@@ -1,0 +1,31 @@
+{
+  "name": "alexgibson",
+  "version": "1.0.1",
+  "description": "Personal blog",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "del": "^2.0.2",
+    "gulp": "^3.8.10",
+    "gulp-compass": "^2.0.3",
+    "gulp-html-minifier": "^0.1.6",
+    "gulp-jshint": "^1.9.0",
+    "gulp-watch": "^4.1.0",
+    "run-sequence": "^1.0.2"
+  },
+  "homepage": "http://alxgbsn.co.uk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexgibson/alxgbsn.co.uk.git"
+  },
+  "author": "Alex Gibson <alxgbsn@gmail.com> (http://alxgbsn.co.uk/)",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.githubusercontent.com/alexgibson/alexgibson.github.com/admin/LICENSE.md"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/alexgibson/alxgbsn.co.uk/issues/issues"
+  }
+}

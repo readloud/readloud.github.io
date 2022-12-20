@@ -1,0 +1,44 @@
+---
+layout: layout
+title: pornvd
+titleinfo: porn videos portal
+desc: Watch porn sex movies free. Hardcore XXX sex clips &amp; adult porn videos available to stream or download in HD. Hot porn and sexy naked girls on Pornhub.
+canonical: '/'
+---
+
+<img class="profile fadeIn" src="{{root}}/images/avatar-300.png" width="150" height="150" alt="porn videos">
+
+<section class="posts">
+  {% if paginator.page == 1 %}
+    <h2>Recent Videos</h2>
+  {% else %}
+    <h2>Older Videos</h2>
+  {% endif %}
+
+  {% for post in paginator.posts %}
+    <article>
+      <time datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%b %d %Y" }}</time>
+      <h3><a rel="bookmark" href="{{ post.url }}">{{ post.title }}</a></h3>
+    </article>
+  {% endfor %}
+
+  <nav class="pagination">
+    <p class="page-number">Page: <em>{{ paginator.page }} of {{ paginator.total_pages }}</em></p>
+    {% if paginator.previous_page == 1 %}
+      <a href="{{ root }}/" class="previous">Newer</a>
+    {% else %}
+      {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path }}" class="previous">Newer</a>
+      {% else %}
+        <span class="previous disabled">Newer</span>
+      {% endif %}
+    {% endif %}
+
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path }}" class="next">Older</a>
+    {% else %}
+      <span class="next disabled">Older</span>
+    {% endif %}
+  </nav>
+
+</section>
