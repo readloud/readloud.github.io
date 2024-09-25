@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>OSINT (Open Source Intelligence) Tools - readloud.org</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "OSINT (Open Source Intelligence) Tools", url: "#_top", children: [
+              {title: "Web Archives", url: "#web-archives" },
+              {title: "Vulnerabilities (CVE)", url: "#vulnerabilities-cve" },
+              {title: "Malware", url: "#malware" },
+          ]},
+          {title: "Person Investigation", url: "#person-investigation", children: [
+              {title: "Accounts in Social Media \u0026amp; Other Platforms", url: "#accounts-in-social-media-other-platforms" },
+              {title: "Google Dorking", url: "#google-dorking" },
+              {title: "IOSINT (Image OSINT) for Account Pictures", url: "#iosint-image-osint-for-account-pictures" },
+              {title: "Older Account Pages", url: "#older-account-pages" },
+              {title: "Reddit", url: "#reddit" },
+              {title: "Twitter", url: "#twitter" },
+          ]},
+          {title: "IMINT (Image Intelligence) and GEOINT (Geospatial Intelligence)", url: "#imint-image-intelligence-and-geoint-geospatial-intelligence", children: [
+              {title: "Basic Investigation", url: "#basic-investigation" },
+              {title: "Gather Information From Search Engine", url: "#gather-information-from-search-engine" },
+              {title: "Reverse Image Search", url: "#reverse-image-search" },
+              {title: "Video (mp4) Geolocation", url: "#video-mp4-geolocation" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="osint-open-source-intelligence-tools">OSINT (Open Source Intelligence) Tools</h1>
+<p>Open-soruce intelligence is the collection and analysis of data gathered from open sources to produce actionable intelligence.</p>
+<ul>
+<li><a href="https://www.abuseipdb.com/">AbuseIPDB</a></li>
+<li><a href="https://search.censys.io/">Censys Search</a></li>
+<li><a href="https://radar.cloudflare.com/">Cloudflare Radar</a></li>
+<li><a href="https://talosintelligence.com/">Cisco Talos</a></li>
+<li><a href="https://www.dehashed.com">DeHashed</a></li>
+<li><a href="https://osint.digitalside.it/report/">DigitalSide</a></li>
+<li><a href="https://feodotracker.abuse.ch/">Feodo Tracker</a></li>
+<li><a href="https://en.fofa.info/">FOFA</a></li>
+<li><a href="https://haveibeenpwned.com/">Have I Been Pwned</a></li>
+<li><a href="https://www.hudsonrock.com/threat-intelligence-cybercrime-tools">HudsonRock Free Tools</a></li>
+<li><a href="https://hunter.io/">Hunter</a></li>
+<li><a href="https://ipinfo.io/">ipinfo.io</a></li>
+<li><a href="https://dnschecker.org/mac-lookup.php">MAC Address Lookup</a></li>
+<li><a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a></li>
+<li><a href="https://metadefender.opswat.com/">MetaDefender Cloud</a></li>
+<li><a href="https://www.nerdydata.com/">NerdyData</a></li>
+<li><a href="https://www.nmmapper.com/">Nmmapper</a></li>
+<li><a href="https://www.ssllabs.com/ssltest/">Qualys</a></li>
+<li><a href="https://securityheaders.com/">Security Headers</a></li>
+<li><a href="https://www.shodan.io/">Shodan</a></li>
+<li><a href="https://sslbl.abuse.ch/">SSLBL</a></li>
+<li><a href="https://threatintelligenceplatform.com/">Threat Intelligence Platform</a></li>
+<li><a href="https://threatfeeds.io/">threatfeeds.io</a></li>
+<li><a href="https://threatfox.abuse.ch/">ThreatFox</a></li>
+<li><a href="https://urlhaus.abuse.ch/">URLhaus</a></li>
+<li><a href="https://urlscan.io/">urlscan.io</a></li>
+<li><a href="https://viewdns.info/">ViewDNS.info</a></li>
+<li><a href="https://www.wappalyzer.com/">Wappalyzer</a></li>
+<li><a href="https://web-check.xyz/">Web Check</a></li>
+<li><a href="https://www.whoxy.com/">Whoxy</a></li>
+<li><a href="https://www.whoisxmlapi.com/">WhoisXML</a></li>
+</ul>
+<h2 id="web-archives">Web Archives</h2>
+<ul>
+<li><a href="https://archive.org/web/">Wayback Machine</a></li>
+</ul>
+<h2 id="vulnerabilities-cve">Vulnerabilities (CVE)</h2>
+<ul>
+<li><a href="https://www.exploit-db.com/">Exploit DB</a></li>
+<li><a href="https://github.com/advisories">GitHub Advisory Database</a></li>
+<li><a href="https://hackerone.com/hacktivity/overview">Hacktivity (HackerOne)</a></li>
+<li><a href="https://huntr.com/bounties/hacktivity/">Hacktivity (Huntr)</a></li>
+<li><a href="https://sploitus.com/">Sploitus</a></li>
+</ul>
+<h2 id="malware">Malware</h2>
+<ul>
+<li><a href="https://malshare.com/">MalShare</a></li>
+<li><a href="https://bazaar.abuse.ch/">MalwareBazaar</a></li>
+</ul>
+<h1 id="person-investigation">Person Investigation</h1>
+<h2 id="accounts-in-social-media-other-platforms">Accounts in Social Media &amp; Other Platforms</h2>
+<p>The target person may use some social media. So first check if the account exists in each platform.</p>
+<ul>
+<li><strong>Facebook</strong></li>
+<li><strong>GitHub</strong></li>
+<li><strong>Instagram</strong></li>
+<li><strong>Reddit</strong></li>
+<li><strong>Threads</strong></li>
+<li><strong>TikTok</strong></li>
+<li><strong>X (formerly Twitter)</strong></li>
+<li><strong>YoutTube</strong></li>
+</ul>
+<h2 id="google-dorking">Google Dorking</h2>
+<p>Assume the target person named John Smith.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;social_media&gt; john smith
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&lt;social_media&gt; jsmith
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>&lt;social_media&gt; j.smith
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a># add the year of birth
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>&lt;social_media&gt; john1999
+</span></code></pre></div>
+<p>For example,</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>facebook jsmith
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>reddit jsmith
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>twitter jsmith
+</span></code></pre></div>
+<h2 id="iosint-image-osint-for-account-pictures">IOSINT (Image OSINT) for Account Pictures</h2>
+<p>If the person sets the picture as user profile or posts, we can investigate the information about the image using IOSINT.<br />
+Also, we might be able to get hints from information reflected a picture as below:</p>
+<ul>
+<li>Brand of clothes the person wears.</li>
+<li>Scenery reflected in the person's eye, cup, glass, etc.</li>
+<li>Numerical values such as dates reflected in a picture.</li>
+</ul>
+<h2 id="older-account-pages">Older Account Pages</h2>
+<p>Using WayBackMachine, we can gather older information about the target person in each platform.</p>
+<p>In WayBackMachine, search the following URLs.</p>
+<h2 id="reddit">Reddit</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>http://old.reddit.com/user/&lt;username&gt;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>https://www.reddit.com/user/&lt;username&gt;
+</span></code></pre></div>
+<h2 id="twitter">Twitter</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>https://twitter.com/&lt;username&gt;
+</span></code></pre></div>
+<h1 id="imint-image-intelligence-and-geoint-geospatial-intelligence">IMINT (Image Intelligence) and GEOINT (Geospatial Intelligence)</h1>
+<p>IMINT and GEOINT are types of OSINT to reveal desired information from analyzing images.</p>
+<h2 id="basic-investigation">Basic Investigation</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>open example.jpg
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>exiftool example.jpg
+</span></code></pre></div>
+<h2 id="gather-information-from-search-engine">Gather Information From Search Engine</h2>
+<p>Search the keyword which is found in the image.</p>
+<ul>
+<li>Name</li>
+<li>Location (country, city, etc.)</li>
+<li>When does it open</li>
+</ul>
+<h2 id="reverse-image-search">Reverse Image Search</h2>
+<p>Upload the image in each search engine.</p>
+<ul>
+<li>
+<p><strong><a href="https://www.bing.com/?scope=images">Bing Images</a></strong></p>
+</li>
+<li>
+<p><strong><a href="https://www.google.com/imghp">Google Images</a></strong></p>
+<p>Click the “Search by image” icon and upload the image.</p>
+</li>
+<li>
+<p><strong><a href="http://yandex.com/images">Yandex Images</a></strong></p>
+</li>
+</ul>
+<h2 id="video-mp4-geolocation">Video (mp4) Geolocation</h2>
+<p>FFmpeg extracts every single frame from a video.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># -i: input file
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a># %06d: followed by six digits e.g. img_000001.png, img_000002.png, etc.
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a># -hide_banner: hide unnecessary text.
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a># -r: frame rate (e.g. 1 frame per second)
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>ffmpeg -i example.mp4 -r 1 img_%06d.png -hide_banner
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/edit/master/docs/osint/osint.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

