@@ -6,7 +6,7 @@
 #### Clone / Forked Repository
 
 ```bash
-$ git clone https://github.com/<your-github-username>/Cool-Front-End-Templates
+$ git clone https://github.com/<your-github-username>/readloud.github.io
 ```
 
 #### Creating a new branch (IMP)
