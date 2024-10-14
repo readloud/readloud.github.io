@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>MailScout - A Python Business Email Finder and Email Validator - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "MailScout - A Python Business Email Finder and Email Validator", url: "#_top", children: [
+              {title: "Features", url: "#features" },
+              {title: "Installation", url: "#installation" },
+              {title: "Initialization", url: "#initialization" },
+              {title: "Usage", url: "#usage" },
+              {title: "Utility Methods", url: "#utility-methods" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="mailscout-a-python-business-email-finder-and-email-validator">MailScout - A Python Business Email Finder and Email Validator</h1>
+<p>MailScout is a Python library designed for finding business email addresses and simple email validation.</p>
+<p>It offers a range of tools for email validation, SMTP checks, and generating potential business email addresses based on provided names and common naming conventions.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Generate and find potential business email addresses based on provided names and common patterns.</li>
+<li>Check SMTP deliverability of email addresses.</li>
+<li>Detect catch-all domains.</li>
+<li>Normalize names to create email-friendly formats.</li>
+<li>Bulk email finder for multiple domains.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Install MailScout using pip:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>mailscout
+</span></code></pre></div>
+<h2 id="initialization">Initialization</h2>
+<h3 id="initialize-the-scout-class">Initialize the Scout class</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">mailscout</span> <span class="kn">import</span> <span class="n">Scout</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">scout</span> <span class="o">=</span> <span class="n">Scout</span><span class="p">()</span>
+</span></code></pre></div>
+<p>The <strong><code>Scout</code></strong> class is the core of the MailScout library, providing various functionalities for email finding, processing and validation. When initializing a <strong><code>Scout</code></strong> object, you can customize its behavior using several arguments:</p>
+<h3 id="arguments">Arguments</h3>
+<ul>
+<li><strong><code>check_variants (bool)</code></strong>: If set to <strong><code>True</code></strong>, the Scout object will generate and check different variants of email addresses based on provided names. Defaults to <strong><code>True</code></strong>.</li>
+<li><code>**check_prefixes (bool)**</code>: Enables the checking of common email prefixes (like 'info', 'contact', etc.) when generating email addresses. This is useful for finding potential business emails. Defaults to <code>**True**</code>.</li>
+<li><strong><code>check_catchall (bool)</code></strong>: Determines whether the Scout object should check if a domain is a catch-all. A catch-all domain accepts emails sent to any address under that domain. Defaults to <strong><code>True</code></strong>.</li>
+<li><strong><code>normalize (bool)</code></strong>: If set to <strong><code>True</code></strong>, the Scout object will normalize names to create email-friendly formats. This is particularly useful for names with diacritics or special characters. Defaults to <strong><code>True</code></strong>.</li>
+<li><strong><code>num_threads (int)</code></strong>: Specifies the number of threads to use for concurrent email checking. Increasing the number of threads can speed up the process when checking a large number of emails. Defaults to <strong><code>5</code></strong>.</li>
+<li><strong><code>num_bulk_threads (int)</code></strong>: Sets the number of threads for bulk email finding tasks. This is separate from <strong><code>num_threads</code></strong> to provide flexibility in handling large-scale operations. Defaults to <strong><code>1</code></strong>.</li>
+<li><strong><code>smtp_timeout (int)</code></strong>: The timeout in seconds for the SMTP connection. This parameter is crucial to avoid long waits on unresponsive servers. Defaults to <strong><code>2</code></strong>.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="find-business-emails-with-names">Find Business Emails with Names</h3>
+<p>Mailscout generates combinations using the names you provide. These names should ideally belong to the same person, typically a first name and a last name.</p>
+<p>To find business emails, we use the <code>**find_valid_emails**</code> method.</p>
+<p>Names might be a list of strings.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Batuhan&quot;</span><span class="p">,</span> <span class="s2">&quot;Akyazı&quot;</span><span class="p">]</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># or, names = [&quot;Batuhan Akyazı&quot;]</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">domain</span> <span class="o">=</span> <span class="s2">&quot;example.com&quot;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">emails</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">find_valid_emails</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">emails</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># [&#39;b.akyazi@example.com&#39;]</span>
+</span></code></pre></div>
+<p>You can also provide a list of lists containing strings to check on multiple people.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">names</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;Winger&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;Ben Cheng&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;Łukas Nowicki&quot;</span><span class="p">]]</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">domain</span> <span class="o">=</span> <span class="s2">&quot;microsoft.com&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">emails</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">find_valid_emails</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">emails</span><span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># [&#39;jeff@microsoft.com&#39;, &#39;ben.cheng@microsoft.com&#39;, &#39;bencheng@microsoft.com&#39;, &#39;ben@microsoft.com&#39;, &#39;lukas@microsoft.com&#39;]</span>
+</span></code></pre></div>
+<p>Or simply a string.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">names</span> <span class="o">=</span> <span class="s2">&quot;Jeffrey Tobias Winger&quot;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">domain</span> <span class="o">=</span> <span class="s2">&quot;microsoft.com&quot;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">emails</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">find_valid_emails</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">emails</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># [&#39;winger.tobias@microsoft.com&#39;]</span>
+</span></code></pre></div>
+<h3 id="find-business-emails-with-common-prefixes">Find Business Emails with Common Prefixes</h3>
+<p>If you don't provide any names, Mailscout will use brute force on common prefixes to find email addresses.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">domain</span> <span class="o">=</span> <span class="s2">&quot;microsoft.com&quot;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">emails</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">find_valid_emails</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">emails</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># [&#39;support@microsoft.com&#39;, &#39;team@microsoft.com&#39;, &#39;marketing@microsoft.com&#39;, &#39;accounts@microsoft.com&#39;, &#39;help@microsoft.com&#39;, &#39;finance@microsoft.com&#39;, &#39;manager@microsoft.com&#39;, &#39;events@microsoft.com&#39;, &#39;community@microsoft.com&#39;, &#39;feedback@microsoft.com&#39;, &#39;dev@microsoft.com&#39;, &#39;developer@microsoft.com&#39;, &#39;status@microsoft.com&#39;, &#39;security@microsoft.com&#39;]</span>
+</span></code></pre></div>
+<h3 id="find-business-emails-in-bulk">Find Business Emails in Bulk</h3>
+<p>To find valid email addresses in bulk for multiple domains and names, use the <code>**find_valid_emails_bulk**</code> method. This function takes a list of dictionaries, each containing a domain and optional names to check, and returns a list of dictionaries, each containing the domain, names, and a list of valid emails found.</p>
+<p>You may think of each list item as a task and provide the data accordingly.</p>
+<p>Here is an example of how to use this function:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">email_data</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="p">{</span><span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John Doe&quot;</span><span class="p">]},</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="p">{</span><span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Jane Smith&quot;</span><span class="p">]},</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="p">{</span><span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;example.com&quot;</span><span class="p">}</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">]</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">valid_emails</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">find_valid_emails_bulk</span><span class="p">(</span><span class="n">email_data</span><span class="p">)</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">valid_emails</span><span class="p">)</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># [{&#39;domain&#39;: &#39;example.com&#39;, &#39;names&#39;: [&#39;John Doe&#39;], &#39;valid_emails&#39;: [&#39;j.doe@example.com&#39;]}, {&#39;domain&#39;: &#39;example2.com&#39;, &#39;names&#39;: [&#39;Jane Smith&#39;], &#39;valid_emails&#39;: [&#39;j.smith@example2.com&#39;, &#39;jane.smith@example2.com&#39;]}, {&#39;domain&#39;: &#39;example.com&#39;, &#39;valid_emails&#39;: [&#39;info@example.com&#39;]}]</span>
+</span></code></pre></div>
+<h2 id="utility-methods">Utility Methods</h2>
+<p>Mailscout comes with a variety of utility methods for different tasks.</p>
+<h3 id="check-smtp-deliverability-email-validation">Check SMTP Deliverability (Email Validation)</h3>
+<p>To validate an email with Mailscout, use the <code>**check_smtp**</code> method.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;batuhan@microsoft.com&quot;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">is_deliverable</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">check_smtp</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Email </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2"> is deliverable: </span><span class="si">{</span><span class="n">is_deliverable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Email batuhan@microsoft.com is deliverable: False</span>
+</span></code></pre></div>
+<h3 id="checking-for-catch-all-domains">Checking for Catch-All Domains</h3>
+<p>The <strong><code>check_email_catchall</code></strong> method can be used to determine if a given domain is configured as a catch-all. A catch-all domain is set up to accept emails sent to any address under that domain, even if the specific address does not exist.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">domain</span> <span class="o">=</span> <span class="s2">&quot;example.com&quot;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">is_catchall</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">check_email_catchall</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Domain </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2"> is catch-all: </span><span class="si">{</span><span class="n">is_catchall</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Email xample.com is catch-all: True</span>
+</span></code></pre></div>
+<h3 id="normalize-names-into-email-friendly-format">Normalize Names into Email-friendly Format</h3>
+<p>To normalize a name for an email-friendly format, use the <code>**normalize_name**</code> method. This method converts a non-compliant name into a format that is acceptable for an email address. Here are some examples:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">name1</span> <span class="o">=</span> <span class="s2">&quot;Şule&quot;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">name2</span> <span class="o">=</span> <span class="s2">&quot;Dzirżyterg&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">normalized_name1</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">normalize_name</span><span class="p">(</span><span class="n">name1</span><span class="p">)</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">normalized_name2</span> <span class="o">=</span> <span class="n">scout</span><span class="o">.</span><span class="n">normalize_name</span><span class="p">(</span><span class="n">name2</span><span class="p">)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">normalized_name1</span><span class="p">)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1"># &#39;sule&#39;</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">normalized_name2</span><span class="p">)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1"># &#39;dzirzyterg&#39;</span>
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/mailscout.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

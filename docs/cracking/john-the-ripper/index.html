@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>John the Ripper - readloud.org</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "John the Ripper", url: "#_top", children: [
+              {title: "Basics", url: "#basics" },
+              {title: "Filter the Word Length of Wordlists", url: "#filter-the-word-length-of-wordlists" },
+              {title: "Generate Custom Wordlist from Original One", url: "#generate-custom-wordlist-from-original-one" },
+              {title: "Remove Cache (Crack Again)", url: "#remove-cache-crack-again" },
+              {title: "Wordlists", url: "#wordlists" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="john-the-ripper">John the Ripper</h1>
+<p>John the Ripper is a password cracking tool.</p>
+<h2 id="basics">Basics</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>john --format=raw-md5 --wordlist=wordlist.txt hash.txt
+</span></code></pre></div>
+<p>To search the type of hash, we can add <strong>"--list=format"</strong> option.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>john --list=formats
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>john --list=formats | grep -i sha
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>john --list=formats | grep -i md5
+</span></code></pre></div>
+<h2 id="filter-the-word-length-of-wordlists">Filter the Word Length of Wordlists</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># Up to 5 characters (-max-len:5)
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>john --wordlist=/usr/share/wordlists/rockyou.txt -max-len:5 hash.txt
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a># 4 characters only (-min-len:4 -max-len:4)
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>john --wordlist=/usr/share/wordlists/rockyou.txt -min-len:4 -max-len:4 hash.txt
+</span></code></pre></div>
+<h2 id="generate-custom-wordlist-from-original-one">Generate Custom Wordlist from Original One</h2>
+<h3 id="command-options">Command Options</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Min length: 12
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a># Max length: 14
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>john --wordlist=./words.txt --min-len:12 --max-len:14 --stdout &gt; new_words.txt
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a># Make uppercase to lowercase
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>cat new_words.txt | tr [:upper:] [:lower:] &gt; new_words_lowercase.txt
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a># Make lowercase to uppercase
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>cat new_words.txt | tr [:lower:] [:upper:] &gt; new_words_uppercase.txt
+</span></code></pre></div>
+<h3 id="custom-rules">Custom Rules</h3>
+<p>Add custom rules to "/etc/john/john.conf"</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[List.Rules:Custom]
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Az&quot;[0-9][0-9][!?#$%&amp;/()=]&quot;                                                                      &quot;
+</span></code></pre></div>
+<p>Generate</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>john --wordlist=./original-wordlist.txt --rules:Custom --stdout &gt; new-wordlist.txt
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="remove-cache-crack-again">Remove Cache (Crack Again)</h2>
+<p>If we can crack the hash that was cracked before,  remove <strong>"john.pot"</strong> which stores cracked passwords.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>rm ~/.john/john.pot
+</span></code></pre></div>
+<h2 id="wordlists">Wordlists</h2>
+<p>Good wordlists</p>
+<ul>
+<li>
+<p>General sources</p>
+<ul>
+<li>Seclists</li>
+<li><a href="https://wordlists.assetnote.io/">Assetnote</a></li>
+</ul>
+</li>
+<li>
+<p>Subdomains</p>
+<ul>
+<li>Seclists<ul>
+<li>/Discovery/dns/*</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/cracking/john-the-ripper.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

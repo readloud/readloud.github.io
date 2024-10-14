@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Bashscripting - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Simple Bash Scripting Cheatsheet", url: "#_top", children: [
+          ]},
+          {title: "Bash Scripts", url: "#bash-scripts", children: [
+          ]},
+          {title: "!/bin/bash", url: "#binbash", children: [
+          ]},
+          {title: "!/bin/bash", url: "#binbash_1", children: [
+          ]},
+          {title: "!/bin/bash", url: "#binbash_2", children: [
+          ]},
+          {title: "!/bin/bash", url: "#binbash_3", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="simple-bash-scripting-cheatsheet">Simple Bash Scripting Cheatsheet</h2>
+<p>[+] nano Shortcuts
+ctrl v          Next page.
+ctrl y          Previous page.
+ctrl w          Where is (find).
+ctrl k          Cut that line of test.
+ctrl x          Exit editor.</p>
+<p>[+] Create a text file:
+touch file      Creates an empty file.
+ifconfig &gt; tmp  pipe the output of a command
+nano file</p>
+<p>[+] Create a file and append text to it:
+ifconfig &gt; tmp   <br />
+echo &gt;&gt; tmp
+ping google.com -c3 &gt;&gt; tmp</p>
+<p>[+] How to view a file:
+cat file        Show entire contents of file.
+more file       Show one page at a time.  Space bar for next page and (q) to exit.
+head file       Show the first 10 lines.
+head -15 file   Show the first 15 lines.
+tail file       Show the last 10 lines.
+tail -15 file   Show the last 15 lines.
+tail -f file    Useful when viewing the output of a log file.</p>
+<p>[+] pipe
+cat tmp | grep Bcast    Feeds the output of one process to the input of another process.</p>
+<p>[+] Processes
+ps aux          Show all running process for all users.
+kill -9 PID     Nicely kill a PID.</p>
+<p>[+] Word Count
+wc -l tmp2      Count the number of lines in a file</p>
+<p>[+] cut
+-d  delimiter
+-f  fields</p>
+<p>[+] sort
+Sort by unique      sort -u file
+sort IP addresses correct       sort -t . -k 1,1n -k 2,2n -k 3,3n -k 4,4n
+cat tmp2 | cut -d '(' -f2 | cut -d ')' -f1 | sort -u        Isolate the IP address</p>
+<p>[+] awk
+awk '{print $1}' file       Show the 1st column.
+awk '{print $1,$5}' file    Show the 1st and 5th columns.</p>
+<p>[+] grep
+grep -v     Remove a single string.
+grep -v 'red' file</p>
+<p>[+] egrep -v
+Remove multiple strings egrep -v '(red|white|blue)' file</p>
+<p>[+] sed
+sed 's/FOO/BAR/g' file      Replace FOO with BAR.
+sed 's/FOO//g' file         Replace FOO with nothing.
+sed '/^FOO/d' file          Remove lines that start with FOO.</p>
+<p>[+] colour
+31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 
+echo -e "\e[1;34mThis is a blue text.\e[0m"</p>
+<h2 id="bash-scripts">Bash Scripts</h2>
+<p>[+] Simple bash script:</p>
+<h1 id="binbash">!/bin/bash</h1>
+<p>clear
+echo
+echo
+print "Hello world."</p>
+<p>[+] Make a file executable.
+chmod +x file
+chmod 755 file</p>
+<p>[+] Variables
+name=Bob
+echo $name
+user=$(whoami)
+echo $user
+echo 'Hello' $name. 'You are running as' $user.</p>
+<h1 id="binbash_1">!/bin/bash</h1>
+<p>clear
+echo "Hello World"
+name=Bob
+ip=<code>ifconfig | grep "Bcast:" | cut -d":" -f2 | cut -d" " -f1</code>
+echo "Hello" $name "Your IP address is:" $ip</p>
+<p>[+] User Input
+read -p "Domain: " domain</p>
+<h1 id="binbash_2">!/bin/bash</h1>
+<p>echo "Please input your domain:"
+read -p "Domain:" domain
+ping -c 5 $domain</p>
+<p>[+] Check For No User Input
+if [ -z $domain ]; then
+    echo
+    echo "#########################"
+    echo
+    echo "Invalid choice."
+    echo
+    exit
+fi</p>
+<p>[+] For loops</p>
+<h1 id="binbash_3">!/bin/bash</h1>
+<p>for host in $(cat hosts.txt)
+do
+    command $host
+done</p>
+<p>[+] One Liners</p>
+<p>Port Scan:
+for port in $(cat Ports.txt); do nc -nzv 192.168.0.1 $port &amp; sleep 0.5; done</p>
+<p>Use a bash loop to find the IP address behind each host:
+for url in $(cat list.txt); do host $url; done</p>
+<p>[+] Condition Onliner</p>
+<p>any command &amp;&amp; if work || if not work 
+type -p massdns &amp;&amp; massdns -r resolver.txt -t A -o S sub.txt -w sub.mass || echo "MassDns not installed"</p>
+<p>[+] Condition Onliner with multiple action </p>
+<p>any command &amp;&amp; { if work; also this; also this } || { if not work; also this; also this }
+type -p massdns &amp;&amp; { massdns -r resolver.txt -t A -o S sub.txt -w sub.mass; cat sub.mass } || { echo "MassDns not installed"; echo "Install MassDns" }</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/bashscripting.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

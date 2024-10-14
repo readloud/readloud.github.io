@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Bug bounty api testing basics - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "another defination", url: "#_top", children: [
+          ]},
+          {title: "language-independent", url: "#language-independent", children: [
+          ]},
+          {title: "gui-independent", url: "#gui-independent", children: [
+          ]},
+          {title: "improved test coverage", url: "#improved-test-coverage", children: [
+          ]},
+          {title: "faster releases", url: "#faster-releases", children: [
+          ]},
+          {title: "set-up of api test environment", url: "#set-up-of-api-test-environment", children: [
+          ]},
+          {title: "types of otuput of an api", url: "#types-of-otuput-of-an-api", children: [
+          ]},
+          {title: "calling of another api/event", url: "#calling-of-another-apievent", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <p>============================
+API TESTING
+============================</p>
+<p>=========================
+what is api testing
+========================</p>
+<p>api is an acronym for application programming interface.</p>
+<p>in software application(app) development,api is the middle layer between the presentation (UI) and the database layer.apis is enable communication and data exchange from one software system to another.</p>
+<p>api testing is a software testing practice that tests the apis directly-from their functionality,reliability,performance,to security.part of integration testung.api testing effectively validates the logic of the build architecture within a short amount of time.</p>
+<hr />
+<h2 id="another-defination">another defination</h2>
+<p>api testing is a software testing type that validates application programming interfaces(APIs) .the purpose of api testing is to check the functionality,reliability ,performace,and security of the programming interfaces.in api testing ,instead of using standard user inputs(keyboards) and outputs,you use software to send calls to the API,get output,and note down the systems response.api tests are very different from GUI tests and wont concentrate on the look adn feel of an application.it mainly concentrates on the bussiness logic layer of the software architecture.</p>
+<p>===============================
+where is api testing performed?
+===============================</p>
+<div class="language-text highlight"><pre><span></span><code>presentation layer
+               |____ -&gt; ui functional testing
+bussiness layer
+               |____ -&gt; api testing
+database layer
+</code></pre></div>
+<p>there are 3 layeers sepearate layers in a typical app the presentation (or user interface) layer,the bussiness layer,and the database layer for modeling and manipulating data.</p>
+<p>api testing is performed at the most critical layer: bussiness which bussiness logic processing is carried out all transactions between the user interface and database layers happen.</p>
+<p>===================================================
+benefits of api testing
+===================================================</p>
+<hr />
+<h2 id="language-independent">language-independent</h2>
+<p>data is exchanged via xml and json formats so any language can be used for test automation,xml and json are typically structured data,making the verification fast and stable.there are also buil-in libraries to support comparing data using these data formats.</p>
+<hr />
+<h2 id="gui-independent">gui-independent</h2>
+<p>api testing can be performed in the app prior to gui testing .Early testing means early feedback and better team productivity.the app core functionalities can be tested to expose small errors and to evaluate the build strengths.</p>
+<hr />
+<h2 id="improved-test-coverage">improved test coverage</h2>
+<p>most api/web services have specifications,allow you to create automated tests with high coverage-including functional testing and non-functional testing.</p>
+<hr />
+<h2 id="faster-releases">faster releases</h2>
+<p>it is common that executing api testing saves upto eight hours compared to UI testing,allowing software development teams to release product faster.</p>
+<p>===================================
+api testing types
+===================================</p>
+<p>1) validation testing</p>
+<div class="language-text highlight"><pre><span></span><code>validation testing occurs among hte final steps and plays an essential role in the developemnt process.it verifies the aspects of product behaviou and efficiency.in other words validation testing can be seen as an assurance of the correct developement.
+</code></pre></div>
+<p>2) functional testing</p>
+<div class="language-text highlight"><pre><span></span><code>includes testing particular functions in the codebase.these features are the representation of specific scenarios to make sure that api functions are handled well within the planned parameters.
+</code></pre></div>
+<p>3)UI testing
+    ui testing is defined as a test of the user interface for the apu and other integral parts.UI testing focuses more o the interface which ties into the api rather than the api testing itself.although ui testing is not a specific test of api in terms of codebase,this technique still provides an overview of the health,usability,and efficiency of the app front and backends.</p>
+<p>4) load testing</p>
+<div class="language-text highlight"><pre><span></span><code>load testing generally occurs after a specific unit or the whole codebase has been  completed,this technique checks if the throretical solutions work as planned.Load testing monitoes the apps performanceat both normal and peak conditions.
+</code></pre></div>
+<p>5) security testing</p>
+<div class="language-text highlight"><pre><span></span><code>this practive ensures the api implementation is secure from external threats.security testing also includes additional steps such as validation of encryption methodologies ,and of the design of the api access control .it also includes user rights management and authorization validtaion.
+</code></pre></div>
+<p>6)runtime and error detection</p>
+<div class="language-text highlight"><pre><span></span><code>this testing type is releated to the actual running of the api-particularly with the universal results of utilizing the api codebase.this technique focuses on one of the below aspects,monitoring,execution errors,resource leaks,or error detection.
+</code></pre></div>
+<p>7) penetration testing
+    penetration testing is considered the second test in the auditing process.in this type,users with limited api knowledge will try to access the threat vector from an outside perspective,which is about functions,resources,processes, or aim to the entire API and its components.</p>
+<p>8) fuzz testing</p>
+<div class="language-text highlight"><pre><span></span><code>fuzz testing is another step in the security audit process.in fuzz testing a vast amount of random data(referred to as &quot;noise&quot; or &quot;fuzz&quot;) will be input into the system to detect any forced crashes or negative behaviours.this technique tests the api&#39;s limits to prepare for the &quot;worst-case scenarios.&quot;
+</code></pre></div>
+<p>=========================================================================================================================
+       IN THIS API TESTING ,YOU WILL LEARN ABOUT        <br />
+=========================================================================================================================</p>
+<p>-&gt; setup of api test environment
+-&gt; types of output of an api
+-&gt; test cases for api testing
+-&gt; approach of api testing
+-&gt; difference between api testing and unit testing
+-&gt;how to test api
+-&gt;best practices of api testing
+-&gt;types of bugs that api testing detects.
+-&gt; how to do api test automation
+-&gt; challenges of api testing</p>
+<hr />
+<h2 id="set-up-of-api-test-environment">set-up of api test environment</h2>
+<p>-&gt; api testing is different thatn other software testing types as GUI is not available,and yet you are required to setup initial environment that invokes api with a required set of parameters and then finally examines the test result.</p>
+<p>-&gt; hence,setting up a testing environment for api automation testing seems a little complex.</p>
+<p>-&gt; database and server should be configured as per the applicaiton requirements.</p>
+<p>-&gt; once the installation is done,the api function should be called to check wheather that api is working.</p>
+<hr />
+<h2 id="types-of-otuput-of-an-api">types of otuput of an api</h2>
+<p>an output of api should be</p>
+<p>1) any type of data
+2)status(say pass or fail)
+3) call another api function.</p>
+<p>lets look at an example of each of the above types in this api testing.</p>
+<p>--&gt;&gt; any type of data
+        example: there isa n api function which should add two integer umbers.
+            Long add (int a, int b)</p>
+<p>the numbers have to be given as input parameters,the output should be a summation of two integer numbers.this output needs to be verified with an expected outcome.</p>
+<p>calling needs to be done such as</p>
+<p>add (1234, 5655)</p>
+<p>exceptions have to handled if hte number is exceeding hte integer limit.</p>
+<p>--&gt;&gt; status (say pass or fail)</p>
+<p>consider the below api function-</p>
+<p>1)lock()
+2)unlock()
+3) delete()</p>
+<p>they return any value such as true(in case of suceess) or false (in case of error) as an output.</p>
+<p>a more accurate Test case would be ,can call the functions in any of hte scripts and later check for changes either in the database or the application GUi.</p>
+<hr />
+<h2 id="calling-of-another-apievent">calling of another api/event</h2>
+<p>in case ,we call one of the api function which in turn will call another function.</p>
+<p>for example-first api function can be used for deleting a specified record in the table and this function,in turns,calls another function to refresh the database.</p>
+<p>--&gt;&gt; test cases for api testing</p>
+<p>test cases of api testing as based on:</p>
+<p>1) return value based on input condition: it is relatively easy to test,as input can be defined and resutls can be autheticated
+2) does not return anything: when there is no value, a behaviour of api on the system to be checked.</p>
+<p>3) trigger some other api/event /interrupt:if an output of an api triggers some event or interrupt,then those events and interrupt listeners should be tracked.</p>
+<p>4) update data structure:updating data structure will have some outcome or effect on the system,and that should be authenticated</p>
+<p>5) modify certain resources: if api call modifies some resources then it should be validated by accessing respective resources.</p>
+<p>--&gt;&gt; API TESTING APPROACH</p>
+<p>api testing approach is a predefined strategy or a method that QA team will perform in order to conduct the api testing after the build is ready.this testing does not include the source code.the api testing approach helps to better understand the functionalities ,testing techiniwues,input parameters and the execution of test cases.</p>
+<p>FOLLOWING POINTS HEPLS THE USERS TO DO API TESTING APPROACH:
+1) understand the functionality of the ap program and clearly define the scope of the program
+2) apply testing techniques such as quivalence classes,boundaries value analysis,and error guessing and write test cases for the api 
+3) input parameters for the api need to be planned and defined appropraitely.
+4) execute the test cases and compare expected and actual results.</p>
+<p>===================
+api testing points
+===================</p>
+<p>-&gt; testers perform it
+-&gt; end to end functionlaity is tested.
+-&gt;testers cannot access the source code.
+-&gt; only api functions are tested.
+-&gt;all functions issues are tested.
+-&gt; broader in scope
+-&gt; ran after build is created.</p>
+<p>========================
+how to test api
+========================</p>
+<p>api automation testing could cover atleast following testing methods apart from usual SDLC process.</p>
+<p>DISCOVERY TESTING:
+    the test group should manually execute the set of calls documented in the api like verifying that a specific resource exposed by the api can be listed,created and deleted as appropriate
+USABILITY TESTING:
+    This testing verifies whether the api is functional and user-friendly.and does api integrates well with another platform as well.
+SECURITY TESTING:
+    This testing includes what type of authentication is required and whether sensitive data is encrypted over http or both.</p>
+<p>AUTOMATED TESTING:
+    api testing should culminate in the creation of a ser of scripts or a tool that can be used to execute the api regularly.</p>
+<p>DOCUMENTAION:
+    the test team has to make sure that the documentation is adequate and provides enough information to interact with the api.Documentation should be a part of the final deliverable.</p>
+<p>===============================
+BEST PRACTICES OF API TESTING
+===============================</p>
+<p>-&gt; api test cases should be grouped by test category.
+-&gt; on the top of each test,you should include the declarations of the apis being called.
+-&gt; parameters selection should be explicitly mentioned in the test case itself.
+-&gt;prioritize api function calls so that it will be easy for testers to test.
+-&gt;each test case should be as self-contained and independent from dependencies as possible.
+-&gt; avoid "test chaining" in your development.
+-&gt; special care must be taken while handling one-time call functions like-delete,clodewindow,etc..
+-&gt; call sequencinng should be performed and well planned.
+-&gt; to ensure complete test coverage,create api test cases for all possible input combinations of the api.</p>
+<p>===========================================
+types of bugs that api testing detects
+===========================================</p>
+<p>-&gt; fails to handle error conditions gracefully
+-&gt; unused flags
+-&gt;missing or duolicate dunctionality
+-&gt; reliable issues,difficulty in connecting and getting a response from api
+-&gt; security issues
+-&gt; multi-threading issues
+-&gt;performance issues.api respose time is very high
+-&gt; improper errors/warnings to a caller
+-&gt; incorrect handling of valid arguments values
+-&gt; response data is not structured correctly(json or xml)</p>
+<p>==========================
+challenges of api testing
+==========================
+challenges of api testing includes:</p>
+<p>-&gt; main challenges in web api testing is paramter combination,parameter selection,and call sequencing
+-&gt; validating and verifying the output in a different system is little difficult for testers.
+-&gt; paramters selctions and categorization is required to be known to the testers.
+-&gt; exception handling function needs to be tested
+-&gt; coding knowledge is necessary for testers.</p>
+<p>==============
+conclusion
+==============
+api consists of a set of classes/functions/procedures which represent the bussiness logic layer.if api is not tested properly,it may cause problems not only the api application but aslo in the calling application.it is an indispendable test in software engineering.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/api/bug_bounty_api_testing_basics.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

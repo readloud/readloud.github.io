@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Hackingwireless - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Hacking wireless cheat sheet", url: "#_top", children: [
+              {title: "Discover the AP, ESSID, and BSSID of a device router with WPS enabled", url: "#discover-the-ap-essid-and-bssid-of-a-device-router-with-wps-enabled" },
+              {title: "airmon-ng", url: "#airmon-ng" },
+          ]},
+          {title: "-w: Wordlist.", url: "#-w-wordlist", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="hacking-wireless-cheat-sheet">Hacking wireless cheat sheet</h2>
+<h3 id="discover-the-ap-essid-and-bssid-of-a-device-router-with-wps-enabled">Discover the AP, ESSID, and BSSID of a device router with WPS enabled</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>wash<span class="w"> </span>-i<span class="w"> </span><span class="o">[</span>INTERFACE<span class="o">]</span>
+</span></code></pre></div>
+<h3 id="airmon-ng">airmon-ng</h3>
+<h4 id="kill-any-conflicting-processes">Kill any conflicting processes</h4>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>airmon-ng<span class="w"> </span>check<span class="w"> </span><span class="nb">kill</span>
+</span></code></pre></div>
+<h4 id="set-monitor-mode-to-an-interface-create-monitor-mode-virtualized-adapter">Set monitor mode to an interface (create monitor mode virtualized adapter)</h4>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>airmon-ng<span class="w"> </span>start<span class="w"> </span><span class="o">[</span>INTERFACE<span class="o">]</span>
+</span></code></pre></div>
+<h4 id="wizard">Wizard</h4>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>airoscript-ng
+</span></code></pre></div>
+<h4 id="de-authentication-attack">De-authentication attack</h4>
+<p>De-authenticate and desassociate a client.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>aireplay-ng<span class="w"> </span>--deauth<span class="w"> </span><span class="m">25</span><span class="w"> </span>-h<span class="w"> </span><span class="o">[</span>TARGET<span class="w"> </span>MAC<span class="o">]</span><span class="w"> </span>-b<span class="w"> </span><span class="o">[</span>AP<span class="w"> </span>MAC<span class="o">]</span><span class="w"> </span><span class="o">[</span>INTERFACE<span class="o">]</span>
+</span></code></pre></div>
+<h4 id="crack-wep-password">Crack WEP password</h4>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>aircrack-ng<span class="w"> </span><span class="s1">&#39;wireless-data-01.cap&#39;</span>
+</span></code></pre></div>
+<h4 id="crack-wpa2-password">Crack WPA2 password</h4>
+<p><div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>aircrack-ng<span class="w"> </span>-a2<span class="w"> </span>-b<span class="w"> </span><span class="o">[</span>TARGET<span class="w"> </span>BSSID<span class="o">]</span><span class="w"> </span>-w<span class="w"> </span>dictionary.txt<span class="w"> </span><span class="s1">&#39;wireless-data-01.cap&#39;</span>
+</span></code></pre></div>
+-a: Technique used to crack the handshake. 2=WPA technique.</p>
+<p>-b: BSSID of the target router.</p>
+<h2 id="-w-wordlist">-w: Wordlist.</h2>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/hackingwireless.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

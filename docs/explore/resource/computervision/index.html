@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Image Analysis for Machine Learning - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Image Analysis for Machine Learning", url: "#_top", children: [
+              {title: "Basic Information", url: "#basic-information" },
+          ]},
+          {title: "Filename", url: "#filename", children: [
+          ]},
+          {title: "Image information", url: "#image-information", children: [
+          ]},
+          {title: "Image format (PNG, JPG, etc.)", url: "#image-format-png-jpg-etc", children: [
+          ]},
+          {title: "Color mode (RPG, CMYK, etc.)", url: "#color-mode-rpg-cmyk-etc", children: [
+          ]},
+          {title: "Image size", url: "#image-size", children: [
+          ]},
+          {title: "Bytes", url: "#bytes", children: [
+          ]},
+          {title: "Pixels", url: "#pixels", children: [
+              {title: "Plot Images", url: "#plot-images" },
+              {title: "Hidden Information", url: "#hidden-information" },
+          ]},
+          {title: "Convert image to bytes", url: "#convert-image-to-bytes", children: [
+          ]},
+          {title: "Image Manipulation for Machine Learning", url: "#image-manipulation-for-machine-learning", children: [
+              {title: "Swapping Pixels", url: "#swapping-pixels" },
+          ]},
+          {title: "Image Recognition Bypass for Machine Learning", url: "#image-recognition-bypass-for-machine-learning", children: [
+              {title: "Blurring", url: "#blurring" },
+              {title: "Cropping/Rotating", url: "#croppingrotating" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="image-analysis-for-machine-learning">Image Analysis for Machine Learning</h1>
+<p>Investigate images to get sensitive/secret data or sensitive information hidden in the images.  </p>
+<p>In advance, load an image using <strong>Pillow (PIL)</strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>import numpy as np
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>from PIL import Image
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>img = Image.open(&quot;example.png&quot;)
+</span></code></pre></div>
+<h2 id="basic-information">Basic Information</h2>
+<h1 id="filename">Filename</h1>
+<p>img.filename</p>
+<h1 id="image-information">Image information</h1>
+<p>img.info</p>
+<h1 id="image-format-png-jpg-etc">Image format (PNG, JPG, etc.)</h1>
+<p>img.format</p>
+<h1 id="color-mode-rpg-cmyk-etc">Color mode (RPG, CMYK, etc.)</h1>
+<p>img.mode</p>
+<h1 id="image-size">Image size</h1>
+<p>img.size</p>
+<h1 id="bytes">Bytes</h1>
+<p>img.tobytes()</p>
+<h1 id="pixels">Pixels</h1>
+<p>np.array(img.getdata())</p>
+<h3 id="plot-images">Plot Images</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>import matplotlib.pyplot as plt
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>plt.imshow(img)
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>plt.axis(&#39;off&#39;) # Turn off axis and labels
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>plt.show()
+</span></code></pre></div>
+<h2 id="hidden-information">Hidden Information</h2>
+<p>Find hidden data in the image by slightly changing.</p>
+<h3 id="resize-image-get-bytes">Resize Image &amp; Get Bytes</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>img1 = img.resize((128, 128))
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>print(img1.tobytes())
+</span></code></pre></div>
+<h3 id="xor-image-bytes">XOR Image Bytes</h3>
+<h1 id="convert-image-to-bytes">Convert image to bytes</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>bytes = img.tobytes()
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>key = 2 # specify the XOR key
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>xored = []
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>for byte in bytes:
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    xored.append(byte ^ key)
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>xored_np = np.array(xored)
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>print(xored_np)
+</span></code></pre></div>
+<h1 id="image-manipulation-for-machine-learning">Image Manipulation for Machine Learning</h1>
+<p>We can update each pixel value to change an image.</p>
+<h2 id="swapping-pixels">Swapping Pixels</h2>
+<p>Reference: <a href="https://www.kaggle.com/code/jonbown/ai-ctf-submissions?scriptVersionId=105606691&amp;cellId=102">https://www.kaggle.com/code/jonbown/ai-ctf-submissions?scriptVersionId=105606691&amp;cellId=102</a></p>
+<p>This example updates pixel values at specified positions.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>import numpy as np
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>from PIL import Image
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>img = Image.open(&quot;example.png&quot;)
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a># Reshape image data to desired size for easy processing
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>pixels = np.array(img.getdata())
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>pixels = np.reshape(pixels, (28, 28))
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a># Update each pixel with desired value for changing image
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>for i in range(img.size[0]):
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    for j in range(img.size[1]):
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        # change pixel value at position (8, 19)
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        if i == 8 and j == 19:
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>            pixels[i, j] = 255
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        # change pixel value at position 25th row, 20th column onwards
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        if i &gt; 25 and j &gt; 20:
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>            pixels[i, j] = np.random.randint(0, 50)
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a># Convert numpy array to image
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>img_updated = Image.fromarray(pixels.astype(np.uint8))
+</span></code></pre></div>
+<h1 id="image-recognition-bypass-for-machine-learning">Image Recognition Bypass for Machine Learning</h1>
+<p>We can trick image recognizer or classifier by adding filters or obfuscating an image.</p>
+<p>The following techniques include those that are ineffective currently or in the future..</p>
+<h2 id="blurring">Blurring</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>from PIL import Image
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>from PIL import ImageFilter
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>img = Image.open(&quot;example.png&quot;)
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a># Box blur
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>img1 = img.filter(ImageFilter.BoxBlur(5))
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a># Gaussian blur
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>img2 = img.filter(ImageFilter.GaussianBlur(5))
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a># Median filter
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>img3 = img.filter(ImageFilter.MedianFilter(size=5))
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a># Rank filter
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>img4 = img.filter(ImageFilter.RankFilter(size=13, rank=5))
+</span></code></pre></div>
+<h2 id="croppingrotating">Cropping/Rotating</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>from PIL import Image
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>from PIL import ImageFilter
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>img = Image.open(&quot;example.png&quot;)
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>img = img.resize((512, 512))
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>img1 = img.crop((0, 0, 300, 280)).rotate(-60)
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/computervision.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

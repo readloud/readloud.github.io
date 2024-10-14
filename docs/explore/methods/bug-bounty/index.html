@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Bug bounty - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Bug Bounty Methodology", url: "#_top", children: [
+              {title: "1. Scope, Ethics, Code of Conduct, etc.", url: "#1-scope-ethics-code-of-conduct-etc" },
+              {title: "2. Reconnaissance and Information Gathering", url: "#2-reconnaissance-and-information-gathering" },
+              {title: "4. Authentication and Authorization Attacks", url: "#4-authentication-and-authorization-attacks" },
+              {title: "RootDown Pentest \u0026amp; Bug Bounty", url: "#rootdown-pentest-bug-bounty" },
+          ]},
+          {title: "Helpful Oneliners", url: "#helpful-oneliners", children: [
+              {title: "Recon", url: "#recon" },
+              {title: "C2 \u0026amp; PostOP", url: "#c2-postop" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="bug-bounty-methodology">Bug Bounty Methodology</h2>
+<hr />
+<h5 id="1-scope-ethics-code-of-conduct-etc">1. Scope, Ethics, Code of Conduct, etc.</h5>
+<h5 id="2-reconnaissance-and-information-gathering">2. Reconnaissance and Information Gathering</h5>
+<h5 id="4-authentication-and-authorization-attacks">4. Authentication and Authorization Attacks</h5>
+<h3 id="rootdown-pentest-bug-bounty">RootDown Pentest &amp; Bug Bounty</h3>
+<hr />
+<h2 id="helpful-oneliners">Helpful Oneliners</h2>
+<p><a href="https://github.com/D4Vinci/One-Lin3r">One-Lin3r</a> one-liner tool for privilege escalation and more</p>
+<h3 id="recon">Recon</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#List all nmap scripts</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ls<span class="w"> </span>/usr/share/nmap/scripts<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>‘s/<span class="se">\.</span>nse$//‘<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort
+</span></code></pre></div>
+<h4 id="payloads">Payloads</h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#”Linux Fork Bomb” - Create processes until the system “crashes”</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>:<span class="o">(){</span><span class="w"> </span>:<span class="p">|</span>:<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span><span class="o">}</span><span class="p">;</span>:
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#”Almost Invisible SSH” - This will not add your user to the /var/log/utmp file and you won’t show up in w or who command of logged in users. It will bypass profile and bash profile as well. On your client side it will stop logging the host name to ~/.ssh/known_hosts.*  Credit: netmux </span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ssh<span class="w"> </span>-o<span class="w"> </span><span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null<span class="w"> </span>-T<span class="w"> </span>user@example.<span class="w"> </span>com<span class="w"> </span>“bash<span class="w"> </span>-¡”<span class="w"> </span>
+</span></code></pre></div>
+<h3 id="c2-postop">C2 &amp; PostOP</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#Delete empty files</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">rm0</span><span class="o">=</span>“find<span class="w"> </span>.<span class="w"> </span>-madepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-size<span class="w"> </span><span class="m">0</span><span class="w"> </span>-delete<span class="w"> </span>-print”
+</span></code></pre></div>
+<blockquote>
+<p>[!IMPORTANT]
+<em>Material in this repository is intended purely for informational and educational purposes. Don't crime.</em></p>
+</blockquote>
+<ul>
+<li>
+<p><a href="https://github.com/Root-Down-Digital/pentesting-resources/blob/main/repos/repos-main.md"><strong>Tools</strong></a> • Browse a collection of tools curated for specific tasks from recon to post-op. </p>
+</li>
+<li>
+<p><a href="https://github.com/Root-Down-Digital/pentesting-resources/tree/main/scripts"><strong>Scripts</strong></a> • Suite of scripts to: Automate monitoring, secure servers, find vulns &amp; escalate privileges.  </p>
+</li>
+<li>
+<p><a href="https://github.com/Root-Down-Digital/pentesting-resources/tree/main/resources"><strong>Resources</strong></a> • Quick reference lists for OSINT, mobile &amp; web and hardware hacking. <em>Methodology in the works.</em> </p>
+</li>
+<li>
+<p><a href="https://github.com/Root-Down-Digital/pentesting-resources/tree/main/hardware"><strong>Hardware</strong></a> • Hak5 &amp; O.MG devices. Other gadgets coming soon (Catsniffer, Magspoof…) </p>
+</li>
+</ul>
+<hr />
+<p>P.S.: Huge thanks to every author of these sources. Feel free to contribute or suggest improvements! We believe in the power of community and collaboration. Every single contribution, however small, is valued and appreciated. </p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/methods/bug-bounty.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

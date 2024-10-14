@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>How to use Ettercap - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "How to use Ettercap", url: "#_top", children: [
+              {title: "Using Ettercap GUI", url: "#using-ettercap-gui" },
+              {title: "ARP poisoning Attack in Ettercap", url: "#arp-poisoning-attack-in-ettercap" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="how-to-use-ettercap">How to use Ettercap</h1>
+<p><code>sudo apt install ettercap-gtk</code></p>
+<p>On Fedora or other distributions based on it, the command will look similar:</p>
+<p><code>sudo yum install ettercap-gtk</code></p>
+<p>We coped with the task of installing Ettercap Linux, but before using it, you need to change a few settings in the configuration file.</p>
+<p><code>sudo vi /etc/ettercap/etter.conf</code></p>
+<p>The <code>ec\_uid</code> and <code>ec\_gid</code> lines must be set to 0 in order for the program service to work on behalf of the superuser:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>\[privs\]
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ec\_uid = 0  * [nobody is the default
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ec\_gid = 0  * [nobody is the default
+</span></code></pre></div></p>
+<p><img alt="ettercap/etter.conf" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-nobody.png" title="ettercap/etter.conf" /></p>
+<p>Next you need to find and uncomment these two lines:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>redir\_command\_on = &quot;iptables -t nat -A PREROUTING -i %iface -p tcp --dport %port -j REDIRECT --to-port %rport&quot;
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>redir\_command\_off = &quot;iptables -t nat -D PREROUTING -i %iface -p tcp --dport %port -j REDIRECT --to-port %rport&quot;
+</span></code></pre></div>
+<img alt="How to use ettercap on kali linux" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap3-SSL.png" /></p>
+<p>They are used to redirect SSL connections to regular HTTP, if possible. Then save the changes and the program is ready to work.</p>
+<h2 id="using-ettercap-gui"><strong>Using Ettercap GUI</strong></h2>
+<p>The program can work in several modes – with a graphical interface, without and as a service. We will consider work in the graphical interface. To run a program with a GTK interface, use the -G option:</p>
+<p><code>sudo -E ettercap -G</code></p>
+<p><img alt="Ettercap GUI" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap1-gui.png" title="Ettercap GUI" /></p>
+<p>We use the -E option for sudo to save all of our user’s environment variables. The main window of the program looks very simple. First we look at how the ARP-poisoing attack is performed.</p>
+<h2 id="arp-poisoning-attack-in-ettercap"><strong>ARP poisoning Attack in Ettercap</strong></h2>
+<p>Let us get to the point and execute the attack attercap arp spofing. In Ettercap, open the <strong>Sniff</strong> menu and select <strong>Unified Snifing</strong>. Then select your network interface, for example, eth0 or wlan0:</p>
+<p><img alt="ARP poisoning Attack in Ettercap" src="https://www.kalitut.com/wp-content/uploads/2020/06/Ettercap-ARP-Attack.png" title="ARP poisoning Attack in Ettercap" /></p>
+<p>The program window will change and much more functions will be available to us. Now you need to scan the network. To do this, open the Hosts menu  and click Scan hosts.  Even if something does not work, then you can load the list of hosts from the file:</p>
+<p><img alt="Ettercap Scan hosts" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap5-Scan-hosts.png" title="Ettercap Scan hosts" /></p>
+<p>Further, after a quick scan, if you open Hosts -&gt; Hosts List , you will see a list of devices connected to the network:</p>
+<p><img alt="ettercap Hosts List" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap6-Add-target.png" title="ettercap Hosts List" /></p>
+<p>To start the attack, we need to specify target 1 and target 2. As the first target, you need to specify the IP of the machine that we are going to attack, and the target 2 is the ip of the router. To add targets, use the Add Target 1 and Add Target 2 buttons :</p>
+<p><img alt="ARP poisoning" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-MITM.png" title="ARP poisoning" /></p>
+<p>Next, open the <strong>MITM</strong>  menu  and select  <strong>ARP</strong> poisoning :</p>
+<p><img alt="ARP poisoning" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-Sniff-remote-connections.png" title="ARP poisoning" /></p>
+<p>In the window that opens, check the <strong>Sniff remote connections</strong> box to intercept all remote connections from this computer:</p>
+<p><img alt="Sniff remote connections" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-Sniffpng.png" title="Sniff remote connections" /></p>
+<p>Now, to start the substitution process, in the Start menu, select <strong>Start Sniffing</strong>.</p>
+<p>After that, the program will start sending packets to the network, with a request for 192.168.1.3 to update the ARP cache and replace the MAC address of the router with yours. The attack is started and successfully executed. You can open the <strong>View -&gt; Connections</strong> menu and see the active connections for the target device:</p>
+<p><img alt="ettercap" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-Start-Sniffing.png" /></p>
+<p>If the packet was not encrypted, then we can view the transmitted information by clicking on the connection with the mouse. The sent information is displayed on the left, and the received information is displayed on the right.</p>
+<p><img alt="ettercap  packet" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap12.png" title="ettercap  packet" /></p>
+<h3 id="dns-spoofing-with-ettercap"><strong>DNS spoofing with ettercap</strong></h3>
+<p>A special service, DNS, is used to convert site names to network IP addresses. When the computer needs an ip of the site, he asks him for the DNS server. But if you are already performing a MITM attack, then we can spoof the server’s response so that instead of the site server’s IP, our IP is returned. First we need to edit the /etc/ettercap/etter.dns file:</p>
+<p><code>sudo vi /etc/ettercap/etter.dns</code></p>
+<p><code>google.com A 127.0.0.1</code></p>
+<p><img alt="DNS spoofing attack ettercap" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-etter.dns_.png" title="DNS spoofing attack with ettercap" /></p>
+<p>This record means that we will substitute the main IP google.com  with 127.0.0.1. Please note that this attack is not performed without the previous one. Further open the menu Plugins -&gt; Manage Plugin:</p>
+<p><img alt="How to do dns spoof with ettercap kali linux" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-dns_spoof.png" /></p>
+<p>Then double click on the <strong>dns_spoof plugin</strong> :</p>
+<p><img alt="ettercap kali linux" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap14.png" /></p>
+<p>The plugin will be activated and you can check the ip on the device. DNS is really being replaced. For example, you can run on a target machine:</p>
+<p><code>ping google.com</code></p>
+<p><code>ping www.ettercap.org</code></p>
+<p>In addition to these plug-ins, there are others with which you can perform the necessary actions.</p>
+<h3 id="ettercap-filters"><strong>Ettercap Filters</strong></h3>
+<p>Filters allow you to modify the packets passed through the program on the fly. You can drop packets or make necessary changes to them using the replace function. Filters also work only while the MITM attack is running. The syntax of the conditions by which we will filter packets is very similar to wireshark. Let’s consider a simple filter that will replace all the pictures with ours:</p>
+<p><code>vi test.filter</code></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>if (ip.proto == TCP &amp;&amp; tcp.dst == 80) {
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>if (search(DATA.data, &quot;Accept-Encoding&quot;)) {
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>replace(&quot;Accept-Encoding&quot;, &quot;Accept-Rubbish!&quot;);
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a> * [note: replacement string is same length as original string
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>msg(&quot;zapped Accept-Encoding!\\n&quot;);
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>}
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>}
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>if (ip.proto == TCP &amp;&amp; tcp.src == 80) {
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>replace(&quot;img src=&quot;, &quot;img src=\\&quot;https://pbs.twimg.com/profile\_images/655061121007616000/NCV0qQnS.png\\&quot; &quot;);
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>replace(&quot;IMG SRC=&quot;, &quot;img src=\\&quot;https://pbs.twimg.com/profile\_images/655061121007616000/NCV0qQnS.png\\&quot; &quot;);
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>msg(&quot;Filter Ran.\\n&quot;);
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>}
+</span></code></pre></div>
+For those who have had experience with programming languages, everything should be clear here. If the TCP protocol and the destination port are 80, we continue searching and look for Accept-Encoding. Then we replace this word with any other, but equivalent in length. Because if the browser will send Accept-Encoding gzip, then the data will be compressed and we will not filter anything there. Next, in the server’s response, the source port is 80, we replace all the images with ours. Now the filter needs to be compiled:</p>
+<p><code>etterfilter test.filter -o test.ef</code></p>
+<p>It remains to load the filter using the menu Filters -&gt; Load Filter :</p>
+<p><img alt="ettercap Filters " src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap-Filters.png" /></p>
+<p>Select a filter file in the file system:</p>
+<p><img alt="ettercap MITM" src="https://www.kalitut.com/wp-content/uploads/2020/06/ettercap16.png" /></p>
+<p>The filter will be loaded and you can open any site where https is not used to make sure everything works. To stop the MITM attack, open the MITM menu and select Stop All Mitm attacks . Our Ettercap manual is coming to an end, but …</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/ettercap.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

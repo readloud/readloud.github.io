@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>WSL (Windows Subsystem for Linux) - readloud.org</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "WSL (Windows Subsystem for Linux)", url: "#_top", children: [
+              {title: "wslu - A collection of utilities for WSL", url: "#wslu-a-collection-of-utilities-for-wsl" },
+          ]},
+          {title: "PPA version of wslu", url: "#ppa-version-of-wslu", children: [
+              {title: "Parrot Security OS on WSL (Windows 10 FCU or later)", url: "#parrot-security-os-on-wsl-windows-10-fcu-or-later" },
+              {title: "Requirements", url: "#requirements" },
+              {title: "Install", url: "#install" },
+              {title: "How-to-Use(for Installed Instance)", url: "#how-to-usefor-installed-instance" },
+              {title: "WSL notes", url: "#wsl-notes" },
+              {title: "Rebuilding kernel with kvm support", url: "#rebuilding-kernel-with-kvm-support" },
+              {title: "Starting WSL with KVM support", url: "#starting-wsl-with-kvm-support" },
+              {title: "Move WSL", url: "#move-wsl" },
+              {title: "Usage", url: "#usage" },
+              {title: "Moving Docker WSL", url: "#moving-docker-wsl" },
+          ]},
+          {title: "Minimal WSL2 systemd script", url: "#minimal-wsl2-systemd-script", children: [
+          ]},
+          {title: "ubuntu-wsl2-systemd-script", url: "#ubuntu-wsl2-systemd-script", children: [
+              {title: "Script is unsupported and will no longer be maintained, but will be up here because it is used by quite some people.", url: "#script-is-unsupported-and-will-no-longer-be-maintained-but-will-be-up-here-because-it-is-used-by-quite-some-people" },
+              {title: "Usage", url: "#usage_1" },
+              {title: "Installing Parrot distribution in WSL2", url: "#installing-parrot-distribution-in-wsl2" },
+              {title: "Parrot-on-Docker", url: "#parrot-on-docker" },
+          ]},
+          {title: "ParrotOS on WSL2", url: "#parrotos-on-wsl2", children: [
+              {title: "Prerequisites", url: "#prerequisites" },
+              {title: "Extras in this Repository", url: "#extras-in-this-repository" },
+          ]},
+          {title: "WSL Pentesting", url: "#wsl-pentesting", children: [
+              {title: "Interesting Files", url: "#interesting-files" },
+              {title: "Escape WSL to Windows Host Machine", url: "#escape-wsl-to-windows-host-machine" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="wsl-windows-subsystem-for-linux">WSL (Windows Subsystem for Linux)</h1>
+<p>WSL is a feature of Windows that allows developers to run a Linux environment without the need for a separate virtual machine or dual booting.</p>
+<h2 id="wslu-a-collection-of-utilities-for-wsl">wslu - A collection of utilities for WSL</h2>
+<blockquote>
+<p><strong>ATTENTION!</strong></p>
+<p>Built-in versions of wslu in Ubuntu are no longer supported by me.</p>
+<p>If you have problems, please check whther you are using the <a href="https://launchpad.net/~wslutilities/+archive/ubuntu/wslu">PPA version of wslu</a>. If not, please report to the Ubuntu WSL team; However, the PPA version of wslu will address most issue that come from the built-in version.</p>
+</blockquote>
+<p>This is a collection of utilities for the Windows Subsystem for Linux (WSL), such as converting Linux paths to Windows paths or creating  Linux application shortcuts on the Windows Desktop.</p>
+<ul>
+<li>Requires at least Windows 10 Creators Update;</li>
+<li>Some of the features require a higher version of Windows;</li>
+<li>Supports WSL2;</li>
+<li>Supports Windows 11.</li>
+</ul>
+<h1 id="ppa-version-of-wslu">PPA version of wslu</h1>
+<h2 id="parrot-security-os-on-wsl-windows-10-fcu-or-later">Parrot Security OS on WSL (Windows 10 FCU or later)</h2>
+<p>based on <a href="https://github.com/yuk7/wsldl">wsldl</a></p>
+<p><img alt="screenshot" src="screenshot.png" /></p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Windows 10 Fall Creators Update x64 or later. (Testing with build 19631)</li>
+<li>Windows Subsystem for Linux feature is enabled.</li>
+</ul>
+<h2 id="install">Install</h2>
+<h4 id="1-download-installer-zip-here">1. <a href="https://github.com/yosukes-dev/ParrotWSL/releases">Download</a> installer zip / <strong><a href="WSL%20Utillities.zip">Here</a></strong></h4>
+<h4 id="2-extract-all-files-in-zip-file-to-same-directory">2. Extract all files in zip file to same directory</h4>
+<h4 id="3-run-parrotexe-to-extract-rootfs-and-register-to-wsl">3. Run Parrot.exe to Extract rootfs and Register to WSL</h4>
+<p>Exe filename is using to the instance name to register.
+If you rename it you can register with a diffrent name and have multiple installs.</p>
+<h2 id="how-to-usefor-installed-instance">How-to-Use(for Installed Instance)</h2>
+<h4 id="exe-usage">exe Usage</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Usage :
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    &lt;no args&gt;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      - Open a new shell with your default settings.
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    run &lt;command line&gt;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>      - Run the given command line in that distro. Inherit current directory.
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    runp &lt;command line (includes windows path)&gt;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>      - Run the path translated command line in that distro.
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    config [setting [value]]
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>      - `--default-user &lt;user&gt;`: Set the default user for this distro to &lt;user&gt;
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>      - `--default-uid &lt;uid&gt;`: Set the default user uid for this distro to &lt;uid&gt;
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>      - `--append-path &lt;on|off&gt;`: Switch of Append Windows PATH to $PATH
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>      - `--mount-drive &lt;on|off&gt;`: Switch of Mount drives
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    get [setting]
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>      - `--default-uid`: Get the default user uid in this distro
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>      - `--append-path`: Get on/off status of Append Windows PATH to $PATH
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>      - `--mount-drive`: Get on/off status of Mount drives
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>      - `--lxguid`: Get WSL GUID key for this distro
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    backup [contents]
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>      - `--tgz`: Output backup.tar.gz to the current directory using tar command
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>      - `--reg`: Output settings registry file to the current directory
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    clean
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>      - Uninstall the distro.
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    help
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>      - Print this usage message.
+</span></code></pre></div>
+<h4 id="how-to-uninstall-instance">How to uninstall instance</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&gt;Parrot.exe clean
+</span></code></pre></div>
+<h2 id="wsl-notes">WSL notes</h2>
+<h2 id="rebuilding-kernel-with-kvm-support">Rebuilding kernel with kvm support</h2>
+<p>This instructions are based on <a href="https://microhobby.com.br/blog/2019/09/21/compiling-your-own-linux-kernel-for-windows-wsl2/">microhobby.com.br</a></p>
+<ol>
+<li>Clone source</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cd WSL2-Linux-Kernel
+</span></code></pre></div>
+<ol>
+<li>Reconfigure kernel</li>
+</ol>
+<p>Enable kvm, as described here https://wiki.gentoo.org/wiki/QEMU#Kernel</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>make menuconfig KCONFIG_CONFIG=Microsoft/config-wsl
+</span></code></pre></div>
+<ol>
+<li>Build kernel</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make KCONFIG_CONFIG=Microsoft/config-wsl -j8
+</span></code></pre></div>
+<ol>
+<li>Copy kernel</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cp vmlinux /mnt/c/Users/&lt;seuUser&gt;/
+</span></code></pre></div>
+<ol>
+<li>Copy <code>.wslconfig</code> file to user home</li>
+</ol>
+<h2 id="starting-wsl-with-kvm-support">Starting WSL with KVM support</h2>
+<ol>
+<li>Copy <code>run-wsl.bat</code>, <code>attach.wdbg</code> and <code>patch_wsl_nested.js</code> to same folder</li>
+<li>Fix path in <code>attach.wdbg</code></li>
+<li>Open admin powershell in that folder</li>
+<li>Run <code>./run-wsl.bat</code> and follow instructions</li>
+</ol>
+<h2 id="move-wsl">Move WSL</h2>
+<p>Bash, batch and PowerShell script to move WSL 1 and WSL 2 distros VHDX file to a different location.</p>
+<p><img alt="Interactive Example" src="screencast.gif" /></p>
+<h2 id="usage">Usage</h2>
+<h3 id="bash">Bash</h3>
+<p>Use with git bash for Windows or similiar.</p>
+<h4 id="interactive-way">Interactive way</h4>
+<p>1) <code>./move-wsl</code>
+2) Select your distro
+3) Enter your target (i.e. <code>/d/wsl target/ubuntu</code>)</p>
+<h4 id="explicit-way">Explicit way</h4>
+<p>1) Get a list of WSL distros: <code>wsl -l</code>
+2) Move your image: <code>./move-wsl [NAME] [LOCATION]</code></p>
+<p><strong>Example:</strong> <code>./move-wsl docker-desktop /d/docker</code></p>
+<h3 id="powershell">PowerShell</h3>
+<p>Interactive way of moving wsl for Windows PowerShell.</p>
+<p>1) <code>./move-wsl.ps1</code>
+2) Select your distro
+3) Enter your target (i.e. <code>D:\wsl target\ubuntu</code>)</p>
+<h3 id="batch">Batch</h3>
+<p><em>This is a lightweight version</em> which can also be used from Windows CMD.</p>
+<p>1) Get a list of WSL distros: <code>wsl -l</code>
+2) Move your image: <code>move-wsl.bat [NAME] [LOCATION]</code></p>
+<p><strong>Example:</strong> <code>move-wsl.bat docker-desktop "D:\wsl files\docker"</code></p>
+<h2 id="moving-docker-wsl">Moving Docker WSL</h2>
+<p>Before moving Docker WSL make sure to stop the Docker service. Otherwise Docker will crash and you may need to reset it to factory defaults.</p>
+<h3 id="default-user-was-switched-to-root-when-moving-a-distro">Default user was switched to root when moving a distro</h3>
+<p>Set your default user inside your distro by adding the following configuration to your <code>/etc/wsl.conf</code>.</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">[user]</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="na">default</span><span class="o">=</span><span class="s">YOUR_USERNAME</span>
+</span></code></pre></div>
+<p>If the file doesn't exist create it manually. Then exit your distro, terminate it (<code>wsl -t YOUR_DISTRO</code>) and start it again. For further options see <a href="https://docs.microsoft.com/en-us/windows/wsl/wsl-config#user">Microsoft Docs</a>.</p>
+<p>Some distributions also allow settings the default user via command line with <code>YOUR_DISTRO config --default-user YOUR_USER</code> (e.g. <code>ubuntu config --default-user johndoe</code>). Make sure to shutdown your distro before (<code>wsl -t YOUR_DISTRO</code>).</p>
+<h3 id="standard-distro-switched-when-moving-it">Standard distro switched when moving it</h3>
+<p>Since we need to unregister to import it with the same name, the standard distro can be switched. Just set your standard distro again:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>wsl<span class="w"> </span>-s<span class="w"> </span>YOUR_DISTRO
+</span></code></pre></div>
+<h3 id="wsl-version-was-switched-when-moving-distro">WSL version was switched when moving distro</h3>
+<p>On import the distro will be registered with the current default WSL version. You can set your default WSL version with <code>wsl --set-default-version &lt;Version&gt;</code>.
+When the WSL version was accidentally changed while moving, you can set the version with <code>wsl --set-version &lt;Distro&gt; &lt;Version&gt;</code>.</p>
+<h1 id="minimal-wsl2-systemd-script">Minimal WSL2 systemd script</h1>
+<p>This is a simple script to perform a minimal installation of @diddledan's <code>one-script-wsl2-systemd</code> for Insiders.</p>
+<p>This script only includes the following:
+- add <code>systemd</code> support
+- add classic snap support</p>
+<p>The script should be running as root. </p>
+<p>That's it.</p>
+<h1 id="ubuntu-wsl2-systemd-script">ubuntu-wsl2-systemd-script</h1>
+<h2 id="script-is-unsupported-and-will-no-longer-be-maintained-but-will-be-up-here-because-it-is-used-by-quite-some-people">Script is unsupported and will no longer be maintained, but will be up here because it is used by quite some people.</h2>
+<p>Script to enable systemd support on current Ubuntu WSL2 images from the Windows store. </p>
+<p>I am not responsible for broken installations, fights with your roommates and police ringing your door ;-).</p>
+<p>Instructions from <a href="https://forum.snapcraft.io/t/running-snaps-on-wsl2-insiders-only-for-now/13033">the snapcraft forum</a> turned into a script. Thanks to <a href="https://forum.snapcraft.io/u/daniel">Daniel</a> on the Snapcraft forum! </p>
+<h2 id="usage_1">Usage</h2>
+<p>You need <code>git</code> to be installed for the commands below to work. Use
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>git
+</span></code></pre></div>
+to do so.</p>
+<h3 id="run-the-script-and-commands">Run the script and commands</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/DamionGans/ubuntu-wsl2-systemd-script.git
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>ubuntu-wsl2-systemd-script/
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>bash<span class="w"> </span>ubuntu-wsl2-systemd-script.sh
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Enter your password and wait until the script has finished</span>
+</span></code></pre></div>
+<h3 id="then-restart-the-ubuntu-shell-and-try-running-systemctl">Then restart the Ubuntu shell and try running systemctl</h3>
+<p><div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>systemctl
+</span></code></pre></div>
+If you don't get an error and see a list of units, the script worked.</p>
+<p>Have fun using systemd on your Ubuntu WSL2 image. You may use and change and distribute this script in whatever way you'd like. </p>
+<h3 id="how-to-install-kali-linux-distro-wsl-version">How to Install KALI LINUX [Distro WSL version]</h3>
+<ol>
+<li>
+<p>INSTALL <a href="https://aka.ms/PSWindows">WSL 2</a></p>
+</li>
+<li>
+<p>Upgrade WSL to latest vesion</p>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>iex &quot;&amp; { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI&quot;
+</span></code></pre></div>
+<ul>
+<li>RUN POWERSHELL as administrator</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+</span></code></pre></div>
+<ul>
+<li>RESTART</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+</span></code></pre></div>
+<ul>
+<li>CHECK VERSION</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>systeminfo | find &quot;System Type&quot;
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>wsl --list --verbose
+</span></code></pre></div>
+<ul>
+<li>SET DEFAULT TO WSL 2</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>wsl --set-default-version 2
+</span></code></pre></div>
+<ol>
+<li>INSTALL GUI</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>wsl --install -d kali-linux
+</span></code></pre></div>
+<h3 id="set-password-username-optional">SET PASSWORD &amp; USERNAME (OPTIONAL)</h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>wsl -d kali-linux -u username
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>passwd root
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>wsl --shutdown
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>wsl --setdefault Kali-linux
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>wsl -d kali-linux -u username
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>kali config --default-user username
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>sudo apt update &amp;&amp; sudo apt upgrade -y
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>sudo apt install kali-desktop-xfce -y
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>sudo apt install -y kali-linux-large
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>sudo apt-get install kali-linux-default
+</span></code></pre></div>
+  - or</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>wget https://gitlab.com/kalilinux/build-scripts/kali-wsl-chroot/-/raw/master/xfce4.sh
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>chmod+x xfce4.sh
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>sudo./x fce4.sh
+</span></code></pre></div>
+<ol>
+<li>XRDP</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>sudo apt install xrdp -y
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>sudo service xrdp start
+</span></code></pre></div>
+<h3 id="optional-installation">Optional Installation</h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker pull kalilinux/kali-rolling
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>docker run --tty --interactive kalilinux/kali-rolling /bin/bash
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>sudo apt update &amp;&amp; sudo apt -y install kali-linux-headless
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>git clone https://github.com/RoliSoft/WSL-Distribution-Switcher.git
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>cd WSL-Distribution-Switcher
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>python get-prebuilt.pykalilinux/kali-linux-docker
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>python install.pyrootfs_kalilinux_kali-linux-docker_latest.tar.gz
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>lxrun/set default user root
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>https://github.com/belherdigital/documentation-oe.git
+</span></code></pre></div></p>
+<h3 id="optional-configuration">Optional Configuration</h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>- /etc/ssl/openssl.cnf
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>- /etc/ssl/kali.cnf
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>- /etc/samba/smb.conf
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>- /etc/ssh/ssh_config.d/kali-wide-compat.conf
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>- regenerate-ssh-host-keys
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>- /etc/ssh
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>sudo systemctl disable regenerate-ssh-host-keys.service
+</span></code></pre></div></p>
+<h3 id="optional-addition">Optional Addition</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>/etc/apt/sources.list
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>grep -v &#39;#&#39; /etc/apt/sources.list | sort -u
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>echo &quot;deb http://http.kali.org/kali kali-rolling main contrib non-free&quot; | sudo tee /etc/apt/sources.list
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>echo &quot;deb http://http.kali.org/kali kali-last-snapshot main contrib non-free&quot; | sudo tee /etc/apt/sources.list
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>echo &quot;deb http://http.kali.org/kali kali-experimental main contrib non-free&quot; | sudo tee /etc/apt/sources.list.d/kali-experimental.list
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>echo &quot;deb http://http.kali.org/kali kali-bleeding-edge main contrib non-free&quot; | sudo tee /etc/apt/sources.list.d/kali-bleeding-edge.list
+</span></code></pre></div>
+<h3 id="remove-optional-addition">Remove Optional addition</h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo rm /etc/apt/sources.list.d/kali-experimental.list
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>sudo rm /etc/apt/sources.list.d/kali-bleeding-edge.list
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>echo &quot;deb-src http://http.kali.org/kali kali-rolling main contrib non-free&quot; | sudo tee -a /etc/apt/sources.list
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>cat /etc/apt/sources.list
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>sudo tee /etc/apt/sources.list.d/kali-bleeding-edge.list
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>sudo rm -f /etc/apt/sources.list.d/kali-bleeding-edge.list
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>sudo apt install gitleaks/kali-bleeding-edge
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>sudo apt install gitleaks/kali-rolling
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>echo &quot;deb http://http.kali.org/kali kali-rolling main non-free contrib&quot; | sudo tee /etc/apt/sources.list
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>sudo apt update &amp;&amp; sudo apt -y full-upgrade
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>cp -i /etc/skel/.bashrc ~/
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>cp -i /etc/skel/.zshrc ~/
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>chsh -s /bin/zsh
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>[ -f /var/run/reboot-required ] &amp;&amp; sudo reboot -f
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>grep VERSION /etc/os-release
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>wget http://http.kali.org/kali/pool/main/k/kali-archive-keyring/kali-archive-keyring_2022.1_all.deb
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>sudo dpkg -i kali-archive-keyring_2022.1_all.deb
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>rm kali-archive-keyring_2022.1_all.deb
+</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>sudo apt-get update
+</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>
+</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>`sudo apt -f update`
+</span><span id="__span-28-16"><a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a>`sudo apt install -y kali-linux-headless`
+</span></code></pre></div></p>
+<h3 id="system">System</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>kali-linux-core: Base Kali Linux System – core items that are always included
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>kali-linux-headless: Default install that doesn’t require GUI
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>kali-linux-default: “Default” desktop (amd64/i386) images include these tools
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>kali-linux-arm: All tools suitable for ARM devices
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>kali-linux-nethunter: Tools used as part of Kali NetHunter
+</span></code></pre></div>
+<h3 id="tools">Tools</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>kali-tools-gpu: Tools which benefit from having access to GPU hardware
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>kali-tools-hardware: Hardware hacking tools
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>kali-tools-crypto-stego: Tools based around Cryptography &amp; Steganography
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>kali-tools-fuzzing: For fuzzing protocols
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>kali-tools-802-11: 802.11 (Commonly known as “Wi-Fi”)
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>kali-tools-bluetooth: For targeting Bluetooth devices
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>kali-tools-rfid: Radio-Frequency IDentification tools
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>kali-tools-sdr: Software-Defined Radio tools
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>kali-tools-voip: Voice over IP tools
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>kali-tools-windows-resources: Any resources which can be executed on a Windows hosts
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>kali-linux-labs: Environments for learning and practising on
+</span></code></pre></div>
+<h3 id="menu">Menu</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>kali-tools-information-gathering: Used for Open Source Intelligence (OSINT) &amp; information gathering
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>kali-tools-vulnerability: Vulnerability assessments tools
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>kali-tools-web: Designed doing web applications attacks
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>kali-tools-database: Based around any database attacks
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>kali-tools-passwords: Helpful for password cracking attacks – Online &amp; offline
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>kali-tools-wireless: All tools based around Wireless protocols – 802.11, Bluetooth, RFID &amp; SDR
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>kali-tools-reverse-engineering: For reverse engineering binaries
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>kali-tools-exploitation: Commonly used for doing exploitation
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>kali-tools-social-engineering: Aimed for doing social engineering techniques
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>kali-tools-sniffing-spoofing: Any tools meant for sniffing &amp; spoofing
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>kali-tools-post-exploitation: Techniques for post exploitation stage
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>kali-tools-forensics: Forensic tools – Live &amp; Offline
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>kali-tools-reporting: Reporting tools
+</span></code></pre></div>
+<h3 id="others">Others</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>kali-linux-large: Our previous default tools for amd64/i386 images
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>kali-linux-everything: Every metapackage and tool listed here
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>kali-desktop-live: Used during a live session when booted from the image
+</span></code></pre></div>
+<h3 id="desktop-environmentswindow-managers">Desktop environments/Window managers</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>kali-desktop-core: Any key tools required for a GUI image
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>kali-desktop-e17: Enlightenment (WM)
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>kali-desktop-gnome: GNOME (DE)
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>kali-desktop-i3: i3 (WM)
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>kali-desktop-kde: KDE (DE)
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>kali-desktop-lxde: LXDE (WM)
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>kali-desktop-mate: MATE (DE)
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>kali-desktop-xfce: Xfce (WM)
+</span></code></pre></div>
+<h2 id="installing-parrot-distribution-in-wsl2">Installing Parrot distribution in WSL2</h2>
+<hr />
+<p>Based on script by the4rchangel.</p>
+<p>To install the distribution you need a base. This may be Kali Linux or Ubuntu.
+To install, use the following instructions:</p>
+<ol>
+<li>Install the Kali Linux or Ubuntu distribution from the Microsoft Store.</li>
+<li>Update available repositories, install the update and the gnupg, git utility. You can do this with the command:</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>sudo apt update
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>apt upgrade -y 
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>apt install gnupg git -y
+</span></code></pre></div>
+<ol>
+<li>Clone this repository and run the script with the command: </li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git clone https://github.com/Prodject/ParrotWSL.git 
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>cd ParrotWSL 
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>chmod a+x parrot-wsl.sh ./parrot-wsl.sh
+</span></code></pre></div>
+<ol>
+<li>
+<p>During installation, you must select the distribution version (home, security, etc.)</p>
+</li>
+<li>
+<p>Add a folder with ParrotOS to Windows Defender exceptions (Kali Linux). You can open the folder with Parrot OS using the command "explorer.exe ."</p>
+</li>
+<li>
+<p>You can install the full version of the system with the command:</p>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>sudo apt install parrot-tools-full
+</span></code></pre></div>
+<ol>
+<li>All done)</li>
+</ol>
+<p><img alt="neofetch" src="https://github.com/Prodject/ParrotWSL/raw/master/.raw/parrot.png" /></p>
+<p>Note: if you run the parrot-wsl-mirror.sh file, then during the installation process you can select a mirror for your location.</p>
+<p>Environment</p>
+<hr />
+<p>By default, mate environment is set, but if you are using X410 in Windowed Apps mode, you will not be able to use this mode. In this case, it is recommended to install XFCE, you can install from script additions wsl.post.sh</p>
+<h2 id="parrot-on-docker">Parrot-on-Docker</h2>
+<div style="text-align: center;">
+
+   ![alt text](https://softwarereviews.s3.amazonaws.com/production/logos/offerings/6116/original/ParrotSecurity_logo.png?1582749483)
+
+   </div>
+
+<h1 id="parrotos-on-wsl2">ParrotOS on WSL2</h1>
+<p><strong><em>Here's the thing...</em></strong> I went scouring the Internet to find some way to put ParrotOS on WSL2 and I found a couple of scripts, another couple of guides; but the apt sources were old, the tools were deprecated, and there were just a lot of tweaks/further debugging that needed to be done in order to get the thing right speed. Plus, you had to start with an <strong>Ubuntu/Debian/Kali</strong> distro <em>anyway</em> which to me didn't seem like the right answer. </p>
+<p>As much as I would like to take credit for this super straight-forward simple way of installing... really any distro your little heart desires {yea you, I'm talking about your little heart buddy}, I just ganked this from the Microsoft documentation found <a href="https://learn.microsoft.com/en-us/windows/wsl/use-custom-distro">here</a>. So I shant toot my own horn. I don't know why it took me so damn long to read the documentation but I figured I'm not the only one, so here we are.</p>
+<p>What's that? Shut the Fv*k up and get on with it? Right Right Right... my bad.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ol>
+<li>There are a million and one guides out there on how to install WSL2.  Like <a href="https://learn.microsoft.com/en-us/windows/wsl/install">this one</a>, <a href="https://www.ceos3c.com/wsl-2/install-wsl2-with-windows-terminal/#:~:text=Install%20WSL2%20on%20Windows%20-%20The%20Easiest%20Way,3%20Step%203%20-%20Initial%20Ubuntu%20Setup%20">that one</a>, or <a href="https://youtu.be/VMZH9Pj2dXw">this other</a>(for those of you who like the motion picture formats). So if you don't have that done, it's <em>kinda</em> necessary.</li>
+<li>Next</li>
+<li>You need to Head over to the <a href="https://docs.docker.com/desktop/install/windows-install/">Website of Docker</a> and follow thier guide on setting up Docker Desktop with WSL2 backend. There are obvious workarounds for this which... <em>I suppose</em> may be worth getting into later but for now, if you can, do the do and install the thing.</li>
+<li>Meat &amp; Potatoes</li>
+</ol>
+<p>Get yourself a <a href="https://littlecaesars.com/">hot-n-ready</a> tar'd ParrotOS</p>
+<hr />
+<p><strong>Now I imagine that there are a ton of ways to go about this.  ~~Heck, I even did you a solid and got one here for ya.~~  But for the sake of learnin you one, we'll go through the steps anyway.</strong></p>
+<hr />
+<p>So the easiest way ~~(besides getting yours here)~~ to get a ParrotOS tar file of the entire image is to compress a container. I  highly encourage you to head over to the ParrotSec <a href="https://parrotsec.org">website</a> to view their latest <a href="https://parrotsec.org/download/">Downloads</a>. Here is their official <a href="https://parrotsec.org/docs/cloud/parrot-on-docker/">Docker documentation</a> where you will find 2 containers.  Again - I <em>highly</em> recommend that you go check it out.  </p>
+<hr />
+<ol>
+<li>
+<p>Open your WSL2 CLI (<em>bash or whatevs</em>) in a distro you've already got installed.</p>
+</li>
+<li>
+<p>In WSL you are going to start Docker</p>
+</li>
+</ol>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>sudo service docker start
+</span></code></pre></div>
+3. Pick one of the following container templates and spin it up.
+   + <strong><em>I recommend rolling up the smallest image since you will be able to update and customize once everything is installed</em></strong></p>
+<h5 id="core-template">Core Template:</h5>
+<h4 id="parrotruncore"><a href="https://parrotsec.org/docs/cloud/parrot-on-docker/#parrotruncore">Parrot.run/Core</a></h4>
+<blockquote>
+<p>Core system with just the Parrot basics. You can use it as a start point to create your custom containers.
+This image is multiarch, and works for amd64, arm64 and armhf architectures.</p>
+</blockquote>
+<p><strong><strong>Launch the container</strong></strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>  docker run -t parrotsec/core bash
+</span></code></pre></div>
+<h5 id="security-template">Security Template</h5>
+<h4 id="parrotrunsec"><a href="https://parrotsec.org/docs/cloud/parrot-on-docker/#parrotrunsecurity">Parrot.run/sec</a></h4>
+<blockquote>
+<p>This container includes a huge collection of tools that can be used via command line from inside a docker container.
+Some tools with graphical interface were excluded for obvious reasons.
+This container ships with the following metapackages:
+-parrot-cloud</p>
+</blockquote>
+<p><strong><strong>Launch the container</strong></strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>  docker run -t parrotsec/security bash
+</span></code></pre></div>
+<ol>
+<li>Get the image's container ID and save it as a variable </li>
+</ol>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>  dockerContainerID=$(docker container ls -a | grep -i parrot | awk &#39;{print $1}&#39;)
+</span></code></pre></div>
+  5. Export your image to the Windows file system</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>  docker export $dockerContainerID &gt; /mnt/c/temp/ParrotOS.tar
+</span></code></pre></div>
+<p>All that so you can import the tar file as an image into WSL2</p>
+<hr />
+<p>Import ParrotOS tar file into WSL</p>
+<hr />
+<ol>
+<li>
+<p>Open yourself a powershell instance and get to your <User> directory and make a folder to install your Distro.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>  cd
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>  mkdir WSLdistro
+</span></code></pre></div></p>
+</li>
+<li>
+<p>move into your new directory Import your tar file into WSL2. Syntax is important here '''wsl --import <DistroName> <where distro data will live> <tar file to be imported></p>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>  cd WSLdistro
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>  wsl --import ParrotSec .\ &quot;C:\temp\ParrotOS.tar&quot;
+</span></code></pre></div>
+<ol>
+<li>Check installed distros</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>  wsl -l -v
+</span></code></pre></div>
+<ol>
+<li>Launch that nizbich</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>  wsl -d ParrotOS
+</span></code></pre></div>
+<h2 id="extras-in-this-repository">Extras in this Repository</h2>
+<p>Check out the Docs folder.  There are a few things in there which help out post import.
+Some dot files, and wsl config files.  If they help, cool, if not.. no sweat.</p>
+<h1 id="wsl-pentesting">WSL Pentesting</h1>
+<h2 id="interesting-files">Interesting Files</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>cat<span class="w"> </span>/etc/wsl.conf
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="escape-wsl-to-windows-host-machine">Escape WSL to Windows Host Machine</h2>
+<p>If we’are currently on WSL machine, we can access to the host Windows machine as below.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="nb">cd</span><span class="w"> </span>/mnt/c/
+</span></code></pre></div>
+<p>If <strong><code>/mnt/c/</code></strong> is empty, we need to mount the folder by running the following command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="nb">cd</span><span class="w"> </span>/
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="c1"># -t: Limit the set of filesystem types</span>
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="c1"># drvfs: A plugin for WSL</span>
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a><span class="c1"># C: : Specify the Windows root</span>
+</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>mount<span class="w"> </span>-t<span class="w"> </span>drvfs<span class="w"> </span>C:<span class="w"> </span>/mnt/c
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/wsl/README.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

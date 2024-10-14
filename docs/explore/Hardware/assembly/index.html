@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>x86 Assembly - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "x86 Assembly", url: "#_top", children: [
+              {title: "Registers", url: "#registers" },
+              {title: "Instructions", url: "#instructions" },
+              {title: "Create 32bit Program", url: "#create-32bit-program" },
+              {title: "Information of Executable File", url: "#information-of-executable-file" },
+              {title: "Create Assembly Programs", url: "#create-assembly-programs" },
+          ]},
+          {title: "32-bit ARM Assembly", url: "#32-bit-arm-assembly", children: [
+              {title: "Registers", url: "#registers_1" },
+              {title: "Create Assembly Program", url: "#create-assembly-program" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="x86-assembly">x86 Assembly</h1>
+<p>x86 assembly language is the name for the family of assembly languages which provide some level of backward compatibility with CPUs back to the Intel 8008 microprocessor.</p>
+<h2 id="registers">Registers</h2>
+<p>Consists of 8 bytes.<br />
+Also, it can be broken down into small segments.<br />
+For example, RAX (64 bits) → EAX (32 bits) → AX (16 bits) → AH (high 8 bits), AL (low 8 bits).</p>
+<h3 id="general-purpose-registers">General Purpose Registers</h3>
+<p>They are used for temporarily storing data.</p>
+<ul>
+<li><strong>EAX/RAX (Accumulator Register)</strong><br />
+    It is used to store values (especially, a return value). It's like a variable in high-level programming languages.<br />
+    It’s usually used to pass the system call(e.g. <strong><code>sys_exit</code></strong>, <strong><code>sys_write</code></strong>) number.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    # AT&amp;T syntax
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    mov 4, %eax
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    # Intel syntax
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    mov eax, 4
+</span></code></pre></div>
+<ul>
+<li><strong>EBX/RBX (Base Register)</strong>  </li>
+<li><strong>ECX/RCX (Counter Register)</strong>  </li>
+<li><strong>EDX/RDX (Data Register)</strong>  </li>
+<li><strong>ESI/RSI (Source Index Register)</strong><br />
+    It is used as the source pointer.</li>
+<li><strong>EDI/RDI (Destination Index Register)</strong><br />
+    It is used as the destination pointer.</li>
+<li><strong>EBP/RBP (Base Pointer Register)</strong><br />
+    It holds the <strong>address of the base (bottom) of the stack</strong>.</li>
+<li><strong>ESP/RSP (Stack Pointer Register)</strong><br />
+    It is also called as the frame pointer. It holds the <strong>address of the top of the stack</strong>.</li>
+<li><strong>EIP/RIP (Instruction Pointer)</strong><br />
+    It is the most important register in reverse engineering. It keeps track of the <strong>next instruction</strong> code to execute. EIP points to the next instruction to execute. It holds the address of the next line of code which will be executed.</li>
+</ul>
+<h3 id="segment-registers">Segment Registers</h3>
+<p>They are used for referencing memory locations.</p>
+<ul>
+<li><strong>CS (Code Segment Register)</strong><br />
+    It contains all the instructions to be executed.</li>
+<li><strong>DS (Data Segment Register)</strong><br />
+    It contains data, constants and work areas.</li>
+<li><strong>ES, FS, GS (Extra Segment Register)</strong>  </li>
+<li><strong>SS (Stack Segment Register)</strong><br />
+    It contains data and return addresses of procedures or subroutines.</li>
+</ul>
+<h3 id="control-registers">Control Registers</h3>
+<p>A processor register which changes or controls the general behavior of a CPU or other digital device.</p>
+<ul>
+<li><strong>CR0</strong><br />
+    Has various control flags that modify the basic operation of the processor.</li>
+<li><strong>CR1</strong><br />
+    Reserved.</li>
+<li><strong>CR2</strong><br />
+    Contains a value called Page Fault Linear Address (PFLA).</li>
+<li><strong>CR3</strong><br />
+    Used when virtual addressing is enabled.</li>
+<li><strong>CR4</strong><br />
+    Used in protected mode to control operations.</li>
+</ul>
+<h3 id="statusflags-registers">Status/Flags Registers</h3>
+<ul>
+<li><strong>AF (Adjust Flag)</strong><br />
+    It is also called as the Auxiliary flag and the Auxiliary Carry flag. The AF is set when a 1-bytes arithmetic operation causes a carry from bit 3 into bit 4.</li>
+<li><strong>AC (Alignment Check Flag)</strong>  </li>
+<li><strong>CF (Carry Flag)</strong><br />
+    It contains the carry of 0 and 1 from a high-order bit (leftmost) after an arithmetic operation. It also stores the contents of last bit of a shift  or rotate operation.</li>
+<li><strong>DF (Direction Flag)</strong><br />
+    When the DF is 0, the string operation takes left-to-right direction and when the DF is 1, the string operation takes right-to-left direction.</li>
+<li><strong>ID (Identification Flag)</strong>  </li>
+<li><strong>IF (Interrupt Enable Flag)</strong><br />
+    When the IF is 0, it disables the external interrupt and when the IF is 1, it enables the interrupt.</li>
+<li><strong>IOPL (I/O Privilege Level Flag)</strong>  </li>
+<li><strong>NT (Nested Task Flag)</strong>  </li>
+<li><strong>OF (Overflow Flag)</strong><br />
+    It indicates the overflow of a high-order bit (leftmost bit) of data after a signed arithmetic operation.</li>
+<li><strong>PF (Parity Flag)</strong><br />
+    It indicates the total number of 1-bits in the result obtained from an arithmetic operation. An even number of 1-bits clears the parity flag to 0 and an odd number of 1-bits clears the parity flag to 1.</li>
+<li><strong>RF (Resume Flag)</strong>  </li>
+<li><strong>SF (Sign Flag)</strong><br />
+    It shows the sign of the result of an arithmetic operation. A positive result clears the value of  SF to 0 and negative result sets it to 1.</li>
+<li><strong>TF (Trap Flag)</strong><br />
+    It allows setting the operation of  the processor in the single-step mode for debugging purposes.</li>
+<li><strong>VM (Virtual-8086 Mode Flag)</strong>  </li>
+<li><strong>VIF (Virtual Interrupt Flag)</strong>  </li>
+<li><strong>VIP (Virtual Interrupt Pending Flag)</strong>  </li>
+<li><strong>ZF (Zero Flag)</strong><br />
+    It indicates the result of an arithmetic or comparison operation. A nonzero result clears the zero flag to 0, and a zero result sets it to 1.</li>
+</ul>
+<p><br /></p>
+<h2 id="instructions">Instructions</h2>
+<h3 id="basic-instructions">Basic Instructions</h3>
+<ul>
+<li><strong>LEA</strong><br />
+    Load Effective Address. It loads addresses (not data). It is almost the same as the MOV instruction but does not dereference.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>    # AT&amp;T syntax - store [esp+0x18] in eax
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    lea 0x18(%esp), %eax
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    # Intel syntax - store [esp+0x18] in eax
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    lea eax, [esp+0x18]
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>CALL</strong><br />
+    Call procedure</p>
+</li>
+<li>
+<p><strong>MOV</strong><br />
+    Move</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    # AT&amp;T syntax - move esp into ebp
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    movl %esp, %ebp
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    # Intel syntax - move ebp into esp
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    mov esp, ebp
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>MOV DWORD</strong><br />
+    Copy (double word)</p>
+</li>
+<li>
+<p><strong>MOV QWORD</strong><br />
+    Copy (quad word)</p>
+</li>
+<li>
+<p><strong>NOP</strong><br />
+    No operation</p>
+</li>
+<li>
+<p><strong>PUSH</strong><br />
+    Push onto stack. It is used to push data on the top of the stack. The pushed data is often to be restored using the ‘POP’ instruction.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>    push rax
+</span></code></pre></div>
+<ul>
+<li><strong>POP</strong><br />
+    Pop stack. It is used to pop data from the top of the stack and store it to the destination address.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    pop rax
+</span></code></pre></div>
+<h3 id="arithmetic-instructions">Arithmetic Instructions</h3>
+<ul>
+<li>
+<p><strong>INC</strong></p>
+<p>Increment data by one.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>    # eax will be 5.
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    # AT&amp;T syntax
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    mov 4, %eax
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    inc %eax
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    # Intel syntax
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    mov eax, 4
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    inc eax
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>DEC</strong>  </p>
+<p>Decrement data by one.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    # eax will be 3.
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    # AT&amp;T syntax
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    mov 4, %eax
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    dec %eax
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    # Intel syntax
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    mov eax, 4
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    dec eax
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>ADD</strong></p>
+<p>Add data and restore the destination.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>    # eax will be 9.
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    # AT&amp;T syntax
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    mov 4, %eax
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    add 5, %eax
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    # Intel syntax
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    mov eax, 4
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    add eax, 5
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>SUB</strong>  </p>
+<p>Subtract data and restore the destination.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    # eax will be 2.
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    # AT&amp;T syntax
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    mov 4, %eax
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    sub %eax, 2
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    # Intel syntax
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    mov eax, 4
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    sub eax, 2
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>DIV</strong>  </p>
+<p>Divide EAX/RAX by the source and restore the result to the EDX/RDX (and EAX/RAX).</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>    # edx and eax will be 5.
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    # AT&amp;T syntax
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    mov 10, %eax
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    mov 2, %ebx
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    div %ebx
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    # Intel syntax
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    mov eax, 10
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    mov ebx, 2
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    div ebx
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>IDIV</strong>  </p>
+<p>Divide (signed)</p>
+</li>
+<li>
+<p><strong>MUL</strong>  </p>
+<p>Multiply (unsigned) EAX/RAX with the source and restore the result to the EDX/RDX (and EAX/RAX).</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>    # edx and eax will be 50.
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    # AT&amp;T syntax
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    mov 10, %eax
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    mov 5, %ebx
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    mul %ebx
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    # Intel syntax
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    mov eax, 10
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    mov ebx, 5
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    mul ebx
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>IMUL</strong>  </p>
+<p>Multiply (signed)</p>
+</li>
+</ul>
+<h3 id="conditional-instructions">Conditional Instructions</h3>
+<ul>
+<li>
+<p><strong>CMOVA</strong>  </p>
+<p>Move if above (CF=0 and ZF=0)</p>
+</li>
+<li>
+<p><strong>CMOVAE</strong>  </p>
+<p>Move if above or equal (CF=0)</p>
+</li>
+<li>
+<p><strong>CMOVB</strong>  </p>
+<p>Move if below (CF=1)</p>
+</li>
+<li>
+<p><strong>CMOVBE</strong>  </p>
+<p>Move if below or equal (CF=1)</p>
+</li>
+<li>
+<p><strong>CMOVC</strong>  </p>
+<p>Move if carry (CF=1)</p>
+</li>
+<li>
+<p><strong>CMOVE</strong>  </p>
+<p>Move if equal (ZF=1)</p>
+</li>
+<li>
+<p><strong>CMOVG</strong>  </p>
+<p>Move if greater (ZF=0 and SF=OF)</p>
+</li>
+<li>
+<p><strong>CMOVGE</strong>  </p>
+<p>Move if greater or equal (SF=OF)</p>
+</li>
+<li>
+<p><strong>CMOVL</strong>  </p>
+<p>Move if less (SF≠OF)</p>
+</li>
+<li>
+<p><strong>CMOVLE</strong>  </p>
+<p>Move if less or equal (ZF=1 or SF≠OF)</p>
+</li>
+<li>
+<p><strong>CMOVO</strong>  </p>
+<p>Move if overflow (OF=1)</p>
+</li>
+<li>
+<p><strong>CMOVP</strong>  </p>
+<p>Move if parity (PF=1)</p>
+</li>
+<li>
+<p><strong>CMOVPE</strong>  </p>
+<p>Move if parity even (PF=1)</p>
+</li>
+<li>
+<p><strong>CMOVPO</strong>  </p>
+<p>Move if parity odd (PF=0)</p>
+</li>
+<li>
+<p><strong>CMOVS</strong>  </p>
+<p>Move if sign (SF=1)</p>
+</li>
+<li>
+<p><strong>CMOVZ</strong>  </p>
+<p>Move if zero (ZF=0)</p>
+</li>
+<li>
+<p><strong>CMOVNA</strong>  </p>
+<p>Move if not above (CF=1 or ZF=1)</p>
+</li>
+<li>
+<p><strong>CMOVNAE</strong>  </p>
+<p>Move if not above or equal (CF=1)</p>
+</li>
+<li>
+<p><strong>CMOVNB</strong>  </p>
+<p>Move if not below (CF=0)</p>
+</li>
+<li>
+<p><strong>CMOVNBE</strong>  </p>
+<p>Move if not below or equal (CF=0 and ZF=0)</p>
+</li>
+<li>
+<p><strong>CMOVNC</strong>  </p>
+<p>Move if not carry (CF=0)</p>
+</li>
+<li>
+<p><strong>CMOVNE</strong>  </p>
+<p>Move if not equal (ZF=0)</p>
+</li>
+<li>
+<p><strong>CMOVNG</strong>  </p>
+<p>Move if not greater (ZF=1 or SF≠OF)</p>
+</li>
+<li>
+<p><strong>CMOVNGE</strong>  </p>
+<p>Move if not greater or equal (SF≠OF)</p>
+</li>
+<li>
+<p><strong>CMOVNL</strong>  </p>
+<p>Move if not less (SF=OF)</p>
+</li>
+<li>
+<p><strong>CMOVNLE</strong>  </p>
+<p>Move if not less or equal (ZF=0 and SF=OF)</p>
+</li>
+<li>
+<p><strong>JMP</strong>  </p>
+<p>Jump</p>
+</li>
+<li>
+<p><strong>JA</strong>  </p>
+<p>Jump if above (CF = 0 and ZF = 0)</p>
+</li>
+<li>
+<p><strong>JAE</strong>  </p>
+<p>Jump if above or equal</p>
+</li>
+<li>
+<p><strong>JB</strong>  </p>
+<p>Jump if below</p>
+</li>
+<li>
+<p><strong>JBE</strong>  </p>
+<p>Jump if below or equal</p>
+</li>
+<li>
+<p><strong>JC</strong>  </p>
+<p>Jump if carry</p>
+</li>
+<li>
+<p><strong>JE</strong>  </p>
+<p>Jump if equal</p>
+</li>
+<li>
+<p><strong>JG</strong>  </p>
+<p>Jump if greater</p>
+</li>
+<li>
+<p><strong>JGE</strong>  </p>
+<p>Jump if greater or equal</p>
+</li>
+<li>
+<p><strong>JL</strong>  </p>
+<p>Jump if less</p>
+</li>
+<li>
+<p><strong>JLE</strong>  </p>
+<p>Jump if less or equal</p>
+</li>
+<li>
+<p><strong>JO</strong>  </p>
+<p>Jump if overflow</p>
+</li>
+<li>
+<p><strong>JP</strong>  </p>
+<p>Jump if parity</p>
+</li>
+<li>
+<p><strong>JPE</strong>  </p>
+<p>Jump if parity even</p>
+</li>
+<li>
+<p><strong>JPO</strong>  </p>
+<p>Jump if parity odd</p>
+</li>
+<li>
+<p><strong>JS</strong>  </p>
+<p>Jump if sign</p>
+</li>
+<li>
+<p><strong>JZ</strong>  </p>
+<p>Jump if zero</p>
+</li>
+<li>
+<p><strong>JNC</strong>  </p>
+<p>Jump if not carry</p>
+</li>
+<li>
+<p><strong>JNE</strong>  </p>
+<p>Jump if not equal</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>    # AT&amp;T syntax
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    mov x, %eax
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    cmp 4, %eax
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    jne func_x_is_not_4
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    call func_x_is_4
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    # Intel syntax
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    mov eax, x
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    cmp eax, 4
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>    jne func_x_is_not_4
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    call func_x_is_4
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>JNO</strong>  </p>
+<p>Jump if not overflow</p>
+</li>
+<li>
+<p><strong>JNP</strong>  </p>
+<p>Jump if not parity</p>
+</li>
+<li>
+<p><strong>JNS</strong>  </p>
+<p>Jump if not sign</p>
+</li>
+<li>
+<p><strong>TEST</strong>  </p>
+<p>Set ZF (Zero Flag) to 1 if a bitwise AND is 0.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>    test %eax,%eax ; set ZF to 1 if eax == 0
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    je 0xf7eb0f70  ; jump if ZF == 1
+</span></code></pre></div>
+<h3 id="other-instructions">Other Instructions</h3>
+<ul>
+<li>
+<p><strong>CMP</strong></p>
+<p>Compare two operands. It subtracts the destination from the source internally.</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>    # It compares if the eax is 4.
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    # AT&amp;T syntax
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    mov 4, %eax
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    cmp 4, %eax
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    # Intel syntax
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    mov eax, 4
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    cmp eax, 4
+</span></code></pre></div>
+<ul>
+<li>
+<p><strong>RET</strong></p>
+<p>Return from procedure.</p>
+</li>
+<li>
+<p><strong>UD2</strong></p>
+<p>Undefined instruction (invalid opcode). It is same as <strong>NOP</strong> instruction.</p>
+</li>
+</ul>
+<p><br /></p>
+<h2 id="create-32bit-program">Create 32bit Program</h2>
+<p>To examine 32bit programs or assembly language, you need to prepare a 32bit executable program.<br />
+First off, create a sample program with C.</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">);</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Then run “gcc” to compile it to the executable file.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a># If needed
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>sudo apt install libc6-dev-i386
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a># -m32: 32bit
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a># -ggdb: generate the debug information for GDB (GNU debugger)
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>gcc -m32 -gdb -o sample sample.c
+</span></code></pre></div>
+<p>You can use this for debugging.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>chmod 700 sample
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>gdb sample
+</span></code></pre></div>
+<p>If you want to convert the C program to assembly, run this command.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a># -S: AT&amp;T syntax
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a># -O0: No optimization
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>gcc -m32 -S -O0 sample.c
+</span></code></pre></div>
+<p>The above command generates "sample.s".<br />
+Then compile it to binary object.</p>
+<p>Finally you need to use a linker to create the actual binary executable file.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>gcc -m32 sample.o -o sample
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="information-of-executable-file">Information of Executable File</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>objdump -d &lt;executable-file&gt;
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>objdump -d sample
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a># -M: specific disassemble option
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>objdump -d -M att sample
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>objdump -d -M intel sample
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="create-assembly-programs">Create Assembly Programs</h2>
+<p>Every assembly language program is divided into three sections.  </p>
+<ul>
+<li><strong>Data section</strong> is used for declaring initialized data or constants. The data does not change at runtime.  </li>
+<li><strong>BSS section</strong> is the block starting symbol. used for declaring uninitialized data or variables.  </li>
+<li><strong>Text section</strong> is used for the actual code sections as it begins with a global _start which tells the kernel where execution begins.  </li>
+</ul>
+<h3 id="example-att-syntax">Example (AT&amp;T syntax)</h3>
+<p>It is often used in Linux. First, create "sample.s"</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>.section .data
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    result:
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>        .asciz &quot;The smallest value is &quot;
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>    lr:
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>        .ascii &quot;.\n&quot;
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>    constant:
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>        .int 10
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>    constants:
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>        .int  5, 8, 17, 44, 50, 52, 60, 65, 70, 77, 80      # array
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>.section .bss
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>    .comm answer, 1
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>    .lcomm buffer 1
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>.section .text
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>    .globl _start
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>_start:
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>    nop                                         # used for debugging purposes
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>mov_data_to_registers:
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>    movl $100, %eax                             # mov 100 into the EAX register
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>    movl $0x50, buffer                          # mov 0x50 into buffer memory location
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>mov_data_between_memory_and_registers:
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>    movl constant, %ecx
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>indirect_addressing:
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>    movl constants, %eax                        # mov constants value into eax
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a>    movl constants, %edi                        # mov memory address into edi
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a>    movl $25, 4(%edi)                           # mov immediate val 4b after edi ptr
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a>    movl $1, %edi                               # load 2nd index constants label
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>    movl constants(, %edi, 4), %ebx
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a>
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a>find_smallest_value:
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a>    movl constants(, %edi, 4), %eax
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a>    cmp %ebx, %eax
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a>    cmovb %eax, %ebx
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a>    inc %edi
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a>    cmp $8, %edi
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a>    jne find_smallest_value
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a>    addl $0x30, %ebx
+</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a>    movl %ebx, answer
+</span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a>
+</span><span id="__span-20-45"><a id="__codelineno-20-45" name="__codelineno-20-45" href="#__codelineno-20-45"></a>    movl $4, %eax
+</span><span id="__span-20-46"><a id="__codelineno-20-46" name="__codelineno-20-46" href="#__codelineno-20-46"></a>    movl $1, %ebx
+</span><span id="__span-20-47"><a id="__codelineno-20-47" name="__codelineno-20-47" href="#__codelineno-20-47"></a>    movl $result, %ecx
+</span><span id="__span-20-48"><a id="__codelineno-20-48" name="__codelineno-20-48" href="#__codelineno-20-48"></a>    movl $23, %edx
+</span><span id="__span-20-49"><a id="__codelineno-20-49" name="__codelineno-20-49" href="#__codelineno-20-49"></a>    int $0x80
+</span><span id="__span-20-50"><a id="__codelineno-20-50" name="__codelineno-20-50" href="#__codelineno-20-50"></a>
+</span><span id="__span-20-51"><a id="__codelineno-20-51" name="__codelineno-20-51" href="#__codelineno-20-51"></a>    movl $4, %eax
+</span><span id="__span-20-52"><a id="__codelineno-20-52" name="__codelineno-20-52" href="#__codelineno-20-52"></a>    movl $1, %ebx
+</span><span id="__span-20-53"><a id="__codelineno-20-53" name="__codelineno-20-53" href="#__codelineno-20-53"></a>    movl $answer, %ecx
+</span><span id="__span-20-54"><a id="__codelineno-20-54" name="__codelineno-20-54" href="#__codelineno-20-54"></a>    movl $1, %edx
+</span><span id="__span-20-55"><a id="__codelineno-20-55" name="__codelineno-20-55" href="#__codelineno-20-55"></a>    int $0x80                                   # call sys_write
+</span><span id="__span-20-56"><a id="__codelineno-20-56" name="__codelineno-20-56" href="#__codelineno-20-56"></a>
+</span><span id="__span-20-57"><a id="__codelineno-20-57" name="__codelineno-20-57" href="#__codelineno-20-57"></a>    movl $4, %eax
+</span><span id="__span-20-58"><a id="__codelineno-20-58" name="__codelineno-20-58" href="#__codelineno-20-58"></a>    movl $1, %ebx
+</span><span id="__span-20-59"><a id="__codelineno-20-59" name="__codelineno-20-59" href="#__codelineno-20-59"></a>    movl $lr, %ecx
+</span><span id="__span-20-60"><a id="__codelineno-20-60" name="__codelineno-20-60" href="#__codelineno-20-60"></a>    movl $2, %edx
+</span><span id="__span-20-61"><a id="__codelineno-20-61" name="__codelineno-20-61" href="#__codelineno-20-61"></a>    int $0x80                                   # call sys_write
+</span><span id="__span-20-62"><a id="__codelineno-20-62" name="__codelineno-20-62" href="#__codelineno-20-62"></a>
+</span><span id="__span-20-63"><a id="__codelineno-20-63" name="__codelineno-20-63" href="#__codelineno-20-63"></a>exit:
+</span><span id="__span-20-64"><a id="__codelineno-20-64" name="__codelineno-20-64" href="#__codelineno-20-64"></a>    movl $1, %eax                               # sys_exit system call
+</span><span id="__span-20-65"><a id="__codelineno-20-65" name="__codelineno-20-65" href="#__codelineno-20-65"></a>    movl $0, %ebx                               # exit code 0 successful execution
+</span><span id="__span-20-66"><a id="__codelineno-20-66" name="__codelineno-20-66" href="#__codelineno-20-66"></a>    int $0x80                                   # call sys_exit
+</span></code></pre></div>
+<p>To compile it, run the following two commands.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a># assembler
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>as -32 -o sample.o sample.s
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a># linker
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>ld -m elf_i386 -o sample sample.o
+</span></code></pre></div>
+<h3 id="example-intel-syntax">Example (Intel syntax)</h3>
+<p>It is often used in Windows. Create "hello_world.asm".</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>section .data
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    msg db &#39;Hello, World!&#39;, 0xa ;string to be printed. db means the Define Byte.
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    len equ $ - msg  ;length of the string. equ means &#39;equate&#39;. &#39;$&#39; means the current address.
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>section .text
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>    global _start  ;linker (ld)
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>_start:
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    mov edx,len  ;message length
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    mov ecx,msg  ;message to write
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>    mov ebx,1    ;file descriptor (stdout)
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    mov eax,4    ;system call number (sys_write)
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>    int 0x80     ;call kernel
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>
+</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>    mov eax,1    ;system call number (sys_exit)
+</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>    int 0x80     ;call kernel
+</span></code></pre></div>
+<p>To assemble the program, run the following command. Then the object file will be created.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># 32-bit
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>nasm -f elf32 hello_world.asm -o hello_world.o
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>ld -m elf_i386 hello_world.o -o hello_world
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a># 64-bit
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>nasm -f elf64 hello_world.asm -o hello_world.o
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>ld hello_world.o -o hello_world
+</span></code></pre></div>
+<h1 id="32-bit-arm-assembly">32-bit ARM Assembly</h1>
+<p>32-bit Advanced RISC Machine (ARM) processor. It's one of a family of central processing units (CPUs) based on the reduced instruction set computer (RISK) architecture for computer processors.</p>
+<h2 id="registers_1">Registers</h2>
+<ul>
+<li><strong>R0 GPR (General Purpose Register)</strong></li>
+<li><strong>R1 GPR (General Purpose Register)</strong></li>
+<li><strong>R2 GPR (General Purpose Register)</strong><br />
+...</li>
+<li><strong>R11 GPR (General Purpose Register)</strong></li>
+<li><strong>R12 GPR (General Purpose Register)</strong></li>
+<li><strong>R13 Stack Pointer</strong></li>
+<li><strong>R14 Link Register</strong></li>
+<li><strong>R15 Program Counter</strong> - Is responsible for directing the CPU to what instruction will be executed next.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>    # Control the PC directly (not recommended in User mode.)
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    mov r15, 0x00000000
+</span></code></pre></div>
+<ul>
+<li><strong>CPSR (Current Program Status Register)</strong> - Stores information about the program and the results of a particular operation.</li>
+</ul>
+<p><br /></p>
+<h2 id="create-assembly-program">Create Assembly Program</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>@ LR Demo - Link Register Demo
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>    .global __start
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>__start:
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>    mov r7, #0x30   @ mov hex 30 into r7
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>    b no_return     @ branch to no_return function which never returns
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>no_return:
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>    mov r7, #1      @ mov decimal 1 into r7
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>    bl my_function  @ go to my_function which after execution
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>wrap_up:
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>    mov r7, #0x12   @ mov hex 12 into r7
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>    b exit          @ branch to exit
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>my_function:
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>    mov r0, #10     @ mov decimal 10 into r0
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>    mov pc, lr      @ mov the ret address into the program counter
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>exit:
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>    mov r7, #1      @ sys_exit
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>    svc 0
+</span></code></pre></div>
+<p>To compile it, run the following commands.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>as -o sample.o sample.s
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>ld -o sample sample.o
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/Hardware/assembly.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

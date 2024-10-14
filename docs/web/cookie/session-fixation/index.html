@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Session Fixation - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Session Fixation", url: "#_top", children: [
+              {title: "Exploitation", url: "#exploitation" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="session-fixation">Session Fixation</h1>
+<p>Session fixation attacks attempt to exploit the vulnerability of a system that allows one person to fixate another person’s session identifier.</p>
+<div class="language-text highlight"><pre><span></span><code>- [Session_fixation](https://owasp.org/www-community/attacks/Session_fixation)
+</code></pre></div>
+<h2 id="exploitation">Exploitation</h2>
+<h3 id="1-attacker-logins-website-to-get-the-session">1. Attacker Logins Website to Get the Session</h3>
+<p>An attacker need to login to a legitimate website then get the session value.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Cookie:<span class="w"> </span><span class="nv">sessid</span><span class="o">=</span>abcdef
+</span></code></pre></div>
+<h3 id="2-attacker-sends-the-session-value-to-victim">2. Attacker Sends the Session Value to Victim</h3>
+<p>There are various way to send the attacker’s session value. For example,</p>
+<ul>
+<li>Send email.</li>
+<li>Predict a session value.</li>
+<li>Eavesdrop a session using packet sniffer such as Wireshark.</li>
+<li>
+<p>XSS</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;script&gt;document.cookie<span class="w"> </span><span class="o">=</span><span class="w"> </span>ATTACKERS_SESSION_ID&lt;/script&gt;
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="3-victim-logins-with-attackers-session">3. Victim Logins with Attacker’s Session</h3>
+<p>If the victim logins and attacker’s session is set to the Cookie, the attacker can control the victim’s account in the website.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/cookie/session-fixation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

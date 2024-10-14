@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Configure an Ethernet interface as a VLAN trunk - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Configure an Ethernet interface as a VLAN trunk", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="configure-an-ethernet-interface-as-a-vlan-trunk">Configure an Ethernet interface as a VLAN trunk</h1>
+<hr />
+<p>Suppose that a host requires access to two VLANs, both carried by a trunk connected to physical interface eth0. The assigned IP addresses for the host are 192.168.2.1/24 on VLAN 2 and 192.168.3.1/24 on VLAN 3.</p>
+<p>[+] First install the vlan package if it is not already present:</p>
+<p>apt-get install vlan</p>
+<p>[+] Turn off network-manager</p>
+<p>sudo stop network-manager</p>
+<p>[+] Configuring interfaces</p>
+<p>vconfig add eth0 <VLAN ID> (you may get a warning message on the first one)
+example: vconfig add eth0 101</p>
+<p>ifconfig eth0.<VLAN ID> <IP Address>/24 up
+example: ifconfig eth0.101 192.168.1.10/24 up</p>
+<p>ifconfig eth0.<VLAN ID></p>
+<p>Note: If any issues run, ifconfig eth0 0.0.0.0 up
+Note: Specify interface with nmap scanning (nmap -e eth0.101)
+Note: You will probably need to add individual routes for each vlan if you want to communicate between vlans, don't rely on your default gateway. (route add)</p>
+<p>[+] Remove Configuration
+vconfig rem eth0.101</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/vlans.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

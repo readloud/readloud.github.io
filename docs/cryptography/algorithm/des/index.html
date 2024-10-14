@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>DES (Data Encryption Standard) - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "DES (Data Encryption Standard)", url: "#_top", children: [
+              {title: "Basic Encryption/Decription with OpenSSL", url: "#basic-encryptiondecription-with-openssl" },
+              {title: "Triple DES", url: "#triple-des" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="des-data-encryption-standard">DES (Data Encryption Standard)</h1>
+<p>The DES is a symmetric-key algorithm for the encryption of digital data.</p>
+<div class="language-text highlight"><pre><span></span><code>- https://en.wikipedia.org/wiki/Data_Encryption_Standard
+- https://en.wikipedia.org/wiki/Triple_DES
+</code></pre></div>
+<h2 id="basic-encryptiondecription-with-openssl">Basic Encryption/Decription with OpenSSL</h2>
+<h3 id="1-prepare-plain-text-file">1. Prepare Plain Text File</h3>
+<p>At first, we create a text file which contains a simple word "hello".</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>echo hello &gt; hello.txt
+</span></code></pre></div>
+<h3 id="2-encrypt-the-plain-text-file">2. Encrypt the Plain Text File</h3>
+<p>Using <code>openssl</code>, we can encrypt the file using <strong>DES</strong> algorithm. We're asked the password so enter the new one.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>openssl des -e -in hello.txt -out encrypted.enc
+</span></code></pre></div>
+<p>After encryption, we can send the encrypted file to someone else. And someone can decrypt it with the DES algorithm.</p>
+<h3 id="3-decrypt-the-encrypted-file">3. Decrypt the Encrypted File</h3>
+<p>In the decryption process, we can also use the almost same command but specify <code>-d (decrypt)</code> option instead of <code>-e (encrypt)</code>. We'll be asked the password which is set when encryption so enter the same password.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>openssl des -d -in encrypted.enc -out decrypted.txt
+</span></code></pre></div>
+<p>After decryption, confirm that the content of the <code>decrypted.txt</code> is the same as that of the original plain <code>hello.txt</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cat decrypted.txt
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a># hello
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="triple-des">Triple DES</h2>
+<p><strong>Triple DES (3DES)</strong> applies the <strong>DES</strong> cipher algorithm three times to each data block.<br />
+This encryption/description process with <code>openssl</code> is almost the same as that of <strong>DES</strong> so I'll write it briefly here</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># Encryption
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>openssl des -e -in hello.txt -out encrypted.enc
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a># Decryption
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>openssl des -d -in encrypted.enc -out decrypted.txt
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/cryptography/algorithm/des.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

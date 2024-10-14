@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Awesome repositories - readloud.org</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Awesome Repositories", url: "#_top", children: [
+              {title: "Footprinting and reconnaissance", url: "#footprinting-and-reconnaissance" },
+              {title: "Networks", url: "#networks" },
+              {title: "Enumeration", url: "#enumeration" },
+              {title: "Vulnerability Analysis", url: "#vulnerability-analysis" },
+              {title: "System hacking", url: "#system-hacking" },
+              {title: "Malwares", url: "#malwares" },
+              {title: "Session hijacking", url: "#session-hijacking" },
+              {title: "Hacking web", url: "#hacking-web" },
+              {title: "Protection", url: "#protection_2" },
+              {title: "Forensics", url: "#forensics" },
+              {title: "Social engineering", url: "#social-engineering" },
+              {title: "Hacking wireless", url: "#hacking-wireless" },
+              {title: "Steganography", url: "#steganography" },
+              {title: "Internet of Things (IoT)", url: "#internet-of-things-iot" },
+              {title: "Cloud", url: "#cloud" },
+          ]},
+          {title: "Other Useful Repositories", url: "#other-useful-repositories", children: [
+          ]},
+          {title: "Custom projects / Scripts", url: "#custom-projects-scripts", children: [
+          ]},
+          {title: "Exploitation tools", url: "#exploitation-tools", children: [
+          ]},
+          {title: "Linux Security Tools", url: "#linux-security-tools", children: [
+          ]},
+          {title: "Exploit Databases", url: "#exploit-databases_1", children: [
+          ]},
+          {title: "Malware Analysis", url: "#malware-analysis", children: [
+          ]},
+          {title: "MITM tools", url: "#mitm-tools", children: [
+          ]},
+          {title: "SQL Injection", url: "#sql-injection_1", children: [
+          ]},
+          {title: "Post explotation", url: "#post-explotation", children: [
+          ]},
+          {title: "Search Engine for Penetration Tester", url: "#search-engine-for-penetration-tester", children: [
+          ]},
+          {title: "Security Information and Event Management (SIEM)", url: "#security-information-and-event-management-siem", children: [
+          ]},
+          {title: "Network Scanning Tools", url: "#network-scanning-tools", children: [
+          ]},
+          {title: "Source Code Analysis Tools", url: "#source-code-analysis-tools", children: [
+          ]},
+          {title: "Binary Analysis Tools", url: "#binary-analysis-tools", children: [
+          ]},
+          {title: "Privilege Escalation", url: "#privilege-escalation", children: [
+          ]},
+          {title: "Collaboration tools", url: "#collaboration-tools", children: [
+          ]},
+          {title: "Active Directory", url: "#active-directory", children: [
+              {title: "AD Tooling", url: "#ad-tooling" },
+              {title: "Attacking Active Directory", url: "#attacking-active-directory" },
+              {title: "Red Team", url: "#red-team" },
+              {title: "Binaries", url: "#binaries" },
+              {title: "Blogs", url: "#blogs" },
+          ]},
+          {title: "Bug Bounties", url: "#bug-bounties", children: [
+          ]},
+          {title: "Threat Modelling", url: "#threat-modelling", children: [
+              {title: "Cheatsheets", url: "#cheatsheets" },
+              {title: "CTF Write-ups \u0026amp; Videos", url: "#ctf-write-ups-videos" },
+              {title: "Cybersecurity Labs", url: "#cybersecurity-labs" },
+              {title: "Networking", url: "#networking" },
+              {title: "Other Resources", url: "#other-resources" },
+              {title: "Payloads", url: "#payloads" },
+              {title: "Programming \u0026amp; Scripting Notes", url: "#programming-scripting-notes" },
+              {title: "Search Engines", url: "#search-engines" },
+              {title: "Tools", url: "#tools" },
+              {title: "Wordlists", url: "#wordlists" },
+          ]},
+          {title: "Cloud Pentesting", url: "#cloud-pentesting", children: [
+              {title: "MultiPlatform Resources", url: "#multiplatform-resources" },
+              {title: "Azure", url: "#azure" },
+              {title: "AWS", url: "#aws" },
+              {title: "AWS Tools", url: "#aws-tools" },
+          ]},
+          {title: "Web App and Web Services", url: "#web-app-and-web-services", children: [
+          ]},
+          {title: "Thick Client", url: "#thick-client", children: [
+          ]},
+          {title: "ICS and OT", url: "#ics-and-ot", children: [
+          ]},
+          {title: "Incident Response", url: "#incident-response", children: [
+          ]},
+          {title: "Privilege Escalation", url: "#privilege-escalation_1", children: [
+          ]},
+          {title: "DNS Attacks", url: "#dns-attacks", children: [
+          ]},
+          {title: "Openshift", url: "#openshift", children: [
+          ]},
+          {title: "Message Queue", url: "#message-queue", children: [
+          ]},
+          {title: "Additional Interesting Resources", url: "#additional-interesting-resources", children: [
+              {title: "Blog", url: "#blog" },
+              {title: "Need More ?", url: "#need-more" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="awesome-repositories">Awesome Repositories</h2>
+<blockquote>
+<p>A curated list of websites and github repos with pentest/redteam <code>cheatsheets</code>, <code>tools</code>, <code>techniques</code>, <code>CTF write-ups</code>, <code>programming languages</code>, and more.</p>
+</blockquote>
+<p>The goal of this project is to centralize <strong>pertinent</strong> and <strong>most used</strong> pentest/redteam cheatsheets, techniques, tools, write-ups, and more for like-minded offensive security enthusiasts and professionals. </p>
+<table>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/ashishb/android-security-awesome">Android Security</a></td>
+<td>Collection of Android security related resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/paragonie/awesome-appsec">AppSec</a></td>
+<td>Resources for learning about application security</td>
+</tr>
+<tr>
+<td><a href="https://github.com/redhuntlabs/Awesome-Asset-Discovery">Asset Discovery</a></td>
+<td>List of resources which help during asset discovery phase of a security assessment engagement</td>
+</tr>
+<tr>
+<td><a href="https://github.com/djadmin/awesome-bug-bounty">Bug Bounty</a></td>
+<td>List of Bug Bounty Programs and write-ups from the Bug Bounty hunters</td>
+</tr>
+<tr>
+<td><a href="https://github.com/r3dy/capsulecorp-pentest">Capsulecorp Pentest</a></td>
+<td>Vagrant+Ansible virtual network penetration testing lab. Companion to "The Art of Network Penetration Testing" by Royce Davis</td>
+</tr>
+<tr>
+<td><a href="https://github.com/W00t3k/Awesome-Cellular-Hacking">Celluar Hacking</a></td>
+<td>This is a list of hacking research in the 3G/4G/5G cellular security space.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/apsdehal/awesome-ctf">CTF</a></td>
+<td>List of CTF frameworks, libraries, resources and softwares</td>
+</tr>
+<tr>
+<td><a href="https://github.com/joe-shenouda/awesome-cyber-skills">Cyber Skills</a></td>
+<td>Curated list of hacking environments where you can train your cyber skills legally and safely</td>
+</tr>
+<tr>
+<td><a href="https://github.com/devsecops/awesome-devsecops">DevSecOps</a></td>
+<td>List of awesome DevSecOps tools with the help from community experiments and contributions</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fkie-cad/awesome-embedded-and-iot-security">Embedded and IoT Security</a></td>
+<td>A curated list of awesome resources about embedded and IoT security</td>
+</tr>
+<tr>
+<td><a href="https://github.com/FabioBaroni/awesome-exploit-development">Exploit Development</a></td>
+<td>Resources for learning about Exploit Development</td>
+</tr>
+<tr>
+<td><a href="https://github.com/secfigo/Awesome-Fuzzing">Fuzzing</a></td>
+<td>List of fuzzing resources for learning Fuzzing and initial phases of Exploit Development like root cause analysis</td>
+</tr>
+<tr>
+<td><a href="https://github.com/carpedm20/awesome-hacking">Hacking</a></td>
+<td>List of awesome Hacking tutorials, tools and resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vitalysim/Awesome-Hacking-Resources">Hacking Resources</a></td>
+<td>Collection of hacking / penetration testing resources to make you better!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/paralax/awesome-honeypots">Honeypots</a></td>
+<td>List of honeypot resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/meirwah/awesome-incident-response">Incident Response</a></td>
+<td>List of tools for incident response</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hslatman/awesome-industrial-control-system-security">Industrial Control System Security</a></td>
+<td>List of resources related to Industrial Control System (ICS) security</td>
+</tr>
+<tr>
+<td><a href="https://github.com/onlurking/awesome-infosec">InfoSec</a></td>
+<td>List of awesome infosec courses and training resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nebgnahz/awesome-iot-hacks">IoT Hacks</a></td>
+<td>Collection of Hacks in IoT Space</td>
+</tr>
+<tr>
+<td><a href="https://github.com/samanL33T/Awesome-Mainframe-Hacking">Mainframe Hacking</a></td>
+<td>List of Awesome Mainframe Hacking/Pentesting Resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rshipp/awesome-malware-analysis">Malware Analysis</a></td>
+<td>List of awesome malware analysis tools and resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jivoi/awesome-osint">OSINT</a></td>
+<td>List of amazingly awesome Open Source Intelligence (OSINT) tools and resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ashishb/osx-and-ios-security-awesome">OSX and iOS Security</a></td>
+<td>OSX and iOS related security tools</td>
+</tr>
+<tr>
+<td><a href="https://github.com/caesar0301/awesome-pcaptools">Pcaptools</a></td>
+<td>Collection of tools developed by researchers in the Computer Science area to process network traces</td>
+</tr>
+<tr>
+<td><a href="https://github.com/enaqx/awesome-pentest">Pentest</a></td>
+<td>List of awesome penetration testing resources, tools and other shiny things</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ziadoz/awesome-php#security">PHP Security</a></td>
+<td>Libraries for generating secure random numbers, encrypting data and scanning for vulnerabilities</td>
+</tr>
+<tr>
+<td><a href="https://github.com/EnableSecurity/awesome-rtc-hacking">Real-time Communications hacking &amp; pentesting resources</a></td>
+<td>Covers VoIP, WebRTC and VoLTE security related topics</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yeyintminthuhtut/Awesome-Red-Teaming">Red Teaming</a></td>
+<td>List of Awesome Red Team / Red Teaming Resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fdivrp/awesome-reversing">Reversing</a></td>
+<td>List of awesome reverse engineering resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Limmen/awesome-rl-for-cybersecurity">Reinforcement Learning for Cyber Security</a></td>
+<td>List of awesome reinforcement learning for security resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PaulSec/awesome-sec-talks">Sec Talks</a></td>
+<td>List of awesome security talks</td>
+</tr>
+<tr>
+<td><a href="https://github.com/danielmiessler/SecLists">SecLists</a></td>
+<td>Collection of multiple types of lists used during security assessments</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sbilly/awesome-security">Security</a></td>
+<td>Collection of awesome software, libraries, documents, books, resources and cools stuffs about security</td>
+</tr>
+<tr>
+<td><a href="https://github.com/puresec/awesome-serverless-security/">Serverless Security</a></td>
+<td>Collection of Serverless security related resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/v2-dev/awesome-social-engineering">Social Engineering</a></td>
+<td>List of awesome social engineering resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mre/awesome-static-analysis">Static Analysis</a></td>
+<td>List of static analysis tools, linters and code quality checkers for various programming languages</td>
+</tr>
+<tr>
+<td><a href="https://github.com/The-Art-of-Hacking/h4cker">The Art of Hacking Series</a></td>
+<td>List of resources  includes thousands of cybersecurity-related references and resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hslatman/awesome-threat-intelligence">Threat Intelligence</a></td>
+<td>List of Awesome Threat Intelligence resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jaredthecoder/awesome-vehicle-security">Vehicle Security</a></td>
+<td>List of resources for learning about vehicle security and car hacking</td>
+</tr>
+<tr>
+<td><a href="https://github.com/re-pronin/awesome-vulnerability-research">Vulnerability Research</a></td>
+<td>List of resources about Vulnerability Research</td>
+</tr>
+<tr>
+<td><a href="https://github.com/infoslack/awesome-web-hacking">Web Hacking</a></td>
+<td>List of web application security</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Anugrahsr/Awesome-web3-Security">Web3 Security</a></td>
+<td>A curated list of web3 Security materials and resources For Pentesters and Bug Hunters.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yeyintminthuhtut/Awesome-Advanced-Windows-Exploitation-References">Windows Exploitation - Advanced</a></td>
+<td>List of Awesome Advanced Windows Exploitation References</td>
+</tr>
+<tr>
+<td><a href="https://github.com/0x90/wifi-arsenal">WiFi Arsenal</a></td>
+<td>Pack of various useful/useless tools for 802.11 hacking</td>
+</tr>
+<tr>
+<td><a href="https://github.com/InQuest/awesome-yara">YARA</a></td>
+<td>List of awesome YARA rules, tools, and people</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sundowndev/hacker-roadmap">Hacker Roadmap</a></td>
+<td>A guide for amateur pen testers and a collection of hacking tools, resources and references to practice ethical hacking.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="footprinting-and-reconnaissance">Footprinting and reconnaissance</h3>
+<ul>
+<li><a href="https://account.arin.net/public">ARIN whois database search</a>: Locate the network range.</li>
+<li><a href="https://github.com/jivoi/awesome-osint">awesome-osint</a>: A curated list of amazingly awesome OSINT.</li>
+<li><a href="https://buzzsumo.com/">BuzzSumo</a>: Find the most shared content for a topic, author, or a domain.</li>
+<li><a href="https://censys.io/">Censys</a>: Full view of every server and device exposed.</li>
+<li><a href="https://github.com/digininja/CeWL">CeWL</a>: Gathering Wordlist from the Target Website.</li>
+<li><a href="https://github.com/darkoperator/dnsrecon">DNSRecon</a>: Reverse DNS lookup.</li>
+<li><a href="https://citizenevidence.amnestyusa.org/">Extract Meta Data</a>: Gather Information from Video Search Engines.</li>
+<li><a href="https://exposing.ai/">exposing.ai</a>: Check if your Flickr photos were used to build face recognition.</li>
+<li><a href="https://github.com/BullsEye0/ghost_eye">Ghost Eye</a>: It is an information-gathering tool written in Python 3. To run, Ghost Eye only needs a domain or IP.</li>
+<li><a href="https://kennbroorg.gitlab.io/ikyweb/">Iky I Know You</a>: It is a tool that collects information from an email and shows results in a nice visual interface.</li>
+<li><a href="https://www.searchftps.net/">NAPALM FTP Indexer</a>: Gather Information from FTP Search Engines.</li>
+<li><a href="https://networkappers.com/tools/reverse-ip-checker#.X-fOden0nlw">networkappers</a>: Reverse DNS lookup.</li>
+<li><a href="https://www.yougetsignal.com/">Network Tools by YouGetSignal.com</a></li>
+<li><a href="http://www.kloth.net/services/nslookup.php/">NSLOOKUP: look up and find IP addresses in the DNS</a></li>
+<li><a href="https://github.com/Ph055a/OSINT_Collection">OSINT_Collection</a>: Maintained collection of OSINT related resources. (All Free &amp; Actionable).</li>
+<li><a href="https://github.com/Quantika14/osint-suite-tools">osint-suite-tools</a>: Repository of the toolkit for making OSINT and SOCMINT with Dante's Gates Minimal Version.</li>
+<li><a href="https://github.com/bhavsec/reconspider">ReconSpider</a>: Framework for scanning IP Address, Emails, Websites, Organizations and find out information from different sources.</li>
+<li><a href="https://reverseip.domaintools.com/">Reverse IP Lookup</a>: Reverse DNS lookup.</li>
+<li><a href="https://github.com/sherlock-project/sherlock">Sherlock.py</a>: Search a vast number of social networking sites for a target username.</li>
+<li><a href="https://www.shodan.io/">Shodan</a>: Search engine for Internet-connected devices.</li>
+<li><a href="https://www.social-searcher.com/">Social Searcher</a>: Free Social Media Search Engine.</li>
+<li><a href="https://www.thingful.net/">Thingful</a>: A search engine for the Internet of Things.</li>
+<li><a href="https://github.com/EnableSecurity/wafw00f">wafw00f</a>: Allows one to identify and fingerprint Web Application Firewall (WAF) products protecting a website.</li>
+<li><a href="https://archive.org/web/">Wayback Machine</a></li>
+<li><a href="https://www.whoishostingthis.com/">WhoIsHostingThis</a>: Get information about the web host, IP address, name servers &amp; more.</li>
+<li><a href="https://github.com/3nock/sub3suite">Sub3 Suite</a>: A suite of tools for intelligence gathering and target mapping.</li>
+</ul>
+<h4 id="competitive-intelligence-gathering">Competitive Intelligence Gathering</h4>
+<h5 id="what-did-this-company-begin-how-did-it-develop">What did this company begin? How did it develop?</h5>
+<ul>
+<li><a href="https://www.businesswire.com/portal/site/home/">Business wire</a></li>
+<li><a href="https://www.dnb.com/products/marketing-sales/dnb-hoovers.html">D&amp;B Hoovers</a></li>
+<li><a href="https://www.sec.gov/edgar/searchedgar/companysearch.html">EDGAR Database</a></li>
+<li><a href="https://www.lexisnexis.com/en-us/gateway.page">LexisNexis</a></li>
+</ul>
+<h5 id="what-are-the-companys-plans">What are the company's plans?</h5>
+<ul>
+<li><a href="https://www.alexa.com/">Alexa</a></li>
+<li><a href="https://www.euromonitor.com/">Euromonitor</a></li>
+<li><a href="https://www.marketwatch.com/">Market Watch</a></li>
+<li><a href="https://www.twst.com/">The Wall Street Transcript</a></li>
+</ul>
+<h5 id="what-expert-do-opinions-say-about-the-company">What expert do opinions say about the company?</h5>
+<ul>
+<li><a href="https://www.proquest.com/">ABI/INFORM Global</a></li>
+<li><a href="http://www.attentionmeter.com/">Attention Meter</a></li>
+<li><a href="https://es.semrush.com/">SEMrush</a></li>
+<li><a href="https://www.similarweb.com/">SimilarWeb</a></li>
+</ul>
+<h4 id="enumerate-people-emails">Enumerate people, emails,...</h4>
+<ul>
+<li><a href="https://contactout.com/">Contact Out</a>: Get private information from LinkedIn accounts.</li>
+<li><a href="https://haveibeenpwned.com/">';--have i been pwned?</a>: Check if your email address is in a data breach.</li>
+<li><a href="https://hunter.io/">hunter.io</a>: Hunter lets you find email addresses in seconds and connect with the people that matter for your business.</li>
+<li><a href="https://www.privateeye.com/">Instant People Search</a>: Searching people.</li>
+<li><a href="https://www.intelius.com/">intelius</a>: Searching people.</li>
+<li><a href="https://www.peekyou.com/">peekyou</a>: Searching people.</li>
+<li><a href="https://pipl.com/">pipl</a>: Searching people.</li>
+<li><a href="https://github.com/davidtavarez/pwndb">pwndb</a>: Search for leaked credentials.</li>
+<li><a href="https://socialcatfish.com/">Social Catfish</a>: Searching people.</li>
+<li><a href="https://github.com/laramies/theHarvester">theHarvester</a>: E-mails, subdomains and names Harvester - OSINT.</li>
+<li><a href="http://verifyemailaddress.org/">VerifyEmailAddress.org</a> </li>
+</ul>
+<h4 id="email-tracking-tools">Email tracking tools</h4>
+<ul>
+<li><a href="http://www.emailtrackerpro.com/">eMailTrackerPro</a>: Trace an email using the email header.</li>
+<li><a href="https://github.com/m4ll0k/Infoga">Infoga</a>: Infoga is a tool gathering email accounts informations (ip,hostname,country,...) from different public source (search engines, pgp key servers and shodan) and check if emails was leaked using haveibeenpwned.com API. Is a really simple tool, but very effective for the early stages of a penetration test or just to know the visibility of your company in the Internet.</li>
+<li><a href="https://mailtrack.io/es/">Mailtrack</a>: Know when your emails are opened.</li>
+<li><a href="https://politemail.com/">PoliteMail</a></li>
+<li><a href="https://rmail.com/">RMail E-Security</a></li>
+</ul>
+<h4 id="extracting-metadata-of-public-documents">Extracting Metadata of Public Documents</h4>
+<ul>
+<li><a href="https://github.com/exiftool/exiftool">Exiftool</a>: ExifTool meta information reader/writer.</li>
+<li><a href="https://github.com/laramies/metagoofil">Metagoofil</a>: Metadata harvester.</li>
+<li><a href="http://opanda.com/en/iexif/index.html">Opanda IExif</a>: It is a professional Exif viewer in Windows / IE /  Firefox, From a photographer's eye, It displays the image taken from digital camera and every item of EXIF data in the image from beginning to end.</li>
+<li><a href="http://www.webextractor.com/">Web Data Extractor</a>: Web Data Extractor Pro is a web scraping tool specifically designed for mass-gathering of various data types. It can harvest URLs, phone and fax numbers, email addresses, as well as meta tag information and body text. Special feature of WDE Pro is custom extraction of structured data.</li>
+</ul>
+<h4 id="extracting-website-links">Extracting Website Links</h4>
+<ul>
+<li><a href="https://www.iwebtool.com/link_extractor">Link Extractor</a>: Very simple tool which allows scrapping all the links from any web page in Internet.</li>
+<li><a href="https://netpeaksoftware.com/spider">Netpeak Spider</a>: Desktop tool for day-to-day SEO audit, fast issue check, comprehensive analysis, and website scraping.</li>
+<li><a href="https://github.com/octoparse">Octoparse</a>: Octoparse is a free, multi-award winning web scraping software to turn websites into structured data without coding.</li>
+</ul>
+<h4 id="find-tlds-domains">Find TLD's domains</h4>
+<ul>
+<li><a href="https://searchdns.netcraft.com/">Search Web by Domain</a></li>
+<li><a href="https://github.com/aboul3la/Sublist3r">Sublist3r</a>: Fast subdomains enumeration tool for penetration testers.</li>
+</ul>
+<h4 id="footprinting">Footprinting</h4>
+<ul>
+<li><a href="https://github.com/GitHackTools/BillCipher">Bill Cipher</a>: Information Gathering tool for a Website or IP address</li>
+<li><a href="https://www.elevenpaths.com/es/innovacion-laboratorio/herramientas/foca">FOCA</a></li>
+<li><a href="https://www.maltego.com/">Maltego</a>: Maltego is an open source intelligence (OSINT) and graphical link analysis tool for gathering and connecting information for investigative tasks.</li>
+<li><a href="https://osintframework.com/">OSINT Framework</a></li>
+<li><a href="https://github.com/i3visio/osrframework">OSRFramework</a>: The Open Sources Research Framework is a AGPLv3+ project by i3visio focused on providing API and tools to perform more accurate online researches.</li>
+<li><a href="https://github.com/evyatarmeged/Raccoon">Raccoon</a>: A high performance offensive security tool for reconnaissance and vulnerability scanning.</li>
+<li><a href="https://github.com/s0md3v/ReconDog">ReconDog</a>: Reconnaissance Swiss Army Knife.</li>
+<li><a href="https://github.com/lanmaster53/recon-ng">Recon-ng</a>: Open Source Intelligence gathering tool aimed at reducing the time spent harvesting information from open sources.</li>
+<li><a href="https://github.com/Moham3dRiahi/Th3inspector">Th3Inspector</a></li>
+</ul>
+<h4 id="instagram">Instagram</h4>
+<ul>
+<li><a href="https://github.com/Datalux/Osintgram">Osintgram</a>: It is a OSINT tool on Instagram. It offers an interactive shell to perform analysis on Instagram account of any users by its nickname.</li>
+</ul>
+<h4 id="ip-geolocation-lookup">IP geolocation lookup</h4>
+<ul>
+<li><a href="https://api.ip.sb/geoip">GeoIP API</a></li>
+<li><a href="https://www.ip2location.com/">IP2Location</a></li>
+<li><a href="https://www.iplocation.net/">IP Location Finder</a></li>
+</ul>
+<h4 id="mirroring-entire-website">Mirroring entire website</h4>
+<ul>
+<li><a href="https://www.cyotek.com/cyotek-webcopy">Cyotek</a>: Copy websites locally for offline browsing</li>
+<li><a href="https://github.com/xroche/httrack">HTTrack WebSite Copier</a>: Copy websites to your computer.</li>
+<li><a href="http://www.calluna-software.com/">NCollector Studio</a></li>
+<li><a href="https://github.com/trustedsec/social-engineer-toolkit">Social-Engineer Toolkit (SET)</a>: It is an open-source penetration testing framework designed for social engineering. SET has a number of custom attack vectors that allow you to make a believable attack quickly.</li>
+<li><a href="https://github.com/suljot/shellphish">ShellPhish</a>: Phishing Tool for Instagram, Facebook, Twitter, Snapchat, Github.napchat, Github.</li>
+</ul>
+<h4 id="monitoring-webpages-for-updates-and-changes">Monitoring webpages for updates and changes</h4>
+<ul>
+<li><a href="https://visualping.io/">visualping</a>: Monitor website changes… so you don't have to!</li>
+<li><a href="https://www.aignes.com/">Website-Watcher</a>: Monitor websites for new content and changes.</li>
+</ul>
+<h4 id="monitoring-website-traffic-of-target-company">Monitoring website traffic of target company</h4>
+<ul>
+<li><a href="https://www.alexa.com/">Alexa</a>: Find, Reach, and Convert Your Audience.</li>
+<li><a href="https://www.teamviewer.com/es/remote-management/monitorizacion-de-web/">TeamViewer Web Monitoring</a>: Monitor the web experience (old Monitis).</li>
+<li><a href="https://www.web-stat.com/">Web-Stat</a></li>
+</ul>
+<h4 id="phone-number">Phone number</h4>
+<ul>
+<li><a href="https://github.com/sundowndev/PhoneInfoga">phoneinfoga</a>: Advanced information gathering &amp; OSINT framework for phone numbers.</li>
+</ul>
+<h4 id="traceroute">Traceroute</h4>
+<ul>
+<li><a href="https://www.solarwinds.com/">IT Management Software &amp; Remote Monitoring Tools | SolarWinds</a></li>
+<li><a href="https://www.pathanalyzer.com/">Path Analyzer Pro</a>: Path Analyzer Pro delivers advanced network route-tracing with performance tests, DNS, whois, and network resolution to investigate network issues. By integrating all these powerful features into one simple graphical interface, Path Analyzer Pro has become a must-have tool for any network, systems, or security professional on Windows and Mac OS X.</li>
+<li><a href="http://www.visualroute.com/">VisualRoute</a></li>
+</ul>
+<h4 id="twitter">Twitter</h4>
+<ul>
+<li><a href="https://onemilliontweetmap.com/">#onemilliontweetmap</a></li>
+<li><a href="https://www.geocreepy.com/">Creepy</a>: Creepy is a geolocation OSINT tool. Gathers geolocation related information from online sources, and allows for presentation on map, search filtering based on exact location and/or date, export in csv format or kml for further analysis in Google Maps.</li>
+<li><a href="http://ctrlq.org/first/">First Tweet - Who Said It First on Twitter</a></li>
+<li><a href="https://foller.me/">foller.me</a>: Twitter analytics application that gives you rich insights about any public Twitter profile. We gather near real-time data about topics, mentions, hashtags, followers, location and more!</li>
+<li><a href="https://followerwonk.com/">Followerwonk</a>: Help to explore and grow one's social graph by digging deeper into Twitter analytics.</li>
+<li><a href="https://www.omnisci.com/demos/tweetmap">Omnisci</a></li>
+<li><a href="https://github.com/vaguileradiaz/tinfoleak">tinfoleak</a>: The most complete open-source tool for Twitter intelligence analysis.</li>
+</ul>
+<h4 id="website-footprinting">Website footprinting</h4>
+<ul>
+<li><a href="https://portswigger.net/burp">Burp Suite</a></li>
+<li><a href="https://pentest-tools.com/information-gathering/find-subdomains-of-domain">Find Subdomains Online | Pentest-Tools.com</a></li>
+<li><a href="https://github.com/AliasIO/wappalyzer">Wappalyzer</a>: Identifies technologies on websites, including content management systems, ecommerce platforms, JavaScript frameworks, analytics tools and much more.</li>
+<li><a href="https://chrome.google.com/webstore/detail/website-informer-addon/hgmkhdckpblkakgojblgmlgaeaimofom">Website informer</a>: Evaluates authority and popularity of websites you are visiting.</li>
+<li><a href="https://sitereport.netcraft.com/">What's that site running? | Netcraft</a>: Find out the infrastructure and technologies used by any site using results from our internet data mining.</li>
+<li><a href="https://github.com/zaproxy/zaproxy">Zaproxy</a>: The OWASP Zed Attack Proxy (ZAP) is one of the world’s most popular free security tools and is actively maintained by a dedicated international team of volunteers. It can help you automatically find security vulnerabilities in your web applications while you are developing and testing your applications.</li>
+</ul>
+<h5 id="website-footprinting-using-spiders">Website footprinting using spiders</h5>
+<ul>
+<li><a href="https://www.parsehub.com/">ParseHub</a>: It is a free and powerful web scraping tool. With our advanced web scraper, extracting data is as easy as clicking on the data you need.</li>
+<li><a href="https://www.spiderfoot.net/">SpiderFoot</a>: Automates OSINT collection and helps you find what matters</li>
+<li><a href="http://www.webextractor.com/">Web Data Extractor</a>: It is a web scraping tool specifically designed for mass-gathering of various data types. It can harvest URLs, phone and fax numbers, email addresses, as well as meta tag information and body text. Special feature of WDE Pro is custom extraction of structured data.</li>
+<li><a href="https://code.google.com/archive/p/webscarab-ng/">webscarab-ng</a>: WebScarab-NG is a complete rewrite of the old WebScarab application, with a special focus on making the application more user-friendly.</li>
+</ul>
+<h3 id="networks">Networks</h3>
+<ul>
+<li><a href="https://github.com/angryip/ipscan">Angry IP Scanner</a>: Fast and friendly network scanner</li>
+<li><a href="https://www.colasoft.com/capsa/">Capsa Portable Network Analyzer</a>: Monitor, Analyze, Troubleshoot your Wired &amp; Wireless Network.</li>
+<li><a href="https://www.colasoft.com/packet_builder/">Colasoft Packet Builder</a>: Colasoft Packet Builder enables creating custom network packets; users can use this tool to check their network protection against attacks and intruders. Colasoft Packet Builder includes a very powerful editing feature. Besides common HEX editing raw data, it features a Decoding Editor allowing users to edit specific protocol field values much easier.</li>
+<li><a href="https://github.com/antirez/hping">hping</a>: hping3 is a network tool able to send custom TCP/IP packets and to display target replies like ping do with ICMP replies. hping3 can handle fragmentation, and almost arbitrary packet size and content, using the command line interface.</li>
+<li><a href="https://www.targeted.org/htthost/">HTTPort 3.SNFM</a>: HTTPort allows you to bypass your HTTP proxy, which is blocking you from the Internet. With HTTPort you may use various Internet software from behind the proxy, ex. e-mail, instant messengers, P2P file sharing, ICQ, News, FTP, IRC, etc.</li>
+<li><a href="https://github.com/LinkedInAttic/jaqen">Jaqen</a>: Simple DNS rebinding.</li>
+<li><a href="http://www.magnetosoft.com/product/megaping/features">Megaping</a>: MegaPing is the ultimate must-have toolkit that provides essential utilities for Information System specialists, system administrators, IT solution providers or individuals.</li>
+<li><a href="https://github.com/rapid7/metasploit-framework">Metasploit Framework</a></li>
+<li><a href="https://github.com/Uninett/nav">Nav</a>: Network Administration Visualized.</li>
+<li><a href="https://www.arcai.com/netCut/s/">netCut</a>: With netCut, you can know who has is or has been on your WIFI, his name, device brand, what time in, what time out.</li>
+<li><a href="https://www.netscantools.com/nstpromain.html">NetScanTools</a>: NetScanTools Pro is an integrated collection of internet information gathering and network troubleshooting utilities for Network Professionals. Research IPv4 addresses, IPv6 addresses, hostnames, domain names, email addresses and URLs automatically<strong> or with manual tools. It is designed for the Windows operating system GUI. </strong>Automated tools are started interactively by the user. Include a promiscous detection scanner.</li>
+<li><a href="http://nutsaboutnets.com/archives/netsurveyor-wifi-scanner/">NetSurveyor</a>: It is an 802.11 (WiFi) network discovery tool that gathers information about nearby wireless access points in real time and displays it in useful ways. Similar in purpose to NetStumbler, it includes many more features. </li>
+<li><a href="https://www.solarwinds.com/es/network-topology-mapper">Network Topology Mapper</a>: Network mapping software designed to automatically map your network.</li>
+<li><a href="https://github.com/nmap/nmap">Nmap</a>: The Network Mapper.</li>
+<li><a href="https://www.liveaction.com/products/omnipeek-network-protocol-analyzer/">Omnipeek Network Protocol Analyzer</a></li>
+<li><a href="https://github.com/pstavirs/ostinato">Ostinato</a>: Packet/Traffic Generator and Analyzer.</li>
+<li><a href="https://github.com/SECFORCE/sparta">sparta</a>: Network Infrastructure Penetration Testing Tool: NMap + hydra.</li>
+<li><a href="https://support.riverbed.com/content/support/software/steelcentral-npm/packet-analyzer.html">SteelCentral Packet Analyzer</a></li>
+<li><a href="https://github.com/dneufeld/unicornscan">Unicornscan</a></li>
+<li><a href="https://github.com/wireshark/wireshark">wireshark</a>: Wireshark is a network traffic analyzer, or "sniffer", for Linux, macOS, *BSD and other Unix and Unix-like operating systems and for Windows. It uses Qt, a graphical user interface library, and libpcap and npcap as packet capture and filtering libraries.</li>
+</ul>
+<h4 id="android">Android</h4>
+<ul>
+<li><a href="https://play.google.com/store/apps/details?id=com.overlook.android.fing">Fing</a></li>
+<li><a href="https://arcai.com/netcut-for-android/">netCut</a>: With netCut, you can know who has is or has been on your WIFI, his name, device brand, what time in, what time out.</li>
+<li><a href="https://play.google.com/store/apps/details?id=com.goodidea.network.ipscanner">Network IP Scanner</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.easymobile.lan.scanner">Network Scanner</a></li>
+<li><a href="https://sourceforge.net/projects/netspoof/">Network Spoofer</a>: Lets you change websites on other people’s computers from an Android phone. After downloading simply log onto a Wifi network, choose a spoof to use and press start.</li>
+<li><a href="https://play.google.com/store/apps/details?id=com.magdalm.wifinetworkscanner">WHO'S ON MY WIFI - NETWORK SCANNER</a></li>
+</ul>
+<h4 id="arp">ARP</h4>
+<h5 id="arp-poisoning">ARP Poisoning</h5>
+<ul>
+<li><a href="https://github.com/xchwarze/Cain">Cain</a></li>
+<li><a href="https://www.ettercap-project.org/">Ettercap</a>: It is a comprehensive suite for man in the middle attacks. It features sniffing of live connections, content filtering on the fly and many other interesting tricks. It supports active and passive dissection of many protocols and includes many features for network and host analysis.</li>
+</ul>
+<h5 id="protection">Protection</h5>
+<ul>
+<li><a href="https://sourceforge.net/projects/arpantispoofer/">ARP AntiSpoofer</a>: A utility for detecting and resisting BIDIRECTIONAL ARP spoofing. It can anti-spoof for not only the local host, but also other hosts in the same subnet. It is as well a handy helper for gateways which don't work well with ARP.</li>
+<li><a href="https://sourceforge.net/projects/arpon/">ArpON</a>: It is a Host-based solution that make the ARP standardized protocol secure in order to avoid the Man In The Middle (MITM) attack through the ARP spoofing, ARP cache poisoning or ARP poison routing attack.</li>
+<li><a href="https://github.com/he2ss/arpstraw">arpstraw</a>: Arp spoof detection tool.</li>
+<li><a href="https://github.com/europa502/shARP">shARP</a>: An anti-ARP-spoofing application software that use active and passive scanning methods to detect and remove any ARP-spoofer from the network.</li>
+<li><a href="http://www.xarp.net/">XArp – Advanced ARP Spoofing Detection</a>: It is a security application that uses advanced techniques to detect ARP based attacks.</li>
+</ul>
+<h4 id="dhcp">DHCP</h4>
+<h5 id="dhcp-starvation-attack">DHCP starvation attack</h5>
+<ul>
+<li><a href="https://github.com/kamorin/DHCPig">DHCPig</a>: DHCP exhaustion script written in python using scapy network library.</li>
+<li><a href="http://dhcpstarv.sourceforge.net/">dhcpstarv</a>:  Is tool that implements DHCP starvation attack. It requests DHCP leases on specified interface, save them and renew on regular basis.</li>
+<li><a href="http://gobbler.sourceforge.net/">Gobbler</a></li>
+<li><a href="https://sourceforge.net/projects/hyenae/">Hyenae</a>: It is a highly flexible platform independent network packet generator. It allows you to reproduce several MITM, DoS and DDoS attack scenarios, comes with a clusterable remote daemon and an interactive attack assistant.</li>
+<li><a href="https://github.com/tomac/yersinia">yersinia</a>: A framework for layer 2 attacks.</li>
+</ul>
+<h5 id="rogue-dhcp-attack">Rogue DHCP attack</h5>
+<ul>
+<li><a href="https://github.com/xchwarze/Cain">Cain</a></li>
+</ul>
+<h4 id="dos">DoS</h4>
+<ul>
+<li><a href="https://github.com/antirez/hping">hping3</a>: hping3 is a network tool able to send custom TCP/IP packets and to display target replies like ping do with ICMP replies. hping3 can handle fragmentation, and almost arbitrary packet size and content, using the command line interface.</li>
+<li><a href="https://sourceforge.net/projects/highorbitioncannon/">High Orbit Ion Cannon (HOIC)</a></li>
+<li><a href="https://github.com/NewEraCracker/LOIC">Low Orbit Ion Cannon (LOIC)</a>:  An open source network stress tool, written in C#. Based on Praetox's LOIC project.</li>
+</ul>
+<h5 id="protection_1">Protection</h5>
+<ul>
+<li><a href="http://www.anti-ddos.net/">Anti DDoS Software</a>: Monitors each incoming and outgoing packet in Real-Time. It displays the local address, remote address, and other information of each network flow. Anti DDoS Guardian limits network flow number, client bandwidth, client concurrent TCP connection number, and TCP connection rate. It also limits the UDP bandwidth, UDP connection rate, and UDP packet rate.</li>
+<li><a href="https://ddos-guard.net/">DDoS-GUARD</a></li>
+<li><a href="https://www.dosarrest.com/">DOSarrest’s DDoS protection service</a></li>
+<li><a href="https://www.cloudflare.com/">Cloudflare</a></li>
+<li><a href="https://id-ransomware.malwarehunterteam.com/">ID Ransomware</a>: Upload a ransom note and/or sample encrypted file to identify the ransomware that has encrypted your data.</li>
+<li><a href="https://www.imperva.com/products/ddos-protection-services/">Imperva Incapsula DDoS Protection</a></li>
+</ul>
+<h4 id="mac-address">MAC address</h4>
+<h5 id="mac-flood-attack">MAC flood attack</h5>
+<ul>
+<li><a href="https://linux.die.net/man/8/macof">macof</a>: Flood a switched LAN with random MAC addresses.</li>
+<li><a href="https://github.com/tomac/yersinia">yersinia</a>: A framework for layer 2 attacks.</li>
+</ul>
+<h5 id="mac-spoofing">MAC Spoofing</h5>
+<ul>
+<li><a href="https://www.klcconsulting.net/smac/">SMAC</a>: FREE MAC Address Spoofing Tool.</li>
+<li><a href="https://technitium.com/tmac/">Technitium MAC Address Changer (TMAC)</a>: A freeware utility to spoof MAC address instantly.</li>
+</ul>
+<h3 id="enumeration">Enumeration</h3>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/adexplorer">Active Directory Explorer</a>: It is an advanced Active Directory (AD) viewer and editor. You can use AD Explorer to easily navigate an AD database, define favorite locations, view object properties and attributes without having to open dialog boxes, edit permissions, view an object's schema, and execute sophisticated searches that you can save and re-execute.</li>
+<li><a href="https://www.advanced-ip-scanner.com/">Advanced IP Scanner</a>: Reliable and free network scanner to analyse LAN. The program shows all network devices, gives you access to shared folders, provides remote control of computers (via RDP and Radmin), and can even remotely switch computers off. It is easy to use and runs as a portable edition. It should be the first choice for every network admin.</li>
+<li><a href="https://github.com/OWASP/Amass">Amass</a>: The OWASP Amass Project performs network mapping of attack surfaces and external asset discovery using open source information gathering and active reconnaissance techniques.</li>
+<li><a href="https://github.com/polarityio/dig">dig</a>: Network admin tool for querying DNS servers.</li>
+<li><a href="https://github.com/maurosoria/dirsearch">dirsearch</a>: Web path scanner.</li>
+<li><a href="https://github.com/darkoperator/dnsrecon">dnsrecon</a>: DNS Enumeration Script.</li>
+<li><a href="https://github.com/davebarr/dnswalk">dnswalk</a>: A DNS database debugger.</li>
+<li><a href="https://github.com/TypeError/domained">domained</a>: Multi Tool Subdomain Enumeration.</li>
+<li><a href="https://www.solarwinds.com/engineers-toolset">Engineer's Toolset</a>: Network software with over 60 must-have tools.</li>
+<li><a href="https://github.com/CiscoCXSecurity/enum4linux">enum4linux</a>: It is a Linux alternative to enum.exe for enumerating data from Windows and Samba hosts.</li>
+<li><a href="https://github.com/FortyNorthSecurity/EyeWitness">EyeWitness</a>: EyeWitness is designed to take screenshots of websites, provide some server header info, and identify default credentials if possible.</li>
+<li><a href="http://www.magnetosoft.com/product/global_network_inventory/features">Global Network Inventory</a>: Global Network Inventory is a powerful and flexible software and hardware inventory system that can be used as an audit scanner in an agent-free and zero deployment environments. If used as an audit scanner, it only requires full administrator rights to the remote computers you wish to scan. Global Network Inventory can audit remote computers and even network appliances, including switches, network printers, document centers, etc.</li>
+<li><a href="https://github.com/OJ/gobuster">gobuster</a>: Directory/File, DNS and VHost busting tool written in Go.</li>
+<li><a href="https://github.com/DragonJAR/Scripts/blob/master/google-url-extractor.js">google-url-extractor.js</a>: Small script that extracts all URLs from a Google search result.</li>
+<li><a href="https://github.com/tomnomnom/httprobe">httprobe</a>: Take a list of domains and probe for working HTTP and HTTPS servers.</li>
+<li><a href="https://bgp.he.net/">Hurricane Electric BGP Toolkit</a></li>
+<li><a href="http://jxplorer.org/downloads/">jxplorer</a>: It is a cross platform LDAP browser and editor. It is a standards compliant general purpose LDAP client that can be used to search, read and edit any standard LDAP directory, or any directory service with an LDAP or DSML interface.</li>
+<li><a href="https://github.com/guelfoweb/knock">Knock</a>: Knockpy is a python tool designed to enumerate subdomains on a target domain through a wordlist. It is designed to scan for DNS zone transfer and to try to bypass the wildcard DNS record automatically if it is enabled. Now knockpy supports queries to VirusTotal subdomains, you can setting the API_KEY within the config.json file.</li>
+<li><a href="https://www.ldap-account-manager.org/lamcms/releases">LDAP Account Manager</a></li>
+<li><a href="http://www.ldapadmin.org/download/ldapadmin.html">LDAP Admin</a></li>
+<li><a href="https://www.ldapadministrator.com/download.htm">LDAP Administrator</a></li>
+<li><a href="https://github.com/blechschmidt/massdns">massdns</a>: A high-performance DNS stub resolver for bulk lookups and reconnaissance (subdomain enumeration).</li>
+<li><a href="http://nbtenum.sourceforge.net/">NetBIOS Enumerator</a>: This application was suggested to show how to use remote network support and how to deal with some other interesting web technics like SMB.</li>
+<li><a href="https://www.netscantools.com/nstpromain.html">NetScanTools</a>: NetScanTools Pro is an integrated collection of internet information gathering and network troubleshooting utilities for Network Professionals. Research IPv4 addresses, IPv6 addresses, hostnames, domain names, email addresses and URLs automatically<strong> or with manual tools. It is designed for the Windows operating system GUI. </strong>Automated tools are started interactively by the user.</li>
+<li><a href="https://www.solarwinds.com/es/network-performance-monitor/use-cases/ip-network-browser">Network Browser</a>: NPM uses the SNMP protocol to send requests across your network and receive responses containing key configuration data, including system details and device failures. This is especially beneficial when dealing with large and dynamic networks using equipment from multiple vendors. Just provide a list of IP addresses or subnets along with SNMP credentials, and the NPM Network Sonar Wizard will automatically scan for devices.</li>
+<li><a href="https://www.solarwinds.com/es/network-performance-monitor">Network Performance Monitor</a>: Multi-vendor network monitoring that scales and expands with the needs of your network.</li>
+<li><a href="https://github.com/vulnersCom/nmap-vulners/blob/master/http-vulners-regex.nse">nmap-vulners</a>: Identifies the used software for each found http port and builds CPEs for the identified versions.</li>
+<li><a href="http://www.nsauditor.com/">nsauditor</a></li>
+<li><a href="https://github.com/anonion0/nsec3map">nsec3map</a>: A tool to enumerate the resource records of a DNS zone using its DNSSEC NSEC or NSEC3 chain</li>
+<li><a href="https://github.com/jtibaquira/nsearch">NSEarch (Nmap Script Engine Search)</a>: Minimal script to help find script into the nse database.</li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/pstools">PsTools</a></li>
+<li><a href="https://github.com/hegusung/RPCScan">RPCScan</a>: Tool to communicate with RPC services and check misconfigurations on NFS shares</li>
+<li><a href="https://github.com/pwnieexpress/pwn_plug_sources/blob/master/src/snmpcheck/snmpcheck-1.8.pl">snmpcheck</a>: Like to snmpwalk, snmpcheck permits to enumerate information via SNMP protocol.</li>
+<li><a href="https://www.softperfect.com/products/networkscanner/">SoftPerfect Network Scanner</a>: Can ping computers, scan ports, discover shared folders and retrieve practically any information about network devices via WMI, SNMP, HTTP, SSH and PowerShell. It also scans for remote services, registry, files and performance counters; offers flexible filtering and display options and exports NetScan results to a variety of formats from XML to JSON.</li>
+<li><a href="https://github.com/TheRook/subbrute">subbrute</a>: A DNS meta-query spider that enumerates DNS records, and subdomains.</li>
+<li><a href="https://github.com/projectdiscovery/subfinder">subfinder</a>: Subfinder is a subdomain discovery tool that discovers valid subdomains for websites. Designed as a passive framework to be useful for bug bounties and safe for penetration testing.</li>
+<li><a href="https://github.com/aboul3la/Sublist3r">Sublist3r</a>: Fast subdomains enumeration tool for penetration testers.</li>
+<li><a href="https://github.com/p4pentest/SuperEnum">SuperEnum</a>: This script does the basic enumeration of any open port along with screenshots.</li>
+<li><a href="https://www.systemtools.com/hyena/">SystemTools Hyena</a>: Using the built-in Windows administration tools to manage a medium to large Windows network or Active Directory environment can be a challenge. Add multiple domains, hundreds or thousands of servers, workstations, and users, and before you know it, things can get out of hand. Hyena is designed to both simplify and centralize nearly all of the day-to-day management tasks, while providing new capabilities for system administration. This functionality is provided in a single, centralized, easy to use product. Used today by tens of thousands of system administrators worldwide, Hyena is the one tool that every administrator cannot afford to be without.</li>
+<li><a href="https://github.com/tomnomnom/waybackurls">waybackurls</a>: Fetch all the URLs that the Wayback Machine knows about for a domain.</li>
+<li><a href="https://github.com/xmendez/wfuzz">wfuzz</a>: Web application fuzzer.</li>
+</ul>
+<h3 id="vulnerability-analysis">Vulnerability Analysis</h3>
+<h4 id="vulnerability-scanning">Vulnerability Scanning</h4>
+<ul>
+<li><a href="https://www.gfihispana.com/products-and-solutions/network-security-solutions/gfi-languard">GFI LanGuard</a></li>
+<li><a href="https://www.tenable.com/products/nessus">Nessus</a>: Scanning for vulnerabilities in various operating systems. It consists of a daemon, nessusd, which performs the scan on the target system, and nessus, the client which displays the progress and reports on the status of the scans.</li>
+<li><a href="https://github.com/sullo/nikto">nikto</a>: Nikto web server scanner.</li>
+<li><a href="https://www.openvas.org/">OpenVAS</a>: It is a full-featured vulnerability scanner. Its capabilities include unauthenticated testing, authenticated testing, various high level and low level Internet and industrial protocols, performance tuning for large-scale scans and a powerful internal programming language to implement any type of vulnerability test.</li>
+<li><a href="https://code.google.com/archive/p/skipfish/">skipfish</a>:  Is an active web application security reconnaissance tool. It prepares an interactive sitemap for the targeted site by carrying out a recursive crawl and dictionary-based probes. The resulting map is then annotated with the output from a number of active (but hopefully non-disruptive) security checks. The final report generated by the tool is meant to serve as a foundation for professional web application security assessments.</li>
+<li><a href="https://owasp.org/www-community/Vulnerability_Scanning_Tools">Vulnerability Scanning Tools by OWASP</a></li>
+</ul>
+<h4 id="databases">Databases</h4>
+<ul>
+<li><a href="https://cve.mitre.org/">CVE mitre</a>: The mission of the CVE® Program is to identify, define, and catalog publicly disclosed cybersecurity vulnerabilities.</li>
+<li><a href="https://cwe.mitre.org/">CWE mitre</a>: It is a community-developed list of software and hardware weakness types. It serves as a common language, a measuring stick for security tools, and as a baseline for weakness identification, mitigation, and prevention efforts.</li>
+<li><a href="https://nvd.nist.gov/">National Vulnerability Database</a>: The NVD is the U.S. government repository of standards based vulnerability management data represented using the Security Content Automation Protocol (SCAP). This data enables automation of vulnerability management, security measurement, and compliance. The NVD includes databases of security checklist references, security-related software flaws, misconfigurations, product names, and impact metrics.</li>
+<li><a href="https://objective-see.com/malware.html">Objective-See</a></li>
+<li><a href="https://www.securityfocus.com/">SecurityFocus</a></li>
+<li><a href="https://talosintelligence.com/vulnerability_info">Talos - Vulnerability Information</a>: Talos investigates software and operating system vulnerabilities in order to discover them before malicious threat actors do. We provide this information to vendors so that they can create patches and protect their customers as soon as possible.</li>
+</ul>
+<h3 id="system-hacking">System hacking</h3>
+<ul>
+<li><a href="https://github.com/9emin1/charlotte">https://github.com/9emin1/charlotte</a>: c++ fully undetected shellcode launcher ;).</li>
+<li><a href="https://github.com/MichaelGrafnetter/DSInternals">DSInternals</a>: The DSInternals project consists of these two parts: 1 - The DSInternals Framework exposes several internal features of Active Directory and can be used from any .NET application. The codebase has already been integrated into several 3rd party commercial products that use it in scenarios like Active Directory disaster recovery, identity management, cross-forest migrations and password strength auditing. 2 - The DSInternals PowerShell Module provides easy-to-use cmdlets that are built on top of the Framework.</li>
+<li><a href="https://github.com/TRSTN4/EagleShell">EagleShell</a>: EagleShell is a high-quality tool that aims to improve your pentest.</li>
+<li><a href="https://github.com/rapid7/metasploit-framework">Metasploit Framework</a></li>
+<li><a href="https://github.com/gentilkiwi/mimikatz">mimikatz</a>: A little tool to play with Windows security.</li>
+<li><a href="https://github.com/g0tmi1k/msfpc">MSFvenom Payload Creator (MSFPC)</a>: A quick way to generate various "basic" Meterpreter payloads via msfvenom (part of the Metasploit framework).</li>
+<li><a href="https://github.com/csababarta/ntdsxtract">ntdsxtract</a>: Active Directory forensic framework.</li>
+<li><a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite">PEASS - Privilege Escalation Awesome Scripts SUITE (with colors)</a>: Here you will find privilege escalation tools for Windows and Linux/Unix and MacOS. These tools search for possible local privilege escalation paths that you could exploit and print them to you with nice colors so you can recognize the misconfigurations easily.</li>
+<li><a href="https://github.com/JohnTroony/php-webshells">php-webshells</a>: Common PHP webshells you might need for your Penetration Testing assignments or CTF challenges. Do not host the file(s) on your server!</li>
+<li><a href="https://github.com/PowerShellEmpire/PowerTools">PowerTools</a>: PowerTools is a collection of PowerShell projects with a focus on offensive operations.</li>
+<li><a href="https://github.com/trustedsec/unicorn">unicorn</a>: It is a simple tool for using a PowerShell downgrade attack and inject shellcode straight into memory. Based on Matthew Graeber's powershell attacks and the powershell bypass technique presented by David Kennedy (TrustedSec) and Josh Kelly at Defcon 18.</li>
+<li><a href="https://github.com/Veil-Framework/Veil">Veil</a>: It is a tool designed to generate metasploit payloads that bypass common anti-virus solutions.</li>
+<li><a href="https://github.com/r00t-3xp10it/venom">venom</a>: The script will use msfvenom  (metasploit) to generate shellcode in diferent formats ( C# | python | ruby | dll | msi | hta-psh | docm | apk | macho | elf | deb | mp4 | etc ) injects the shellcode generated into one template (example: python) "the python funtion will execute the shellcode into ram" and uses compilers like gcc (gnu cross compiler) or mingw32 or pyinstaller to build the executable file.</li>
+<li><a href="https://docs.microsoft.com/es-es/windows-server/administration/windows-commands/wevtutil">wevtutil</a>: Enables you to retrieve information about event logs and publishers. You can also use this command to install and uninstall event manifests, to run queries, and to export, archive, and clear logs.</li>
+<li><a href="https://github.com/WhiteWinterWolf/wwwolf-php-webshell">WhiteWinterWolf's PHP web shell</a></li>
+</ul>
+<h4 id="android_1">Android</h4>
+<ul>
+<li><a href="https://github.com/aerosol-can/PhoneSploit">PhoneSploit</a>: A tool for remote ADB exploitation in Python3 for all Machines.</li>
+<li><a href="https://github.com/linkedin/qark">Quick Android Review Kit (QARK)</a>: Tool to look for several security related Android application vulnerabilities.</li>
+<li><a href="https://vulnerabilitytest.quixxi.com/#/">Quixxi Vulnerability Scanner</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=in.indiandragon.shellshock.shellshockvulnerabilityscan&amp;hl=es&amp;gl=US">Shellshock Vulnerability Scan</a>: Free, fastest &amp; open Source app to scan for Shellshock vulnerability in Android.</li>
+<li><a href="https://play.google.com/store/apps/details?id=com.vulners&amp;hl=en_US&amp;gl=US">Vulners Scanner</a>: It implements technology of passive vulnerability scanning based on software version fingerprint.</li>
+<li><a href="https://www.vegabird.com/yaazhini/">Yaazhini</a>: Free Android APK &amp; API Vulnerability Scanner.</li>
+<li><a href="https://www.zimperium.com/zanti-mobile-penetration-testing">zANTI</a>: It is a mobile penetration testing toolkit that lets security managers assess the risk level of a network with the push of a button. This easy to use mobile toolkit enables IT Security Administrators to simulate an advanced attacker to identify the malicious techniques they use in the wild to compromise the corporate network.</li>
+</ul>
+<h4 id="ios">iOS</h4>
+<ul>
+<li><a href="https://github.com/benjamin-42/Trident">Trident</a>: This exploits the following two CVEs: CVE-2016-4655, allow an attacker to obtain sensitive information from kernel memory via a crafted app; and CVE-2016-4656, allow an attacker to execute arbitrary code in a privileged context or cause a denial of service (memory corruption) via a crafted app.</li>
+</ul>
+<h4 id="privilege-escalation-post-exploitation">Privilege Escalation / Post exploitation</h4>
+<ul>
+<li><a href="https://github.com/AlessandroZ/BeRoot">BeRoot</a>: It is a post exploitation tool to check common misconfigurations to find a way to escalate our privilege.</li>
+<li><a href="https://github.com/reider-roque/linpostexp">linpostexp</a>: ux post exploitation enumeration and exploit checking tools.</li>
+<li><a href="https://docs.rapid7.com/metasploit/meterpreter-getsystem/">meterpreter - getsystem</a></li>
+<li><a href="https://github.com/PowerShellMafia/PowerSploit/">PowerSploit</a>: A PowerShell Post-Exploitation Framework</li>
+</ul>
+<h4 id="exploit-databases">Exploit databases</h4>
+<ul>
+<li><a href="https://cve.circl.lu/">Circl</a></li>
+<li><a href="https://cve.mitre.org/">CVE mitre</a>: The mission of the CVE® Program is to identify, define, and catalog publicly disclosed cybersecurity vulnerabilities.</li>
+<li><a href="https://cxsecurity.com/exploit">cxsecurity</a></li>
+<li><a href="https://www.exploit-db.com/">Exploit Database</a></li>
+<li><a href="https://www.securityfocus.com/">SecurityFocus</a></li>
+<li><a href="https://vuldb.com/">VulDB</a></li>
+<li><a href="https://vulners.com/">Vulners</a></li>
+</ul>
+<h4 id="logs">Logs</h4>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/auditpol">auditpol</a>: Displays information about and performs functions to manipulate audit policies.</li>
+<li><a href="https://www.bleachbit.org">BleachBit</a></li>
+<li><a href="https://www.tenforums.com/tutorials/16588-clear-all-event-logs-event-viewer-windows.html">Clear_Event_Viewer_Logs.bat</a></li>
+<li><a href="https://dban.org">DBAN</a></li>
+<li><a href="https://github.com/Rizer0/Log-killer">Log-killer</a>: Clear all your logs in [linux/windows] servers.</li>
+<li><a href="https://www.cybertronsoft.com">Privacy Eraser</a></li>
+<li><a href="https://privacyroot.com">Wipe</a></li>
+</ul>
+<h4 id="password-cracking-login-brute-forcer">Password cracking / Login brute-forcer</h4>
+<ul>
+<li><a href="https://www.darknet.org.uk/2006/09/brutus-password-cracker-download-brutus-aet2zip-aet2/">Brutus Password Cracker</a></li>
+<li><a href="https://github.com/xchwarze/Cain">Cain</a>: Password recovery tool for Microsoft Operating Systems. It allows easy recovery of various kind of passwords by sniffing the network, cracking encrypted passwords using Dictionary, Brute-Force and Cryptanalysis attacks, recording VoIP conversations, decoding scrambled passwords, recovering wireless network keys, revealing password boxes, uncover,…</li>
+<li><a href="https://github.com/hashcat/hashcat">hashcat</a>: Password recovery utility, supporting five unique modes of attack for over 300 highly-optimized hashing algorithms. hashcat currently supports CPUs, GPUs, and other hardware accelerators on Linux, Windows, and macOS, and has facilities to help enable distributed password cracking.</li>
+<li><a href="https://github.com/openwall/john">John the Ripper jumbo</a>: Advanced offline password cracker, which supports hundreds of hash and cipher types, and runs on many operating systems, CPUs, GPUs, and even some FPGAs.</li>
+<li><a href="https://www.l0phtcrack.com/">L0phtCrack Password Auditor</a>: Enforce strong passwords across your enterprise.</li>
+<li><a href="https://github.com/jmk-foofus/medusa">medusa</a>: Medusa is a speedy, parallel, and modular, login brute-forcer.</li>
+<li><a href="https://github.com/mxrch/penglab">penglab</a>: Abuse of Google Colab for cracking hashes.</li>
+<li><a href="https://project-rainbowcrack.com/">RainbowCrack</a>: It is a general propose implementation of Philippe Oechslin's faster time-memory trade-off technique. It crack hashes with rainbow tables.</li>
+<li><a href="https://github.com/lgandx/Responder">Responder</a>: Responder is a LLMNR, NBT-NS and MDNS poisoner, with built-in HTTP/SMB/MSSQL/FTP/LDAP rogue authentication server supporting NTLMv1/NTLMv2/LMv2, Extended Security NTLMSSP and Basic HTTP authentication.</li>
+<li><a href="https://github.com/vanhauser-thc/thc-hydra">thc-hydra</a>: Number one of the biggest security holes are passwords, as every password security study shows. This tool is a proof of concept code, to give researchers and security consultants the possibility to show how easy it would be to gain unauthorized access from remote to a system.</li>
+</ul>
+<h3 id="malwares">Malwares</h3>
+<ul>
+<li><a href="http://www.enelpc.com/p/4n4ldetector.html">4n4lDetector</a>: It is a tool for analysis of Windows executable files, in order to quickly identify if this is or is not a malware. Most analyzes are based on the extraction of strings "ANSI" and "UNICODE" in disk, but also works with "Memory Dumps".</li>
+<li><a href="https://github.com/1y0n/AV_Evasion_Tool">Advanced AV Evasion Tool For Red Team Ops</a></li>
+<li><a href="https://hakin9.org/antispy-a-free-but-powerful-anti-virus-and-rootkits-toolkit/">Antispy</a>: AntiSpy is a free but powerful anti virus and rootkits toolkit.It offers you the ability with the highest privileges that can detect, analyze and restore various kernel modifications and hooks.With its assistance, you can easily spot and neutralize malware, hidden from normal detectors.</li>
+<li><a href="https://github.com/rshipp/awesome-malware-analysis">awesome-malware-analysis</a>: A curated list of awesome malware analysis tools and resources.</li>
+<li><a href="https://github.com/InQuest/awesome-yara">awesome-yara</a>: A curated list of awesome YARA rules, tools, and people.</li>
+<li><a href="https://cert.at/en/downloads/software/software-bytehist">Bytehist</a>: A tool for generating byte-usage-histograms for all types of files with a special focus on binary executables in PE-format (Windows).</li>
+<li><a href="https://cerbero.io/">Cerbero Suite</a></li>
+<li><a href="https://www.diskpulse.com/">Disk pulse</a>: It is a real-time disk change monitoring solution allowing one to monitor one or more disks or directories, save reports and disk change monitoring statistics, export detected changes to a centralized SQL database, execute custom commands and send E-Mail notifications when unauthorized changes are detected in critical system files.</li>
+<li><a href="https://github.com/outflanknl/EvilClippy">EvilClippy</a>: A cross-platform assistant for creating malicious MS Office documents. Can hide VBA macros, stomp VBA code (via P-Code) and confuse macro analysis tools. Runs on Linux, OSX and Windows.</li>
+<li><a href="https://github.com/AGDCservices/Ghidra-Scripts">Ghidra-Scripts</a>: Malware analysis scripts for Ghidra.</li>
+<li><a href="https://github.com/dragokas/hijackthis/">hijackthis</a>: A free utility that finds malware, adware and other security threats.</li>
+<li><a href="https://github.com/indetectables-net/toolkit">Indetectables Toolkit</a>: Fundamental reverse/analysis/cracking toolkit.</li>
+<li><a href="https://malapi.io/">MalAPI.io</a>: List of Windows API functions ranked based on their usefulness in malware.</li>
+<li><a href="https://github.com/jonaslejon/malicious-pdf">Malicious PDF Generator</a>: Generate a bunch of malicious pdf files with phone-home functionality. Can be used with Burp Collaborator.</li>
+<li><a href="https://malwareanalysis.co/">MalwareAnalysis.co</a>: Collection of malware tool and resources: <a href="https://malwareanalysis.co/resources/tools/windows/">Windows</a>, <a href="https://malwareanalysis.co/resources/tools/macos/">macOS</a>, <a href="https://malwareanalysis.co/resources/tools/linux/">Linux</a>, <a href="Android">https://malwareanalysis.co/resources/tools/android/</a>.</li>
+<li><a href="https://mmonit.com/">M/Monit</a>: Can monitor and manage distributed computer systems, conduct automatic maintenance and repair and execute meaningful causal actions in error situations.</li>
+<li><a href="https://github.com/mrphrazer/obfuscation_detection">obfuscation_detection</a>: Collection of scripts to pinpoint obfuscated code.</li>
+<li><a href="https://github.com/PELock/PELock-Software-Protection-and-Licensing-SDK">PELock Software Protection &amp; Software License Key System</a></li>
+<li><a href="https://github.com/oddcod3/Phantom-Evasion">Phantom-Evasion</a>: It is an antivirus evasion tool written in python (both compatible with python and python3) capable to generate (almost) fully undetectable executable even with the most common x86 msfvenom payload.</li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer">Process Explorer</a>: Ever wondered which program has a particular file or directory open? Now you can find out. Process Explorer shows you information about which handles and DLLs processes have opened or loaded.</li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procmon">Process Monitor</a>: It is an advanced monitoring tool for Windows that shows real-time file system, Registry and process/thread activity.</li>
+<li><a href="https://www.procdot.com/">ProcDOT</a>: There are plenty of tools for behavioral malware analysis. The defacto standard ones, though, are Sysinternals’s Process Monitor (also known as Procmon) and PCAP generating network sniffers like Windump, Tcpdump, Wireshark, and the like. These “two” tools cover almost everything a malware analyst might be interested in when doing behavioral malware analysis.</li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">ProcDump</a>: It is a command-line utility whose primary purpose is monitoring an application for CPU spikes and generating crash dumps during a spike that an administrator or developer can use to determine the cause of the spike. ProcDump also includes hung window monitoring (using the same definition of a window hang that Windows and Task Manager use), unhandled exception monitoring and can generate dumps based on the values of system performance counters. It also can serve as a general process dump utility that you can embed in other scripts.droid. TheFatRat Provides An Easy way to create Backdoors and Payload which can bypass most anti-virus.</li>
+<li><a href="http://reflexil.net/">Reflexil</a>: The .NET Assembly Editor.</li>
+<li><a href="https://www.nirsoft.net/utils/resources_extract.html">ResourcesExtract</a>: It is a small utility that scans dll/ocx/exe files and extract all resources (bitmaps, icons, cursors, AVI movies, HTML files, and more...) stored in them into the folder that you specify. You can use ResourcesExtract in user interface mode, or alternatively, in command-line mode without displaying any user interface.</li>
+<li><a href="https://github.com/hexfati/SharpDllLoader">SharpDllLoader</a>: A simple C# executable that invokes an arbitrary method of an arbitrary C# DLL.</li>
+<li><a href="https://www.shellterproject.com/introducing-shellter/">Shellter</a>: It is a dynamic shellcode injection tool, and the first truly dynamic PE infector ever created.</li>
+<li><a href="http://sandsprite.com/iDef/SysAnalyzer/">SysAnalyzer</a>: It is an open source application that was designed to give malcode analysts an automated tool to quickly collect, compare, and report on the actions a binary took while running on the system.</li>
+<li><a href="https://github.com/Screetsec/TheFatRat">TheFatRat</a>: It is an exploiting tool which compiles a malware with famous payload, and then the compiled malware can be executed on Linux , Windows , Mac and Android. TheFatRat Provides An Easy way to create Backdoors and Payload which can bypass most anti-virus.</li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/">Windows Sysinternals</a></li>
+<li><a href="https://virustotal.github.io/yara/">YARA</a>: YARA is a tool aimed at (but not limited to) helping malware researchers to identify and classify malware samples.</li>
+</ul>
+<h4 id="android_2">Android</h4>
+<ul>
+<li><a href="https://www.apkdecompilers.com/">APK Decompilers Online</a></li>
+<li><a href="https://github.com/dwisiswant0/apkleaks">apkleaks</a>: Scanning APK file for URIs, endpoints &amp; secrets.</li>
+<li><a href="https://github.com/vaibhavpandeyvpz/apkstudio">apkstudio</a>: Open-source, cross platform Qt based IDE for reverse-engineering Android application packages.</li>
+<li><a href="https://github.com/iBotPeaches/Apktool">Apktool</a>: A tool for reverse engineering 3rd party, closed, binary Android apps. It can decode resources to nearly original form and rebuild them after making some modifications. It also makes working with an app easier because of the project like file structure and automation of some repetitive tasks like building apk, etc.</li>
+<li><a href="https://github.com/appium/appium">appium</a>: It  is an open source test automation framework for use with native, hybrid and mobile web apps.</li>
+<li><a href="https://github.com/arguslab/Argus-SAF">Argus-SAF</a>: Argus static analysis framework</li>
+<li><a href="https://bitbar.com/">BitBar</a>: Testing Intelligence for DevOps.</li>
+<li><a href="https://github.com/Konloch/bytecode-viewer">Bytecode Viewer</a>: A Java 8+ Jar &amp; Android APK Reverse Engineering Suite (Decompiler, Editor, Debugger &amp; More).</li>
+<li><a href="https://github.com/FrenchYeti/dexcalibur">dexcalibur</a>: Android reverse engineering tool focused on dynamic instrumentation automation. Powered by Frida. It disassembles dex, analyzes it statically, generates hooks, discovers reflected methods, stores intercepted data and does new things from it. Its aim is to be an all-in-one Android reverse engineering platform.</li>
+<li><a href="https://github.com/FSecureLABS/drozer">drozer</a>: The Leading Security Assessment Framework for Android.</li>
+<li><a href="https://github.com/facebook/infer">fbinfer</a>: A tool to detect bugs in Java and C/C++/Objective-C code before it ships.</li>
+<li><a href="https://frida.re/docs/android/">frida.re</a>: Dynamic instrumentation toolkit for developers, reverse-engineers, and security researchers.</li>
+<li><a href="https://github.com/ac-pm/Inspeckage">Inspeckage</a>: About
+Android Package Inspector - dynamic analysis with api hooks, start unexported activities and more. </li>
+<li><a href="https://www.pnfsoftware.com/">JEB Decompiler</a>: Decompile and debug binary code. Break down and analyze document files.
+Android Dalvik, Intel x86, ARM, MIPS, Java, WebAssembly &amp; Ethereum Decompilers.</li>
+<li><a href="https://github.com/MobSF/Mobile-Security-Framework-MobSF">Mobile Security Framework (MobSF)</a>: It is an automated, all-in-one mobile application (Android/iOS/Windows) pen-testing, malware analysis and security assessment framework capable of performing static and dynamic analysis.</li>
+<li><a href="https://github.com/sensepost/objection">objection</a>: Runtime mobile exploration.</li>
+<li><a href="https://vulnerabilitytest.quixxi.com/#/">Quixxi Vulnerability Scanner</a></li>
+<li><a href="http://sanddroid.xjtu.edu.cn/#upload">SandDroid</a>: An automatic Android application analysis system.</li>
+<li><a href="http://selendroid.io/">selendroid</a>: Test automation for native or hybrid Android apps and the mobile web with Selendroid.</li>
+<li><a href="https://www.sisik.eu/apk-tool">Sixo Online APK Analyzer</a>: This tool allows you to analyze various details about Android APK files. It can decompile binary xml files and resources.</li>
+</ul>
+<h4 id="databases_1">Databases</h4>
+<ul>
+<li><a href="https://app.any.run/submissions">ANY.RUN</a>: Registration required.</li>
+<li><a href="http://contagiodump.blogspot.com/">Contagio Malware Dump</a>: Curated, password required.</li>
+<li><a href="https://capesandbox.com/">CAPE Sandbox</a>: Registration required.</li>
+<li><a href="http://dasmalwerk.eu/">Das Malwerk</a></li>
+<li><a href="https://tria.ge/">Hatching Triage</a>: Registration required.</li>
+<li><a href="https://www.hybrid-analysis.com/">Hybrid Analysis</a>: Registration required.</li>
+<li><a href="https://github.com/InQuest/malware-samples">InQuest Malware Samples</a></li>
+<li><a href="https://github.com/ashishb/ios-malware">ios-malware</a>: KeyRaider, OneClick, and XcodeGhost.</li>
+<li><a href="http://www.kernelmode.info/forum/viewforum.php?f=16">KernelMode.info</a>: Registration required.</li>
+<li><a href="http://malshare.com/">MalShare</a>: Registration required.</li>
+<li><a href="https://bazaar.abuse.ch/">MalwareBazaar</a>: MalwareBazaar is a project from abuse.ch with the goal of sharing malware samples with the infosec community, AV vendors and threat intelligence providers.</li>
+<li><a href="https://github.com/MalwareSamples/Malware-Feed/">MalwareSamples</a> Malware-Feed: Curated.</li>
+<li><a href="https://github.com/vxunderground/MalwareSourceCode">MalwareSourceCode</a>: About
+Collection of malware source code for a variety of platforms in an array of different programming languages.</li>
+<li><a href="https://objective-see.com/malware.html">Objective-See Collection</a>: Mac malware.</li>
+<li><a href="https://packettotal.com/malware-archive.html">PacketTotal</a>: Malware inside downloadable PCAP files.</li>
+<li><a href="https://github.com/marcoramilli/PhishingKitTracker">PhishingKitTracker</a>: Phishing sites source code.</li>
+<li><a href="https://polyswarm.network/">PolySwarm</a>: Registration required.</li>
+<li><a href="https://app.sndbox.com/">SNDBOX</a>: Registration required.</li>
+<li><a href="https://github.com/sophos-ai/SOREL-20M">SoReL-20M</a>: 10M defanged malware samples.</li>
+<li><a href="https://thezoo.morirt.com/">theZoo</a>: A repository of LIVE malwares for your own joy and pleasure.</li>
+<li><a href="https://urlhaus.abuse.ch/browse/">URLhaus</a>: Links to live sites hosting malware.</li>
+<li><a href="https://beta.virusbay.io/">VirusBay</a>: Registration required.</li>
+<li><a href="https://virusshare.com/">VirusShare</a>: Registration required.</li>
+<li><a href="https://www.virussign.com/downloads.html">VirusSign</a>: Registration required.</li>
+<li><a href="https://www.virussamples.com/">Virus and Malware Samples</a>: Includes APT, registration required.</li>
+<li><a href="https://vx-underground.org/samples.html">vx-underground</a></li>
+</ul>
+<h4 id="debuggers-disassemblers">Debuggers / Disassemblers</h4>
+<ul>
+<li><a href="https://www.telerik.com/fiddler">Fiddler</a></li>
+<li><a href="https://www.immunityinc.com/products/debugger/">Immunity Debugger</a>: It is a powerful new way to write exploits, analyze malware, and reverse engineer binary files. It builds on a solid user interface with function graphing, the industry's first heap analysis tool built specifically for heap creation, and a large and well supported Python API for easy extensibility.</li>
+<li><a href="http://www.ollydbg.de/">OllyDbg</a>: OllyDbg is a 32-bit assembler level analysing debugger for Microsoft® Windows®. Emphasis on binary code analysis makes it particularly useful in cases where source is unavailable.</li>
+<li><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools">WinDbg</a>: Can be used to debug kernel-mode and user-mode code, analyze crash dumps, and examine the CPU registers while the code executes.</li>
+<li><a href="https://github.com/x64dbg/x64dbg">x64dbg</a>: An open-source x64/x32 debugger for windows.</li>
+</ul>
+<h4 id="decompilers">Decompilers</h4>
+<ul>
+<li><a href="https://binary.ninja/">binary.ninja</a>: Online decompiler.</li>
+<li><a href="https://github.com/rizinorg/cutter">cutter</a>: Free and Open Source Reverse Engineering Platform powered by rizin.</li>
+<li><a href="https://www.decompiler.com/">Decompiler</a>: Online decompiler.</li>
+<li><a href="https://github.com/dnSpy/dnSpy">dnSpy</a>: .NET debugger and assembly editor.</li>
+<li><a href="https://sourceforge.net/projects/dile/">Dotnet IL Editor (dile)</a>: Dotnet IL Editor (DILE) allows disassembling and debugging .NET 1.0/1.1/2.0/3.0/3.5/4.0 applications without source code or .pdb files. It can debug even itself or the assemblies of the .NET Framework on IL level.</li>
+<li><a href="https://www.jetbrains.com/es-es/decompiler/">dotPeek</a>: It is a .NET decompiler from JetBrains, the makers of a wide array of developer productivity tools: ReSharper, dotTrace, and dotCover for .NET developers.</li>
+<li><a href="https://github.com/NationalSecurityAgency/ghidra">Ghidra Software Reverse Engineering Framework</a>: This framework includes a suite of full-featured, high-end software analysis tools that enable users to analyze compiled code on a variety of platforms including Windows, macOS, and Linux. Capabilities include disassembly, assembly, decompilation, graphing, and scripting, along with hundreds of other features. Ghidra supports a wide variety of processor instruction sets and executable formats and can be run in both user-interactive and automated modes. Users may also develop their own Ghidra plug-in components and/or scripts using Java or Python.</li>
+<li><a href="https://www.hex-rays.com/products/ida/">IDA Pro</a></li>
+<li><a href="https://github.com/icsharpcode/ILSpy">ILSpy</a>: ILSpy is the open-source .NET assembly browser and decompiler.</li>
+<li><a href="https://onlinedisassembler.com/odaweb/">Online Disassembler</a></li>
+<li><a href="https://github.com/radareorg/radare2">radare2</a>: UNIX-like reverse engineering framework and command-line toolset.</li>
+<li><a href="https://github.com/x64dbg/ScyllaHide">ScyllaHide</a>: ScyllaHide is an advanced open-source x64/x86 user mode Anti-Anti-Debug library. It hooks various functions to hide debugging. This tool is intended to stay in user mode (ring 3). </li>
+<li><a href="https://derevenets.com/">Snowman</a>: Snowman is a native code to C/C++ decompiler.</li>
+<li><a href="https://www.telerik.com/products/decompiler.aspx">Telerik JustDecompile</a>: Open Source Decompilation Engine.</li>
+<li><a href="https://github.com/gaasedelen/tenet">Tenet - A Trace Explorer for Reverse Engineers</a>: Tenet is an IDA Pro plugin for exploring execution traces. The goal of this plugin is to provide more natural, human controls for navigating execution traces against a given binary. The basis of this work stems from the desire to research new or innovative methods to examine and distill complex execution patterns in software.</li>
+<li><a href="https://github.com/mafaca/UtinyRipper">UtinyRipper</a>: It is a tool for extracting assets from serialized files (CAB-<em>, </em>.assets, <em>.sharedAssets, etc.) and assets bundles (</em>.unity3d, *.assetbundle, etc.) and conveting them into native Engine format.</li>
+<li><a href="https://github.com/ThunderCls/xAnalyzer">xAnalyzer</a>: xAnalyzer is a plugin for the x86/x64 x64dbg debugger by @mrexodia. This plugin is based on APIInfo Plugin by @mrfearless, although some improvements and additions have been made. xAnalyzer is capable of doing various types of analysis over the static code of the debugged application to give more extra information to the user. This plugin is going to make an extensive API functions call detections to add functions definitions, arguments and data types as well as any other complementary information, something close at what you get with OllyDbg analysis engine, in order to make it even more comprehensible to the user just before starting the debuggin task.</li>
+</ul>
+<h4 id="deobfuscator">Deobfuscator</h4>
+<ul>
+<li><a href="https://github.com/de4dot/de4dot">de4dot</a>: .NET deobfuscator and unpacker.</li>
+<li><a href="https://github.com/DissectMalware/XLMMacroDeobfuscator">XLMMacroDeobfuscator</a>: Extract and Deobfuscate XLM macros (a.k.a Excel 4.0 Macros).</li>
+</ul>
+<h4 id="dependencies">Dependencies</h4>
+<ul>
+<li><a href="https://github.com/jeremylong/DependencyCheck">DependencyCheck</a>: OWASP dependency-check is a software composition analysis utility that detects publicly disclosed vulnerabilities in application dependencies.</li>
+<li><a href="https://www.dependencywalker.com/">Dependency Walker</a>: It is a free utility that scans any 32-bit or 64-bit Windows module (exe, dll, ocx, sys, etc.) and builds a hierarchical tree diagram of all dependent modules. For each module found, it lists all the functions that are exported by that module, and which of those functions are actually being called by other modules. Another view displays the minimum set of required files, along with detailed information about each file including a full path to the file, base address, version numbers, machine type, debug information, and more.</li>
+<li><a href="https://hakiri.io/">Hakiri</a>: Monitors Ruby apps for dependency and code security vulnerabilities.</li>
+<li><a href="https://retirejs.github.io/retire.js/">RetireJS</a>: There is a plethora of JavaScript libraries for use on the web and in node.js apps out there. This greatly simplifies, but we need to stay update on security fixes. "Using Components with Known Vulnerabilities" is now a part of the OWASP Top 10 and insecure libraries can pose a huge risk for your webapp. The goal of Retire.js is to help you detect use of version with known vulnerabilities.</li>
+<li><a href="https://snyk.io/">snyk</a></li>
+</ul>
+<h4 id="device-drivers-monitoring">Device drivers monitoring</h4>
+<ul>
+<li><a href="https://www.nirsoft.net/utils/driverview.html">DriverView</a></li>
+</ul>
+<h4 id="dns-monitoring">DNS monitoring</h4>
+<ul>
+<li><a href="https://www.nirsoft.net/utils/dns_query_sniffer.html">DNSQuerySniffer</a>: It is a network sniffer utility that shows the DNS queries sent on your system. For every DNS query, the following information is displayed: Host Name, Port Number, Query ID, Request Type (A, AAAA, NS, MX, and so on), Request Time, Response Time, Duration, Response Code, Number of records, and the content of the returned DNS records.</li>
+</ul>
+<h4 id="file-fingerprinting">File fingerprinting</h4>
+<ul>
+<li><a href="https://www.slavasoft.com/hashcalc/">HashCalc</a></li>
+<li><a href="https://www.nirsoft.net/utils/hash_my_files.html">HashMyFiles</a>: It is small utility that allows you to calculate the MD5 and SHA1 hashes of one or more files in your system. You can easily copy the MD5/SHA1 hashes list into the clipboard, or save them into text/html/xml file.</li>
+<li><a href="http://implbits.com/products/hashtab/">HashTab</a></li>
+<li><a href="http://md5deep.sourceforge.net/">md5deep and hashdeep</a></li>
+<li><a href="https://github.com/gentilkiwi/mimikatz">mimikatz</a>: A little tool to play with Windows security.</li>
+</ul>
+<h4 id="files-integrity-monitoring">Files integrity monitoring</h4>
+<ul>
+<li><a href="https://www.cspsecurity.com/solutions/compliance-and-file-monitoring/file-integrity-checker/">CSP File Integrity Checker</a>: FIC delivers a simple yet powerful solution with its file monitoring and reporting capabilities. File monitoring is a critical part of the PCI data security standard to protect confidential (e.g. card-holder) information.</li>
+<li><a href="https://www.netwrix.com/auditor.html">Netwrix Auditor</a></li>
+<li><a href="https://www.newnettechnologies.com/change-tracker-gen-7.html">NNT Change Tracker</a>: Includes context-based File Integrity Monitoring and File Whitelisting to assure all change activity is automatically analyzed and validated. </li>
+<li><a href="https://www.poweradmin.com/products/file-sight/">PA File Sight</a></li>
+<li><a href="https://www.ionx.co.uk/">Verisys</a>: File integrity monitoring for Windows, Linux and network devices.</li>
+<li><a href="https://github.com/wazuh">Wazuh</a></li>
+</ul>
+<h4 id="network">Network</h4>
+<ul>
+<li><a href="https://www.colasoft.com/capsa/">Capsa Portable Network Analyzer</a>: Capsa, a portable network performance analysis and diagnostics tool, provides tremendously powerful and comprehensive packet capture and analysis solution with an easy to use interface allowing both veteran and novice users the ability to protect and monitor networks in a critical business environment. Capsa aids in keeping you assessed of threats that may cause significant business outage.</li>
+<li><a href="https://www.nirsoft.net/utils/cports.html">CurrPorts</a>: It is network monitoring software that displays the list of all currently opened TCP/IP and UDP ports on your local computer. For each port in the list, information about the process that opened the port is also displayed, including the process name, full path of the process, version information of the process (product name, file description, and so on), the time that the process was created, and the user that created it.</li>
+<li><a href="https://sourceforge.net/projects/fakenet/">FakeNet</a>: It is Windows network simulation tool designed for malware analysis. It redirects all traffic leaving a machine to the localhost (including hard-coded IP traffic and DNS traffic) and implements several protocols to ensure that malicious code continues to execute and can be observed by an analyst.</li>
+<li><a href="https://www.gfihispana.com/products-and-solutions/network-security-solutions/gfi-languard">GFI LanGuard</a></li>
+<li><a href="https://www.inetsim.org/downloads.html">INetSim</a>: It is a software suite for simulating common internet services in a lab environment, e.g. for analyzing the network behaviour of unknown malware samples.</li>
+<li><a href="https://www.solarwinds.com/es/netflow-traffic-analyzer">NetFlow Traffic Analyzer</a></li>
+<li><a href="https://www.netfort.com/">Netfort</a></li>
+<li><a href="https://port-monitor.com/">Port Monitor</a></li>
+<li><a href="https://www.es.paessler.com/prtg">PRTG Network Monitor</a></li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/tcpview">TCPView</a>: It is a Windows program that will show you detailed listings of all TCP and UDP endpoints on your system, including the local and remote addresses and state of TCP connections.</li>
+<li><a href="https://www.wireshark.org/">Wireshark</a></li>
+</ul>
+<h4 id="packers">Packers</h4>
+<ul>
+<li><a href="https://ntcore.com/?page_id=353">.NET Generic Unpacker</a>: This is a program to dump .NET packed applications. Of course no serious .NET protection relies on packing. In fact, this software shows how easily you can unpack a protected assemly. This .NET Generic Unpacker was written in a couple of hours and despite of the fact that it’s very simple, it might turn useful having it: otherwise you have to unpack manually, which is quite easy as well.</li>
+<li><a href="https://github.com/ExeinfoASL/ASL">ASL</a>: Detect packer , compiler , protector , .NET obfuscator.</li>
+<li><a href="http://aspack.com/">ASPack</a>: It is an advanced EXE packer created to compress Win32 executable files and to protect them against non-professional reverse engineering.</li>
+<li><a href="https://github.com/horsicq/Detect-It-Easy">https://github.com/horsicq/Detect-It-Easy</a>: Program for determining types of files for Windows, Linux and MacOS.</li>
+<li><a href="https://www.softpedia.com/get/Programming/Packers-Crypters-Protectors/PEiD-updated.shtml">PEiD</a>: It is an intuitive application that relies on its user-friendly interface to detect packers, cryptors and compilers found in PE executable files – its detection rate is higher than that of other similar tools since the app packs more than 600 different signatures in PE files.</li>
+<li><a href="https://github.com/sevagas/macro_pack">macro_pack</a>: The macro_pack is a tool used to automatize obfuscation and generation of retro formats such as MS Office documents or VBS like format. Now it also handles various shortcuts formats.</li>
+<li><a href="http://www.rdgsoft.net/">RDG Packer Detector</a>: It is a detector for packers, ciphers, compilers, packers, encoders, assemblers, installers.</li>
+<li><a href="https://upx.github.io/">UPX the Ultimate Packer for eXecutables</a>: It is a free, portable, extendable, high-performance executable packer for several executable formats.</li>
+</ul>
+<h4 id="portable-executable-pe-explorer">Portable Executable (PE) explorer</h4>
+<ul>
+<li><a href="https://ntcore.com/?page_id=388">CFF Explorer</a>: CFF Explorer was designed to make PE editing as easy as possible, but without losing sight on the portable executable’s internal structure. </li>
+<li><a href="https://horsicq.github.io/">Detect It Easy (DiE)</a>: Determining types of files.</li>
+<li><a href="https://github.com/accidentalrebel/dllcharacteristics.py">dllcharacteristics.py</a>: A simple Python tool for getting and setting the values of DLL characteristics for PE files.</li>
+<li><a href="http://exeinfo.atwebpages.com/">Exeinfo PE</a></li>
+<li><a href="https://www.aldeid.com/wiki/LordPE">Lord PE</a>: LordPE is a tool for system programmers/reverse engineers which is able to edit/view many parts of PE (Portable Executable) files, dump them from memory, optimize them, validate, analyze, edit, etc.</li>
+<li><a href="http://www.heaventools.com/overview.htm">PE Explorer</a>: Lets you open, view and edit a variety of different 32-bit Windows executable file types (also called PE files) ranging from the common, such as EXE, DLL and ActiveX Controls, to the less familiar types, such as SCR (Screensavers), CPL (Control Panel Applets), SYS, MSSTYLES, BPL, DPL and more (including executable files that run on MS Windows Mobile platform).</li>
+<li><a href="https://github.com/hasherezade/pe-bear-releases">PE-bear</a>: PE-bear is a freeware reversing tool for PE files. Its objective is to deliver fast and flexible “first view” for malware analysts, stable and capable to handle malformed PE files.</li>
+<li><a href="https://github.com/erocarrera/pefile">pefile</a>: It is a Python module to read and work with PE (Portable Executable) files.</li>
+<li><a href="https://github.com/guelfoweb/peframe">PEframe</a>: It is a open source tool to perform static analysis on Portable Executable malware and malicious MS Office documents.</li>
+<li><a href="https://github.com/secana/PeNet">PeNet</a>: It is a parser for Windows Portable Executable headers. It completely written in C# and does not rely on any native Windows APIs. Furthermore it supports the creation of Import Hashes (ImpHash), which is a feature often used in malware analysis. You can extract Certificate Revocation List, compute different hash sums and other useful stuff for working with PE files.</li>
+<li><a href="https://penet.azureedge.net/">PeNet Web</a>: PeNet Web is an online Portable Executable viewer. It displays fields and additional information from uploaded PE files. The project is based on the PeNet library.</li>
+<li><a href="https://www.winitor.com/features">pestudio</a>: The goal of pestudio is to spot artifacts of executable files in order to ease and accelerate Malware Initial Assessment. The tool is used by Computer Emergency Response (CERT) teams, Security Operations Centers (SOC) and Labs worldwide.</li>
+<li><a href="http://wjradburn.com/software/">PeView</a>: Provides a quick and easy way to view the structure and content of 32-bit Portable Executable (PE) and Component Object File Format (COFF) files. This PE/COFF file viewer displays header, section, directory, import table, export table, and resource information within EXE, DLL, OBJ, LIB, DBG, and other file types.</li>
+<li><a href="https://github.com/katjahahn/PortEx">PortEx</a>: Java library to analyse Portable Executable files with a special focus on malware analysis and PE malformation robustness.</li>
+<li><a href="https://tzworks.net/prototype_page.php?proto_id=15">Portable Executable Scanner (pescan)</a>: It is a command line tool to scan portable executable (PE) files to identify how they were constructed.</li>
+<li><a href="https://www.mzrst.com/">PPEE (puppy)</a>: It is a Professional PE file Explorer for reversers, malware researchers and those who want to statically inspect PE files in more details.</li>
+<li><a href="http://www.angusj.com/resourcehacker/">Resource Hacker</a>: It is a resource editor for 32bit and 64bit Windows® applications. It's both a resource compiler (for <em>.rc files), and a decompiler - enabling viewing and editing of resources in executables (</em>.exe; <em>.dll; </em>.scr; etc) and compiled resource libraries (<em>.res, </em>.mui). While Resource Hacker™ is primarily a GUI application, it also provides many options for compiling and decompiling resources from the command-line.</li>
+</ul>
+<h4 id="ransomware">Ransomware</h4>
+<ul>
+<li><a href="https://github.com/theanonhackuk/ransomware-sources">ransomware-sources</a>: Collection of source code of some ransomware on Github.</li>
+</ul>
+<h4 id="rats">RATs</h4>
+<ul>
+<li><a href="https://github.com/AliBawazeEer/RAT-NjRat-0.7d-modded-source-code">RAT-NjRat-0.7d-modded-source-code</a></li>
+</ul>
+<h4 id="scanners-sandbox">Scanners / Sandbox</h4>
+<ul>
+<li><a href="https://cuckoosandbox.org/">Cuckoo</a>: You can throw any suspicious file at it and in a matter of minutes Cuckoo will provide a detailed report outlining the behavior of the file when executed inside a realistic but isolated environment.</li>
+<li><a href="">Hybrid Analysis</a>: This tool allows sending a file to different scanners in parallel: VirusTotal, MetaDefender and CrowdStrike Falcon. Send samples.</li>
+<li><a href="https://www.virustotal.com/gui/">jotti</a>: Simple online scanner that returns the scan results of a number of antivirus scanners, as well as some basic information about the file. Send samples.</li>
+<li><a href="https://github.com/xchwarze/KIMS">KIMS</a>: KIMS was the first local and web multi scan of the world which last version came out on 2006 programed by Thor. In 2009 it began being developed to the new version by DSR!.</li>
+<li><a href="https://github.com/maliceio">Malice.IO</a>: VirusTotal Wanna Be - Now with 100% more Hipster.</li>
+<li><a href="https://malwareanalysis.co/sandboxes/">MalwareAnalysis.co</a></li>
+<li><a href="https://nodistribute.com/">NoDistribute</a></li>
+<li><a href="https://github.com/Rurik/Noriben">Noriben</a>: Portable, Simple, Malware Analysis Sandbox.</li>
+<li><a href="https://github.com/Lifka/thor-av-multiscanner">thor-av-multiscanner</a>: Static analysis of malware using Docker. This software allows you to scan a file with different antivirus engines. Also, it allows obtaining information from a file; such as imported libraries, PE, hashes, etc.</li>
+<li><a href="https://valkyrie.comodo.com/">Valkyrie Sandbox</a>: It is a file verdict system. Different from traditional signature based malware detection techniques Valkyrie conducts several analysis using run-time behavior and hundreds of features from a file and based on analysis results can warn users against malware undetected by classic Anti-Virus products.</li>
+<li><a href="https://www.virustotal.com/gui/">VirusTotal</a>: Analyze suspicious files and URLs to detect types of malware, automatically share them with the security community. Displays information on static and dynamic analysis. Send samples.</li>
+</ul>
+<h4 id="spyware">Spyware</h4>
+<ul>
+<li><a href="https://activtrak.com">ACTIVTrack</a></li>
+<li><a href="https://www.spytech-web.com/spyagent.shtml">Spytech SpyAgent</a>: Allows you to monitor and record EVERYTHING users do on your computer - in total stealth. SpyAgent provides an unrivaled set of essential computer monitoring features, as well as website and application content filtering, chat client blocking, real-time activity alerts, and remote delivery of logs via email or FTP. </li>
+<li><a href="https://www.netvizor.net">NetVizor</a></li>
+<li><a href="https://ematrixsoft.com/power-spy-software.php">Power Spy</a>: It is a computer activity monitoring software that allows you to secretly log all users on a PC while they are unaware. After the software is installed on the PC, you can remotely receive log reports on any device via email or FTP. You can check these reports as soon as you receive them or at any convenient time. You can also directly check logs using the log viewer on the monitored PC.</li>
+<li><a href="https://www.softactivity.com">SoftActivity Monitor</a></li>
+<li><a href="https://www.veriato.com">Veriato Cerebral</a></li>
+</ul>
+<h4 id="string-search">String search</h4>
+<ul>
+<li><a href="https://www.aldeid.com/wiki/BinText">BinText</a>: A small, very fast and powerful text extractor that will be of particular interest to programmers. It can extract text from any kind of file and includes the ability to find plain ASCII text, Unicode (double byte ANSI) text and Resource strings, providing useful information for each item in the optional "advanced" view mode. Its comprehensive filtering helps prevent unwanted text being listed. The gathered list can be searched and saved to a separate file as either a plain text file or in informative tabular format.</li>
+<li><a href="https://github.com/fireeye/flare-floss">FireEye Labs Obfuscated String Solver</a>: Automatically extract obfuscated strings from malware.</li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/strings">Strings</a></li>
+<li><a href="https://github.com/mandiant/stringsifter">stringsifter</a>: A machine learning tool that ranks strings based on their relevance for malware analysis.</li>
+</ul>
+<h4 id="virus">Virus</h4>
+<ul>
+<li><a href="https://github.com/hacktoolspack/hack-tools/tree/master/DELmE's%20Batch%20Virus%20Maker%20v%202.0">DELmE's Batch Virus Maker</a></li>
+<li><a href="http://www.solidfiles.com/v/DKy7Xd6Rgrj8x">JPS Virus Maker</a></li>
+</ul>
+<h4 id="windows-registry-monitoring">Windows registry monitoring</h4>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns">Autoruns for Windows</a>: This utility, which has the most comprehensive knowledge of auto-starting locations of any startup monitor, shows you what programs are configured to run during system bootup or login, and when you start various built-in Windows applications like Internet Explorer, Explorer and media players. These programs and drivers include ones in your startup folder, Run, RunOnce, and other Registry keys. Autoruns reports Explorer shell extensions, toolbars, browser helper objects, Winlogon notifications, auto-start services, and much more. Autoruns goes way beyond other autostart utilities.</li>
+<li><a href="https://www.resplendence.com/registrar">Registrar Registry Manager</a>: It is an advanced and complete suite of tools that allows you to safely maintain your local registry as well as the registries on the systems of your network. Since many years, Registrar Registry Manager has been the expert's choice in registry management.</li>
+<li><a href="https://accessdata.com/product-download/registry-viewer-2-0-0">Registry Viewer</a></li>
+<li><a href="https://www.chemtable.com/organizer.htm">Reg Organizer</a>: The utility allows you to remove unwanted programs from the system and search for traces of the uninstalled program. If there are “heavy” programs that run automatically on start-up in your Windows operating system, disabling them in an advanced startup manager can in some cases speed up the boot time and operation of your operating system. The disk cleanup feature frees up space on your system disk. And this is only part of features in the utility.</li>
+<li><a href="https://www.nirsoft.net/utils/regscanner.html">RegScanner</a>:  Is a small utility that allows you to scan the Registry, find the desired Registry values that match to the specified search criteria, and display them in one list. After finding the Registry values, you can easily jump to the right value in RegEdit, simply by double-clicking the desired Registry item. You can also export the found Registry values into a .reg file that can be used in RegEdit.</li>
+<li><a href="https://sourceforge.net/projects/regshot/">regshot</a>: Regshot is an open-source (LGPL) registry compare utility that allows you to quickly take a snapshot of your registry and then compare it with a second one - done after doing system changes or installing a new software product.</li>
+</ul>
+<h4 id="windows-services-monitoring">Windows services monitoring</h4>
+<ul>
+<li><a href="https://securityxploded.com/winservicemanager.php">Advanced Windows Service Manager</a>: It is the specialized software for smarter analysis of Windows Services. It offers many powerful and unique features which sets it apart from built-in Service Management Console as well as other similar softwares.</li>
+<li><a href="https://www.anvir.com/">AnVir Task Manager</a>: Control everything running on computer, remove Trojans, speed up computer.</li>
+<li><a href="https://www.netwrix.com/windows_services_monitoring_freeware.html">Netwrix Service Monitor</a>: Freeware service monitoring tool that enables you to monitor Windows services on your critical servers.</li>
+<li><a href="https://www.poweradmin.com/products/file-sight/licensing-and-pricing/">PA File Sight</a></li>
+<li><a href="https://processhacker.sourceforge.io/">Process Hacker</a></li>
+<li><a href="https://www.activeplus.com/products/serviceplus">Service+</a></li>
+<li><a href="https://sysprogs.com/legacy/tools/srvman/">SrvMan</a>: Windows Service Manager is a small tool that simplifies all common tasks related to Windows services. It can create services (both Win32 and Legacy Driver) without restarting Windows, delete existing services and change service configuration. It has both GUI and Command-line modes. It can also be used to run arbitrary Win32 applications as services (when such service is stopped, main application window is closed automatically).</li>
+</ul>
+<h3 id="session-hijacking">Session hijacking</h3>
+<ul>
+<li><a href="https://portswigger.net/burp">Burp Suite</a></li>
+<li><a href="https://github.com/bettercap/bettercap">bettercap</a>: The Swiss Army knife for 802.11, BLE and Ethernet networks reconnaissance and MITM attacks.</li>
+<li><a href="https://sourceforge.net/projects/netoolsh/">netool toolki</a>: MitM pentesting opensource toolkit.</li>
+<li><a href="https://www.zaproxy.org/">OWASP ZAP</a>: It is an integrated penetration testing tool for finding vulnerabilities in web applications. It offers automated scanners as well as a set of tools that allow you to find security vulnerabilities manually. ZAP allows you to see all the requests you make to a web app and all the responses you receive from it. Among other things, it allows you to see AJAX calls that may not otherwise be outright visible. You can also set breakpoints, which allow you to change the requests and responses in real-time.</li>
+<li><a href="https://github.com/moxie0/sslstrip">https://github.com/moxie0/sslstrip</a>: A tool for exploiting Moxie Marlinspike's SSL "stripping" attack.</li>
+<li><a href="https://sourceforge.net/projects/websploit/">WebSploit Framework</a></li>
+</ul>
+<h4 id="android_3">Android</h4>
+<ul>
+<li><a href="https://droidsheep.info/">DroidSheep</a>: It is an open-source Android application made by Corsin Camichel that allows you to intercept unprotected web-browser sessions using WiFi.</li>
+<li><a href="https://github.com/evozi/DroidSniff">DroidSniff</a>: It is an Android app for Security analysis in wireless networks and capturing facebook, twitter, linkedin and other accounts.rotected web-browser sessions using WiFi.</li>
+<li><a href="http://faceniff.ponury.net/">FaceNiff</a>: It is an Android app that allows you to sniff and intercept web session profiles over the WiFi that your mobile is connected to. It is possible to hijack sessions only when WiFi is not using EAP, but it should work over any private networks (Open/WEP/WPA-PSK/WPA2-PSK). It's kind of like Firesheep for android. Maybe a bit easier to use (and it works on WPA2!).</li>
+</ul>
+<h3 id="hacking-web">Hacking web</h3>
+<ul>
+<li><a href="https://sourceforge.net/projects/dirbuster/">DirBuster</a>: It is a multi threaded java application designed to brute force directories and files names on web/application servers.</li>
+<li><a href="https://github.com/BullsEye0/ghost_eye">Ghost Eye</a>: It is an information-gathering tool written in Python 3. To run, Ghost Eye only needs a domain or IP.</li>
+<li><a href="https://w3dt.net/tools/httprecon">httprecon</a>: It is a tool for advanced web server fingerprinting. This tool performs banner-grabbing attacks, status code enumeration, and header ordering analysis on its target web server.</li>
+<li><a href="https://www.grc.com/id/idserve.htm">ID Serve</a>: It is a simple Internet server identification utility. Following is a list of its capabilities: HTTP server identification, Non-HTTP server identification, Reverse DNS lookup.</li>
+<li><a href="https://code.google.com/archive/p/skipfish/">skipfish</a>:  Is an active web application security reconnaissance tool. It prepares an interactive sitemap for the targeted site by carrying out a recursive crawl and dictionary-based probes. The resulting map is then annotated with the output from a number of active (but hopefully non-disruptive) security checks. The final report generated by the tool is meant to serve as a foundation for professional web application security assessments.</li>
+</ul>
+<h4 id="footprinting_1">Footprinting</h4>
+<ul>
+<li><a href="#website-footprinting">More tools</a></li>
+</ul>
+<h5 id="whois-lookup">Whois lookup</h5>
+<ul>
+<li><a href="http://www.sabsoft.com">IP Converter</a></li>
+<li><a href="https://www.netcraft.com/">Netcraft</a></li>
+<li><a href="https://www.tamos.com">SmartWhois</a></li>
+<li><a href="http://whois.domaintools.com">WHOIS Lookup</a></li>
+</ul>
+<h5 id="dns-interrogation">DNS interrogation</h5>
+<ul>
+<li><a href="https://github.com/darkoperator/dnsrecon">DNSRecon</a></li>
+<li><a href="https://network-tools.com/dns-records/">DNS Records</a></li>
+<li><a href="https://centralops.net/co/">Domain Dossier</a></li>
+<li><a href="https://tools.dnsstuff.com">Toolset</a></li>
+</ul>
+<h5 id="scan-ports-and-services-running">Scan ports and services running</h5>
+<ul>
+<li><a href="https://github.com/nmap/nmap">Nmap</a></li>
+<li><a href="https://github.com/urbanadventurer/WhatWeb">WhatWeb</a></li>
+</ul>
+<h5 id="web-application-reconnaissance">Web Application Reconnaissance</h5>
+<ul>
+<li>telnet</li>
+<li><a href="https://github.com/urbanadventurer/WhatWeb">WhatWeb</a></li>
+</ul>
+<h5 id="web-spidering">Web spidering</h5>
+<ul>
+<li><a href="https://owasp.org/www-project-zap/">OWASP Zed Attack Proxy (ZAP)</a>: Integrated penetration testing tool for finding vulnerabilities in web applications. It offers automated scanners as well as a set of tools that allow you to find security vulnerabilities manually.</li>
+</ul>
+<h5 id="detect-load-balancer">Detect load balancer</h5>
+<ul>
+<li><a href="https://github.com/polarityio/dig">dig</a>: Network admin tool for querying DNS servers.</li>
+<li><a href="https://github.com/jmbr/halberd">halberd</a>: discovers HTTP load balancers. It is useful for web application security auditing and for load balancer configuration testing.</li>
+<li><a href="https://github.com/craig/ge.mine.nu/tree/master/lbd">load balancing detector (lbd)</a>: Detects if a given domain uses DNS and/or HTTP Load-Balancing (via Server: and Date: header and diffs between server answers).</li>
+</ul>
+<h5 id="identify-web-server-directories">Identify web server directories</h5>
+<ul>
+<li><a href="https://github.com/OJ/gobuster">Gobuster</a>: Directory/File, DNS and VHost busting tool written in Go.</li>
+<li><a href="https://github.com/nmap/nmap">Nmap</a></li>
+</ul>
+<h5 id="identify-web-application-vulnerabilities">Identify web application vulnerabilities</h5>
+<ul>
+<li><a href="https://www.acunetix.com/">acunetix</a></li>
+<li><a href="https://www.hcltechsw.com/products/appscan">appscan</a></li>
+<li><a href="https://www.rapid7.com/products/appspider/">appspider</a>: Web application security testing to close the gaps in your apps.</li>
+<li><a href="https://github.com/Arachni/arachni">arachni</a>: Web Application Security Scanner Framework.</li>
+<li><a href="https://github.com/sullo/nikto">nikto</a>: Nikto web server scanner.</li>
+<li><a href="https://owasp.org/www-project-zap/">OWASP Zed Attack Proxy (ZAP)</a>: Integrated penetration testing tool for finding vulnerabilities in web applications. It offers automated scanners as well as a set of tools that allow you to find security vulnerabilities manually.</li>
+<li><a href="https://github.com/poerschke/Uniscan">uniscan</a>: Uniscan web vulnerability scanner.</li>
+<li><a href="https://subgraph.com/vega/">vega</a>: It is a free and open source web security scanner and web security testing platform to test the security of web applications. Vega can help you find and validate SQL Injection, Cross-Site Scripting (XSS), inadvertently disclosed sensitive information, and other vulnerabilities. It is written in Java, GUI based, and runs on Linux, OS X, and Windows.</li>
+<li><a href="https://owasp.org/www-community/Vulnerability_Scanning_Tools">Vulnerability Scanning Tools by OWASP</a></li>
+<li><a href="https://github.com/wpscanteam/wpscan">WPScan</a>: WordPress security scanner. Written for security professionals and blog maintainers to test the security of their WordPress websites.</li>
+</ul>
+<h4 id="attack">Attack</h4>
+<ul>
+<li><a href="https://portswigger.net/burp">Burp Suite</a>: Integrated platform for performing security testing of web applications. It has various tools that work together to support the entire testing process from the initial mapping and analysis of an application’s attack surface to finding and exploiting security vulnerabilities. Contains key components such as an intercepting proxy, application-aware spider, advanced web application scanner, intruder tool, repeater tool, and sequencer tool.</li>
+<li><a href="https://github.com/synacktiv/HopLa">HopLa Burp Suite Extender plugin</a>: Adds autocompletion support and useful payloads in Burp Suite.</li>
+<li><a href="https://github.com/rapid7/metasploit-framework">Metasploit Framework</a></li>
+<li><a href="https://github.com/JohnTroony/php-webshells">php-webshells</a>: Common PHP webshells you might need for your Penetration Testing assignments or CTF challenges. Do not host the file(s) on your server!</li>
+<li><a href="https://github.com/epinna/weevely3">Weevely</a>: Used to develop a backdoor shell and upload it to a target server in order to gain remote shell access. This tool also helps in performing administrative tasks, maintaining persistence, and spreading backdoors across the target network.</li>
+</ul>
+<h5 id="sql-injection">SQL Injection</h5>
+<ul>
+<li><a href="https://github.com/CiscoCXSecurity/bbqsql">bbqsql</a>: SQL Injection Exploitation Tool.</li>
+<li><a href="https://github.com/awnumar/blind-sql-bitshifting">blind-sql-bitshifting</a>: A blind SQL injection module that uses bitshfting to calculate characters.</li>
+<li><a href="https://github.com/JohnTroony/Blisqy">Blisqy</a>: Exploit Time-based blind-SQL injection in HTTP-Headers (MySQL/MariaDB).</li>
+<li><a href="https://github.com/stamparm/DSSS">DSSS - Damn Small SQLi Scanner</a>: It is a fully functional SQL injection vulnerability scanner (supporting GET and POST parameters) written in under 100 lines of code.</li>
+<li><a href="https://web.archive.org/web/20150228203859/http://itsecteam.com/products/havij-advanced-sql-injection/">Havij</a>: It is an automated SQL Injection tool that helps penetration testers to find and exploit SQL Injection vulnerabilities on a web page. It can take advantage of a vulnerable web application. By using this software, user can perform back-end database fingerprinting, retrieve DBMS login names and password hashes, dump tables and columns, fetch data from the database, execute SQL statements against the server, and even access the underlying file system and execute operating system shell commands.</li>
+<li><a href="https://sourceforge.net/projects/themole/">Mole</a>: It is an automatic SQL Injection exploitation tool. Only by providing a vulnerable URL and a valid string on the site it can detect the injection and exploit it, either by using the union technique or a boolean query based technique. The Mole uses a command based interface, allowing the user to indicate the action he wants to perform easily. The CLI also provides auto-completion on both commands and command arguments, making the user type as less as possible.</li>
+<li><a href="https://github.com/codingo/NoSQLMap">NoSQLMap</a>: Automated NoSQL database enumeration and web application exploitation tool.</li>
+<li><a href="http://sqlmap.org/">sqlmap</a>: Is is an open source penetration testing tool that automates the process of detecting and exploiting SQL injection flaws and taking over of database servers. It comes with a powerful detection engine, many niche features for the ultimate penetration tester and a broad range of switches lasting from database fingerprinting, over data fetching from the database, to accessing the underlying file system and executing commands on the operating system via out-of-band connections.</li>
+</ul>
+<h4 id="vulnerable-web-applications">Vulnerable web applications</h4>
+<ul>
+<li><a href="https://github.com/digininja/DVWA">Damn Vulnerable Web App (DVWA)</a>: It is a PHP/MySQL web application that is damn vulnerable. Its main goal is to be an aid for security professionals to test their skills and tools in a legal environment, help web developers better understand the processes of securing web applications and to aid both students &amp; teachers to learn about web application security in a controlled class room environment.</li>
+</ul>
+<h3 id="protection_2">Protection</h3>
+<ul>
+<li><a href="https://github.com/redcanaryco/atomic-red-team">atomic-red-team</a>: Small and highly portable detection tests based on MITRE's ATT&amp;CK.</li>
+<li><a href="https://brave.com/">brave</a></li>
+<li><a href="https://www.maltego.com/products/">CaseFile</a></li>
+<li><a href="https://www.code42.com/">CODE42</a></li>
+<li><a href="https://www.malwarebytes.com/">malwarebytes</a></li>
+<li><a href="https://www.splunk.com/">Splunk</a></li>
+<li><a href="https://www.torproject.org/">Tor</a></li>
+<li><a href="https://github.com/benbusby/whoogle-search">whoogle-search</a>: A self-hosted, ad-free, privacy-respecting metasearch engine.</li>
+</ul>
+<h4 id="disk-encryption">Disk encryption</h4>
+<ul>
+<li><a href="https://www.finalcrypt.org/">FinalCrypt</a></li>
+<li><a href="https://www.rohos.com/products/rohos-disk-encryption/">Rohos Disk Encryption</a>: It is program creates hidden and protected partitions on a computer, USB flash drive or cloud storage. It protects/locks access to encrypted partitions with a hardware key replacing your password.</li>
+<li><a href="https://sourceforge.net/projects/veracrypt/">VeraCrypt</a></li>
+</ul>
+<h4 id="e-mail">E-mail</h4>
+<ul>
+<li><a href="https://www.egress.com/email-security/encryption">Egress Secure Email and File Transfer</a>: Secure email encryption software that delivers the highest level of security.</li>
+<li><a href="http://www.gilisoft.com/product-full-disk-encryption.htm">Gilisoft Full Disk Encryption</a></li>
+<li><a href="https://www.proofpoint.com/us/products/email-security-and-protection">Proofpoint Email Protection</a></li>
+<li><a href="https://rmail.com/">RMail E-Security</a></li>
+<li><a href="https://www.virtru.com/">Virtru</a>: End to End Encryption for Email and Files.</li>
+<li><a href="https://www.getzixmail.com/products/zixmail">ZixMail</a>: It is the desktop email encryption solution that provides individuals with a high level of security in their email communications. It’s an easy-to-use service that lets users encrypt and decrypt emails and attachments with a single click.</li>
+</ul>
+<h4 id="firewalls">Firewalls</h4>
+<ul>
+<li><a href="https://personalfirewall.comodo.com/">Comodo Firewall</a></li>
+<li><a href="https://www.manageengine.com/products/firewall/">ManageEngine Firewall Analyzer</a></li>
+<li><a href="https://www.pfsense.org/">pfSense</a></li>
+<li><a href="https://www.sophos.com/en-us/products/next-gen-firewall.aspx">Sophos XG Firewall</a></li>
+<li><a href="https://www.zonealarm.com/software/free-firewall">ZoneAlarm Free Firewall</a></li>
+</ul>
+<h4 id="honeypots">Honeypots</h4>
+<ul>
+<li><a href="https://github.com/paralax/awesome-honeypots">awesome-honeypots</a>: An awesome list of honeypot resources.</li>
+<li><a href="http://www.honeyd.org/">Honeyd Virtual Honeypot</a>:  Is a small daemon that creates virtual hosts on a network. The hosts can be configured to run arbitrary services, and their personality can be adapted so that they appear to be running certain operating systems. Honeyd enables a single host to claim multiple addresses - I have tested up to 65536 - on a LAN for network simulation. Honeyd improves cyber security by providing mechanisms for threat detection and assessment. It also deters adversaries by hiding real systems in the middle of virtual systems.</li>
+<li><a href="http://www.keyfocus.net/kfsensor/">KFSensor</a>: Acts as a honeypot, designed to attract and detect hackers and worms by simulating vulnerable system services and trojans.</li>
+</ul>
+<h4 id="ids-ips">IDS / IPS</h4>
+<ul>
+<li><a href="https://www.snort.org/">Snort</a>: Open Source Intrusion Prevention System (IPS) in the world. Snort IPS uses a series of rules that help define malicious network activity and uses those rules to find packets that match against them and generates alerts for users.</li>
+<li><a href="https://github.com/wazuh">wazuh</a>: Open source security platform based on OSSEC.</li>
+</ul>
+<h4 id="inventory-management">Inventory management</h4>
+<ul>
+<li><a href="https://glpi-project.org/">GLPI Project</a></li>
+<li><a href="https://ocsinventory-ng.org/?lang=en">OCS Inventory</a>: Open computers and software inventory is an assets management solution.</li>
+<li><a href="https://www.spiceworks.com/">spiceworks</a></li>
+</ul>
+<h4 id="passwords">Passwords</h4>
+<ul>
+<li><a href="https://1password.com/">1password</a>: Password manager.</li>
+</ul>
+<h4 id="patch">Patch</h4>
+<ul>
+<li><a href="https://patchmypc.com/home-updater">Patch My PC</a>: Simplify third-party patching on your PC.</li>
+<li><a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-server-update-services/get-started/windows-server-update-services-wsus">Windows Server Update Services (WSUS)</a>: Enables information technology administrators to deploy the latest Microsoft product updates. </li>
+</ul>
+<h4 id="trackers">Trackers</h4>
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk">ClearURLs</a>: This extension will automatically remove tracking elements from URLs to help protect your privacy when browse through the Internet.</li>
+<li><a href="https://chrome.google.com/webstore/detail/pixelblock/jmpmfcjnflbcoidlgapblgpgbilinlem">PixelBlock</a>: Blocks people from tracking when you open their emails.</li>
+<li><a href="https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp">Privacy Badger</a>: Automatically learns to block invisible trackers.</li>
+<li><a href="https://chrome.google.com/webstore/detail/ugly-email/ldgiafaliifpknmgofiifianlnbgflgj">Ugly Email</a>: It is an open-source Gmail extension for identifying and blocking email trackers.</li>
+</ul>
+<h3 id="forensics">Forensics</h3>
+<ul>
+<li><a href="https://www.autopsy.com/">Autopsy</a>: Autopsy® is the premier end-to-end open source digital forensics platform. Built by Basis Technology with the core features you expect in commercial forensic tools, Autopsy is a fast, thorough, and efficient hard drive investigation solution that evolves with your needs.</li>
+<li><a href="https://github.com/volatilityfoundation/volatility">Volatility</a>: An advanced memory forensics framework.</li>
+</ul>
+<h3 id="social-engineering">Social engineering</h3>
+<ul>
+<li><a href="https://github.com/alievk/avatarify">avatarify</a>: Avatars for Zoom, Skype and other video-conferencing apps.</li>
+<li><a href="https://mailtrack.io/en/">mailtrack</a>": Know when your emails are opened.</li>
+<li><a href="https://www.facebook.com/login/identify?ctx=recover&amp;lwv=100">Get Facebook account from phone number</a></li>
+</ul>
+<h4 id="phising">Phising</h4>
+<ul>
+<li><a href="https://github.com/trustedsec/social-engineer-toolkit">Social-Engineer Toolkit (SET)</a>: It is an open-source penetration testing framework designed for social engineering. SET has a number of custom attack vectors that allow you to make a believable attack quickly.</li>
+<li><a href="https://github.com/suljot/shellphish">ShellPhish</a>: Phishing Tool for Instagram, Facebook, Twitter, Snapchat, Github.napchat, Github.</li>
+</ul>
+<h5 id="protection_3">Protection</h5>
+<h6 id="employees-education">Employees education</h6>
+<ul>
+<li><a href="https://getgophish.com/">Gophish</a>: Open-Source Phishing Framework.</li>
+<li><a href="https://github.com/rsmusllp/king-phisher">king-phisher</a>: Phishing Campaign Toolkit.</li>
+<li><a href="https://ohphish.eccouncil.org/">OhPhish</a></li>
+</ul>
+<h6 id="phishing-detection">Phishing detection</h6>
+<ul>
+<li><a href="https://www.netcraft.com/">Netcraft</a></li>
+<li><a href="https://www.phishtank.com/">PhishTank</a></li>
+</ul>
+<h3 id="hacking-wireless">Hacking wireless</h3>
+<ul>
+<li><a href="https://www.aircrack-ng.org/">aircrack-ng</a>: It is a complete suite of tools to assess WiFi network security.</li>
+<li><a href="https://kismac-ng.org/">kismac-ng</a>: Free and open-source program helps you collect essential information about surrounding WiFi networks. KisMAC WiFi scanner app can detect SSIDs, shows you the logged in clients, allows you to sketch WiFi maps, and more!</li>
+<li><a href="https://github.com/t6x/reaver-wps-fork-t6x">Reaver</a></li>
+<li><a href="https://github.com/JPaulMora/Pyrit">Pyrit</a>: It  allows you to create massive databases of pre-computed WPA/WPA2-PSK authentication phase in a space-time-tradeoff. By using the computational power of Multi-Core CPUs and other platforms through ATI-Stream,Nvidia CUDA and OpenCL, it is currently by far the most powerful attack against one of the world's most used security-protocols.</li>
+<li><a href="https://sourceforge.net/projects/wepattack/">wepattack</a>: Active dictionary attack on WEP keys in WLAN networks.</li>
+<li><a href="https://sourceforge.net/projects/wepcrackgui/">wepcrackgui</a>: Gui for aircrack-ng that can crack WEP and WPA networks, automatically scans for available networks, provides fake authentication and injection support.</li>
+</ul>
+<h4 id="bluetooth">Bluetooth</h4>
+<ul>
+<li><a href="https://github.com/balle/bluediving">bluediving</a>: The Bluetooth penetration testing tool suite.</li>
+</ul>
+<h4 id="finding-wps-enabled-aps">Finding WPS-Enabled APs</h4>
+<ul>
+<li><a href="https://github.com/t6x/reaver-wps-fork-t6x">Wash</a></li>
+</ul>
+<h4 id="mac-spoofing_1">MAC spoofing</h4>
+<ul>
+<li>ifconfig</li>
+<li><a href="https://github.com/alobbs/macchanger">macchanger</a></li>
+<li><a href="https://technitium.com/tmac/">Technitium MAC Address Changer</a></li>
+</ul>
+<h4 id="wpa3">WPA3</h4>
+<h5 id="dragonblood">Dragonblood</h5>
+<ul>
+<li><a href="https://github.com/vanhoefm/dragondrain-and-time">dragondrain-and-time</a>: dragondrain tool can be used to test wether, or to which extend, an Access Point is vulnerable to denial-of-service attacks against WPA3's SAE handshake. dragontime is an experimental tool to perform timing attacks against the SAE handshake if MODP group 22, 23, or 24 are supported. Note that most WPA3 implementations by default do not enable these groups.</li>
+<li><a href="https://github.com/vanhoefm/dragonforce">dragonforce</a>: It is an experimental tool which takes the information recovered from our timing or cache-based attacks, and performs a password partitioning attack. This is similar to a dictionary attack.</li>
+<li><a href="https://github.com/vanhoefm/dragonslayer">dragonslayer</a>: This is an experimental tool to test WPA3's SAE and EAP-pwd implementations for vulnerabilities. We also strongly recommend to perform code inspections to assure all vulnerabilities have been properly addressed.</li>
+</ul>
+<h3 id="steganography">Steganography</h3>
+<h4 id="image">Image</h4>
+<ul>
+<li><a href="https://www.briggsoft.com">CryptaPix</a></li>
+<li><a href="http://www.darkside.com.au">gifshuffle</a></li>
+<li><a href="https://github.com/syvaidya/openstego">OpenStego</a>: It is a steganography application that provides two functionalities: a) Data Hiding: It can hide any data within an image file. b) Watermarking: Watermarking image files with an invisible signature. It can be used to detect unauthorized file copying.</li>
+<li><a href="http://quickcrypto.com">QuickStego</a></li>
+<li><a href="https://www.ssuitesoft.com">SSuite Picsel</a></li>
+</ul>
+<h4 id="white-space">White Space</h4>
+<ul>
+<li><a href="http://www.darkside.com.au/snow/">snow</a>: It is used to conceal messages in ASCII text by appending whitespace to the end of lines. Because spaces and tabs are generally not visible in text viewers, the message is effectively hidden from casual observers. And if the built-in encryption is used, the message cannot be read even if it is detected.</li>
+</ul>
+<h3 id="internet-of-things-iot">Internet of Things (IoT)</h3>
+<h4 id="information-gathering">Information gathering</h4>
+<ul>
+<li><a href="https://www.shodan.io/">Shodan</a>: Search engine for Internet-connected devices.</li>
+</ul>
+<h4 id="maintain-access">Maintain access</h4>
+<ul>
+<li><a href="https://github.com/rampageX/firmware-mod-kit">Firmware Modification Kit</a>: This kit is a collection of scripts and utilities to extract and rebuild linux based firmware images.</li>
+</ul>
+<h3 id="cloud">Cloud</h3>
+<h4 id="containers">Containers</h4>
+<h5 id="amazon-s3">Amazon S3</h5>
+<h6 id="enumeration_1">Enumeration</h6>
+<ul>
+<li><a href="https://digi.ninja/projects/bucket_finder.php">Bucket Finder</a>: This is a fairly simple tool to run, all it requires is a wordlist and it will go off and check each word to see if that bucket name exists in the Amazon's S3 system. Any that it finds it will check to see if the bucket is public, private or a redirect.</li>
+<li><a href="https://github.com/nahamsec/lazys3">lazys3</a>: A Ruby script to bruteforce for AWS s3 buckets using different permutations.</li>
+<li><a href="https://github.com/gwen001/s3-buckets-finder">s3-buckets-finder</a>: Find aws s3 buckets and extract datas.</li>
+<li><a href="https://github.com/clario-tech/s3-inspector">s3-inspector</a>: Tool to check AWS S3 bucket permissions.</li>
+<li><a href="https://github.com/clarketm/s3recon">s3recon</a>: Amazon S3 bucket finder and crawler.</li>
+<li><a href="https://github.com/sa7mon/S3Scanner">S3Scanner</a>: Scan for open AWS S3 buckets and dump the contents.</li>
+</ul>
+<h6 id="exploit">Exploit</h6>
+<ul>
+<li><a href="https://github.com/dagrz/aws_pwn">aws_pwn</a>: A collection of AWS penetration testing junk.</li>
+</ul>
+<h5 id="google-storage-buckets">Google Storage Buckets</h5>
+<ul>
+<li><a href="https://github.com/RhinoSecurityLabs/GCPBucketBrute">GCPBucketBrute</a>: A script to enumerate Google Storage buckets, determine what access you have to them, and determine if they can be privilege escalated.</li>
+</ul>
+<h5 id="scanners">Scanners</h5>
+<ul>
+<li><a href="https://github.com/quay/clair">clair</a>: Vulnerability Static Analysis for Containers.</li>
+<li><a href="https://github.com/eliasgranderubio/dagda">dagda</a>: A tool to perform static analysis of known vulnerabilities, trojans, viruses, malware &amp; other malicious threats in docker images/containers and to monitor the docker daemon and running docker containers for detecting anomalous activities.</li>
+<li><a href="https://github.com/aquasecurity/trivy">trivy</a>: A Simple and Comprehensive Vulnerability Scanner for Container Images, Git Repositories and Filesystems. Suitable for CI.</li>
+</ul>
+<h4 id="salesforce">Salesforce</h4>
+<h5 id="scanners_1">Scanners</h5>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=checkmarx.cxvscode">CxVSCode</a>: It is an IDE extension that brings the Checkmarx AppSec unique capabilities closer to the developer.</li>
+</ul>
+<h5 id="javascript">Javascript</h5>
+<ul>
+<li><a href="https://retirejs.github.io/retire.js/">RetireJS</a>: There is a plethora of JavaScript libraries for use on the web and in node.js apps out there. This greatly simplifies, but we need to stay update on security fixes. "Using Components with Known Vulnerabilities" is now a part of the OWASP Top 10 and insecure libraries can pose a huge risk for your webapp. The goal of Retire.js is to help you detect use of version with known vulnerabilities.</li>
+</ul>
+<h2 id="other-useful-repositories">Other Useful Repositories</h2>
+<table>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/yenchenlin/awesome-adversarial-machine-learning">Adversarial Machine Learning</a></td>
+<td>Curated list of awesome adversarial machine learning resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RandomAdversary/Awesome-AI-Security">AI Security</a></td>
+<td>Curated list of AI security resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/shieldfy/API-Security-Checklist">API Security Checklist</a></td>
+<td>Checklist of the most important security countermeasures when designing, testing, and releasing your API</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kbandla/APTnotes">APT Notes</a></td>
+<td>Various public documents, whitepapers and articles about APT campaigns</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rshipp/awesome-malware-analysis">Awesome Malware Analysis</a></td>
+<td>A curated list of awesome malware analysis tools and resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hack-with-Github/Awesome-Hacking">Awesome-Hacking</a></td>
+<td>A collection of various awesome lists for hackers, pentesters and security researchers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jivoi/awesome-osint">Awesome-osint</a></td>
+<td>A curated list of amazingly awesome OSINT</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ngalongc/bug-bounty-reference">Bug Bounty Reference</a></td>
+<td>List of bug bounty write-up that is categorized by the bug nature</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dreddsa5dies/goHackTools">Code examples for Penetration Testing</a></td>
+<td>this is The CODE, but very simple and light. No VIDEO/AUDIO/TEXT lectures</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sobolevn/awesome-cryptography">Cryptography</a></td>
+<td>Cryptography resources and tools</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SandySekharan/CTF-tool">CTF Tool</a></td>
+<td>List of Capture The Flag (CTF) frameworks, libraries, resources and softwares</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zardus/ctf-tools">ctf-tools</a></td>
+<td>Some setup scripts for security research tools.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qazbnm456/awesome-cve-poc">CVE PoC</a></td>
+<td>List of CVE Proof of Concepts (PoCs)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/trickest/cve">CVE PoC updated daily</a></td>
+<td>List of CVE Proof of Concepts (PoCs) updated daily by Trickest</td>
+</tr>
+<tr>
+<td><a href="https://github.com/clong/DetectionLab">Detection Lab</a></td>
+<td>Vagrant &amp; Packer scripts to build a lab environment complete with security tooling and logging best practices</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Cugu/awesome-forensics">Forensics</a></td>
+<td>List of awesome forensic analysis tools and resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/EbookFoundation/free-programming-books">Free Programming Books</a></td>
+<td>Free programming books for developers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fuzzdb-project/fuzzdb">fuzzdb</a></td>
+<td>Dictionary of attack patterns and primitives for black-box application fault injection and resource discovery.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bt3gl/Gray-Hacker-Resources">Gray Hacker Resources</a></td>
+<td>Useful for CTFs, wargames, pentesting</td>
+</tr>
+<tr>
+<td><a href="https://gtfobins.github.io">GTFOBins</a></td>
+<td>A curated list of Unix binaries that can be exploited by an attacker to bypass local security restrictions</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hacker0x01/hacker101">Hacker101</a></td>
+<td>A free class for web security by HackerOne</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bugcrowd/HUNT">HUNT Proxy Extension</a></td>
+<td>Identify common parameters vulnerable to certain vulnerability classes (HUNT Scanner, availible for Burp Suite PRO and ZAProxy). Organize testing methodologies (currently avalible only inside of Burp Suite).</td>
+</tr>
+<tr>
+<td><a href="https://github.com/gradiuscypher/infosec_getting_started">Infosec Getting Started</a></td>
+<td>A collection of resources, documentation, links, etc to help people learn about Infosec</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rmusser01/Infosec_Reference">Infosec Reference</a></td>
+<td>Information Security Reference That Doesn't Suck</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sroberts/awesome-iocs">IOC</a></td>
+<td>Collection of sources of indicators of compromise</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xairy/linux-kernel-exploitation">Linux Kernel Exploitation</a></td>
+<td>A bunch of links related to Linux kernel fuzzing and exploitation</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PaulSec/awesome-sec-talks">List of Sec talks/videos</a></td>
+<td>A curated list of awesome Security talks</td>
+</tr>
+<tr>
+<td><a href="https://github.com/meitar/awesome-lockpicking">Lockpicking</a></td>
+<td>Resources relating to the security and compromise of locks, safes, and keys.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jivoi/awesome-ml-for-cybersecurity">Machine Learning for Cyber Security</a></td>
+<td>Curated list of tools and resources related to the use of machine learning for cyber security</td>
+</tr>
+<tr>
+<td><a href="https://github.com/foospidy/payloads">Payloads</a></td>
+<td>Collection of web attack payloads</td>
+</tr>
+<tr>
+<td><a href="https://github.com/swisskyrepo/PayloadsAllTheThings">PayloadsAllTheThings</a></td>
+<td>List of useful payloads and bypass for Web Application Security and Pentest/CTF</td>
+</tr>
+<tr>
+<td><a href="https://github.com/coreb1t/awesome-pentest-cheat-sheets">Pentest Cheatsheets</a></td>
+<td>Collection of the cheat sheets useful for pentesting</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nixawk/pentest-wiki">Pentest Wiki</a></td>
+<td>A free online security knowledge library for pentesters / researchers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/berzerk0/Probable-Wordlists">Probable Wordlists</a></td>
+<td>Wordlists sorted by probability originally created for password generation and testing</td>
+</tr>
+<tr>
+<td><a href="https://github.com/FuzzySecurity/Resource-List">Resource List</a></td>
+<td>Collection of useful GitHub projects loosely categorised</td>
+</tr>
+<tr>
+<td><a href="https://github.com/onethawt/reverseengineering-reading-list">Reverse Engineering</a></td>
+<td>List of Reverse Engineering articles, books, and papers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cn0xroot/RFSec-ToolKit">RFSec-ToolKit</a></td>
+<td>Collection of Radio Frequency Communication Protocol Hacktools</td>
+</tr>
+<tr>
+<td><a href="https://github.com/We5ter/Scanners-Box">Scanners-Box</a></td>
+<td>The toolbox of open source scanners</td>
+</tr>
+<tr>
+<td><a href="https://github.com/danielmiessler/SecLists">SecLists</a></td>
+<td>It is a collection of multiple types of lists used during security assessments</td>
+</tr>
+<tr>
+<td><a href="https://github.com/andrewjkerr/security-cheatsheets">Security Cheatsheets</a></td>
+<td>Collection of cheatsheets for various infosec tools and topics</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zbetcheckin/Security_list">Security List</a></td>
+<td>Great security list for fun and profit</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alebcay/awesome-shell">Shell</a></td>
+<td>List of awesome command-line frameworks, toolkits, guides and gizmos to make complete use of shell</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Cyb3rWard0g/ThreatHunter-Playbook">ThreatHunter-Playbook</a></td>
+<td>A Threat hunter's playbook to aid the development of techniques and hypothesis for hunting campaigns</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qazbnm456/awesome-web-security">Web Security</a></td>
+<td>Curated list of Web Security materials and resources</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vulhub/vulhub">Vulhub</a></td>
+<td>Pre-Built Vulnerable Environments Based on Docker-Compose</td>
+</tr>
+<tr>
+<td><a href="https://github.com/LionSec/xerosploit">Xerosploit</a></td>
+<td>Efficient and advanced man in the middle framework</td>
+</tr>
+</tbody>
+</table>
+<h2 id="custom-projects-scripts">Custom projects / Scripts</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/gentilkiwi/mimikatz">mimikatz</a></td>
+<td>A useful tool to play with Windows security including extracting plaintext passwords, kerberos tickets, etc.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/arismelachroinos/lscript">LAZY script v2.1.3</a></td>
+<td>The LAZY script will make your life easier, and of course faster.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/UltimateHackers/XSStrike">XSStrike</a></td>
+<td>XSStrike is a program which can fuzz and bruteforce parameters for XSS. It can also detect and bypass WAFs.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/subfinder/subfinder">SubFinder</a></td>
+<td>Subdomain discovery tool for use on web application engagements. SubFinder is a subdomain discovery tool that discovers valid subdomains for any target using passive online sources.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/codingo/VHostScan">VHostScan</a></td>
+<td>A virtual host scanner that performs reverse lookups, can be used with pivot tools, detect catch-all scenarios, aliases and dynamic default pages.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nil0x42/phpsploit">PhpSploit</a></td>
+<td>Full-featured C2 framework which silently persists on webserver via evil PHP oneliner, with a complete asrenal of post-exploitation &amp; privesc features.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exploitation-tools">Exploitation tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://beefproject.com/">BeEF</a></td>
+<td>Browser Exploitation Framework (Beef)</td>
+</tr>
+<tr>
+<td><a href="https://www.coresecurity.com/core-impact">Core Impact</a></td>
+<td>Core Impact provides vulnerability assessment and penetration security testing throughout your organization.</td>
+</tr>
+<tr>
+<td><a href="https://www.metasploit.com/">Metasploit</a></td>
+<td>The world’s most used penetration testing framework</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linux-security-tools">Linux Security Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/K4YT3X/DefenseMatrix">DefenseMatrix</a></td>
+<td>Full security solution for Linux Servers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/spencerdodd/kernelpop">Kernelpop</a></td>
+<td>kernel privilege escalation enumeration and exploitation framework</td>
+</tr>
+<tr>
+<td><a href="https://github.com/CISOfy/lynis">Lynis</a></td>
+<td>Security auditing tool for Linux, macOS, and UNIX-based systems.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/intezer/linux-explorer">linux-explorer</a></td>
+<td>Easy-to-use live forensics toolbox for Linux endpoints</td>
+</tr>
+<tr>
+<td><a href="https://github.com/LionSec/katoolin">Katoolin</a></td>
+<td>Automatically install all Kali linux tools in distros like Ubuntu</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exploit-databases_1">Exploit Databases</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://0day.today/">0day</a></td>
+<td>Inj3ct0r is the ultimate database of exploits and vulnerabilities and a great resource for vulnerability researchers and security professionals.</td>
+</tr>
+<tr>
+<td><a href="http://cxsecurity.com/exploit">cxsecurity</a></td>
+<td>Exploit Database</td>
+</tr>
+<tr>
+<td><a href="https://www.exploit-db.com/">exploit-db</a></td>
+<td>Exploits Database by Offensive Security</td>
+</tr>
+<tr>
+<td><a href="http://iedb.ir/">iedb</a></td>
+<td>Iranian Exploit DataBase</td>
+</tr>
+<tr>
+<td><a href="https://rapid7.com/db">rapid7</a></td>
+<td>Vulnerability &amp; Exploit Database - Rapid7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="malware-analysis">Malware Analysis</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/maliceio/malice">malice.io</a></td>
+<td>Open source version of VirusTotal that anyone can use at any scale from an independent researcher to a fortune 500 company.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mitm-tools">MITM tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.bettercap.org/">BetterCAP</a></td>
+<td>MITM attacks against a network, manipulate HTTP, HTTPS and TCP traffic in realtime, sniff for credentials and much more.</td>
+</tr>
+<tr>
+<td><a href="https://portswigger.net/burp">Burp Suite</a></td>
+<td>GUI based tool for testing Web application security.</td>
+</tr>
+<tr>
+<td><a href="https://ettercap.github.io/ettercap/">Ettercap</a></td>
+<td>Ettercap is a comprehensive suite for man in the middle attacks</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kgretzky/evilginx">Evilginx</a></td>
+<td>Man-in-the-middle attack framework used for phishing credentials and session cookies of any web service.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/byt3bl33d3r/MITMf">MITMf</a></td>
+<td>Framework for Man-In-The-Middle attacks</td>
+</tr>
+<tr>
+<td><a href="https://mitmproxy.org/">mitmproxy</a></td>
+<td>An interactive console program that allows traffic flows to be intercepted, inspected, modified and replayed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sql-injection_1">SQL Injection</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://sqlmap.org/">SQLmap</a></td>
+<td>Automatic SQL injection and database takeover tool</td>
+</tr>
+<tr>
+<td><a href="http://sqlninja.sourceforge.net/">SQLninja</a></td>
+<td>SQL Server injection &amp; takeover tool</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hadesy2k/sqliv">SQLiv</a></td>
+<td>Massive SQL injection scanner</td>
+</tr>
+</tbody>
+</table>
+<h2 id="post-explotation">Post explotation</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/SpiderLabs/portia">Portia</a></td>
+<td>Portia aims to automate a number of techniques commonly performed on internal network penetration tests after a low privileged account has been compromised.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/panagiks/RSPET">RSPET</a></td>
+<td>RSPET (Reverse Shell and Post Exploitation Tool) is a Python based reverse shell equipped with functionalities that assist in a post exploitation scenario.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="search-engine-for-penetration-tester">Search Engine for Penetration Tester</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://spyse.com/">Spyse</a></td>
+<td>Spyse collects valuable data from all open source internet and stores it in its own database to provide instant access to the data.</td>
+</tr>
+<tr>
+<td><a href="https://www.censys.io/">Censys</a></td>
+<td>Censys continually monitors every reachable server and device on the Internet, so you can search for and analyze them in real time</td>
+</tr>
+<tr>
+<td><a href="http://shodan.io/">Shodan</a></td>
+<td>Shodan is the world's first search engine for Internet-connected devices.</td>
+</tr>
+<tr>
+<td><a href="https://wigle.net/index">WiGLE</a></td>
+<td>Maps and database of 802.11 wireless networks, with statistics, submitted by wardrivers, netstumblers, and net huggers.</td>
+</tr>
+<tr>
+<td><a href="https://www.zoomeye.org/">Zoomeye</a></td>
+<td>search engine for cyberspace that lets the user find specific network components(ip, services, etc.)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="security-information-and-event-management-siem">Security Information and Event Management (SIEM)</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.alienvault.com/products/ossim">OSSIM</a></td>
+<td>AlienVault’s Open Source Security Information and Event Management (SIEM) product</td>
+</tr>
+</tbody>
+</table>
+<h2 id="network-scanning-tools">Network Scanning Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://nmap.org/">NMAP</a></td>
+<td>The industry standard in network/port scanning.  Widely used.</td>
+</tr>
+<tr>
+<td><a href="https://www.wireshark.org/">Wireshark</a></td>
+<td>A versatile and feature-packed packet sniffing/analysis tool.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code-analysis-tools">Source Code Analysis Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://pyup.io/">pyup</a></td>
+<td>Automated Security and Dependency Updates</td>
+</tr>
+<tr>
+<td><a href="https://www.ripstech.com/">RIPS</a></td>
+<td>PHP Security Analysis</td>
+</tr>
+<tr>
+<td><a href="http://retirejs.github.io/retire.js/">Retire.js</a></td>
+<td>detecting the use of JavaScript libraries with known vulnerabilities</td>
+</tr>
+<tr>
+<td><a href="https://snyk.io/">Snyk</a></td>
+<td>find &amp; fix vulnerabilities in dependencies, supports various languages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="binary-analysis-tools">Binary Analysis Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/google/binnavi">BinNavi</a></td>
+<td>BinNavi is a binary analysis IDE that allows to inspect, navigate, edit and annotate control flow graphs and call graphs of disassembled code</td>
+</tr>
+<tr>
+<td><a href="https://github.com/radare/radare2">Radare2</a></td>
+<td>Radare2 is a reverse engineering suite which includes a complete toolkit for reverse enigneering needs.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/rebootuser/LinEnum">LinEnum</a></td>
+<td>Scripted Local Linux Enumeration &amp; Privilege Escalation Checks</td>
+</tr>
+<tr>
+<td><a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite">PEASS</a></td>
+<td>Privilege Escalation tools for Windows and Linux/Unix</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nongiach/CVE/blob/master/CVE-2017-5123/README.md">CVE-2017-5123</a></td>
+<td>Linux Kernel 4.14.0-rc4+ - 'waitid()' Local Privilege Escalation</td>
+</tr>
+<tr>
+<td><a href="http://obtruse.syfrtext.com/2018/07/oracle-privilege-escalation-via.html">Oracle Privilege Escalation via Deserialization</a></td>
+<td>CVE-2018-3004 Oracle Privilege Escalation via Deserialization</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mzet-/linux-exploit-suggester">linux-exploit-suggester</a></td>
+<td>The tool is meant to assist the security analyst in his testing for privilege escalation opportunities on Linux machine</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AlessandroZ/BeRoot">BeRoot Project</a></td>
+<td>BeRoot Project is a post exploitation tool to check common misconfigurations to find a way to escalate our privilege.</td>
+</tr>
+<tr>
+<td><a href="https://securityonline.info/yodo-local-privilege-escalation/">yodo: Local Privilege Escalation</a></td>
+<td>yodo proves how easy it is to become root via limited sudo permissions, via dirty COW or using Pa(th)zuzu.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="collaboration-tools">Collaboration tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://dradisframework.com/ce/">Dradis</a></td>
+<td>Open-source reporting and collaboration tool for InfoSec professionals</td>
+</tr>
+</tbody>
+</table>
+<h1 id="active-directory">Active Directory</h1>
+<ul>
+<li>Active Directory Blogs</li>
+<li><a href="https://adsecurity.org/">AD Security</a></li>
+<li>
+<p><a href="https://www.dsinternals.com/en/">DS Internals</a></p>
+</li>
+<li>
+<p>Active Directory Building Blocks</p>
+</li>
+<li>
+<p><a href="https://www.lifewire.com/netbios-software-protocol-818229">What is NetBIOS</a></p>
+</li>
+<li><a href="https://blogs.msdn.microsoft.com/sql_protocols/2006/12/02/understanding-kerberos-and-ntlm-authentication-in-sql-server-connections/">NTLM vs Kerberos</a> </li>
+<li><a href="https://blogs.msdn.microsoft.com/autz_auth_stuff/2011/04/28/what-is-a-spn-and-why-should-you-care/">Service Principal Names</a></li>
+<li><a href="https://wald0.com/?p=112">ACLs with BloodHound</a></li>
+<li><a href="https://attack.mitre.org/wiki/Lateral_Movement">MITRE Tactics</a></li>
+<li><a href="https://attack.mitre.org/techniques/">MITRE Techniques</a></li>
+<li><a href="https://attack.mitre.org/wiki/Privilege_Escalation">MITRE Privilege Escalation</a></li>
+<li><a href="https://blogs.technet.microsoft.com/the_9z_by_chris_davis/2014/02/14/mitigating-the-risk-of-lateral-movement/">Lateral Movement Mitigations</a></li>
+<li><a href="https://www.dsinternals.com/wp-content/uploads/pth_wug_2015.pdf">Pass-the-Hash</a></li>
+<li><a href="http://www.harmj0y.net/blog/redteaming/a-guide-to-attacking-domain-trusts/">Attacking Domain Trusts</a></li>
+<li><a href="https://www.pentestpartners.com/security-blog/abusing-group-policy-preferences-to-elevate-privileges/">Abusing Group Policy Preference</a></li>
+<li><a href="https://blog.rapid7.com/2016/07/27/pentesting-in-the-real-world-group-policy-pwnage">Abusing Group Policy Preference - Rapid 7</a></li>
+<li><a href="http://www.tech-faq.com/active-directory-objects.html">Understanding Active Directory Objects</a></li>
+<li><a href="http://slideplayer.com/slide/4886893/">Modern AD Attacks, Prevention, and Detection</a></li>
+<li><a href="https://auth0.com/blog/what-is-and-how-does-single-sign-on-work/">What is Single Sign-On</a></li>
+<li><a href="https://kb.globalscape.com/KnowledgebaseArticle11035.aspx">Using IWA for SSO</a></li>
+<li><a href="https://www.ibm.com/support/knowledgecenter/en/SSMKHH_9.0.0/com.ibm.etools.mft.doc/bp62000_.htm">IWA and other AD Authentication Protocols</a></li>
+<li><a href="https://www.blackhat.com/docs/us-16/materials/us-16-Metcalf-Beyond-The-MCSE-Active-Directory-For-The-Security-Professional.pdf">ActiveDirectory For The Security Professional</a></li>
+<li><a href="https://adsecurity.org/?p=1684">Common AD Security Issues</a></li>
+<li><a href="https://www.slideshare.net/QuestSoftware/identifying-hybrid-ad-security-risks-with-continuous-assessment">Risks with Hybrid AD Solutions</a></li>
+<li><a href="https://www.slideshare.net/harmj0y/i-have-the-powerview">Attacking AD With Powerview</a></li>
+<li><a href="https://www.youtube.com/watch?v=AZScrF6JxeQ&amp;feature=youtu.be&amp;t=87">AD Beyond the Easy Button</a></li>
+<li><a href="https://github.com/PaulSec/awesome-windows-domain-hardening">Hardening Windows AD</a></li>
+<li><a href="https://github.com/infosecn1nja/AD-Attack-Defense/blob/master/README.md">Cyber Kill Chain</a></li>
+<li>
+<p><a href="https://en.hackndo.com/kerberos/">Kerberos in AD</a></p>
+</li>
+<li>
+<p>Understanding SPF DKIM and DMARC</p>
+</li>
+<li><a href="https://blog.zsec.uk/mail-tech-spf-pt1/">What is SPF</a></li>
+<li><a href="https://stopemailfraud.proofpoint.com/spf/">SPF and DMARC Checker</a></li>
+<li><a href="https://postmarkapp.com/guides">Understanding DMARC, DKIM, and SPF</a></li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=PHtukqtSdQc">SMTP Security in a Changing World</a></p>
+</li>
+<li>
+<p>Abusing Exchange</p>
+</li>
+<li>
+<p><a href="https://dirkjanm.io/abusing-exchange-one-api-call-away-from-domain-admin/">One API Call Away from DA</a></p>
+</li>
+<li>
+<p>Abusing ACLs</p>
+</li>
+<li><a href="https://www.specterops.io/assets/resources/an_ace_up_the_sleeve.pdf">ACE up the Sleeve</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/desktop/secauthz/directory-services-access-rights">Access Rights</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/desktop/secauthz/access-rights-and-access-masks">Access Rights and Access Masks</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/desktop/secauthz/access-control-entries">Access Control Entries</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/desktop/secauthz/access-control-lists">Access Control Lists</a></li>
+<li>
+<p><a href="https://www.ernw.de/download/BloodHoundWorkshop/ERNW_DogWhispererHandbook.pdf">The Dog Whisperers Handbook</a></p>
+</li>
+<li>
+<p>Kerberoasting</p>
+</li>
+<li><a href="https://www.harmj0y.net/blog/powershell/kerberoasting-without-mimikatz/">Kerberoasting without Mimikatz</a></li>
+<li>
+<p><a href="https://hackernoon.com/kerberoasting-f080cd03e8cd">Hackernoon Kerberoasting</a></p>
+</li>
+<li>
+<p>AS-REP Roasting</p>
+</li>
+<li><a href="https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/">Roasting AS Reps</a></li>
+<li>
+<p><a href="https://blog.xpnsec.com/kerberos-attacks-part-2/">More Roasting with AS-Reps</a></p>
+</li>
+<li>
+<p>Abusing GPOs</p>
+</li>
+<li><a href="https://www.harmj0y.net/blog/redteaming/abusing-gpo-permissions/">Abusing GPO Permissions</a></li>
+<li><a href="https://wald0.com/?p=179">Red Teamers Guide to GPOs and OUs</a></li>
+<li><a href="https://www.harmj0y.net/blog/redteaming/where-my-admins-at-gpo-edition/">Where my Admins at</a></li>
+<li><a href="https://rastamouse.me/2019/01/gpo-abuse-part-1/">GPO Abuse Part 1</a></li>
+<li><a href="https://rastamouse.me/2019/01/gpo-abuse-part-2/">GPO Abuse Part 2</a></li>
+<li>
+<p><a href="https://www.shellandco.net/blog/2014/02/04/get-the-gpo-name-guid-and-sid/">Obtaining GPO Name, Guid, and SID</a></p>
+</li>
+<li>
+<p>Abusing LAPS</p>
+</li>
+<li><a href="https://rastamouse.me/2018/03/laps---part-1/">Intro to LAPS</a></li>
+<li><a href="https://rastamouse.me/2018/03/laps---part-2/">Abusing LAPS for persistence</a></li>
+</ul>
+<h2 id="ad-tooling">AD Tooling</h2>
+<ul>
+<li>Bloodhound</li>
+<li><a href="https://github.com/BloodHoundAD/BloodHound/wiki/Getting-started">Getting Started</a></li>
+<li><a href="https://neo4j.com/download/">Downloading Neo4j</a></li>
+<li><a href="https://stealingthe.network/quick-guide-to-installing-bloodhound-in-kali-rolling/">Installing Bloodhound in Kali</a></li>
+<li><a href="https://hausec.com/2017/10/26/using-bloodhound-to-map-the-user-network/">Using Bloodhound to map the Domain</a></li>
+<li>
+<p><a href="https://neo4j.com/docs/cypher-refcard/current/">Cypher Query Cheetsheet</a></p>
+</li>
+<li>
+<p>Cobalt Strike</p>
+</li>
+<li><a href="https://www.cobaltstrike.com/help-beacon">Beacons</a></li>
+<li><a href="https://www.cobaltstrike.com/help-smb-beacon">SMB Beacons</a></li>
+<li><a href="https://www.youtube.com/watch?v=XVKRDSLxEeU&amp;list=PL85B4C2D2703F3BBB">Pentesting with Cobalt Strike</a></li>
+</ul>
+<h2 id="attacking-active-directory">Attacking Active Directory</h2>
+<ul>
+<li>Host Configuration Checks</li>
+<li><a href="https://github.com/411Hall/JAWS">Windows Enumeration</a></li>
+<li><a href="https://github.com/bitsadmin/wesng">Windows Exploits</a></li>
+<li>
+<p><a href="https://github.com/Z3R0th-13/LinEnum">Linux Enumeration</a></p>
+</li>
+<li>
+<p>User Enumeration</p>
+</li>
+<li><a href="https://bitbucket.org/grimhacker/office365userenum/src/master/">Office 365 User Enumeration</a></li>
+<li>
+<p><a href="https://github.com/sensepost/UserEnum">LDAP User Enumeration</a></p>
+</li>
+<li>
+<p>Active Directory</p>
+</li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procmon">Procmon</a></li>
+<li><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/">Sysinternals</a></li>
+<li><a href="https://github.com/vletoux/pingcastle">Ping Castle</a></li>
+<li><a href="https://github.com/GhostPack/Rubeus">Rubues</a></li>
+<li><a href="https://github.com/FSecureLABS/SharpGPOAbuse">Sharp GPO Abuse</a></li>
+<li>
+<p><a href="https://github.com/mgeeky/Penetration-Testing-Tools/">Awesome Collection of Pentesting Tools</a></p>
+</li>
+<li>
+<p>Powershell Scipts</p>
+</li>
+<li><a href="https://github.com/p3nt4/PowerShdll">Run powershell with DLLs</a></li>
+<li><a href="https://github.com/PyroTek3/PowerShell-AD-Recon">AD Recon</a></li>
+<li><a href="https://github.com/NetSPI/PowerShell">Federation Endpoint</a></li>
+<li><a href="https://gallery.technet.microsoft.com/scriptcenter/Get-SPN-Get-Service-3bd5524a">Get-SPN</a></li>
+<li><a href="https://github.com/dafthack/MailSniper">Mail Sniper</a></li>
+<li><a href="https://github.com/nyxgeek/o365recon">o365 Recon</a></li>
+<li><a href="https://github.com/PowerShellMafia/PowerSploit/tree/dev/Recon">Powerview</a></li>
+<li><a href="https://github.com/BloodHoundAD/SharpHound">Sharphound</a></li>
+<li><a href="https://outflank.nl/blog/2018/03/30/automated-ad-and-windows-test-lab-deployments-with-invoke-adlabdeployer/">Automated AD Lab Setup</a></li>
+<li><a href="https://github.com/tokyoneon/Chimera">Powershell Obfuscation with Chimera</a></li>
+</ul>
+<h2 id="red-team">Red Team</h2>
+<ul>
+<li><a href="https://github.com/bluscreenofjeff/Red-Team-Infrastructure-Wiki">Setting up Red Team Infrastructure</a></li>
+<li><a href="https://pbs.twimg.com/media/Dtqg0aKW4AQ48uT.jpg">Red Team MindMap</a></li>
+<li><a href="https://github.com/chryzsh/DarthSidious/">DarthSidious Book on Attacking AD</a></li>
+<li><a href="https://medium.com/@adam.toscher/top-five-ways-the-red-team-breached-the-external-perimeter-262f99dc9d17">Breaching the Perimeter</a></li>
+<li><a href="https://vincentyiu.com/red-team">Red Teaming by Vincent Yiu</a></li>
+<li><a href="https://github.com/ihebski/A-Red-Teamer-diaries">Red Teamer Diaries</a></li>
+<li><a href="https://theevilbit.github.io/posts/divide_and_conquer/">Divide &amp; Conquer to Bypass AV</a></li>
+</ul>
+<h2 id="binaries">Binaries</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gtfobins</td>
+<td><a href="https://twitter.com/norbemi">Emilio Pinna</a>, <a href="https://twitter.com/cyrus_and">Andrea Cardaci</a></td>
+<td>A curated list of Unix binaries that can be used to bypass local security restrictions in misconfigured systems.</td>
+<td><a href="https://gtfobins.github.io/">Link</a></td>
+<td>Unix</td>
+</tr>
+<tr>
+<td>LOLBAS</td>
+<td><a href="https://www.linkedin.com/in/oddvarmoe/">Oddvar Moe</a></td>
+<td>Contains a list of Windows binaries, scripts, and libraries that can be used for executing codes, Compiling code, UAC bypass, Persistance, etc</td>
+<td><a href="https://lolbas-project.github.io/#">Link</a></td>
+<td>Windows</td>
+</tr>
+</tbody>
+</table>
+<h2 id="blogs">Blogs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>harmj0y</td>
+<td><a href="https://twitter.com/harmj0y">harmj0y</a></td>
+<td>harmj0y's blog covering security researches and attacks on active directory.</td>
+<td><a href="https://blog.harmj0y.net/">Link</a></td>
+<td>Offsec/Active Directory</td>
+</tr>
+<tr>
+<td>Juggernaut Pentesting Academy</td>
+<td><a href="https://juggernaut-sec.com/whoami/">Juggernaut</a></td>
+<td>Extensive blog on General Offsec, Red Teaming and Pentesting Topics</td>
+<td><a href="https://juggernaut-sec.com/blog/">Link</a></td>
+<td>Pentest, Red Team, Offsec Topics</td>
+</tr>
+<tr>
+<td>0xBEN</td>
+<td><a href="https://www.linkedin.com/in/benjaminheater/">Benjamin H.</a></td>
+<td>0xBEN's blog featuring cybersecurity/IT resources, cheat sheets, and write-ups.</td>
+<td><a href="https://benheater.com/">Link</a></td>
+<td>Cybersecurity/IT</td>
+</tr>
+<tr>
+<td>NetSPI Blog</td>
+<td>NetSPI</td>
+<td>A blog on various Pentest, Red Team, General Offsec focused topics.</td>
+<td><a href="https://www.netspi.com/blog/technical/">Link</a></td>
+<td>Pentest/Red Team in depth</td>
+</tr>
+<tr>
+<td>Hacking Articles</td>
+<td><a href="https://www.linkedin.com/in/rajchandel/?originalSubdomain=in">Raj Chandel - Founder</a> and Others</td>
+<td>Detailed and Summarised articles on various Pentest and Red Team topics, Offsec Tools and CTF writeups</td>
+<td><a href="https://www.hackingarticles.in/">Link</a></td>
+<td>Pentest/Red Team</td>
+</tr>
+<tr>
+<td>TechMint</td>
+<td><a href="https://www.linkedin.com/in/ravisaive/">Ravi Saive</a></td>
+<td>Free online community-supported publication that publishes practical and useful out-of-the-box high-quality articles on Linux, Sysadmin, Security, DevOps, Cloud Computing, Tools, and many other topics.</td>
+<td><a href="https://www.tecmint.com/">Link</a></td>
+<td>Linux, Sysadmin, Security, Tools, etc</td>
+</tr>
+</tbody>
+</table>
+<h1 id="bug-bounties">Bug Bounties</h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=-FAjxUOKbdI&amp;feature=youtu.be">How to Shot Web - 2015</a></li>
+<li><a href="https://www.youtube.com/watch?v=C4ZHAdI8o1w">Bug Bounty Hunter Methodology V1</a></li>
+<li><a href="https://www.youtube.com/watch?v=Qw1nNPiH_Go">Bug Bounty Hunter Methodology V2</a></li>
+<li><a href="https://github.com/jhaddix/tbhm">Bug Hunters Metholodogy - Book</a></li>
+</ul>
+<h1 id="threat-modelling">Threat Modelling</h1>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Threat_model">What is Threat Modelling</a></li>
+<li><a href="https://henryhoggard.co.uk/blog/Threat-Model-Reference-Guide">Threat Modelling Reference Guide</a></li>
+<li><a href="https://www.youtube.com/watch?v=GqmQg-cszw4&amp;t=2411s">Introduction to Threat Modelling</a></li>
+<li><a href="https://www.youtube.com/watch?v=ZoxHIpzaZ6U">Threat Modelling in 2019</a></li>
+<li>
+<p><a href="https://www.owasp.org/index.php/Category:Threat_Modeling">OWASP - Threat Modelling</a></p>
+</li>
+<li>
+<p>DrawIO</p>
+</li>
+<li><a href="https://michenriksen.com/blog/drawio-for-threat-modeling/">DrawIO for Threat Modelling</a></li>
+<li><a href="https://github.com/michenriksen/drawio-threatmodeling">DrawIO DFD Model</a></li>
+</ul>
+<h2 id="cheatsheets">Cheatsheets</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HackTricks</td>
+<td><a href="https://www.linkedin.com/in/carlos-polop-martin/">Carlos Polop</a></td>
+<td>A website featuring curated hacking tricks, techniques, and methodologies, spanning from network penetration testing to web penetration testing.</td>
+<td><a href="https://book.hacktricks.xyz/welcome/readme">Link</a></td>
+<td>Pentest</td>
+</tr>
+<tr>
+<td>pentestmonkey</td>
+<td><a href="https://twitter.com/pentestmonkey">pentestmonkey</a></td>
+<td>Contains pentest blogs, tools, and cheatsheets</td>
+<td><a href="https://pentestmonkey.net/">Link</a></td>
+<td>Pentest</td>
+</tr>
+<tr>
+<td>Active Directory Exploitation Cheat Sheet</td>
+<td><a href="https://twitter.com/S1ckB0y1337">Nikos Katsiopis</a></td>
+<td>A cheat sheet that contains common enumeration and attack methods for Windows Active Directory.</td>
+<td><a href="https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet">Link</a></td>
+<td>Active Directory</td>
+</tr>
+<tr>
+<td>OSCP Cheatsheet</td>
+<td><a href="https://twitter.com/nullshock1">Sai Sathvik</a></td>
+<td>OSCP cheatsheets to prepare effectively for the certification</td>
+<td><a href="https://github.com/saisathvik1/OSCP-Cheatsheet">Link</a></td>
+<td>OSCP</td>
+</tr>
+<tr>
+<td>explainshell.com</td>
+<td><a href="https://aleph.nu/about/">Idan Kamara</a></td>
+<td>A web interface capable of parsing man pages, extracting options and explaining a given command-line by matching each argument to the relevant help text in the man page.</td>
+<td><a href="https://www.explainshell.com/">Link</a></td>
+<td>Shell/Linux</td>
+</tr>
+<tr>
+<td>WADComs</td>
+<td><a href="https://twitter.com/JohnWoodman15">John Woodman</a></td>
+<td>An interactive cheat sheet, containing a curated list of offensive security tools and their respective commands, to be used against Windows/AD environments</td>
+<td><a href="https://wadcoms.github.io/">Link</a></td>
+<td>Windows/AD</td>
+</tr>
+<tr>
+<td>Offensive Security Cheatsheet</td>
+<td><a href="https://twitter.com/Haax9_">Haax</a></td>
+<td>A document used to centralize many informations about cybersecurity techniques and payloads.</td>
+<td><a href="https://cheatsheet.haax.fr/">Link</a></td>
+<td>Pentest</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ctf-write-ups-videos">CTF Write-ups &amp; Videos</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IppSec</td>
+<td><a href="https://twitter.com/ippsec">IppSec</a></td>
+<td>IppSec's website that helps streamline your search for his YouTube videos and courses on HTB walkthroughs and techniques</td>
+<td><a href="https://ippsec.rocks/?#">Link</a></td>
+<td>videos</td>
+</tr>
+<tr>
+<td>0xdf hacks stuff</td>
+<td><a href="https://twitter.com/0xdf">0xdf</a></td>
+<td>0xdf's website with detailed write-ups on HTB machines</td>
+<td><a href="https://0xdf.gitlab.io/">Link</a></td>
+<td>write-ups</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cybersecurity-labs">Cybersecurity Labs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DetectionLab</td>
+<td><a href="https://twitter.com/Centurion">Chris Long</a></td>
+<td>Automate the creation of a lab environment complete with security tooling and logging best practices</td>
+<td><a href="https://detectionlab.network/">Link</a></td>
+<td>Cybersecurity Home-lab</td>
+</tr>
+<tr>
+<td>PortSwigger Web Security Academy</td>
+<td><a href="https://twitter.com/PortSwigger">PortSwigger</a></td>
+<td>An academy with lessons and hands on lab to learn WebApp Pentesting</td>
+<td><a href="https://portswigger.net/web-security">Link</a></td>
+<td>WebApp Security Lessons &amp; Labs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="networking">Networking</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed Guide</td>
+<td><a href="https://www.speedguide.net/about.php">SG Staff</a></td>
+<td>The site offers free network tools and covers Broadband Internet connections, network security, wireless and system performance. A large section focuses on Cable Modems and DSL technology, stressing on improving TCP/IP performance over high speed/latency networks.</td>
+<td><a href="https://www.speedguide.net/">Link</a></td>
+<td>Network &amp; Security</td>
+</tr>
+</tbody>
+</table>
+<h2 id="other-resources">Other Resources</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Red Team Notes</td>
+<td><a href="https://www.linkedin.com/in/mantvydasb/">Mantvydas Baranauskas</a></td>
+<td>A list of red teaming and penetration testing notes on various tools and techniques utilized by penetration testers, red teams, and real adversaries.</td>
+<td><a href="https://www.ired.team/">Link</a></td>
+<td>Red team/Pentest notes</td>
+</tr>
+<tr>
+<td>The Hacker Recipes</td>
+<td><a href="https://twitter.com/_nwodtuhs">Charlie Bromberg</a></td>
+<td>Provides technical guides on various hacking topics as well as advanced topics such as Active Directory and Web services.</td>
+<td><a href="https://www.thehacker.recipes/">Link</a></td>
+<td>Ethical Hacking guide</td>
+</tr>
+<tr>
+<td>Hackersploit</td>
+<td><a href="https://twitter.com/hackersploit?lang=en">Hackersploit</a></td>
+<td>Video content on Red Team, Blue Team, Android Sec, CTF Writeup, Bug Bounty</td>
+<td><a href="https://hackersploit.org/">Link</a></td>
+<td>Red/Blue Team, Webapp, Android, Bug Bounty</td>
+</tr>
+<tr>
+<td>Awesome Pentest</td>
+<td><a href="https://www.linkedin.com/in/nick-raienko-8b907895/">Nick Raienko</a></td>
+<td>A collection of awesome penetration testing resources, tools and other shiny things</td>
+<td><a href="https://github.com/enaqx/awesome-pentest">Link</a></td>
+<td>Penetration testing and offensive cybersecurity</td>
+</tr>
+<tr>
+<td>The Book of Secret Knowledge</td>
+<td><a href="https://twitter.com/trimstray">Michał Ży</a></td>
+<td>A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.</td>
+<td><a href="https://github.com/trimstray/the-book-of-secret-knowledge">Link</a></td>
+<td>Resources for System and Network administrators, DevOps, Pentesters, and Security Researchers</td>
+</tr>
+<tr>
+<td>Cybercopaedia</td>
+<td><a href="https://github.com/cr0mll">cr0mll</a></td>
+<td>A website aimed at accumulating knowledge from the world of cybersecurity and presenting it in a cogent way, so it is accessible to as large an audience as possible and so that everyone has a good resource to learn ethical hacking from</td>
+<td><a href="https://cr0mll.github.io/cyberclopaedia/Cyberclopaedia/index.html">Link</a></td>
+<td>Ethical Hacking Encyclopedia</td>
+</tr>
+</tbody>
+</table>
+<h2 id="payloads">Payloads</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Payloads All The Things</td>
+<td><a href="https://twitter.com/pentest_swissky">Swissky</a></td>
+<td>A list of useful payloads and bypass for Web Application Security and Pentest/CTF</td>
+<td><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master">Link</a></td>
+<td>Web App</td>
+</tr>
+<tr>
+<td>RevShells.com</td>
+<td><a href="https://ryanmontgomery.me/">Ryan Montgomery</a></td>
+<td>Website with simple to use generator for reverse shell payloads</td>
+<td><a href="https://www.revshells.com/">Link</a></td>
+<td>Payloads and reverse shells</td>
+</tr>
+</tbody>
+</table>
+<h2 id="programming-scripting-notes">Programming &amp; Scripting Notes</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goal Kicker</td>
+<td>Unknown</td>
+<td>Provides free exceptional programming notes covering 49 different types of programming languages, including scripting languages such as python and powershell</td>
+<td><a href="https://books.goalkicker.com/">Link</a></td>
+<td>Programming &amp; Scripting languages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="search-engines">Search Engines</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Awesome Hacker Search Engines</td>
+<td><a href="https://www.linkedin.com/in/edoardoottavianelli/">Edoardo Ottavianelli</a></td>
+<td>A curated list of awesome search engines useful during Penetration testing, Vulnerability assessments, Red/Blue Team operations, Bug Bounty and more.</td>
+<td><a href="https://github.com/edoardottt/awesome-hacker-search-engines">Link</a></td>
+<td>Pentest search engines</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tools">Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CyberChef</td>
+<td><a href="https://www.gchq.gov.uk/">GCHQ</a></td>
+<td>A web app for encryption, encoding, compression and data analysis</td>
+<td><a href="https://gchq.github.io/CyberChef/">Link</a></td>
+<td>Web based security analysis</td>
+</tr>
+<tr>
+<td>HackTools</td>
+<td><a href="https://www.linkedin.com/in/ludovic-coulon/">Ludovic Coulon</a>, <a href="http://github.com/rb-x">Riadh BOUCHAHOUA</a></td>
+<td>A web extension facilitating web application penetration tests, it includes cheatsheets as well as all the tools used during a test such as XSS payloads, Reverse shells and much more.</td>
+<td><a href="https://github.com/LasCC/Hack-Tools">Link</a></td>
+<td>Web App</td>
+</tr>
+<tr>
+<td>HackerTarget.com</td>
+<td>Peter Hill</td>
+<td>An open-source security platform that provides free security tools, tutorials, cheatsheets, blogs, and researches</td>
+<td><a href="https://hackertarget.com/">Link</a></td>
+<td>Open-source cybersecurity tools</td>
+</tr>
+</tbody>
+</table>
+<h2 id="wordlists">Wordlists</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Author(s) / Maintainer(s)</th>
+<th>Description</th>
+<th>Link</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SecLists</td>
+<td><a href="https://danielmiessler.com/">Daniel Miessler</a>, <a href="https://twitter.com/Jhaddix">Jason Haddix</a>, <a href="https://twitter.com/g0tmi1k">g0tmi1k</a></td>
+<td>A collection of multiple types of lists used during security assessments, collected in one place. List types include usernames, passwords, URLs, sensitive data patterns, fuzzing payloads, web shells, and many more.</td>
+<td><a href="https://github.com/danielmiessler/SecLists">Link</a></td>
+<td>Wordlists</td>
+</tr>
+<tr>
+<td>Assetnote Wordlists</td>
+<td><a href="https://www.assetnote.io/">Assetnote</a></td>
+<td>The website provides wordlists that are up to date and effective against the most popular technologies on the internet.</td>
+<td><a href="https://wordlists.assetnote.io/">Link</a></td>
+<td>Wordlists</td>
+</tr>
+</tbody>
+</table>
+<h1 id="cloud-pentesting">Cloud Pentesting</h1>
+<h2 id="multiplatform-resources">MultiPlatform Resources</h2>
+<ul>
+<li><a href="https://www.marcolancini.it/continuous-cloud-visibility/">Cloud Logging &amp; Visibility</a></li>
+<li><a href="https://github.com/dafthack/CloudPentestCheatsheets">Cloud Pentesting CheetSheets</a></li>
+<li><a href="https://github.com/appsecco/breaking-and-pwning-apps-and-servers-aws-azure-training">AWS and Azure Training</a></li>
+<li><a href="https://hackingthe.cloud/">HackingTheCloud</a></li>
+</ul>
+<h2 id="azure">Azure</h2>
+<ul>
+<li><a href="https://docs.microsoft.com/en-gb/learn/paths/azure-fundamentals/">Azure Fundamentals</a></li>
+<li><a href="https://www.blackhillsinfosec.com/red-teaming-microsoft-part-1-active-directory-leaks-via-azure/">AD Leaks via Azure</a></li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-2.7.0&amp;viewFallbackFrom=azurermps-6.8.1">Azure and Powershell</a></li>
+<li><a href="https://adsecurity.org/?p=4211">What is Azure AD</a></li>
+<li><a href="https://dirkjanm.io/azure-ad-privilege-escalation-application-admin/">Azure AD Privilege Escalation</a></li>
+</ul>
+<h2 id="aws">AWS</h2>
+<ul>
+<li><a href="https://asecure.cloud/">A Secure Cloud</a></li>
+<li><a href="https://asecure.cloud/tools/">AWS Security Tools</a></li>
+<li><a href="https://github.com/jonrau1/ElectricEye">Monitoring your AWS Environment</a></li>
+<li><a href="https://www.aws.training/Details/eLearning?id=60697">AWS Training &amp; Certification</a></li>
+<li><a href="https://expeditedsecurity.com/aws-in-plain-english/">AWS in Plain English</a></li>
+<li><a href="https://gracefulsecurity.com/an-introduction-to-penetration-testing-aws-same-same-but-different/">Pentesting the Cloud</a></li>
+</ul>
+<h2 id="aws-tools">AWS Tools</h2>
+<ul>
+<li><a href="https://github.com/nccgroup/ScoutSuite">ScoutSuite</a></li>
+<li><a href="https://expel.io/blog/mind-map-for-aws-investigations/">AWS Investigations MindMap</a></li>
+<li><a href="https://github.com/FSecureLABS/awspx">awspx</a></li>
+</ul>
+<h1 id="web-app-and-web-services">Web App and Web Services</h1>
+<ul>
+<li><a href="https://www.owasp.org/index.php/Web_Services">What are Web Services</a></li>
+<li><a href="http://www.guru99.com/webservice-testing-beginner-guide.html">Beginners Guide to Web Services</a></li>
+<li><a href="http://www.softwaretestingclass.com/what-is-web-service-how-it-is-tested/">What is a web Service and How to Test it</a></li>
+<li><a href="https://www.slideshare.net/secfigo/pentesting-restful-webservices">Pentesting RESTful Web Services</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Assessment_Cheat_Sheet.html">REST Web Services CheatSheet</a></li>
+<li><a href="https://support.smartbear.com/testcomplete/docs/app-testing/web/services/editor/index.html">SmartBear Web Services Editor</a></li>
+<li><a href="https://www.soapui.org/tutorials/tutorial-data-driven-testing.html">SoapUI Web Services Editor</a></li>
+</ul>
+<h1 id="thick-client">Thick Client</h1>
+<ul>
+<li><a href="https://www.slideshare.net/nullbind/thick-application-penetration-testing-crash-course">Pentesting Thick Clients - Crash Course</a></li>
+<li><a href="https://www.slideshare.net/sanjucsrf/thick-client-application-security-assessment?next_slideshow=1">Pentesting Thick Clients</a></li>
+<li>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp">Setting up a VPN with PPTP</a></p>
+</li>
+<li>
+<p>Thick Client Tools</p>
+</li>
+<li><a href="https://docs.microsoft.com/en-za/sysinternals/downloads/procmon">Procmon</a></li>
+<li><a href="https://github.com/icsharpcode/ILSpy">ILSpy</a></li>
+<li><a href="https://github.com/0xd4d/dnSpy">DNSpy</a></li>
+<li><a href="https://github.com/0xd4d/de4dot">De4Dot</a></li>
+</ul>
+<h1 id="ics-and-ot">ICS and OT</h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=k7qNCU8_Wpc">Know your ICS</a></li>
+<li><a href="https://www.youtube.com/watch?v=0uSuHEhjhPE">Attacks and Threats</a></li>
+<li><a href="https://www.youtube.com/channel/UC5MdLu7ji_eyGiTfigk75lQ">S4 Events</a></li>
+<li><a href="https://www.youtube.com/watch?v=uVVlDOxE1mE">Risk Management and Executive Communication</a></li>
+<li><a href="https://www.sans.org/cyber-security-summit/archives/file/summit-archive-1493413730.pdf">The ICS Cyber Kill Chain</a></li>
+<li>
+<p><a href="https://collaborate.mitre.org/attackics/index.php/Main_Page">Mitre ICS Framework</a></p>
+</li>
+<li>
+<p>SCADA</p>
+</li>
+<li><a href="https://research.aurainfosec.io/scada-penetration-testing/">Pentesting SCADA</a></li>
+<li><a href="https://www.sans.org/cyber-security-summit/archives/file/summit-archive-1493758822.pdf">Pentesting SCADA / DCS</a></li>
+<li><a href="https://nmap.org/nsedoc/scripts/bacnet-info.html">Discovering and Enumerating BACnet Devices</a></li>
+<li><a href="https://www.robertmlee.org/a-collection-of-resources-for-getting-started-in-icsscada-cybersecurity/">Collection of ICS/SCADA Resources</a></li>
+<li><a href="https://www.scadahacker.com/library/index.html">Library of ICS Resources</a></li>
+</ul>
+<h1 id="incident-response">Incident Response</h1>
+<ul>
+<li>Cloud Incident Response</li>
+<li>
+<p><a href="https://docs.aws.amazon.com/whitepapers/latest/classic-intrusion-analysis-frameworks-for-aws-environments/classic-intrusion-analysis-frameworks-for-aws-environments.pdf">Cloud IR</a></p>
+</li>
+<li>
+<p>Digital Forensics and Incident Response</p>
+</li>
+<li><a href="https://digital-forensics.sans.org/blog">SANS DF and IR Blog</a></li>
+<li><a href="https://github.com/meirwah/awesome-incident-response">IR Tools and Resources</a></li>
+<li><a href="https://github.com/cugu/awesome-forensics">Forensic Analysis Tools and Resources</a></li>
+<li><a href="https://salt4n6.com/">iOS and Mobile Forensics</a></li>
+<li><a href="https://aboutdfir.com">The Definitive Compendium Project</a></li>
+<li><a href="https://www.dfir.training">DFIR Training</a></li>
+<li><a href="https://www.slideshare.net/HuyKha2/cthow-cyber-threat-hunting-on-windows">Threat Hunting on Windows</a></li>
+<li><a href="https://www.slideshare.net/HuyKha2/cthow-v20-cyber-threat-hunting-on-windows">Threat Hunting on Windows v2.0</a></li>
+<li>
+<p><a href="https://www.itu.int/en/ITU-D/Cybersecurity/Documents/CyberDrill-2020/Cyber%20Threat%20Hunting%20Workshop%20-%20ITU%2019112020.pdf">Threat Hunting Workshop</a></p>
+</li>
+<li>
+<p>DFIR Tools and Playbooks</p>
+</li>
+<li><a href="https://ericzimmerman.github.io/#!index.md">Eric Zimmermans' Tools</a></li>
+<li><a href="https://www.incidentresponse.com/playbooks/">Incident Response Playbooks</a></li>
+<li><a href="https://www.demisto.com/resources/">A repository of Demisto Resources</a></li>
+<li><a href="https://github.com/certsocietegenerale/IRM">Incident Response Methodologies</a></li>
+<li><a href="https://github.com/The-Art-of-Hacking/h4cker/tree/master/dfir">DFIR Reources</a></li>
+<li><a href="https://www.fireeye.com/services/freeware/flare-vm.html">Flare VM -Fireeye</a></li>
+<li><a href="https://github.com/Cyb3rWard0g/ThreatHunter-Playbook">The Threat Hunters Playbook</a></li>
+<li><a href="https://www.dfir.training/dfirtools/tools">Collection of DFIR Training Tools</a></li>
+<li><a href="https://www.jaiminton.com/cheatsheet/DFIR/">DFIR CheatSheet</a></li>
+<li><a href="https://github.com/meirwah/awesome-incident-response">Awesome Incident Response</a></li>
+<li>
+<p><a href="https://github.com/meirwah/awesome-malware-analysis">Awesome Malware Analysis</a></p>
+</li>
+<li>
+<p>DFIR Search Engines</p>
+</li>
+<li><a href="https://www.virustotal.com">VirusTotal</a></li>
+<li><a href="https://talosintelligence.com/">Talos</a></li>
+<li><a href="https://www.hybrid-analysis.com/">Hybrid Analysis</a></li>
+<li><a href="https://community.riskiq.com/login">PassiveTotal</a></li>
+<li><a href="https://paste.cryptolaemus.com/">Cryptolaemus</a></li>
+<li><a href="https://pulsedive.com/">PulseDive</a></li>
+<li><a href="https://www.alienvault.com">AlienVault</a></li>
+<li>
+<p><a href="https://malshare.com/">Malshare</a></p>
+</li>
+<li>
+<p>SOC Management</p>
+</li>
+<li><a href="https://www.mitre.org/sites/default/files/publications/pr-13-1028-mitre-10-strategies-cyber-ops-center.pdf">Mitre Top 10 Strategies</a></li>
+<li><a href="https://www.amazon.com/Blue-Team-Handbook-Condensed-Operations/dp/1091493898#ace-g2545694624">Blue Team Handbook</a></li>
+</ul>
+<h1 id="privilege-escalation_1">Privilege Escalation</h1>
+<ul>
+<li><a href="https://sec-consult.com/en/blog/2019/04/windows-privilege-escalation-an-approach-for-penetration-testers/">Understanding and Exploiting Windows</a></li>
+<li><a href="http://www.fuzzysecurity.com/tutorials/16.html">Windows Privilege Escalation Fundamentals</a></li>
+<li><a href="http://it-ovid.blogspot.com/2012/02/windows-privilege-escalation.html?m=1">Windows Privilege Escalation CheatSheet</a></li>
+<li><a href="http://www.rebootuser.com/?p=1623#.VkIKBWdieWg">Linux Enumeration &amp; Privilege Escalation Cheatsheet</a></li>
+<li><a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">Basic Linux Privilege Escalation</a></li>
+<li><a href="https://attack.mitre.org/matrices/enterprise/linux/">Linux Mitre Matrices</a></li>
+<li><a href="https://highon.coffee/blog/cheat-sheet/">Pentesting CheatSheets</a></li>
+<li><a href="greyhathacker.net/?p=738">Exploiting Weak Folder Permissions</a></li>
+<li><a href="https://windows-internals.com/faxing-your-way-to-system/">Faxing your way to System</a></li>
+</ul>
+<h1 id="dns-attacks">DNS Attacks</h1>
+<ul>
+<li><a href="http://www.cs.bu.edu/~goldbe/papers/NTPattack.pdf">Attacking the Network Time Protocol</a></li>
+<li><a href="http://inside-out.xyz/technology/how-dns-tunneling-works.html">How does DNS Tunneling Work</a></li>
+<li><a href="https://github.com/yarrick/iodine">Iodine</a></li>
+<li><a href="https://www.sans.org/reading-room/whitepapers/dns/detecting-dns-tunneling-34152">Detecting DNS Tunneling</a></li>
+</ul>
+<h1 id="openshift">Openshift</h1>
+<ul>
+<li><a href="https://www.openshift.com/">What is Openshift</a></li>
+<li><a href="https://www.redhat.com/files/summit/session-assets/2018/S1030-Best-practices-for-OpenShift-high-availability-deployment-field-experience-Distribution.pdf">OpenShift Best Practices</a></li>
+<li><a href="https://docs.openshift.com/container-platform/3.6/scaling_performance/host_practices.html">Recommended Host Practices</a></li>
+<li><a href="https://blog.openshift.com/openshift-protects-against-nasty-container-exploit/">Openshift Enhancing RHEL</a></li>
+</ul>
+<h1 id="message-queue">Message Queue</h1>
+<ul>
+<li><a href="https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_9.0.0/com.ibm.mq.pro.doc/q001020_.htm">What is IBM MQ</a></li>
+<li><a href="http://www.mqtechconference.com/sessions_v2017/MQTC_2017_IBM_MQ_Security-Overview.pdf">IBM MQ Security Overview</a></li>
+<li><a href="www.mqtechconference.com/sessions_v2014/IBM_MQ_Connection_Authentication.pdf">Connection Authentication</a></li>
+<li><a href="https://www.ibm.com/developerworks/community/blogs/messaging/entry/Connection_Authentication_Channel_Authentication_interactions?lang=en">Connection Authentication &amp; Channel Authentication Record interactions</a></li>
+<li><a href="https://www.mcafee.com/us/resources/white-papers/foundstone/wp-pentesters-guide-hacking-activemq-jms-applications.pdf">A Pentesters Guide to Hacking ActiveMQ-Based JMS Applications</a></li>
+<li><a href="https://labs.mwrinfosecurity.com/assets/BlogFiles/mwri-websphere-mq-security-white-paper-part1-2008-05-06.pdf">WebSphere MQ Security</a></li>
+<li>
+<p><a href="https://www.slideshare.net/MoragHughson/websphere-mq-v8-security-deep-dive">WebSphere MQ 8.0 security deep dive</a></p>
+</li>
+<li>
+<p>Message Queue and Broker Injection </p>
+</li>
+<li><a href="https://www.slideshare.net/cr0hn/rootedcon-2016-broker-mq-injection">Broker and MQ Injection</a></li>
+<li><a href="https://www.youtube.com/watch?v=NydCkS2xRYY">Broker and MQ Injection - YouTube</a></li>
+<li><a href="https://github.com/cr0hn/enteletaor">Message Queue &amp; Broker Injection tool</a></li>
+<li><a href="https://www.ibm.com/developerworks/websphere/library/techarticles/1001_xiao/1001_xiao.html">Websphere MQ Message Formats</a></li>
+<li><a href="https://stackoverflow.com/questions/19609705/difference-between-queue-manager-and-message-broker#19617774">Difference between MQ and Message Broker</a></li>
+<li><a href="http://www.mqtechconference.com/sessions_v2015/MQ_PCF.pdf">MQ PCF Programming</a></li>
+<li><a href="https://middlewarenews.blogspot.co.za/2010/11/pcf-commands-middleware-news.html">PCF Commands</a></li>
+<li><a href="https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_9.0.0/com.ibm.mq.adm.doc/q020070_.htm">MQ Administration Interface (MQAI)</a></li>
+</ul>
+<h1 id="additional-interesting-resources">Additional Interesting Resources</h1>
+<ul>
+<li><a href="web.archive.org">Wayback machine</a></li>
+<li><a href="https://www.grc.com/securitynow.htm">SecurityNow Security Podcast</a></li>
+<li><a href="http://carnal0wnage.attackresearch.com/">Attack Research - CarnalOwnage</a></li>
+<li><a href="overthewire.org">Wargames</a></li>
+<li>
+<p><a href="https://gchq.github.io/CyberChef/">CyberChef</a></p>
+</li>
+<li>
+<p>CTF Style Websites</p>
+</li>
+<li><a href="vulnhub.com">Vulnhub</a></li>
+<li><a href="https://www.hackthebox.eu/">Hack The Box</a></li>
+<li>
+<p><a href="https://tryhackme.com/">TryHackMe</a></p>
+</li>
+<li>
+<p>AWS CTF Style Challenges</p>
+</li>
+<li><a href="http://flaws.cloud/">flAWS</a></li>
+<li><a href="http://flaws2.cloud/">flAWS 2</a></li>
+<li>
+<p><a href="https://github.com/RhinoSecurityLabs/cloudgoat">CloudGoat</a></p>
+</li>
+<li>
+<p>Exploitation Resources</p>
+</li>
+<li><a href="http://pwnable.kr">Wargames</a></li>
+<li><a href="http://fuzzysecurity.com">Fuzzy Security</a></li>
+<li><a href="https://liveoverflow.com">Live Overflow</a></li>
+<li><a href="http://cybercampaigns.net">Cyber Campaigns</a></li>
+<li><a href="https://fullpwnops.com/windows-exploitation-pathway.html">Windows Exploitation Pathway</a></li>
+<li>
+<p><a href="https://guyinatuxedo.github.io/index.html">Intro to Binary Exploitation</a></p>
+</li>
+<li>
+<p>Cool Links</p>
+</li>
+<li><a href="http://hackingandsecurity.blogspot.com/2018/?view=flipcard">Hacking and Security FlipCards</a></li>
+<li><a href="https://github.com/vitalysim/Awesome-Hacking-Resources">Awesome Hacking Resources</a></li>
+<li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings">Payload All the Things</a></li>
+<li><a href="https://averagesecurityguy.github.io/2017/01/06/bypassing-av-with-golang/">Bypassing AV with Golang</a></li>
+<li><a href="https://github.com/trimstray/the-book-of-secret-knowledge">The Book of Secret Knowledge</a></li>
+<li><a href="https://github.com/ihebski/DefaultCreds-cheat-sheet">Default Credentials Cheat Sheet</a></li>
+</ul>
+<h2 id="blog">Blog</h2>
+<p>See our blog post for more information: <a href="https://blog.compass-security.com/2019/10/hacking-tools-cheat-sheet/">compass-security</a></p>
+<p>The cheat sheet contains:
+- Basic Linux Networking Tools (ip, dig)
+- Information Gathering (whois, CT logs, subdomain enumeration)
+- TCP Tools (ncat)
+- TLS Tools (openssl, ncat, sslyze, socat)
+- HTTP Tools (python webserver, curl, nikto, gobuster)
+- Sniffing (ARP spoofing, tcpdump, Wireshark, …)
+- Network Scanning (nmap, masscan)
+- Shells (Bind/reverse shells)
+- Vulnerability DBs and Exploits (searchsploit and some links)
+- Cracking (ncrack, hashcat, John the Ripper)
+- Metasploit Framework (Use exploits, generate shells, shell listeners, meterpreter, pivoting, SOCKS proxying)
+- Linux Privilege Escalation (LinEnum, lynis, GTFOBins)
+- Windows Privilege Escalation (PowerSploit, smbmap)
+- Windows Credentials Gathering (mimikatz, lsadump)
+- Passh-The-Hash (Lots of impacket tools)
+- NTLM Relay (ntlmrelayx, SOCKS proxying)
+- Active Directory (BloodHound &amp; PingCastle)
+- Online References</p>
+<h3 id="images">Images</h3>
+<p>Page 1:</p>
+<p><img alt="Hacking Tools Cheat Sheet Page 1" src="https://raw.githubusercontent.com/CompassSecurity/Hacking_Tools_Cheat_Sheet/master/hacking_tools_cheat_sheet_v2.0-0.png" /></p>
+<p>Page 2:</p>
+<p><img alt="Hacking Tools Cheat Sheet Page 2" src="https://raw.githubusercontent.com/CompassSecurity/Hacking_Tools_Cheat_Sheet/master/hacking_tools_cheat_sheet_v2.0-1.png" /></p>
+<p>Page 3:</p>
+<p><img alt="Hacking Tools Cheat Sheet Page 2" src="https://raw.githubusercontent.com/CompassSecurity/Hacking_Tools_Cheat_Sheet/master/hacking_tools_cheat_sheet_v2.0-2.png" /></p>
+<h2 id="need-more">Need More ?</h2>
+<blockquote>
+<p><a href="./auth/contributing.md">⭐ Contributing</a> are always welcome !</p>
+</blockquote>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/glossary/awesome repositories.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

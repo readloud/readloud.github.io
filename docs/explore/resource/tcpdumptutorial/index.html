@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TCPDUMP - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TCPDUMP", url: "#_top", children: [
+              {title: "Command options:", url: "#command-options" },
+              {title: "How to read TCPDUMP Output", url: "#how-to-read-tcpdump-output" },
+              {title: "Basic usage:", url: "#basic-usage" },
+              {title: "1. Basic communication (without many options)", url: "#1-basic-communication-without-many-options" },
+              {title: "2. Basic communication (very verbose)", url: "#2-basic-communication-very-verbose" },
+              {title: "3. Look at the traffic with contents in hex and ASCII", url: "#3-look-at-the-traffic-with-contents-in-hex-and-ascii" },
+              {title: "4. Full packet view", url: "#4-full-packet-view" },
+              {title: "Capture two ICMP packets (-c2)", url: "#capture-two-icmp-packets-c2" },
+              {title: "Common Syntax", url: "#common-syntax" },
+          ]},
+          {title: "Expressions examples", url: "#expressions-examples", children: [
+              {title: "host look for traffic based on IP address or hostname if not using -n", url: "#host-look-for-traffic-based-on-ip-address-or-hostname-if-not-using-n" },
+              {title: "If you only want to see traffic in one direction or the other, you can use src and dst", url: "#if-you-only-want-to-see-traffic-in-one-direction-or-the-other-you-can-use-src-and-dst" },
+              {title: "net capture an entire network using CIDR notation", url: "#net-capture-an-entire-network-using-cidr-notation" },
+              {title: "proto works for tcp, udp, and icmp.", url: "#proto-works-for-tcp-udp-and-icmp" },
+              {title: "port see only traffic to or from a certain port", url: "#port-see-only-traffic-to-or-from-a-certain-port" },
+              {title: "src, dst port filter based on the source or destination port", url: "#src-dst-port-filter-based-on-the-source-or-destination-port" },
+              {title: "src/dst, port, protocol combinations", url: "#srcdst-port-protocol-combinations" },
+              {title: "Port Ranges see traffic to any port in a range (portrange)", url: "#port-ranges-see-traffic-to-any-port-in-a-range-portrange" },
+              {title: "Packet Size Filter only see packets below or above (less or greater) a certain size (in bytes)", url: "#packet-size-filter-only-see-packets-below-or-above-less-or-greater-a-certain-size-in-bytes" },
+              {title: "Writing to a File", url: "#writing-to-a-file" },
+              {title: "Traffic to a File", url: "#traffic-to-a-file" },
+              {title: "Read Captured Traffic", url: "#read-captured-traffic" },
+              {title: "Read Captured Traffic with expressions", url: "#read-captured-traffic-with-expressions" },
+              {title: "Combine Expressions", url: "#combine-expressions" },
+              {title: "TCP traffic from 10.0.10.100 destined for port 443", url: "#tcp-traffic-from-10010100-destined-for-port-443" },
+              {title: "Traffic originating from the 10 network headed for the 172.16 network", url: "#traffic-originating-from-the-10-network-headed-for-the-17216-network" },
+              {title: "Non-ICMP traffic destined for 172.16 network from 10.0.10.102", url: "#non-icmp-traffic-destined-for-17216-network-from-10010102" },
+              {title: "Combining expressions", url: "#combining-expressions" },
+              {title: "or", url: "#or" },
+          ]},
+          {title: "About TCP", url: "#about-tcp", children: [
+              {title: "There are 8 bits in the control bits section of the TCP header:", url: "#there-are-8-bits-in-the-control-bits-section-of-the-tcp-header" },
+              {title: "Starting to count with 0, the relevant TCP control bits are contained in octet 13:", url: "#starting-to-count-with-0-the-relevant-tcp-control-bits-are-contained-in-octet-13" },
+              {title: "Let\u2019s have a closer look at octet no. 13:", url: "#lets-have-a-closer-look-at-octet-no-13" },
+              {title: "If we want to capture packets with only SYN set.", url: "#if-we-want-to-capture-packets-with-only-syn-set" },
+              {title: "Examples", url: "#examples" },
+          ]},
+          {title: "Useful tcpdump usage:", url: "#useful-tcpdump-usage", children: [
+              {title: "View ASCII (-A) or HEX (-X) traffic:", url: "#view-ascii-a-or-hex-x-traffic" },
+              {title: "View traffic with timestamps and don\u0027t convert addresses + verbose:", url: "#view-traffic-with-timestamps-and-dont-convert-addresses-verbose" },
+              {title: "Potential DDoS capture - Top talkers after 1000 packets:", url: "#potential-ddos-capture-top-talkers-after-1000-packets" },
+              {title: "Capture traffic on any interface from target host and specific port. Then output to a file:", url: "#capture-traffic-on-any-interface-from-target-host-and-specific-port-then-output-to-a-file" },
+              {title: "Save pcap file on rotating size:", url: "#save-pcap-file-on-rotating-size" },
+              {title: "Find traffic that cotains the word pass:", url: "#find-traffic-that-cotains-the-word-pass" },
+              {title: "Grab clear text protocol passwords:", url: "#grab-clear-text-protocol-passwords" },
+              {title: "References:", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="tcpdump">TCPDUMP</h1>
+<p><em>"tcpdump is a data-network packet analyzer computer program that runs under a command line interface. It allows the user to display TCP/IP and other packets being transmitted or received over a network to which the computer is attached. Distributed under the BSD license, tcpdump is free software."</em></p>
+<ul>
+<li><strong><em><code>TCPDUMP</code> is without question the premier network analysis tool because it provides both power and simplicity in one interface.</em></strong></li>
+</ul>
+<p align="center">
+<img width="80%" src="https://i.stack.imgur.com/cAtkx.jpg">
+</p>
+
+<hr />
+<h2 id="command-options">Command options:</h2>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>About</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>-i any</code></strong></td>
+<td>Listen on all interfaces just to see if you’re seeing any traffic.</td>
+</tr>
+<tr>
+<td><strong><code>-n</code></strong></td>
+<td>Don’t resolve hostnames.</td>
+</tr>
+<tr>
+<td><strong><code>-nn</code></strong></td>
+<td>Don’t resolve hostnames or port names.</td>
+</tr>
+<tr>
+<td><strong><code>-X</code></strong></td>
+<td>Show the packet’s contents in both hex and ASCII.</td>
+</tr>
+<tr>
+<td><strong><code>-XX</code></strong></td>
+<td>Same as -X, but also shows the ethernet header.</td>
+</tr>
+<tr>
+<td><strong><code>-v</code>, <code>-vv</code>, <code>-vvv</code></strong></td>
+<td>Increase the amount of packet information you get back.</td>
+</tr>
+<tr>
+<td><strong><code>-c</code></strong></td>
+<td>Only get x number of packets and then stop.</td>
+</tr>
+<tr>
+<td><strong><code>-s</code></strong></td>
+<td>Define the snaplength (size) of the capture in bytes. Use -s0 to get everything, unless you are intentionally capturing less.</td>
+</tr>
+<tr>
+<td><strong><code>-S</code></strong></td>
+<td>Print absolute sequence numbers.</td>
+</tr>
+<tr>
+<td><strong><code>-e</code></strong></td>
+<td>Get the ethernet header as well.</td>
+</tr>
+<tr>
+<td><strong><code>-q</code></strong></td>
+<td>Show less protocol information.</td>
+</tr>
+<tr>
+<td><strong><code>-E</code></strong></td>
+<td>Decrypt IPSEC traffic by providing an encryption key.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    The default snaplength as of tcpdump 4.0 has changed from 68 bytes to 96 bytes.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    While this will give you more of a packet to see, it still won’t get everything.
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    Use -s 1514 to get full coverage.
+</span></code></pre></div>
+<h2 id="how-to-read-tcpdump-output">How to read TCPDUMP Output</h2>
+<hr />
+<ul>
+<li>
+<p>Example <strong>TCP</strong> output:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>    19:10:23.857236 IP 10.0.10.107.39643 &gt; 10.0.10.102.wap-wsp: Flags [P.], seq 1330613859:1330614161, ack 2667667222, win 6142, options [nop,nop,TS val 12490995 ecr 9292714], length 302
+</span></code></pre></div>
+TCP piece | About
+-|-
+<code>19:10:23.857236</code>  | <strong>Timestamp</strong>
+<code>IP</code>  | <strong>IP protocol</strong>
+<code>10.0.10.107</code>  | <strong>Source Address</strong>
+<code>39643</code>  | <strong>Source Port</strong>
+<code>10.0.10.102</code> | <strong>Destination Address</strong>
+<code>wap-wsp</code> |  <strong>Destination Port</strong> (<strong>resolved</strong>)
+<code>Flags [P.]</code>  | <strong>TCP Flags</strong> PUSH which means that the data should be transferred immediately and “<strong>.</strong>” indicates an <strong>ACK</strong>
+<code>seq 1330613859:1330614161</code> |  <strong>TCP sequence number</strong>
+<code>ack 2667667222</code> |  <strong>TCP acknowledgement number</strong>
+<code>win 6142</code>  | <strong>Window size</strong>
+<code>options [nop,nop,TS val 12490995 ecr 9292714]</code> |  <strong>TCP options</strong>
+<code>length 302</code> | <strong>length of the packet</strong></p>
+</li>
+<li>
+<p>Example <strong>UDP</strong> output:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    13:38:54.920116 IP 10.0.10.107.17500 &gt; 10.0.10.1.17500: UDP, length 103
+</span></code></pre></div></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>UDP piece</th>
+<th>About</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>13:38:54.920116</code></td>
+<td><strong>Timestamp</strong></td>
+</tr>
+<tr>
+<td><code>IP</code></td>
+<td><strong>IP protocol</strong></td>
+</tr>
+<tr>
+<td><code>10.0.10.107</code></td>
+<td><strong>Source Address</strong></td>
+</tr>
+<tr>
+<td><code>17500</code></td>
+<td><strong>Source Port</strong></td>
+</tr>
+<tr>
+<td><code>10.0.10.1</code></td>
+<td><strong>Destination Address</strong></td>
+</tr>
+<tr>
+<td><code>17500</code></td>
+<td><strong>Destination Port</strong></td>
+</tr>
+<tr>
+<td><code>UDP</code></td>
+<td><strong>Protocol UDP</strong></td>
+</tr>
+<tr>
+<td><code>length 103</code></td>
+<td><strong>length of the packet</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="basic-usage">Basic usage:</h2>
+<h2 id="1-basic-communication-without-many-options">1.  <strong>Basic communication</strong> (without many options)</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>tcpdump -nS
+</span></code></pre></div>
+<strong>Sample Output</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    19:10:20.683331 IP 10.0.10.1.db-lsp-disc &gt; 10.0.10.255.db-lsp-disc: UDP, length 103
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    19:10:20.922940 IP 10.0.10.107.39649 &gt; 10.0.10.102.wap-wsp: Flags [.], ack 1988852773, win 245, options [nop,nop,TS val 12487817 ecr 9271223], length 0
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    19:10:20.922971 IP 10.0.10.102.wap-wsp &gt; 10.0.10.107.39649: Flags [.], ack 1628937822, win 277, options [nop,nop,TS val 9298997 ecr 10365680], length 0
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    19:10:23.857236 IP 10.0.10.107.39643 &gt; 10.0.10.102.wap-wsp: Flags [P.], seq 1330613859:1330614161, ack 2667667222, win 6142, options [nop,nop,TS val 12490995 ecr 9292714], length 302
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    19:10:23.858598 IP 10.0.10.102.wap-wsp &gt; 10.0.10.107.39643: Flags [P.], seq 2667667222:2667667409, ack 1330614161, win 1452, options [nop,nop,TS val 9301933 ecr 12490995], length 187
+</span></code></pre></div></p>
+<h2 id="2-basic-communication-very-verbose">2.  <strong>Basic communication</strong> (very verbose)</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>tcpdump -nnvvS
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>tcpdump: listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>19:13:28.478471 IP (tos 0x0, ttl 64, id 58549, offset 0, flags [DF], proto TCP (6), length 354)
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    10.0.10.107.39643 &gt; 10.0.10.102.9200: Flags [P.], cksum 0x0dee (correct), seq 1330623399:1330623701, ack 2667678276, win 6142, options [nop,nop,TS val 12690995 ecr 9477326], length 302
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>19:13:28.479385 IP (tos 0x0, ttl 64, id 26783, offset 0, flags [DF], proto TCP (6), length 240)
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    10.0.10.102.9200 &gt; 10.0.10.107.39643: Flags [P.], cksum 0x29b3 (incorrect -&gt; 0xcd47), seq 2667678276:2667678464, ack 1330623701, win 1452, options [nop,nop,TS val 9486554 ecr 12690995], length 188
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>19:13:28.479678 IP (tos 0x0, ttl 64, id 58550, offset 0, flags [DF], proto TCP (6), length 52)
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    10.0.10.107.39643 &gt; 10.0.10.102.9200: Flags [.], cksum 0xe09b (correct), seq 1330623701, ack 2667678464, win 6142, options [nop,nop,TS val 12690996 ecr 9486554], length 0
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>19:13:28.480045 IP (tos 0x0, ttl 64, id 58551, offset 0, flags [DF], proto TCP (6), length 227)
+</span></code></pre></div></p>
+<h2 id="3-look-at-the-traffic-with-contents-in-hex-and-ascii">3.  <strong>Look at the traffic with contents in hex and ASCII</strong></h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>tcpdump -nnvvXS
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    tcpdump: listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    19:17:45.195365 IP (tos 0x0, ttl 64, id 34413, offset 0, flags [DF], proto TCP (6), length 52)
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>        10.0.10.107.39649 &gt; 10.0.10.102.9200: Flags [.], cksum 0x76f7 (correct), seq 1628937821, ack 1988852773, win 245, options [nop,nop,TS val 12969095 ecr 9715496], length 0
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        0x0000:  4500 0034 866d 4000 4006 8b86 0a00 0a6b  E..4.m@.@......k
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        0x0010:  0a00 0a66 9ae1 23f0 6117 9e5d 768b 7c25  ...f..#.a..]v.|%
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>        0x0020:  8010 00f5 76f7 0000 0101 080a 00c5 e487  ....v...........
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>        0x0030:  0094 3f28                                ..?(
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    19:17:45.195388 IP (tos 0x0, ttl 64, id 44637, offset 0, flags [DF], proto TCP (6), length 52)
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>        10.0.10.102.9200 &gt; 10.0.10.107.39649: Flags [.], cksum 0x28f7 (incorrect -&gt; 0xc416), seq 1988852773, ack 1628937822, win 277, options [nop,nop,TS val 9743270 ecr 10365680], length 0
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>            0x0000:  4500 0034 ae5d 4000 4006 6396 0a00 0a66  E..4.]@.@.c....f
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>            0x0010:  0a00 0a6b 23f0 9ae1 768b 7c25 6117 9e5e  ...k#...v.|%a..^
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>            0x0020:  8010 0115 28f7 0000 0101 080a 0094 aba6  ....(...........
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>            0x0030:  009e 2af0                                ..*.
+</span></code></pre></div></p>
+<h2 id="4-full-packet-view">4.  <strong>Full packet view</strong></h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>tcpdump -nnvvXSs 0
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>tcpdump: listening on eno16777736, link-type EN10MB (Ethernet), capture size 1514 bytes
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>19:21:28.495717 IP (tos 0x0, ttl 64, id 58757, offset 0, flags [DF], proto TCP (6), length 354)
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    10.0.10.107.39643 &gt; 10.0.10.102.9200: Flags [P.], cksum 0xfa57 (correct), seq 1330648203:1330648505, ack 2667707032, win 6142, options [nop,nop,TS val 13210995 ecr 9957340], length 302
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>        0x0000:  4500 0162 e585 4000 4006 2b40 0a00 0a6b  E..b..@.@.+@...k
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        0x0010:  0a00 0a66 9adb 23f0 4f50 148b 9f01 fa98  ...f..#.OP......
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        0x0020:  8018 17fe fa57 0000 0101 080a 00c9 9573  .....W.........s
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        0x0030:  0097 efdc 5055 5420 2f70 6163 6b65 7462  ....PUT./packetb
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        0x0040:  6561 742d 746f 706f 6c6f 6779 2f73 6572  eat-topology/ser
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>        0x0050:  7665 722d 6970 2f61 7070 7372 7630 313f  ver-ip/appsrv01?
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        0x0060:  7474 6c3d 3135 3030 3020 4854 5450 2f31  ttl=15000.HTTP/1
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        0x0070:  2e31 0d0a 486f 7374 3a20 3130 2e30 2e31  .1..Host:.10.0.1
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        0x0080:  302e 3130 323a 3932 3030 0d0a 5573 6572  0.102:9200..User
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>        0x0090:  2d41 6765 6e74 3a20 656c 6173 7469 6353  -Agent:.elasticS
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>        0x00a0:  6561 7263 682f 302e 302e 3220 286c 696e  earch/0.0.2.(lin
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>        0x00b0:  7578 2d61 6d64 3634 290d 0a43 6f6e 7465  ux-amd64)..Conte
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>        0x00c0:  6e74 2d4c 656e 6774 683a 2036 340d 0a41  nt-Length:.64..A
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>        0x00d0:  6363 6570 743a 2061 7070 6c69 6361 7469  ccept:.applicati
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>        0x00e0:  6f6e 2f6a 736f 6e0d 0a43 6f6e 7465 6e74  on/json..Content
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>        0x00f0:  2d54 7970 653a 2061 7070 6c69 6361 7469  -Type:.applicati
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>        0x0100:  6f6e 2f6a 736f 6e0d 0a41 6363 6570 742d  on/json..Accept-
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>        0x0110:  456e 636f 6469 6e67 3a20 677a 6970 0d0a  Encoding:.gzip..
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>        0x0120:  0d0a 7b22 4e61 6d65 223a 2261 7070 7372  ..{&quot;Name&quot;:&quot;appsr
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>        0x0130:  7630 3122 2c22 4950 7322 3a22 3130 2e30  v01&quot;,&quot;IPs&quot;:&quot;10.0
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>        0x0140:  2e31 302e 3130 372c 6665 3830 3a3a 3230  .10.107,fe80::20
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>        0x0150:  633a 3239 6666 3a66 6533 393a 6436 3138  c:29ff:fe39:d618
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>        0x0160:  227d                                     &quot;}
+</span></code></pre></div></p>
+<h2 id="capture-two-icmp-packets-c2"><strong>Capture two ICMP packets (-c2)</strong></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>tcpdump -nnvXSs 0 -c2 icmp
+</span></code></pre></div>
+<p><strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>        tcpdump: listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>        19:31:26.983712 IP (tos 0x0, ttl 64, id 53710, offset 0, flags [DF], proto ICMP (1), length 84)
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>        10.0.10.102 &gt; 8.8.8.8: ICMP echo request, id 3434, seq 5, length 64
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        0x0000:  4500 0054 d1ce 4000 4001 4465 0a00 0a66  E..T..@.@.De...f
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>        0x0010:  0808 0808 0800 237e 0d6a 0005 8ee8 e454  ......#~.j.....T
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>        0x0020:  0000 0000 8602 0f00 0000 0000 1011 1213  ................
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        0x0030:  1415 1617 1819 1a1b 1c1d 1e1f 2021 2223  .............!&quot;#
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>        0x0040:  2425 2627 2829 2a2b 2c2d 2e2f 3031 3233  $%&amp;&#39;()*+,-./0123
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>        0x0050:  3435 3637                                4567
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>        19:31:27.010974 IP (tos 0x0, ttl 127, id 24526, offset 0, flags [none], proto ICMP (1), length 84)
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        8.8.8.8 &gt; 10.0.10.102: ICMP echo reply, id 3434, seq 5, length 64
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        0x0000:  4500 0054 5fce 0000 7f01 b765 0808 0808  E..T_......e....
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>        0x0010:  0a00 0a66 0000 2b7e 0d6a 0005 8ee8 e454  ...f..+~.j.....T
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>        0x0020:  0000 0000 8602 0f00 0000 0000 1011 1213  ................
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        0x0030:  1415 1617 1819 1a1b 1c1d 1e1f 2021 2223  .............!&quot;#
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>        0x0040:  2425 2627 2829 2a2b 2c2d 2e2f 3031 3233  $%&amp;&#39;()*+,-./0123
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>        0x0050:  3435 3637                                4567
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>        2 packets captured
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>        2 packets received by filter
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>        0 packets dropped by kernel
+</span></code></pre></div></p>
+<h2 id="common-syntax">Common Syntax</h2>
+<h4 id="expressions-allow-you-to-trim-out-various-types-of-traffic-and-find-exactly-what-you-want">Expressions allow you to trim out various types of traffic and find exactly what you want</h4>
+<h3 id="types-of-expressions">Types of expressions:</h3>
+<ul>
+<li><strong>Type</strong><ul>
+<li><strong><code>host</code></strong></li>
+<li><strong><code>net</code></strong></li>
+<li><strong><code>port</code></strong></li>
+</ul>
+</li>
+<li><strong>Direction</strong><ul>
+<li><strong><code>src</code></strong></li>
+<li><strong><code>dst</code></strong></li>
+<li><strong><code>src or dst</code></strong></li>
+<li><strong><code>src and dst</code></strong></li>
+</ul>
+</li>
+<li><strong>Protocol</strong><ul>
+<li><strong><code>tcp</code></strong></li>
+<li><strong><code>udp</code></strong></li>
+<li><strong><code>icmp</code></strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="expressions-examples">Expressions examples</h1>
+<h2 id="host-look-for-traffic-based-on-ip-address-or-hostname-if-not-using-n"><strong><code>host</code></strong> look for traffic based on IP address or hostname if not using <strong><code>-n</code></strong></h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>tcpdump host 8.8.8.8
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    20:01:15.122526 IP srv01 &gt; google-public-dns-a.google.com: ICMP echo request, id 3692, seq 1, length 64
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    20:01:15.141578 IP google-public-dns-a.google.com &gt; srv01: ICMP echo reply, id 3692, seq 1, length 64
+</span></code></pre></div></p>
+<h2 id="if-you-only-want-to-see-traffic-in-one-direction-or-the-other-you-can-use-src-and-dst">If you only want to see traffic in one direction or the other, you can use <strong><code>src</code></strong> and <strong><code>dst</code></strong></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>tcpdump src 8.8.8.8
+</span></code></pre></div>
+<p><strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    20:03:17.798724 IP google-public-dns-a.google.com &gt; srv01: ICMP echo reply, id 3708, seq 1, length 64
+</span></code></pre></div></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>tcpdump dst 8.8.8.8
+</span></code></pre></div>
+<p><strong>Sample Output</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decodez
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    20:03:52.842281 IP srv01 &gt; google-public-dns-a.google.com: ICMP echo request, id 3708, seq 36, length 64
+</span></code></pre></div>
+<h2 id="net-capture-an-entire-network-using-cidr-notation"><strong><code>net</code></strong> capture an entire network using CIDR notation</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>tcpdump net 8.0.0.0/8
+</span></code></pre></div>
+<p><strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    20:06:38.114365 IP srv01 &gt; google-public-dns-a.google.com: ICMP echo request, id 3708, seq 201, length 64
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>    20:06:38.130358 IP google-public-dns-a.google.com &gt; srv01: ICMP echo reply, id 3708, seq 201, length 64
+</span></code></pre></div></p>
+<h2 id="proto-works-for-tcp-udp-and-icmp"><strong>proto</strong> works for <strong><code>tcp</code></strong>, <strong><code>udp</code></strong>, and <strong><code>icmp</code></strong>.</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>tcpdump icmp
+</span></code></pre></div>
+<strong>Sample Output</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    20:08:40.335712 IP srv01 &gt; google-public-dns-a.google.com: ICMP echo request, id 3708, seq 323, length 64
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>    20:08:40.352119 IP google-public-dns-a.google.com &gt; srv01: ICMP echo reply, id 3708, seq 323, length 64
+</span></code></pre></div></p>
+<h2 id="port-see-only-traffic-to-or-from-a-certain-port"><strong><code>port</code></strong> see only traffic to or from a certain port</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>tcpdump port 80
+</span></code></pre></div>
+<p><strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    20:11:41.814576 IP srv01.44119 &gt; 195.8.12.114.http: Flags [S], seq 3779891606, win 29200, options [mss 1460,sackOK,TS val 12979889 ecr 0,nop,wscale 7], length 0
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    20:11:41.828249 IP 195.8.12.114.http &gt; srv01.44119: Flags [S.], seq 2121552255, ack 3779891607, win 64240, options [mss 1460], length 0
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>    20:11:41.828307 IP srv01.44119 &gt; 195.8.12.114.http: Flags [.], ack 1, win 29200, length 0
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>    20:11:41.828488 IP srv01.44119 &gt; 195.8.12.114.http: Flags [P.], seq 1:75, ack 1, win 29200, length 74
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>    20:11:41.828787 IP 195.8.12.114.http &gt; srv01.44119: Flags [.], ack 75, win 64240, length 0
+</span></code></pre></div></p>
+<h2 id="src-dst-port-filter-based-on-the-source-or-destination-port"><strong><code>src, dst port</code></strong> filter based on the source or destination port</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>tcpdump dst port 80
+</span></code></pre></div>
+<strong>Sample Output</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>    20:14:05.193985 IP srv01.44120 &gt; 195.8.12.114.http: Flags [S], seq 2184298397, win 29200, options [mss 1460,sackOK,TS val 13123268 ecr 0,nop,wscale 7], length 0
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>    20:14:05.207701 IP srv01.44120 &gt; 195.8.12.114.http: Flags [.], ack 2124225918, win 29200, length 0
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    20:14:05.207863 IP srv01.44120 &gt; 195.8.12.114.http: Flags [P.], seq 0:74, ack 1, win 29200, length 74
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    20:14:05.225965 IP srv01.44120 &gt; 195.8.12.114.http: Flags [.], ack 525, win 30016, length 0
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>    20:14:05.226218 IP srv01.44120 &gt; 195.8.12.114.http: Flags [F.], seq 74, ack 525, win 30016, length 0
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>````
+</span></code></pre></div>
+tcpdump src port 22
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>**Sample Output**:
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>```log
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>    20:21:13.330361 IP srv01.ssh &gt; 10.0.10.1.53234: Flags [P.], seq 3093181568:3093181684, ack 1976561377, win 362, options [nop,nop,TS val 13551405 ecr 671662897], length 116
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>    20:21:13.330543 IP srv01.ssh &gt; 10.0.10.1.53234: Flags [P.], seq 116:152, ack 1, win 362, options [nop,nop,TS val 13551405 ecr 671662897], length 36
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>    20:21:13.330748 IP srv01.ssh &gt; 10.0.10.1.53234: Flags [P.], seq 152:268, ack 1, win 362, options [nop,nop,TS val 13551405 ecr 671662954], length 116
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>    20:21:13.330868 IP srv01.ssh &gt; 10.0.10.1.53234: Flags [P.], seq 268:304, ack 1, win 362, options [nop,nop,TS val 13551405 ecr 671662954], length 36
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>    20:21:13.355764 IP srv01.ssh &gt; 10.0.10.1.53234: Flags [P.], seq 304:516, ack 1, win 362, options [nop,nop,TS val 13551430 ecr 671662954], length 212
+</span></code></pre></div></p>
+<h2 id="srcdst-port-protocol-combinations"><strong><code>src/dst, port, protocol</code></strong> combinations</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>tcpdump udp and dst port 53
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    20:24:10.072630 IP srv01.57827 &gt; pfsense.company.local.domain: 54153+ A? amazon.com. (28)
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>    20:24:10.073082 IP srv01.54404 &gt; pfsense.company.local.domain: 45255+ PTR? 100.10.0.10.in-addr.arpa. (42)
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>    20:24:10.073627 IP srv01.43702 &gt; pfsense.company.local.domain: 37469+ PTR? 102.10.0.10.in-addr.arpa. (42)
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>    20:24:10.074473 IP srv01.57827 &gt; pfsense.company.local.domain: 17165+ AAAA? amazon.com. (28)
+</span></code></pre></div></p>
+<h2 id="port-ranges-see-traffic-to-any-port-in-a-range-portrange"><strong>Port Ranges</strong> see traffic to any port in a range (<code>portrange</code>)</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>tcpdump portrange 80-443
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>    20:26:19.340339 IP srv01.44326 &gt; 176.32.98.166.https: Flags [S], seq 1903133728, win 29200, options [mss 1460,sackOK,TS val 13857415 ecr 0,nop,wscale 7], length 0
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>    20:26:19.460156 IP 176.32.98.166.https &gt; srv01.44326: Flags [S.], seq 945702592, ack 1903133729, win 64240, options [mss 1460], length 0
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>    20:26:19.460193 IP srv01.44326 &gt; 176.32.98.166.https: Flags [.], ack 1, win 29200, length 0
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>    20:26:19.532871 IP srv01.44326 &gt; 176.32.98.166.https: Flags [P.], seq 1:131, ack 1, win 29200, length 130
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>    20:26:19.533225 IP 176.32.98.166.https &gt; srv01.44326: Flags [.], ack 131, win 64240, length 0
+</span></code></pre></div></p>
+<h2 id="packet-size-filter-only-see-packets-below-or-above-less-or-greater-a-certain-size-in-bytes"><strong>Packet Size Filter</strong> only see packets below or above (<code>less</code> or <code>greater</code>) a certain size (in bytes)</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>tcpdump less 84
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>    20:29:01.332092 IP 10.0.10.107.39649 &gt; srv01.wap-wsp: Flags [.], ack 1988852773, win 245, options [nop,nop,TS val 17601415 ecr 13991634], length 0
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>    20:29:01.332124 IP srv01.wap-wsp &gt; 10.0.10.107.39649: Flags [.], ack 1, win 277, options [nop,nop,TS val 14019406 ecr 10365680], length 0
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>    20:29:01.332892 IP srv01.47077 &gt; pfsense.company.local.domain: 61232+ PTR? 102.10.0.10.in-addr.arpa. (42)
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>    20:29:01.336791 IP pfsense.company.local.domain &gt; srv01.47077: 61232 NXDomain 0/0/0 (42)
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>    20:29:01.337979 IP srv01.38137 &gt; pfsense.company.local.domain: 4011+ PTR? 107.10.0.10.in-addr.arpa. (42)
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>    20:29:01.359519 IP pfsense.company.local.domain &gt; srv01.38137: 4011 NXDomain 0/0/0 (42)
+</span></code></pre></div></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>tcpdump greater 128
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>    20:30:14.792878 IP 10.0.10.107.39643 &gt; srv01.wap-wsp: Flags [P.], seq 1330861422:1330861724, ack 2667954223, win 6142, options [nop,nop,TS val 17680995 ecr 14083638], length 302
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>    20:30:14.793793 IP srv01.wap-wsp &gt; 10.0.10.107.39643: Flags [P.], seq 1:189, ack 302, win 1452, options [nop,nop,TS val 14092868 ecr 17680995], length 188
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>    20:30:14.794334 IP 10.0.10.107.39643 &gt; srv01.wap-wsp: Flags [P.], seq 302:477, ack 189, win 6142, options [nop,nop,TS val 17680996 ecr 14092868], length 175
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>    20:30:14.794723 IP srv01.wap-wsp &gt; 10.0.10.107.39643: Flags [P.], seq 189:554, ack 477, win 1452, options [nop,nop,TS val 14092869 ecr 17680996], length 365
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>    20:30:14.795972 IP pfsense.company.local.61945 &gt; srv01.palace-4: UDP, length 120
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>    20:30:14.796005 IP srv01 &gt; pfsense.company.local: ICMP srv01 udp port palace-4 unreachable, length 156
+</span></code></pre></div></p>
+<h2 id="writing-to-a-file">Writing to a File</h2>
+<h2 id="traffic-to-a-file">Traffic to a File</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>tcpdump -s0 port 80 -w capture.pcap
+</span></code></pre></div>
+<h2 id="read-captured-traffic">Read Captured Traffic</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>tcpdump -r capture.pcap
+</span></code></pre></div>
+<strong>Sample Output</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>    reading from file capture.pcap, link-type EN10MB (Ethernet)
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>    20:35:00.654476 IP srv01.60950 &gt; 130.162.96.66.static.eigbox.net.http: Flags [S], seq 1427930173, win 29200, options [mss 1460,sackOK,TS val 14378729 ecr 0,nop,wscale 7], length 0
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>    20:35:00.790534 IP 130.162.96.66.static.eigbox.net.http &gt; srv01.60950: Flags [S.], seq 1331704013, ack 1427930174, win 64240, options [mss 1460], length 0
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>    20:35:00.790604 IP srv01.60950 &gt; 130.162.96.66.static.eigbox.net.http: Flags [.], ack 1, win 29200, length 0
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>    20:35:00.790940 IP srv01.60950 &gt; 130.162.96.66.static.eigbox.net.http: Flags [P.], seq 1:83, ack 1, win 29200, length 82
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>    20:35:00.791332 IP 130.162.96.66.static.eigbox.net.http &gt; srv01.60950: Flags [.], ack 83, win 64240, length 0
+</span></code></pre></div></p>
+<h2 id="read-captured-traffic-with-expressions">Read Captured Traffic with expressions</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>tcpdump -X -r capture.pcap
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>    reading from file capture.pcap, link-type EN10MB (Ethernet)
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>    20:35:00.654476 IP srv01.60950 &gt; 130.162.96.66.static.eigbox.net.http: Flags [S], seq 1427930173, win 29200, options [mss 1460,sackOK,TS val 14378729 ecr 0,nop,wscale 7], length 0
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>        0x0000:  4500 003c 1ad4 4000 4006 26a0 0a00 0a66  E..&lt;..@.@.&amp;....f
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>        0x0010:  4260 a282 ee16 0050 551c 7c3d 0000 0000  B`.....PU.|=....
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>        0x0020:  a002 7210 f976 0000 0204 05b4 0402 080a  ..r..v..........
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>        0x0030:  00db 66e9 0000 0000 0103 0307            ..f.........
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>    20:35:00.790534 IP 130.162.96.66.static.eigbox.net.http &gt; srv01.60950: Flags [S.], seq 1331704013, ack 1427930174, win 64240, options [mss 1460], length 0
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>        0x0000:  4500 002c 7277 0000 7f06 d00c 4260 a282  E..,rw......B`..
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>        0x0010:  0a00 0a66 0050 ee16 4f60 30cd 551c 7c3e  ...f.P..O`0.U.|&gt;
+</span><span id="__span-40-10"><a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a>        0x0020:  6012 faf0 63ee 0000 0204 05b4 0000       `...c.........
+</span><span id="__span-40-11"><a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a>    20:35:00.790604 IP srv01.60950 &gt; 130.162.96.66.static.eigbox.net.http: Flags [.], ack 1, win 29200, length 0
+</span><span id="__span-40-12"><a id="__codelineno-40-12" name="__codelineno-40-12" href="#__codelineno-40-12"></a>        0x0000:  4500 0028 1ad5 4000 4006 26b3 0a00 0a66  E..(..@.@.&amp;....f
+</span><span id="__span-40-13"><a id="__codelineno-40-13" name="__codelineno-40-13" href="#__codelineno-40-13"></a>        0x0010:  4260 a282 ee16 0050 551c 7c3e 4f60 30ce  B`.....PU.|&gt;O`0.
+</span><span id="__span-40-14"><a id="__codelineno-40-14" name="__codelineno-40-14" href="#__codelineno-40-14"></a>        0x0020:  5010 7210 f962 0000                      P.r..b..
+</span></code></pre></div></p>
+<h2 id="combine-expressions">Combine Expressions</h2>
+<p>The real magic of tcpdump is being able to combine different expressions individually in creative ways in order to isolate exactly what you’re looking for.</p>
+<table>
+<thead>
+<tr>
+<th>Boolean operator</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AND</td>
+<td><code>and</code> or <code>&amp;&amp;</code></td>
+</tr>
+<tr>
+<td>OR</td>
+<td><code>or</code> or <code>||</code></td>
+</tr>
+<tr>
+<td>EXCEPT</td>
+<td><code>not</code> or <code>!</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tcp-traffic-from-10010100-destined-for-port-443">TCP traffic from 10.0.10.100 destined for port 443</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>tcpdump -nnvvS src 10.0.10.102 and dst port 443
+</span></code></pre></div>
+<strong>Sample Output</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>    tcpdump: listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>    20:46:34.763292 IP (tos 0x0, ttl 64, id 49233, offset 0, flags [DF], proto TCP (6), length 60)
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>        10.0.10.102.39759 &gt; 149.20.4.69.443: Flags [S], cksum 0xaded (incorrect -&gt; 0x8a80), seq 3277995543, win 29200, options [mss 1460,sackOK,TS val 15072838 ecr 0,nop,wscale 7], length 0
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>    20:46:35.311914 IP (tos 0x0, ttl 64, id 49234, offset 0, flags [DF], proto TCP (6), length 40)
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>        10.0.10.102.39759 &gt; 149.20.4.69.443: Flags [.], cksum 0xadd9 (incorrect -&gt; 0x1ff5), seq 3277995544, ack 1866818117, win 29200, length 0
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>    20:46:35.383895 IP (tos 0x0, ttl 64, id 49235, offset 0, flags [DF], proto TCP (6), length 174)
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>        10.0.10.102.39759 &gt; 149.20.4.69.443: Flags [P.], cksum 0xae5f (incorrect -&gt; 0x65b1), seq 3277995544:3277995678, ack 1866818117, win 29200, length 134
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>    20:46:35.926830 IP (tos 0x0, ttl 64, id 49236, offset 0, flags [DF], proto TCP (6), length 40)
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>        10.0.10.102.39759 &gt; 149.20.4.69.443: Flags [.], cksum 0xadd9 (incorrect -&gt; 0xf20a), seq 3277995678, ack 1866822437, win 36500, length 0
+</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a>    20:46:35.926883 IP (tos 0x0, ttl 64, id 49237, offset 0, flags [DF], proto TCP (6), length 40)
+</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>        10.0.10.102.39759 &gt; 149.20.4.69.443: Flags [.], cksum 0xadd9 (incorrect -&gt; 0xe505), seq 3277995678, ack 1866822850, win 39420, length 0
+</span><span id="__span-42-12"><a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>    20:46:35.934729 IP (tos 0x0, ttl 64, id 49238, offset 0, flags [DF], proto TCP (6), length 358)
+</span></code></pre></div>
+<h2 id="traffic-originating-from-the-10-network-headed-for-the-17216-network">Traffic originating from the 10 network headed for the 172.16 network</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>tcpdump -nvX src net 10.0.0.0/8 and dst net 172.16.0.0/16
+</span></code></pre></div>
+<strong>Sample Output</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>    tcpdump: listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>    20:52:37.503845 IP (tos 0x0, ttl 64, id 46250, offset 0, flags [DF], proto ICMP (1), length 84)
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>        10.0.10.102 &gt; 172.16.0.1: ICMP echo request, id 4139, seq 1, length 64
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>        0x0000:  4500 0054 b4aa 4000 4001 c587 0a00 0a66  E..T..@.@......f
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>        0x0010:  ac10 0001 0800 8f00 102b 0001 95fb e454  .........+.....T
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>        0x0020:  0000 0000 18b0 0700 0000 0000 1011 1213  ................
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>        0x0030:  1415 1617 1819 1a1b 1c1d 1e1f 2021 2223  .............!&quot;#
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>        0x0040:  2425 2627 2829 2a2b 2c2d 2e2f 3031 3233  $%&amp;&#39;()*+,-./0123
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>        0x0050:  3435 3637                                4567
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>    20:52:38.506070 IP (tos 0x0, ttl 64, id 46390, offset 0, flags [DF], proto ICMP (1), length 84)
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>        10.0.10.102 &gt; 172.16.0.1: ICMP echo request, id 4139, seq 2, length 64
+</span><span id="__span-44-12"><a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>        0x0000:  4500 0054 b536 4000 4001 c4fb 0a00 0a66  E..T.6@.@......f
+</span><span id="__span-44-13"><a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a>        0x0010:  ac10 0001 0800 f2f6 102b 0002 96fb e454  .........+.....T
+</span><span id="__span-44-14"><a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>        0x0020:  0000 0000 b3b8 0700 0000 0000 1011 1213  ................
+</span><span id="__span-44-15"><a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a>        0x0030:  1415 1617 1819 1a1b 1c1d 1e1f 2021 2223  .............!&quot;#
+</span><span id="__span-44-16"><a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a>        0x0040:  2425 2627 2829 2a2b 2c2d 2e2f 3031 3233  $%&amp;&#39;()*+,-./0123
+</span><span id="__span-44-17"><a id="__codelineno-44-17" name="__codelineno-44-17" href="#__codelineno-44-17"></a>        0x0050:  3435 3637                                4567
+</span></code></pre></div></p>
+<h2 id="non-icmp-traffic-destined-for-17216-network-from-10010102">Non-ICMP traffic destined for 172.16 network from 10.0.10.102</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>tcpdump -nvvXSs 1514 dst net 172.16.0.0/16 and src 10.0.10.102 and not icmp
+</span></code></pre></div>
+<strong>Sample Output</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>    tcpdump: listening on eno16777736, link-type EN10MB (Ethernet), capture size 1514 bytes
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>    20:56:15.499069 IP (tos 0x0, ttl 64, id 996, offset 0, flags [DF], proto TCP (6), length 60)
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>        10.0.10.102.43153 &gt; 172.16.0.45.ssh: Flags [S], cksum 0xc0d1 (incorrect -&gt; 0x684b), seq 1334106401, win 29200, options [mss 1460,sackOK,TS val 15653573 ecr 0,nop,wscale 7], length 0
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>        0x0000:  4500 003c 03e4 4000 4006 7635 0a00 0a66  E..&lt;..@.@.v5...f
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>        0x0010:  ac10 002d a891 0016 4f84 d921 0000 0000  ...-....O..!....
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>        0x0020:  a002 7210 c0d1 0000 0204 05b4 0402 080a  ..r.............
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>        0x0030:  00ee dac5 0000 0000 0103 0307            ............
+</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>    20:56:15.504357 IP (tos 0x0, ttl 64, id 997, offset 0, flags [DF], proto TCP (6), length 40)
+</span><span id="__span-46-9"><a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>        10.0.10.102.43153 &gt; 172.16.0.45.ssh: Flags [.], cksum 0xc0bd (incorrect -&gt; 0xb1ee), seq 1334106402, ack 4195155926, win 29200, length 0
+</span><span id="__span-46-10"><a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>        0x0000:  4500 0028 03e5 4000 4006 7648 0a00 0a66  E..(..@.@.vH...f
+</span><span id="__span-46-11"><a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>        0x0010:  ac10 002d a891 0016 4f84 d922 fa0c ffd6  ...-....O..&quot;....
+</span><span id="__span-46-12"><a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a>        0x0020:  5010 7210 c0bd 0000                      P.r.....
+</span></code></pre></div></p>
+<h2 id="combining-expressions">Combining expressions</h2>
+<h4 id="traffic-from-100100-and-destined-for-ports-22-or-23">Traffic from 10.0.10.0 AND destined for ports 22 or 23</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>tcpdump &#39;src net 10.0.10.0/24 and (dst port 22 or 23)&#39;
+</span></code></pre></div>
+<h2 id="or">or</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>tcpdump src net 10.0.10.0/24 and \(dst port 22 or 23\)
+</span></code></pre></div>
+<strong>Sample Output</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>    tcpdump &#39;src net 10.0.10.0/24 and (dst port 22 or 23)&#39;
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>    listening on eno16777736, link-type EN10MB (Ethernet), capture size 262144 bytes
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>    21:02:18.573451 IP 10.0.10.1.53234 &gt; srv01.ssh: Flags [.], ack 3099113320, win 4092, options [nop,nop,TS val 674120900 ecr 16016647], length 0
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>    21:02:18.573845 IP 10.0.10.1.53234 &gt; srv01.ssh: Flags [.], ack 37, win 4094, options [nop,nop,TS val 674120900 ecr 16016648], length 0
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>    21:02:18.573877 IP 10.0.10.1.53234 &gt; srv01.ssh: Flags [.], ack 153, win 4092, options [nop,nop,TS val 674120900 ecr 16016648], length 0
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>    21:02:18.574161 IP 10.0.10.1.53234 &gt; srv01.ssh: Flags [.], ack 189, win 4094, options [nop,nop,TS val 674120900 ecr 16016648], length 0
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>    21:02:18.598050 IP 10.0.10.1.53234 &gt; srv01.ssh: Flags [.], ack 369, win 4090, options [nop,nop,TS val 674120924 ecr 16016672], length 0
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>    21:02:18.598090 IP 10.0.10.1.53234 &gt; srv01.ssh: Flags [.], ack 405, win 4094, options [nop,nop,TS val 674120924 ecr 16016672], length 0
+</span><span id="__span-49-10"><a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>    21:02:18.598322 IP 10.0.10.1.53234 &gt; srv01.ssh: Flags [.], ack 585, win 4090, options [nop,nop,TS val 674120924 ecr 16016672], length 0
+</span></code></pre></div></p>
+<h1 id="about-tcp">About TCP</h1>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>     0                            15                              31
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>    -----------------------------------------------------------------
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>    |          source port          |       destination port        |
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>    -----------------------------------------------------------------
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>    |                        sequence number                        |
+</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>    -----------------------------------------------------------------
+</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>    |                     acknowledgment number                     |
+</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>    -----------------------------------------------------------------
+</span><span id="__span-50-9"><a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>    |  HL   | rsvd  |C|E|U|A|P|R|S|F|        window size            |
+</span><span id="__span-50-10"><a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>    -----------------------------------------------------------------
+</span><span id="__span-50-11"><a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>    |         TCP checksum          |       urgent pointer          |
+</span><span id="__span-50-12"><a id="__codelineno-50-12" name="__codelineno-50-12" href="#__codelineno-50-12"></a>    -----------------------------------------------------------------
+</span></code></pre></div>
+<p align="center">
+<img width="80%" src="https://i.stack.imgur.com/cAtkx.jpg">
+</p>
+
+<h2 id="there-are-8-bits-in-the-control-bits-section-of-the-tcp-header"><strong>There are 8 bits in the control bits section of the TCP header:</strong></h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>    CWR | ECE | URG | ACK | PSH | RST | SYN | FIN
+</span></code></pre></div>
+TCP Flag | About
+-|-
+<strong><code>CWR</code></strong> | Congestion Window Reduced (CWR) flag is set by the sending host to indicate that it received a TCP segment with the ECE flag set and had responded in congestion control mechanism (added to header by RFC 3168).
+<strong><code>ECE</code></strong> | ECN-Echo has a dual role, depending on the value of the SYN flag. It indicates If the SYN flag is set (1), that the TCP peer is ECN capable. If the SYN flag is clear (0), that a packet with Congestion Experienced flag in IP header set is received during normal transmission (added to header by RFC 3168).
+<strong><code>URG</code></strong> | Indicates that the Urgent pointer field is significant
+<strong><code>ACK</code></strong> | Indicates that the Acknowledgment field is significant. All packets after the initial SYN packet sent by the client should have this flag set.
+<strong><code>PSH</code></strong> | Push function. Asks to push the buffered data to the receiving application.
+<strong><code>RST</code></strong> | Reset the connection
+<strong><code>SYN</code></strong> | Synchronize sequence numbers.
+<strong><code>FIN</code></strong> | No more data from sender</p>
+<h2 id="starting-to-count-with-0-the-relevant-tcp-control-bits-are-contained-in-octet-13"><strong>Starting to count with 0, the relevant TCP control bits are contained in octet 13:</strong></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>     0             7|             15|             23|             31
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>    ----------------|---------------|---------------|----------------
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>    |  HL   | rsvd  |C|E|U|A|P|R|S|F|        window size            |
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>    ----------------|---------------|---------------|----------------
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>    |               |  13th octet   |               |               |
+</span></code></pre></div>
+<h2 id="lets-have-a-closer-look-at-octet-no-13"><strong>Let’s have a closer look at octet no. 13:</strong></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>    |               |
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>    |---------------|
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>    |C|E|U|A|P|R|S|F|
+</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a>    |---------------|
+</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a>    |7   5   3     0|
+</span></code></pre></div>
+<h2 id="if-we-want-to-capture-packets-with-only-syn-set"><strong>If we want to capture packets with only SYN set.</strong></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>    |C|E|U|A|P|R|S|F|
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>    |---------------|
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>    |0 0 0 0 0 0 1 0|
+</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>    |---------------|
+</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a>    |7 6 5 4 3 2 1 0|
+</span></code></pre></div>
+<p>Looking at the control bits section we see that only bit number 1 (SYN)
+is set.</p>
+<p>Assuming that octet number 13 is an 8-bit unsigned integer in network byte order, the binary value of this octet is</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>    00000010
+</span></code></pre></div>
+and its decimal representation is</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>     7     6     5     4     3     2     1     0
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>    0*2 + 0*2 + 0*2 + 0*2 + 0*2 + 0*2 + 1*2 + 0*2  =  2
+</span></code></pre></div>
+<strong>The tcpdump syntax is:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>tcpdump &#39;tcp[13] == 2&#39;
+</span></code></pre></div></p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><strong>Show all URGENT (URG) packets…</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>    tcpdump &#39;tcp[13] &amp; 32!=0&#39;
+</span></code></pre></div></li>
+<li><strong>Show all ACKNOWLEDGE (ACK) packets…</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>    tcpdump &#39;tcp[13] &amp; 16!=0&#39;
+</span></code></pre></div></li>
+<li><strong>Show all PUSH (PSH) packets…</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>    tcpdump &#39;tcp[13] &amp; 8!=0&#39;
+</span></code></pre></div></li>
+<li><strong>Show me all RESET (RST) packets…</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>    tcpdump &#39;tcp[13] &amp; 4!=0&#39;
+</span></code></pre></div></li>
+<li><strong>Show all SYNCHRONIZE (SYN) packets…</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>    tcpdump &#39;tcp[13] &amp; 2!=0&#39;
+</span></code></pre></div></li>
+<li><strong>Show me all FINISH (FIN) packets…</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>    tcpdump &#39;tcp[13] &amp; 1!=0&#39;
+</span></code></pre></div></li>
+<li>
+<p><strong>Show all SYNCHRONIZE/ACKNOWLEDGE (SYNACK) packets…</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>    tcpdump &#39;tcp[13]=18&#39;
+</span></code></pre></div>
+</li>
+</ul>
+<h1 id="useful-tcpdump-usage">Useful <code>tcpdump</code> usage:</h1>
+<h3 id="view-ascii-a-or-hex-x-traffic"><strong>View ASCII (<code>-A</code>) or HEX (<code>-X</code>) traffic:</strong></h3>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>tcpdump -A
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>tcpdump -X
+</span></code></pre></div></p>
+<h3 id="view-traffic-with-timestamps-and-dont-convert-addresses-verbose"><strong>View traffic with timestamps and don't convert addresses + verbose:</strong></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>tcpdump -tttt -n -vv
+</span></code></pre></div>
+<h3 id="potential-ddos-capture-top-talkers-after-1000-packets"><strong>Potential DDoS capture - Top talkers after 1000 packets:</strong></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>tcpdump -nn -c 1000 | awk &#39;{print $3}&#39; | cut -d. - | fl-4 | sort -n | uniq -c | sort -nr
+</span></code></pre></div>
+<h3 id="capture-traffic-on-any-interface-from-target-host-and-specific-port-then-output-to-a-file"><strong>Capture traffic on any interface from target host and specific port. Then output to a file:</strong></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>tcpdump -w output-file.pcap -i any dst &lt;TARGET IP ADDRESS&gt; and port 80
+</span></code></pre></div>
+<h3 id="save-pcap-file-on-rotating-size"><strong>Save pcap file on rotating size:</strong></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>tcpdump -n -s65535 -c 1000 -w &#39;%host_%Y-%m­-%d_%H:%M:%S.pcap&#39;
+</span></code></pre></div>
+<h3 id="find-traffic-that-cotains-the-word-pass"><strong>Find traffic that cotains the word pass:</strong></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>tcpdump -n -A -s0 | grep pass
+</span></code></pre></div>
+<h3 id="grab-clear-text-protocol-passwords"><strong>Grab clear text protocol passwords:</strong></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>tcpdump -n -A -s0 port http or port ftp or port smtp or port imap or port pop3 | egrep -i &#39;pass=|pwd=|log=|login=|user=|username=|pw=|passw=|passwd=|password=|pass:|user:|username:|password:|login:|pass |user &#39; --color=auto --line-buffered -B20
+</span></code></pre></div>
+<h3 id="references">References:</h3>
+<ul>
+<li><a href="https://danielmiessler.com/study/tcpdump/">danielmiessler.com</a></li>
+<li><a href="http://man7.org/linux/man-pages/man1/tcpdump.1.html">man7.org</a></li>
+</ul>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/tcpdumptutorial.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

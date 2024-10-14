@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Practical Hashcat Ruleset - readloud.org</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Practical Hashcat Ruleset", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="practical-hashcat-ruleset">Practical Hashcat Ruleset</h1>
+<ol>
+<li>Download maskprocessor from <a href="https://github.com/hashcat/maskprocessor/releases/">here</a></li>
+<li>
+<p>Rules</p>
+<ul>
+<li>Just paste this whole (or portions only) section to your cmd.exe terminal.</li>
+<li>Why cmd.exe? It gets weird in powershell due to the '$' character.</li>
+<li>Pasting the whole portion, there is no need to remove the tabs and comments/descriptions as it will be ignored</li>
+</ul>
+<p># Realistic years only (For smaller rules)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>        ## Uppercase First Letter, Append 4 Digits
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>          mp64.exe -o trojand.rule &quot;c $1$9$?d$?d&quot;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>          mp64.exe -o trojand.rule &quot;c $2$0$?d$?d&quot;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ## Uppercase First Letter, Symbol, Append 4 Digits
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>          mp64.exe -o trojand.rule &quot;c $?s$1$9$?d$?d&quot;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>          mp64.exe -o trojand.rule &quot;c $?s$2$0$?d$?d&quot;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        ## Uppercase First Letter, Append 4 Digits,Symbol
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>          mp64.exe -o trojand.rule &quot;c $1$9$?d$?d$?s&quot;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>          mp64.exe -o trojand.rule &quot;c $2$0$?d$?d$?s&quot;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        ## Uppercase First Letter, 2 Symbols, Append 4 Digits
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>          mp64.exe -o trojand.rule &quot;c $?s$?s$1$9$?d$?d&quot;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>          mp64.exe -o trojand.rule &quot;c $?s$?s$2$0$?d$?d&quot;
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        ## Uppercase First Letter, Append 4 Digits, 2 Symbols
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>          mp64.exe -o trojand.rule &quot;c $1$9$?d$?d$?s$?s&quot;
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>          mp64.exe -o trojand.rule &quot;c $2$0$?d$?d$?s$?s&quot;
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        ## Append 4 Digits
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>          mp64.exe -o trojand.rule &quot;$1$9$?d$?d&quot;
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>          mp64.exe -o trojand.rule &quot;$2$0$?d$?d&quot;
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        ## Symbol, Append 4 Digits
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>          mp64.exe -o trojand.rule &quot;$?s$1$9$?d$?d&quot;
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>          mp64.exe -o trojand.rule &quot;$?s$2$0$?d$?d&quot;
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        ## Append 4 Digits,Symbol
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>          mp64.exe -o trojand.rule &quot;$1$9$?d$?d$?s&quot;
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>          mp64.exe -o trojand.rule &quot;$2$0$?d$?d$?s&quot;
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        ## 2 Symbols, Append 4 Digits
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>          mp64.exe -o trojand.rule &quot;$?s$?s$1$9$?d$?d&quot;
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>          mp64.exe -o trojand.rule &quot;$?s$?s$2$0$?d$?d&quot;
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>        ## Append 4 Digits, 2 Symbols
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>          mp64.exe -o trojand.rule &quot;$1$9$?d$?d$?s$?s&quot;
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>          mp64.exe -o trojand.rule &quot;$2$0$?d$?d$?s$?s&quot;
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        ## ALL UPPERCASE, Append 4 Digits
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>          mp64.exe -o trojand.rule &quot;u $1$9$?d$?d&quot;
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>          mp64.exe -o trojand.rule &quot;u $2$0$?d$?d&quot;
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        ## ALL UPPERCASE, Symbol, Append 4 Digits
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>          mp64.exe -o trojand.rule &quot;u $?s$1$9$?d$?d&quot;
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>          mp64.exe -o trojand.rule &quot;u $?s$2$0$?d$?d&quot;
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        ## ALL UPPERCASE, Append 4 Digits,Symbol
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>          mp64.exe -o trojand.rule &quot;u $1$9$?d$?d$?s&quot;
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>          mp64.exe -o trojand.rule &quot;u $2$0$?d$?d$?s&quot;
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        ## ALL UPPERCASE, 2 Symbols, Append 4 Digits
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>          mp64.exe -o trojand.rule &quot;u $?s$?s$1$9$?d$?d&quot;
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>          mp64.exe -o trojand.rule &quot;u $?s$?s$2$0$?d$?d&quot;
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>        ## ALL UPPERCASE, Append 4 Digits, 2 Symbols
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>          mp64.exe -o trojand.rule &quot;u $1$9$?d$?d$?s$?s&quot;
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>          mp64.exe -o trojand.rule &quot;u $2$0$?d$?d$?s$?s&quot;
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>        ## all lowercase, Append 4 Digits
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>          mp64.exe -o trojand.rule &quot;l $1$9$?d$?d&quot;
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>          mp64.exe -o trojand.rule &quot;l $2$0$?d$?d&quot;
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        ## all lowercase, Symbol, Append 4 Digits
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>          mp64.exe -o trojand.rule &quot;l $?s$1$9$?d$?d&quot;
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>          mp64.exe -o trojand.rule &quot;l $?s$2$0$?d$?d&quot;
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>        ## all lowercase, Append 4 Digits,Symbol
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>          mp64.exe -o trojand.rule &quot;l $1$9$?d$?d$?s&quot;
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>          mp64.exe -o trojand.rule &quot;l $2$0$?d$?d$?s&quot;
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>        ## all lowercase, 2 Symbols, Append 4 Digits
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>          mp64.exe -o trojand.rule &quot;l $?s$?s$1$9$?d$?d&quot;
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>          mp64.exe -o trojand.rule &quot;l $?s$?s$2$0$?d$?d&quot;
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>        ## all lowercase, Append 4 Digits, 2 Symbols
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>          mp64.exe -o trojand.rule &quot;l $1$9$?d$?d$?s$?s&quot;
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>          mp64.exe -o trojand.rule &quot;l $2$0$?d$?d$?s$?s&quot;
+</span></code></pre></div>
+  # Aggresive Numbers
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>        ## Uppercase First Letter, Append &lt;1-4&gt; Digits
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>          mp64.exe -o trojand.rule &quot;c $?d&quot;
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d&quot;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d$?d&quot;
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d$?d$?d&quot;
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        ## Uppercase First Letter, Symbol, Append &lt;1-4&gt; Digits
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>          mp64.exe -o trojand.rule &quot;c $?s$?d&quot;
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>          mp64.exe -o trojand.rule &quot;c $?s$?d$?d&quot;
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>          mp64.exe -o trojand.rule &quot;c $?s$?d$?d$?d&quot;
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>          mp64.exe -o trojand.rule &quot;c $?s$?d$?d$?d$?d&quot;
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        ## Uppercase First Letter, Append &lt;1-4&gt; Digits,Symbol
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>          mp64.exe -o trojand.rule &quot;c $?d$?s&quot;
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d$?s&quot;
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d$?d$?s&quot;
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d$?d$?d$?s&quot;
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        ## Uppercase First Letter, 2 Symbols, Append &lt;1-3&gt; Digits
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>          mp64.exe -o trojand.rule &quot;c $?s$?s$?d&quot;
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>          mp64.exe -o trojand.rule &quot;c $?s$?s$?d$?d&quot;
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>          mp64.exe -o trojand.rule &quot;c $?s$?s$?d$?d$?d&quot;
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        ## Uppercase First Letter, Append &lt;1-3&gt; Digits, 2 Symbols
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>          mp64.exe -o trojand.rule &quot;c $?d$?s$?s&quot;
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d$?s$?s&quot;
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>          mp64.exe -o trojand.rule &quot;c $?d$?d$?d$?s$?s&quot;
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>        ## Append &lt;1-4&gt; Digits
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>          mp64.exe -o trojand.rule &quot;$?d&quot;
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>          mp64.exe -o trojand.rule &quot;$?d$?d&quot;
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>          mp64.exe -o trojand.rule &quot;$?d$?d$?d&quot;
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>          mp64.exe -o trojand.rule &quot;$?d$?d$?d$?d&quot;
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>        ## Symbol, Append &lt;1-4&gt; Digits
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>          mp64.exe -o trojand.rule &quot;$?s$?d&quot;
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>          mp64.exe -o trojand.rule &quot;$?s$?d$?d&quot;
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>          mp64.exe -o trojand.rule &quot;$?s$?d$?d$?d&quot;
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>          mp64.exe -o trojand.rule &quot;$?s$?d$?d$?d$?d&quot;
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>        ## Append &lt;1-4&gt; Digits,Symbol
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>          mp64.exe -o trojand.rule &quot;$?d$?s&quot;
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>          mp64.exe -o trojand.rule &quot;$?d$?d$?s&quot;
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>          mp64.exe -o trojand.rule &quot;$?d$?d$?d$?s&quot;
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>          mp64.exe -o trojand.rule &quot;$?d$?d$?d$?d$?s&quot;
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>        ## 2 Symbols, Append &lt;1-3&gt; Digits
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>          mp64.exe -o trojand.rule &quot;$?s$?s$?d&quot;
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>          mp64.exe -o trojand.rule &quot;$?s$?s$?d$?d&quot;
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>          mp64.exe -o trojand.rule &quot;$?s$?s$?d$?d$?d&quot;
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>        ## Append &lt;1-3&gt; Digits, 2 Symbols
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>          mp64.exe -o trojand.rule &quot;$?d$?s$?s&quot;
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>          mp64.exe -o trojand.rule &quot;$?d$?d$?s$?s&quot;
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>          mp64.exe -o trojand.rule &quot;$?d$?d$?d$?s$?s&quot;
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>        ## ALL UPPERCASE, Append &lt;1-4&gt; Digits
+</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>          mp64.exe -o trojand.rule &quot;u $?d&quot;
+</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d&quot;
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d$?d&quot;
+</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d$?d$?d&quot;
+</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>        ## ALL UPPERCASE, Symbol, Append &lt;1-4&gt; Digits
+</span><span id="__span-1-53"><a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>          mp64.exe -o trojand.rule &quot;u $?s$?d&quot;
+</span><span id="__span-1-54"><a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>          mp64.exe -o trojand.rule &quot;u $?s$?d$?d&quot;
+</span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>          mp64.exe -o trojand.rule &quot;u $?s$?d$?d$?d&quot;
+</span><span id="__span-1-56"><a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>          mp64.exe -o trojand.rule &quot;u $?s$?d$?d$?d$?d&quot;
+</span><span id="__span-1-57"><a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>        ## ALL UPPERCASE, Append &lt;1-4&gt; Digits,Symbol
+</span><span id="__span-1-58"><a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>          mp64.exe -o trojand.rule &quot;u $?d$?s&quot;
+</span><span id="__span-1-59"><a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d$?s&quot;
+</span><span id="__span-1-60"><a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d$?d$?s&quot;
+</span><span id="__span-1-61"><a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d$?d$?d$?s&quot;
+</span><span id="__span-1-62"><a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>        ## ALL UPPERCASE, 2 Symbols, Append &lt;1-3&gt; Digits
+</span><span id="__span-1-63"><a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a>          mp64.exe -o trojand.rule &quot;u $?s$?s$?d&quot;
+</span><span id="__span-1-64"><a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a>          mp64.exe -o trojand.rule &quot;u $?s$?s$?d$?d&quot;
+</span><span id="__span-1-65"><a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a>          mp64.exe -o trojand.rule &quot;u $?s$?s$?d$?d$?d&quot;
+</span><span id="__span-1-66"><a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a>        ## ALL UPPERCASE, Append &lt;1-3&gt; Digits, 2 Symbols
+</span><span id="__span-1-67"><a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a>          mp64.exe -o trojand.rule &quot;u $?d$?s$?s&quot;
+</span><span id="__span-1-68"><a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d$?s$?s&quot;
+</span><span id="__span-1-69"><a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a>          mp64.exe -o trojand.rule &quot;u $?d$?d$?d$?s$?s&quot;
+</span><span id="__span-1-70"><a id="__codelineno-1-70" name="__codelineno-1-70" href="#__codelineno-1-70"></a>        ## all lowercase, Append &lt;1-4&gt; Digits
+</span><span id="__span-1-71"><a id="__codelineno-1-71" name="__codelineno-1-71" href="#__codelineno-1-71"></a>          mp64.exe -o trojand.rule &quot;l $?d&quot;
+</span><span id="__span-1-72"><a id="__codelineno-1-72" name="__codelineno-1-72" href="#__codelineno-1-72"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d&quot;
+</span><span id="__span-1-73"><a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d$?d&quot;
+</span><span id="__span-1-74"><a id="__codelineno-1-74" name="__codelineno-1-74" href="#__codelineno-1-74"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d$?d$?d&quot;
+</span><span id="__span-1-75"><a id="__codelineno-1-75" name="__codelineno-1-75" href="#__codelineno-1-75"></a>        ## all lowercase, Symbol, Append &lt;1-4&gt; Digits
+</span><span id="__span-1-76"><a id="__codelineno-1-76" name="__codelineno-1-76" href="#__codelineno-1-76"></a>          mp64.exe -o trojand.rule &quot;l $?s$?d&quot;
+</span><span id="__span-1-77"><a id="__codelineno-1-77" name="__codelineno-1-77" href="#__codelineno-1-77"></a>          mp64.exe -o trojand.rule &quot;l $?s$?d$?d&quot;
+</span><span id="__span-1-78"><a id="__codelineno-1-78" name="__codelineno-1-78" href="#__codelineno-1-78"></a>          mp64.exe -o trojand.rule &quot;l $?s$?d$?d$?d&quot;
+</span><span id="__span-1-79"><a id="__codelineno-1-79" name="__codelineno-1-79" href="#__codelineno-1-79"></a>          mp64.exe -o trojand.rule &quot;l $?s$?d$?d$?d$?d&quot;
+</span><span id="__span-1-80"><a id="__codelineno-1-80" name="__codelineno-1-80" href="#__codelineno-1-80"></a>        ## all lowercase, Append &lt;1-4&gt; Digits,Symbol
+</span><span id="__span-1-81"><a id="__codelineno-1-81" name="__codelineno-1-81" href="#__codelineno-1-81"></a>          mp64.exe -o trojand.rule &quot;l $?d$?s&quot;
+</span><span id="__span-1-82"><a id="__codelineno-1-82" name="__codelineno-1-82" href="#__codelineno-1-82"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d$?s&quot;
+</span><span id="__span-1-83"><a id="__codelineno-1-83" name="__codelineno-1-83" href="#__codelineno-1-83"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d$?d$?s&quot;
+</span><span id="__span-1-84"><a id="__codelineno-1-84" name="__codelineno-1-84" href="#__codelineno-1-84"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d$?d$?d$?s&quot;
+</span><span id="__span-1-85"><a id="__codelineno-1-85" name="__codelineno-1-85" href="#__codelineno-1-85"></a>        ## all lowercase, 2 Symbols, Append &lt;1-3&gt; Digits
+</span><span id="__span-1-86"><a id="__codelineno-1-86" name="__codelineno-1-86" href="#__codelineno-1-86"></a>          mp64.exe -o trojand.rule &quot;l $?s$?s$?d&quot;
+</span><span id="__span-1-87"><a id="__codelineno-1-87" name="__codelineno-1-87" href="#__codelineno-1-87"></a>          mp64.exe -o trojand.rule &quot;l $?s$?s$?d$?d&quot;
+</span><span id="__span-1-88"><a id="__codelineno-1-88" name="__codelineno-1-88" href="#__codelineno-1-88"></a>          mp64.exe -o trojand.rule &quot;l $?s$?s$?d$?d$?d&quot;
+</span><span id="__span-1-89"><a id="__codelineno-1-89" name="__codelineno-1-89" href="#__codelineno-1-89"></a>        ## all lowercase, Append &lt;1-3&gt; Digits, 2 Symbols
+</span><span id="__span-1-90"><a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a>          mp64.exe -o trojand.rule &quot;l $?d$?s$?s&quot;
+</span><span id="__span-1-91"><a id="__codelineno-1-91" name="__codelineno-1-91" href="#__codelineno-1-91"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d$?s$?s&quot;
+</span><span id="__span-1-92"><a id="__codelineno-1-92" name="__codelineno-1-92" href="#__codelineno-1-92"></a>          mp64.exe -o trojand.rule &quot;l $?d$?d$?d$?s$?s&quot;
+</span></code></pre></div></p>
+<p># Specific to a country's mobile number format
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>  ## i.e for Mongolia
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    mp64.exe -o trojand.rule &quot;$d$?d$?d$?d$?d$?d$?d$?d&quot;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    mp64.exe -o trojand.rule &quot;$9$7$6$d$?d$?d$?d$?d$?d$?d$?d&quot;
+</span></code></pre></div></p>
+</li>
+<li>
+<p>How to use this</p>
+<ul>
+<li>It is NOT recommended to paste all of the above to generate one massive rule file as this would either take ages to load in hashcat<ul>
+<li>Try to paste portions of it only</li>
+<li>Keep the size of the rule file to 50MB-100MB MAX. A 100MB Rule file took <ul>
+<li>A 100MB Rule file took ~5mins to load in hashcat on my PC</li>
+</ul>
+</li>
+<li>But you may have a beast of a PC, dedicated cracking rig or a cluster of rigs. If yes, disregard this recommendation</li>
+</ul>
+</li>
+<li>It is recommended to use a custom wordlists containing a few words</li>
+<li>You can of course use <code>cewl</code> but I recommend you make it simpler</li>
+<li>A simple wordlist might include<ul>
+<li>Country</li>
+<li>Capital City</li>
+<li>Current City</li>
+<li>Top 3 other famous/major cities within the country</li>
+<li>Company Name (No Space)</li>
+<li>Company Abbreviation</li>
+<li>Other observed password formats of users (After post-exploitation)</li>
+</ul>
+</li>
+<li>You can use this with bigger wordlists, it would take a long time though</li>
+<li>Nowadays, Passwords usually need an Uppercase character. It is recommeded to prioritize the rules that converts the first character to Uppercase<ul>
+<li>Try to crack some passwords using the basic Uppercase first letter rule and the rule without changing any case<ul>
+<li>If none gets cracked in the all lowercase rule, this MIGHT be a hint that an Uppercase character is enforced in that organization.</li>
+</ul>
+</li>
+<li>The "# Realistic years only (For smaller rules)" section is quick to generate, load and gives the most results.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Example commands after build the wordlist:
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>`.\hashcat.exe -a 0 -m 1000 --potfile-path company.potfile --debug-mode=4 --debug-file=matched.rule --session=company-wordlist-custom --force -O .\dumped_hashes.txt .\uber_targeted_custom_wordlist.dict -r .\trojand.rule`
+</span></code></pre></div></p>
+</li>
+</ol>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/cracking/Hashcat_Practical_Ruleset.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

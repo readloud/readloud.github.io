@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Instagram Private API - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Instagram Private API", url: "#_top", children: [
+              {title: "Overview", url: "#overview" },
+              {title: "Features", url: "#features" },
+              {title: "Documentation", url: "#documentation" },
+              {title: "Install", url: "#install" },
+              {title: "Usage", url: "#usage" },
+              {title: "Legal", url: "#legal" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="instagram-private-api">Instagram Private API</h1>
+<p>A Python wrapper for the Instagram private API with no 3rd party dependencies. Supports both the app and web APIs.</p>
+<p><img alt="Python 2.7, 3.5" src="https://img.shields.io/badge/Python-2.7%2C%203.5-3776ab.svg?maxAge=2592000" />
+<a href="https://github.com/ping/instagram_private_api/releases"><img alt="Release" src="https://img.shields.io/github/release/ping/instagram_private_api.svg?colorB=ff7043" /></a>
+<a href="https://instagram-private-api.readthedocs.io/en/latest/"><img alt="Docs" src="https://img.shields.io/badge/docs-readthedocs.io-ff4980.svg?maxAge=2592000" /></a>
+<a href="https://travis-ci.org/ping/instagram_private_api"><img alt="Build" src="https://img.shields.io/travis/ping/instagram_private_api.svg" /></a></p>
+<p><a href="https://www.buymeacoffee.com/ping"><img alt="Build" src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" /></a></p>
+<h2 id="overview">Overview</h2>
+<p>I wrote this to access Instagram's API when they clamped down on developer access. Because this is meant to achieve <a href="https://git@github.com/ping/instagram_private_api/COMPAT.md">parity</a> with the <a href="https://www.instagram.com/developer/endpoints/">official public API</a>, methods not available in the public API will generally have lower priority.</p>
+<p>Problems? Please check the <a href="https://instagram-private-api.readthedocs.io/en/latest/">docs</a> before submitting an issue.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Supports many functions that are only available through the official app, such as:<ul>
+<li>Multiple feeds, such as <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.user_feed">user feed</a>, <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.feed_location">location feed</a>, <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.feed_tag">tag feed</a>, <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.feed_popular">popular feed</a></li>
+<li>Post a <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.post_photo">photo</a> or <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.post_video">video</a> to your feed or stories</li>
+<li><a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.post_like">Like</a>/<a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.delete_like">unlike</a> posts</li>
+<li>Get <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.media_comments">post comments</a></li>
+<li><a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.post_comment">Post</a>/<a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_web_api.Client.delete_comment">delete</a> comments</li>
+<li><a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.comment_like">Like</a>/<a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.comment_unlike">unlike</a> comments</li>
+<li><a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.friendships_create">Follow</a>/<a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.friendships_destroy">unfollow</a> users</li>
+<li>User <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client.user_story_feed">stories</a></li>
+<li>And <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.Client">more</a>!</li>
+</ul>
+</li>
+<li>The web api client supports a subset of functions that do not require login, such as:<ul>
+<li>Get user <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_web_api.Client.user_info">info</a> and <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_web_api.Client.user_feed">feed</a></li>
+<li>Get <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_web_api.Client.media_comments">post comments</a></li>
+<li>And <a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_web_api.Client">more</a>!</li>
+</ul>
+</li>
+<li>Compatible with functions available through the public API using the ClientCompatPatch (<a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_private_api.ClientCompatPatch">app</a>/<a href="https://instagram-private-api.readthedocs.io/en/latest/api.html#instagram_web_api.ClientCompatPatch">web</a>) utility class</li>
+<li>Beta Python 3 support</li>
+</ul>
+<p>An <a href="https://github.com/ping/instagram_private_api_extensions">extension module</a> is available to help with common tasks like pagination, posting photos or videos.</p>
+<h2 id="documentation">Documentation</h2>
+<p>Documentation is available at <a href="https://instagram-private-api.readthedocs.io/en/latest/">https://instagram-private-api.readthedocs.io/en/latest/</a></p>
+<h2 id="install">Install</h2>
+<p>Install with pip:</p>
+<p><code>pip install git+https://git@github.com/ping/instagram_private_api.git@1.6.0</code></p>
+<p>To update:</p>
+<p><code>pip install git+https://git@github.com/ping/instagram_private_api.git@1.6.0 --upgrade</code></p>
+<p>To update with latest repo code:</p>
+<p><code>pip install git+https://git@github.com/ping/instagram_private_api.git --upgrade --force-reinstall</code></p>
+<p>Tested on Python 2.7 and 3.5.</p>
+<h2 id="usage">Usage</h2>
+<p>The <a href="instagram_private_api/">app API client</a> emulates the official app and has a larger set of functions. The <a href="instagram_web_api/">web API client</a> has a smaller set but can be used without logging in.</p>
+<p>Your choice will depend on your use case.</p>
+<p>The <a href="examples/"><code>examples/</code></a> and <a href="tests/"><code>tests/</code></a> are a good source of detailed sample code on how to use the clients, including a simple way to save the auth cookie for reuse.</p>
+<h3 id="option-1-use-the-official-apps-api">Option 1: Use the <a href="instagram_private_api/">official app's API</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">instagram_private_api</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ClientCompatPatch</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">user_name</span> <span class="o">=</span> <span class="s1">&#39;YOUR_LOGIN_USER_NAME&#39;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;YOUR_PASSWORD&#39;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">api</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">user_name</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">results</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">feed_timeline</span><span class="p">()</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;feed_items&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>         <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;media_or_ad&#39;</span><span class="p">)]</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="c1"># Manually patch the entity to match the public api as closely as possible, optional</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="c1"># To automatically patch entities, initialise the Client with auto_patch=True</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">ClientCompatPatch</span><span class="o">.</span><span class="n">media</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;media_or_ad&#39;</span><span class="p">])</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;media_or_ad&#39;</span><span class="p">][</span><span class="s1">&#39;code&#39;</span><span class="p">])</span>
+</span></code></pre></div>
+<h3 id="option-2-use-the-official-websites-api">Option 2: Use the <a href="instagram_web_api/">official website's API</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">instagram_web_api</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ClientCompatPatch</span><span class="p">,</span> <span class="n">ClientError</span><span class="p">,</span> <span class="n">ClientLoginError</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Without any authentication</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">web_api</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">auto_patch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop_incompat_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">user_feed_info</span> <span class="o">=</span> <span class="n">web_api</span><span class="o">.</span><span class="n">user_feed</span><span class="p">(</span><span class="s1">&#39;329452045&#39;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">for</span> <span class="n">post</span> <span class="ow">in</span> <span class="n">user_feed_info</span><span class="p">:</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> from </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">post</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">],</span> <span class="n">post</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">]))</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Some endpoints, e.g. user_following are available only after authentication</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">authed_web_api</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">auto_patch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">authenticate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">username</span><span class="o">=</span><span class="s1">&#39;YOUR_USERNAME&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;YOUR_PASSWORD&#39;</span><span class="p">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">following</span> <span class="o">=</span> <span class="n">authed_web_api</span><span class="o">.</span><span class="n">user_following</span><span class="p">(</span><span class="s1">&#39;123456&#39;</span><span class="p">)</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">following</span><span class="p">:</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">])</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1"># Note: You can and should cache the cookie even for non-authenticated sessions.</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># This saves the overhead of a single http request when the Client is initialised.</span>
+</span></code></pre></div>
+<h3 id="avoiding-re-login">Avoiding Re-login</h3>
+<p>You are advised to persist/cache the auth cookie details to avoid logging in every time you make an api call. Excessive logins is a surefire way to get your account flagged for removal. It's also advisable to cache the client details such as user agent, etc together with the auth details.</p>
+<p>The saved auth cookie can be reused for up to <strong>90 days</strong>.</p>
+<h2 id="legal">Legal</h2>
+<p>Disclaimer: This is not affliated, endorsed or certified by Instagram. This is an independent and unofficial API. Strictly <strong>not for spam</strong>. Use at your own risk.</p>
+<p>.dist-info
+* <a href="https://github.com/readloud/instagram_private_api/.INSTALLER">INSTALLER</a>
+* <a href="https://github.com/readloud/instagram_private_api/.RECORD">RECORD</a></p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/InstagramPrivateAPI.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>

