@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaya Abadi - Jasa Las, Bubut & Aluminium Terpercaya</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info .phone {
+            background-color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://placehold.co/1200x600/2c3e50/FFFFFF/png?text=Jasa+Las+dan+Bubut+Profesional');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title p {
+            color: #777;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-img {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .service-content {
+            padding: 1.5rem;
+        }
+        
+        .service-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Price Table */
+        .pricing {
+            background-color: var(--light);
+            padding: 4rem 0;
+        }
+        
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .price-table th, .price-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .price-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .price-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .price-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Gallery */
+        .gallery {
+            padding: 4rem 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            height: 250px;
+            background-color: #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--light);
+            padding: 4rem 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 1rem 0;
+            }
+            
+            .contact-info {
+                margin-top: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Jaya<span>Abadi</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#services">Layanan</a></li>
+                    <li><a href="#pricing">Harga</a></li>
+                    <li><a href="#gallery">Galeri</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+            <div class="contact-info">
+                <div class="phone">0812-3456-7890</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Jasa Las & Bubut Profesional Terpercaya</h1>
+            <p>Melayani pembuatan pagar, kanopi, tralis, railing tangga, kusen dan pintu aluminium dengan kualitas terbaik dan harga kompetitif</p>
+            <a href="#contact" class="btn">Konsultasi Gratis</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan Kami</h2>
+                <p>Kami menyediakan berbagai jasa fabrikasi logam dan aluminium</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://placehold.co/300x200/3498db/FFFFFF/png?text=Jasa+Las');"></div>
+                    <div class="service-content">
+                        <h3>Jasa Las</h3>
+                        <p>Layanan las berbagai material besi, stainless steel, dan aluminium untuk kebutuhan industri dan rumah tangga.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://placehold.co/300x200/e74c3c/FFFFFF/png?text=Jasa+Bubut');"></div>
+                    <div class="service-content">
+                        <h3>Jasa Bubut</h3>
+                        <p>Pengerjaan bubut presisi untuk berbagai komponen mesin dan kebutuhan teknik lainnya.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://placehold.co/300x200/2c3e50/FFFFFF/png?text=Pagar+Kanopi');"></div>
+                    <div class="service-content">
+                        <h3>Pagar & Kanopi</h3>
+                        <p>Pembuatan pagar, kanopi, dan tralis dengan berbagai model dan material sesuai kebutuhan.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://placehold.co/300x200/3498db/FFFFFF/png?text=Railing+Tangga');"></div>
+                    <div class="service-content">
+                        <h3>Railing Tangga</h3>
+                        <p>Desain dan pembuatan railing tangga yang elegan dan kuat dari material besi hollow, galvanis, atau stainless steel.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://placehold.co/300x200/e74c3c/FFFFFF/png?text=Atap+Baja+Ringan');"></div>
+                    <div class="service-content">
+                        <h3>Atap Baja Ringan</h3>
+                        <p>Pemasangan atap dari bahan baja ringan, twinlite, alderon, dan material berkualitas lainnya.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://placehold.co/300x200/2c3e50/FFFFFF/png?text=Kusen+Aluminium');"></div>
+                    <div class="service-content">
+                        <h3>Kusen & Pintu Aluminium</h3>
+                        <p>Pembuatan kusen dan pintu aluminium dengan berbagai model dan ukuran untuk rumah dan gedung.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Daftar Harga</h2>
+                <p>Harga dapat berubah sesuai dengan kompleksitas desain dan kondisi lapangan</p>
+            </div>
+            
+            <h3>Pagar Besi Hollow</h3>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Ukuran</th>
+                        <th>Harga per Meter</th>
+                        <th>Ketebalan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hollow Galvanis</td>
+                        <td>4x4 cm</td>
+                        <td>Rp 350.000</td>
+                        <td>1.2 mm</td>
+                    </tr>
+                    <tr>
+                        <td>Hollow Galvanis</td>
+                        <td>4x6 cm</td>
+                        <td>Rp 400.000</td>
+                        <td>1.4 mm</td>
+                    </tr>
+                    <tr>
+                        <td>Hollow Hitam</td>
+                        <td>4x4 cm</td>
+                        <td>Rp 300.000</td>
+                        <td>1.2 mm</td>
+                    </tr>
+                    <tr>
+                        <td>Hollow Hitam</td>
+                        <td>4x6 cm</td>
+                        <td>Rp 350.000</td>
+                        <td>1.4 mm</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Kanopi</h3>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Ukuran</th>
+                        <th>Harga per Meter</th>
+                        <th>Ketebalan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Baja Ringan</td>
+                        <td>0.75 mm</td>
+                        <td>Rp 450.000</td>
+                        <td>0.75 mm</td>
+                    </tr>
+                    <tr>
+                        <td>Baja Ringan</td>
+                        <td>0.80 mm</td>
+                        <td>Rp 500.000</td>
+                        <td>0.80 mm</td>
+                    </tr>
+                    <tr>
+                        <td>Atap Twinlite</td>
+                        <td>-</td>
+                        <td>Rp 600.000</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Atap Alderon</td>
+                        <td>-</td>
+                        <td>Rp 650.000</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Kusen dan Pintu Aluminium</h3>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Jenis</th>
+                        <th>Model</th>
+                        <th>Harga per Meter</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Kusen Aluminium</td>
+                        <td>Standard</td>
+                        <td>Rp 550.000</td>
+                        <td>Warna putih</td>
+                    </tr>
+                    <tr>
+                        <td>Kusen Aluminium</td>
+                        <td>Premium</td>
+                        <td>Rp 750.000</td>
+                        <td>Warna custom</td>
+                    </tr>
+                    <tr>
+                        <td>Pintu Aluminium</td>
+                        <td>Sliding</td>
+                        <td>Rp 1.200.000</td>
+                        <td>Include kaca</td>
+                    </tr>
+                    <tr>
+                        <td>Pintu Aluminium</td>
+                        <td>Swing</td>
+                        <td>Rp 1.500.000</td>
+                        <td>Include kaca</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="text-align: center; margin-top: 2rem;">
+                <a href="#contact" class="btn">Dapatkan Penawaran Khusus</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galeri Projek</h2>
+                <p>Beberapa hasil pekerjaan yang telah kami selesaikan</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item" style="background-image: url('https://placehold.co/300x300/3498db/FFFFFF/png?text=Projek+1');"></div>
+                <div class="gallery-item" style="background-image: url('https://placehold.co/300x300/e74c3c/FFFFFF/png?text=Projek+2');"></div>
+                <div class="gallery-item" style="background-image: url('https://placehold.co/300x300/2c3e50/FFFFFF/png?text=Projek+3');"></div>
+                <div class="gallery-item" style="background-image: url('https://placehold.co/300x300/3498db/FFFFFF/png?text=Projek+4');"></div>
+                <div class="gallery-item" style="background-image: url('https://placehold.co/300x300/e74c3c/FFFFFF/png?text=Projek+5');"></div>
+                <div class="gallery-item" style="background-image: url('https://placehold.co/300x300/2c3e50/FFFFFF/png?text=Projek+6');"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Testimoni Pelanggan</h2>
+                <p>Apa kata mereka yang telah menggunakan jasa kami</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Hasil pekerjaan sangat rapi dan sesuai dengan yang diharapkan. Harga juga kompetitif. Recommended!"
+                    </div>
+                    <div class="testimonial-author">- Bapak Andi, Jakarta Selatan</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Pengerjaan cepat dan profesional. Kanopi yang dibuat sangat kokoh dan awet. Terima kasih tim Jaya Abadi."
+                    </div>
+                    <div class="testimonial-author">- Ibu Sinta, Tangerang</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Kusen aluminium yang dipesan untuk kantor saya sangat bagus kualitasnya. Pemasangan juga rapi dan tepat waktu."
+                    </div>
+                    <div class="testimonial-author">- Bapak Rudi, Bekasi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+                <p>Konsultasikan kebutuhan las dan aluminium Anda dengan kami</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <p><strong>Alamat:</strong> Jl. Industri Raya No. 123, Jakarta Barat</p>
+                    <p><strong>Telepon:</strong> 0812-3456-7890 / 021-1234567</p>
+                    <p><strong>Email:</strong> info@jayaabadi.com</p>
+                    <p><strong>Jam Operasional:</strong> Senin - Sabtu, 08:00 - 17:00 WIB</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form>
+                        <input type="text" placeholder="Nama Lengkap" required>
+                        <input type="email" placeholderAlamat Email" required>
+                        <input type="tel" placeholder="Nomor Telepon">
+                        <textarea placeholder="Jelaskan kebutuhan Anda" required></textarea>
+                        <button type="submit" class="btn">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Jaya Abadi</h3>
+                    <p>Melayani jasa las, bubut, dan pembuatan produk dari besi hollow, galvanis, baja ringan, serta kusen dan pintu aluminium dengan kualitas terbaik.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="#">Jasa Las</a></li>
+                        <li><a href="#">Jasa Bubut</a></li>
+                        <li><a href="#">Pagar & Kanopi</a></li>
+                        <li><a href="#">Railing Tangga</a></li>
+                        <li><a href="#">Kusen & Pintu Aluminium</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li>Jl. Industri Raya No. 123, Jakarta Barat</li>
+                        <li>0812-3456-7890</li>
+                        <li>021-1234567</li>
+                        <li>info@jayaabadi.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Jaya Abadi - Jasa Las & Bubut Profesional. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

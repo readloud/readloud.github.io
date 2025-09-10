@@ -1,2260 +1,854 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The quieter you become, the more you are able to hear.">
-    <meta name="author" content="readloud">
-    <meta name="p:domain_verify" content="036375eee971553471041537850b7cfc"/>
-    <link rel="shortcut icon" href="./img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>readloud.org</title>
-    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="./css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/highlight.css">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-
-    <script src="./js/jquery-3.2.1.min.js"></script>
-    <script src="./js/bootstrap-3.3.7.min.js"></script>
-    <script src="./js/highlight.pack.js"></script>
-    
-      <script src="./js/elasticlunr.min.js"></script>
-    
-    <base target="_top">
-    <script>
-      var base_url = '.';
-      var is_top_frame = (window === window.parent);
+    <title>Jasa Konstruksi Profesional - Design, Bangun, Renovasi</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2e86c1;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --danger: #e74c3c;
+        }
         
-        var pageToc = [
-        ];
-
-    </script>
-    <script src="./js/base.js"></script>
-      <script src="search/main.js"></script> 
-</head>
-
-<body>
-<script>
-if (is_top_frame) { $('body').addClass('wm-top-page'); }
-</script>
-
-<nav class="navbar wm-page-top-frame">
-  <div class="container-fluid wm-top-container">
-    
-    <div class="wm-top-tool pull-right wm-vcenter">
-      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
-        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
-          ><i class="fa fa-search" aria-hidden="true"></i></button>
-
-        <div class="input-group input-group-sm wm-top-search">
-          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
-          <span class="input-group-btn" role="search">
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #e67e22;
+        }
+        
+        /* Section Styling */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-img {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .service-content {
+            padding: 1.5rem;
+        }
+        
+        .service-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Pricing Tables */
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .pricing-table th, .pricing-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pricing-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .pricing-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* Contact Form */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--accent);
+            font-size: 1.2rem;
+            min-width: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
             
-            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
-            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
-            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </span>
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .pricing-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-building"></i> MITRA<span>BANGUN</span>
+                </div>
+                <button class="mobile-menu-btn">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#services">Layanan</a></li>
+                        <li><a href="#pricing">Harga</a></li>
+                        <li><a href="#rab">Jasa RAB</a></li>
+                        <li><a href="#lpse">Jasa LPSE</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-      </form>
-    </div>
-
-    
-    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
-      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
-    </div>
-
-    
-    
-
-    
-    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
-      
-      <div class="wm-top-title">
-        readloud.org<br>
-        
-          <span class="wm-top-version">copywrites@2024</span>
-        
-      </div>
-    </a>
-  </div>
-</nav>
-
-  <div id="main-content" class="wm-page-top-frame">
-    
-<nav class="wm-toc-pane">
-  
-    <ul class="wm-toctree wm-toc-repo">
-      <li class="wm-toc-li wm-toc-lev1">
-      <a class="wm-article-link wm-toc-text" href="https://github.com/readloud/readloud.github.io/releases/tag/themes">
-        <i class="fa fa-github"></i>
-
-        GitHub
-      </a>
-      </li>
-    </ul>
-  <ul class="wm-toctree">
-        <li class="wm-toc-li wm-toc-lev1 "><a href="/" class="wm-article-link wm-toc-text">Home</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Buffer Overflow</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/Autorecon_modification" class="wm-article-link wm-toc-text">Modifications</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/brainpain" class="wm-article-link wm-toc-text">Brainpain</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/Egghunting-Basic" class="wm-article-link wm-toc-text">Egghunting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/elite oscp v.0.1" class="wm-article-link wm-toc-text">OSCP</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/General_methodology" class="wm-article-link wm-toc-text">General</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/Skeleton" class="wm-article-link wm-toc-text">Skeleton</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/Simple_Fuzz" class="wm-article-link wm-toc-text">Simple Fuzz</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/bof/vuln_fuzzer" class="wm-article-link wm-toc-text">Vuln Fuzzer</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Cryptography</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Algorithm</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/aes" class="wm-article-link wm-toc-text">AES</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/aes-cbc-bit-flipping-attack" class="wm-article-link wm-toc-text">AES CBC Bit Flipping Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/aes-cbc-padding-oracle-attack" class="wm-article-link wm-toc-text">AES CBC Padding Oracle Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/aes-ecb-padding-attack" class="wm-article-link wm-toc-text">AES ECB Padding Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/ansible-vault-secret" class="wm-article-link wm-toc-text">Ansible Vault Secret</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/atbash-cipher" class="wm-article-link wm-toc-text">Atbash Cipher</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/base32-base64" class="wm-article-link wm-toc-text">Base32 Base64</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/caesar-cipher" class="wm-article-link wm-toc-text">Caesar Cipher</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/camellia-cipher" class="wm-article-link wm-toc-text">Camellia Cipher</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/certificates" class="wm-article-link wm-toc-text">Certificates</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/cyberchef-magic" class="wm-article-link wm-toc-text">Cyberchef Magic</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/des" class="wm-article-link wm-toc-text">DES</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/diffie-hellman-key-exchange" class="wm-article-link wm-toc-text">Diffie Hellman Key Exchange</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/ecc" class="wm-article-link wm-toc-text">ECC</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/ecdsa" class="wm-article-link wm-toc-text">ECDSA</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/fernet" class="wm-article-link wm-toc-text">Fernet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/gpg" class="wm-article-link wm-toc-text">GPG</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/hmac" class="wm-article-link wm-toc-text">HMAC</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/kdbx-files" class="wm-article-link wm-toc-text">KDBX-Files</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/kerberos-tgt-cracking" class="wm-article-link wm-toc-text">Kerberos TGT Cracking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/length-extension-attack" class="wm-article-link wm-toc-text">Length Extension Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/md4-md5" class="wm-article-link wm-toc-text">Md4-Md5</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/multi-tap-cipher" class="wm-article-link wm-toc-text">Multi Tap Cipher</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/ntlm-ntlmv2" class="wm-article-link wm-toc-text">NTLM NTLMV2</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/pem" class="wm-article-link wm-toc-text">PEM</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/pgp" class="wm-article-link wm-toc-text">PGP</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/pkcs" class="wm-article-link wm-toc-text">PKCS</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/powershell-credentials" class="wm-article-link wm-toc-text">Powershell Credentials</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/rar" class="wm-article-link wm-toc-text">RAR</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/ripemd" class="wm-article-link wm-toc-text">Ripemd</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/rot13-rot47" class="wm-article-link wm-toc-text">ROT13-ROT47</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/rpng-guessing" class="wm-article-link wm-toc-text">RPNG Guessing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/rsa" class="wm-article-link wm-toc-text">RSA</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/sha1-hash-collision-attack" class="wm-article-link wm-toc-text">SHA1 Hash Collision Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/sha1-sha256-sha512" class="wm-article-link wm-toc-text">SHA1 Sha256-Sha512</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/transposition-cipher" class="wm-article-link wm-toc-text">Transposition Cipher</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/algorithm/vigenere-cipher" class="wm-article-link wm-toc-text">Vigenere Cipher</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Bit Wise Operation</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/bit-wise-operation/and-bitwise-operations" class="wm-article-link wm-toc-text">And Bitwise Operations</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/bit-wise-operation/or-bitwise-operations" class="wm-article-link wm-toc-text">Or Bitwise Operations</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/bit-wise-operation/shift-bitwise-operations" class="wm-article-link wm-toc-text">Shift Bitwise Operations</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/bit-wise-operation/xor-bitwise-operations" class="wm-article-link wm-toc-text">Xor Bitwise Operations</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Conversion</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-binary-to-int-in-python" class="wm-article-link wm-toc-text">Convert Binary To Int In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-bytes-to-hex-in-python" class="wm-article-link wm-toc-text">Convert Bytes To Hex In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-bytes-to-int-in-python" class="wm-article-link wm-toc-text">Convert Bytes To Int In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-bytes-to-matrix-in-python" class="wm-article-link wm-toc-text">Convert Bytes To Matrix In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-bytes-to-string-in-python" class="wm-article-link wm-toc-text">Convert Bytes To String In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-character-to-binary-in-python" class="wm-article-link wm-toc-text">Convert Character To Binary In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-character-to-unicode-in-python" class="wm-article-link wm-toc-text">Convert Character To Unicode In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-hex-to-bytes-in-python" class="wm-article-link wm-toc-text">Convert Hex To Bytes In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-hex-to-int-in-python" class="wm-article-link wm-toc-text">Convert Hex To Int In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-int-to-binary-in-python" class="wm-article-link wm-toc-text">Convert Int To Binary In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-int-to-bytes-in-python" class="wm-article-link wm-toc-text">Convert Int To Bytes In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-int-to-hex-in-python" class="wm-article-link wm-toc-text">Convert Int To Hex In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-int-to-string-in-python" class="wm-article-link wm-toc-text">Convert Int To String In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-matrix-to-bytes-in-python" class="wm-article-link wm-toc-text">Convert Matrix To Bytes In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-string-to-binary-in-python" class="wm-article-link wm-toc-text">Convert String To Binary In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-string-to-bytes-in-python" class="wm-article-link wm-toc-text">Convert String To Bytes In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-string-to-int-in-python" class="wm-article-link wm-toc-text">Convert String To Int In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/convert-unicode-to-character-in-python" class="wm-article-link wm-toc-text">Convert-Unicode To Character In Python</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/conversion/zero-padding-in-python" class="wm-article-link wm-toc-text">Zero Padding In Python</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Key Derivation Function</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/key-derivation-function/bcrypt" class="wm-article-link wm-toc-text">Bcrypt</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/key-derivation-function/pbkdf2" class="wm-article-link wm-toc-text">Pbkdf2</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/key-derivation-function/scrypt" class="wm-article-link wm-toc-text">Scrypt</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Math</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/math/chinese-remainder-theorem" class="wm-article-link wm-toc-text">Chinese-Remainder Theorem</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/math/exponential" class="wm-article-link wm-toc-text">Exponential</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/math/greatest-common-divisor" class="wm-article-link wm-toc-text">Greatest Common-Divisor</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/math/modular-congruence" class="wm-article-link wm-toc-text">Modular Congruence</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/cryptography/math/quadratic-residue" class="wm-article-link wm-toc-text">Quadratic-Residue</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/cryptography/steganography/steganography" class="wm-article-link wm-toc-text">Steganography</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Database</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/couchdb-pentesting" class="wm-article-link wm-toc-text">Couchdb Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/database-hunting" class="wm-article-link wm-toc-text">Database Hunting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/influxdb-pentesting" class="wm-article-link wm-toc-text">Influxdb Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/mongodb-pentesting" class="wm-article-link wm-toc-text">Mongodb Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/mssql-pentesting" class="wm-article-link wm-toc-text">Mssql Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/mysql-pentesting" class="wm-article-link wm-toc-text">Mysql Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/neo4j-pentesting" class="wm-article-link wm-toc-text">Neo4j Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/postgresql-pentesting" class="wm-article-link wm-toc-text">Postgresql Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/redis-pentesting" class="wm-article-link wm-toc-text">Redis Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/database/sqlite-pentesting" class="wm-article-link wm-toc-text">Sqlite Pentesting</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Malware</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/malware" class="wm-article-link wm-toc-text">About Malware</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/maldoc-analysis" class="wm-article-link wm-toc-text">Maldoc-Analysis</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/malware-analysis" class="wm-article-link wm-toc-text">Malware-Analysis</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/malware-detection-on-windows" class="wm-article-link wm-toc-text">Malware-Detection-On-Windows</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/malware-dynamic-analysis-with-remnux" class="wm-article-link wm-toc-text">Malware-Dynamic-Analysis-With-Remnux</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/malware-static-analysis" class="wm-article-link wm-toc-text">Malware-Static-Analysis</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/npm-supply-chain-attack" class="wm-article-link wm-toc-text">Npm-Supply-Chain-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/phishing-catcher" class="wm-article-link wm-toc-text">Phishing Catcher</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/splunk-pentesting" class="wm-article-link wm-toc-text">Splunk-Pentesting</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Malware-Example</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/libreoffice-macros" class="wm-article-link wm-toc-text">Libreoffice-Macros</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/sigma-rules" class="wm-article-link wm-toc-text">Sigma-Rules</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/files/files/Logic_Bomb.zip" class="wm-article-link wm-toc-text">Logic_Bomb</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/files/OOB_SQL_Injection.zip" class="wm-article-link wm-toc-text">OOB_SQL_Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/files/Persistent_Backdoors.zip" class="wm-article-link wm-toc-text">Persistent_Backdoors</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/files/R.U.D.Y.zip" class="wm-article-link wm-toc-text">R.U.D.Y</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/Ransomeware_Example_In_C.zip" class="wm-article-link wm-toc-text">Ransomeware_Example_In_C</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/Remote_Access_Via_Buffer_Overflow.zip" class="wm-article-link wm-toc-text">Remote_Access_Via_Buffer_Overflow</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/files/Ruby_Steganography_Malware.zip" class="wm-article-link wm-toc-text">Ruby_Steganography_Malware</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/files/Shadow_RDP_Hacking.zip" class="wm-article-link wm-toc-text">Shadow_RDP_Hacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/malware/files/XSS_Attacks.zip" class="wm-article-link wm-toc-text">XSS_Attacks</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Mobile/Android</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/mobile/android-pentesting" class="wm-article-link wm-toc-text">Android Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/mobile/connect-to-android-device-from-pc" class="wm-article-link wm-toc-text">Connect To Android-Device</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/mobile/mobileapptesting" class="wm-article-link wm-toc-text">Mobile app testing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/mobile/Rooting Android Device with Magisk" class="wm-article-link wm-toc-text">Rooting Android Device with Magisk</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Networking</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Attack</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/adobe-pdf-attack" class="wm-article-link wm-toc-text">Adobe-Pdf-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/arp_poisoning" class="wm-article-link wm-toc-text">Arp_Poisoning</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/arp-spoofing" class="wm-article-link wm-toc-text">Arp-Spoofing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/bluetooth-hacking" class="wm-article-link wm-toc-text">Bluetooth-Hacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/dos-ddos-attack" class="wm-article-link wm-toc-text">Dos-Ddos-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/mac-flooding-attack" class="wm-article-link wm-toc-text">Mac-Flooding-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/password_spraying" class="wm-article-link wm-toc-text">Password_Spraying</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/attack/redos" class="wm-article-link wm-toc-text">Redos</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Connections</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/connections/firewall" class="wm-article-link wm-toc-text">Firewall</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/connections/ipsec-vpn-pentesting" class="wm-article-link wm-toc-text">Ipsec-Vpn-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/connections/network-connection" class="wm-article-link wm-toc-text">Network-Connection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/connections/openvpn-troubleshooting" class="wm-article-link wm-toc-text">Openvpn-Troubleshooting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/connections/SSH_Tunneling" class="wm-article-link wm-toc-text">Ssh_Tunneling</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/connections/tor" class="wm-article-link wm-toc-text">Tor</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Data_Exfiltration</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/data_exfiltration/Account hunting & data exfiltration'" class="wm-article-link wm-toc-text">Account Hunting & Data Exfiltration'</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/data_exfiltration/Powershell-SAMBA" class="wm-article-link wm-toc-text">Powershell-Samba</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/data_exfiltration/Windows-Archiving_and_Compression" class="wm-article-link wm-toc-text">Windows-Archiving_And_Compression</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/data_exfiltration/Windows_bitsadmin" class="wm-article-link wm-toc-text">Windows_Bitsadmin</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/data_exfiltration/Windows-Linux-Curl-SimpleHTTPServerwithUpload" class="wm-article-link wm-toc-text">Windows-Linux-Curl-Simplehttpserverwithupload</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Pentesting</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/apache-hadoop-pentesting" class="wm-article-link wm-toc-text">Apache-Hadoop-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/dhcp-pentesting" class="wm-article-link wm-toc-text">Dhcp-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/dns-pentesting" class="wm-article-link wm-toc-text">Dns-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/fastcgi-pentesting" class="wm-article-link wm-toc-text">Fastcgi-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/ftp-pentesting" class="wm-article-link wm-toc-text">Ftp-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/grpc-pentesting" class="wm-article-link wm-toc-text">Grpc-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/multicast-dns-pentesting" class="wm-article-link wm-toc-text">Multicast-Dns-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/network-traffic-analysis" class="wm-article-link wm-toc-text">Network-Traffic-Analysis</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/nfs-pentesting" class="wm-article-link wm-toc-text">Nfs-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/restricted-shell-bypass" class="wm-article-link wm-toc-text">Restricted-Shell-Bypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/rsync-pentesting" class="wm-article-link wm-toc-text">Rsync-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/rtsp-pentesting" class="wm-article-link wm-toc-text">Rtsp-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/snmp-pentesting" class="wm-article-link wm-toc-text">Snmp-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/ssh-pentesting" class="wm-article-link wm-toc-text">Ssh-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/telnet-pentesting" class="wm-article-link wm-toc-text">Telnet-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/pentesting/vnc-pentesting" class="wm-article-link wm-toc-text">Vnc-Pentesting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Port-Forwarding</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/port-forwarding/port-forwarding-with-chisel" class="wm-article-link wm-toc-text">Port-Forwarding-With-Chisel</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/port-forwarding/port-forwarding-with-plink" class="wm-article-link wm-toc-text">Port-Forwarding-With-Plink</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/port-forwarding/port-forwarding-with-socat" class="wm-article-link wm-toc-text">Port-Forwarding-With-Socat</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/port-forwarding/port-forwarding-with-ssh" class="wm-article-link wm-toc-text">Port-Forwarding-With-Ssh</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Scanning</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/scanning/PassiveMode-Kali" class="wm-article-link wm-toc-text">Passivemode-Kali</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/scanning/port-scanning" class="wm-article-link wm-toc-text">Port-Scanning</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Wifi</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/wifi/mitm-attack" class="wm-article-link wm-toc-text">Mitm-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/wifi/reaver" class="wm-article-link wm-toc-text">Reaver</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/wifi/wifi-pentest/" class="wm-article-link wm-toc-text">Wireless Pentest</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/wifi/wifi-hacking" class="wm-article-link wm-toc-text">Wifi-Hacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/network/wifi/wifi-password-recovery" class="wm-article-link wm-toc-text">Wifi-Password-Recovery</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/convert-putty-key-to-openssh-key" class="wm-article-link wm-toc-text">Convert-Putty-Key-To-Openssh-Key</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/nginxreverseproxy_dradis-eyewitness" class="wm-article-link wm-toc-text">Nginxreverseproxy_Dradis-Eyewitness</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/non-privileged_port_binding" class="wm-article-link wm-toc-text">Non-Privileged_Port_Binding</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/openssh_server_windows" class="wm-article-link wm-toc-text">Openssh_Server_Windows</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/openvpn" class="wm-article-link wm-toc-text">Openvpn</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/process_and_network_connection_monitoring" class="wm-article-link wm-toc-text">Process_And_Network_Connection_Monitoring</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/reconnaissance" class="wm-article-link wm-toc-text">Reconnaissance</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/simple_python_go_packages" class="wm-article-link wm-toc-text">Simple_Python_Go_Packages</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/ssh_config_template" class="wm-article-link wm-toc-text">Ssh_Config_Template</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/Subnet-Guide.xlsx" class="wm-article-link wm-toc-text">Subnet-Guide</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/systemctl_with_user_privileges" class="wm-article-link wm-toc-text">Systemctl_With_User_Privileges</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/network/Wireshark-Filters" class="wm-article-link wm-toc-text">Wireshark-Filters</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Password Cracking</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/cracking/crunch" class="wm-article-link wm-toc-text">Crunch</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/cracking/Hashcat_general_cheatsheet" class="wm-article-link wm-toc-text">Hashcat General Cheatsheet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/cracking/Hashcat Password Cracking" class="wm-article-link wm-toc-text">Hashcat Password Cracking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/cracking/Hashcat_Practical_Ruleset" class="wm-article-link wm-toc-text">Hashcat Practical Ruleset</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/cracking/john-the-ripper" class="wm-article-link wm-toc-text">John The-Ripper</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/cracking/truecrack" class="wm-article-link wm-toc-text">Truecrack</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Reconnaissance</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Powersploit</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/AntivirusBypass/Find-AVSignature" class="wm-article-link wm-toc-text">AntivirusBypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/powerview" class="wm-article-link wm-toc-text">Powerview</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Export-PowerViewCSV" class="wm-article-link wm-toc-text">Export-PowerViewCSV</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Resolve-IPAddress" class="wm-article-link wm-toc-text">Resolve-IPAddress</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/ConvertTo-SID" class="wm-article-link wm-toc-text">ConvertTo-SID</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/ConvertFrom-SID" class="wm-article-link wm-toc-text">ConvertFrom-SID</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Convert-ADName" class="wm-article-link wm-toc-text">Convert-ADName</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/ConvertFrom-UACValue" class="wm-article-link wm-toc-text">ConvertFrom-UACValue</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Add-RemoteConnection" class="wm-article-link wm-toc-text">Add-RemoteConnection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Remove-RemoteConnection" class="wm-article-link wm-toc-text">Remove-RemoteConnection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Invoke-UserImpersonation" class="wm-article-link wm-toc-text">Invoke-UserImpersonation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Invoke-RevertToSelf" class="wm-article-link wm-toc-text">Invoke-RevertToSelf</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainSPNTicket" class="wm-article-link wm-toc-text">Get-DomainSPNTicket</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Invoke-Kerberoast" class="wm-article-link wm-toc-text">Invoke-Kerberoast</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-PathAcl" class="wm-article-link wm-toc-text">Get-PathAcl</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainDNSZone" class="wm-article-link wm-toc-text">Get-DomainDNSZone</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainDNSRecord" class="wm-article-link wm-toc-text">Get-DomainDNSRecord</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-Domain" class="wm-article-link wm-toc-text">Get-Domain</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainController" class="wm-article-link wm-toc-text">Get-DomainController</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-Forest" class="wm-article-link wm-toc-text">Get-Forest</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-ForestDomain" class="wm-article-link wm-toc-text">Get-ForestDomain</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-ForestGlobalCatalog" class="wm-article-link wm-toc-text">Get-ForestGlobalCatalog</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-DomainObjectPropertyOutlier" class="wm-article-link wm-toc-text">Find-DomainObjectPropertyOutlier</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainUser" class="wm-article-link wm-toc-text">Get-DomainUser</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/New-DomainUser" class="wm-article-link wm-toc-text">New-DomainUser</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Set-DomainUserPassword" class="wm-article-link wm-toc-text">Set-DomainUserPassword</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainUserEvent" class="wm-article-link wm-toc-text">Get-DomainUserEvent</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainComputer" class="wm-article-link wm-toc-text">Get-DomainComputer</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainObject" class="wm-article-link wm-toc-text">Get-DomainObject</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Set-DomainObject" class="wm-article-link wm-toc-text">Set-DomainObject</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Set-DomainObjectOwner" class="wm-article-link wm-toc-text">Set-DomainObjectOwner</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainObjectAcl" class="wm-article-link wm-toc-text">Get-DomainObjectAcl</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Add-DomainObjectAcl" class="wm-article-link wm-toc-text">Add-DomainObjectAcl</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-InterestingDomainAcl" class="wm-article-link wm-toc-text">Find-InterestingDomainAcl</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainOU" class="wm-article-link wm-toc-text">Get-DomainOU</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainSite" class="wm-article-link wm-toc-text">Get-DomainSite</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainSubnet" class="wm-article-link wm-toc-text">Get-DomainSubnet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainSID" class="wm-article-link wm-toc-text">Get-DomainSID</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainGroup" class="wm-article-link wm-toc-text">Get-DomainGroup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/New-DomainGroup" class="wm-article-link wm-toc-text">New-DomainGroup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainManagedSecurityGroup" class="wm-article-link wm-toc-text">Get-DomainManagedSecurityGroup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainGroupMember" class="wm-article-link wm-toc-text">Get-DomainGroupMember</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Add-DomainGroupMember" class="wm-article-link wm-toc-text">Add-DomainGroupMember</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainFileServer" class="wm-article-link wm-toc-text">Get-DomainFileServer</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainDFSShare" class="wm-article-link wm-toc-text">Get-DomainDFSShare</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainGPO" class="wm-article-link wm-toc-text">Get-DomainGPO</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainGPOLocalGroup" class="wm-article-link wm-toc-text">Get-DomainGPOLocalGroup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainGPOUserLocalGroupMapping" class="wm-article-link wm-toc-text">Get-DomainGPOUserLocalGroupMapping</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainGPOComputerLocalGroupMapping" class="wm-article-link wm-toc-text">Get-DomainGPOComputerLocalGroupMapping</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainPolicy" class="wm-article-link wm-toc-text">Get-DomainPolicy</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-NetLocalGroup" class="wm-article-link wm-toc-text">Get-NetLocalGroup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-NetLocalGroupMember" class="wm-article-link wm-toc-text">Get-NetLocalGroupMember</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-NetShare" class="wm-article-link wm-toc-text">Get-NetShare</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-NetLoggedon" class="wm-article-link wm-toc-text">Get-NetLoggedon</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-NetSession" class="wm-article-link wm-toc-text">Get-NetSession</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-RegLoggedOn" class="wm-article-link wm-toc-text">Get-RegLoggedOn</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-NetRDPSession" class="wm-article-link wm-toc-text">Get-NetRDPSession</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Test-AdminAccess" class="wm-article-link wm-toc-text">Test-AdminAccess</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-NetComputerSiteName" class="wm-article-link wm-toc-text">Get-NetComputerSiteName</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-WMIRegProxy" class="wm-article-link wm-toc-text">Get-WMIRegProxy</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-WMIRegLastLoggedOn" class="wm-article-link wm-toc-text">Get-WMIRegLastLoggedOn</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-WMIRegCachedRDPConnection" class="wm-article-link wm-toc-text">Get-WMIRegCachedRDPConnection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-WMIRegMountedDrive" class="wm-article-link wm-toc-text">Get-WMIRegMountedDrive</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-WMIProcess" class="wm-article-link wm-toc-text">Get-WMIProcess</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-InterestingFile" class="wm-article-link wm-toc-text">Find-InterestingFile</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-DomainUserLocation" class="wm-article-link wm-toc-text">Find-DomainUserLocation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-DomainProcess" class="wm-article-link wm-toc-text">Find-DomainProcess</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-DomainUserEvent" class="wm-article-link wm-toc-text">Find-DomainUserEvent</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-DomainShare" class="wm-article-link wm-toc-text">Find-DomainShare</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-InterestingDomainShareFile" class="wm-article-link wm-toc-text">Find-InterestingDomainShareFile</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-LocalAdminAccess" class="wm-article-link wm-toc-text">Find-LocalAdminAccess</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Find-DomainLocalGroupMember" class="wm-article-link wm-toc-text">Find-DomainLocalGroupMember</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainTrust" class="wm-article-link wm-toc-text">Get-DomainTrust</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-ForestTrust" class="wm-article-link wm-toc-text">Get-ForestTrust</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainForeignUser" class="wm-article-link wm-toc-text">Get-DomainForeignUser</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainForeignGroupMember" class="wm-article-link wm-toc-text">Get-DomainForeignGroupMember</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-DomainTrustMapping" class="wm-article-link wm-toc-text">Get-DomainTrustMapping</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-ComputerDetail" class="wm-article-link wm-toc-text">Get-ComputerDetail</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Get-HttpStatus" class="wm-article-link wm-toc-text">Get-HttpStatus</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Invoke-Portscan" class="wm-article-link wm-toc-text">Invoke-Portscan</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Powersploit/Invoke-ReverseDnsLookup" class="wm-article-link wm-toc-text">Invoke-ReverseDnsLookup</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Privilege Escalation</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/powerup" class="wm-article-link wm-toc-text">Powerup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ModifiablePath" class="wm-article-link wm-toc-text">Get-ModifiablePath</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ProcessTokenGroup" class="wm-article-link wm-toc-text">Get-ProcessTokenGroup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ProcessTokenPrivilege" class="wm-article-link wm-toc-text">Get-ProcessTokenPrivilege</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Enable-Privilege" class="wm-article-link wm-toc-text">Enable-Privilege</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Add-ServiceDacl" class="wm-article-link wm-toc-text">Add-ServiceDacl</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Set-ServiceBinaryPath" class="wm-article-link wm-toc-text">Set-ServiceBinaryPath</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Test-ServiceDaclPermission" class="wm-article-link wm-toc-text">Test-ServiceDaclPermission</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-UnquotedService" class="wm-article-link wm-toc-text">Get-UnquotedService</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ModifiableServiceFile" class="wm-article-link wm-toc-text">Get-ModifiableServiceFile</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ModifiableService" class="wm-article-link wm-toc-text">Get-ModifiableService</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ServiceDetail" class="wm-article-link wm-toc-text">Get-ServiceDetail</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Invoke-ServiceAbuse" class="wm-article-link wm-toc-text">Invoke-ServiceAbuse</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Write-ServiceBinary" class="wm-article-link wm-toc-text">Write-ServiceBinary</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Install-ServiceBinary" class="wm-article-link wm-toc-text">Install-ServiceBinary</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Restore-ServiceBinary" class="wm-article-link wm-toc-text">Restore-ServiceBinary</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Find-ProcessDLLHijack" class="wm-article-link wm-toc-text">Find-ProcessDLLHijack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Find-PathDLLHijack" class="wm-article-link wm-toc-text">Find-PathDLLHijack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Write-HijackDll" class="wm-article-link wm-toc-text">Write-HijackDll</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-RegistryAlwaysInstallElevated" class="wm-article-link wm-toc-text">Get-RegistryAlwaysInstallElevated</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-RegistryAutoLogon" class="wm-article-link wm-toc-text">Get-RegistryAutoLogon</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ModifiableRegistryAutoRun" class="wm-article-link wm-toc-text">Get-ModifiableRegistryAutoRun</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ModifiableScheduledTaskFile" class="wm-article-link wm-toc-text">Get-ModifiableScheduledTaskFile</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-UnattendedInstallFile" class="wm-article-link wm-toc-text">Get-UnattendedInstallFile</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-WebConfig" class="wm-article-link wm-toc-text">Get-WebConfig</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-ApplicationHost" class="wm-article-link wm-toc-text">Get-ApplicationHost</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-SiteListPassword" class="wm-article-link wm-toc-text">Get-SiteListPassword</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-CachedGPPPassword" class="wm-article-link wm-toc-text">Get-CachedGPPPassword</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Write-UserAddMSI" class="wm-article-link wm-toc-text">Write-UserAddMSI</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Invoke-WScriptUACBypass" class="wm-article-link wm-toc-text">Invoke-WScriptUACBypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Invoke-PrivescAudit" class="wm-article-link wm-toc-text">Invoke-PrivescAudit</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Privesc/Get-System" class="wm-article-link wm-toc-text">Get-System</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">CodeExecution</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/CodeExecution/Invoke-DllInjection" class="wm-article-link wm-toc-text">Invoke-DllInjection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/CodeExecution/Invoke-ReflectivePEInjection" class="wm-article-link wm-toc-text">Invoke-ReflectivePEInjection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/CodeExecution/Invoke-Shellcode" class="wm-article-link wm-toc-text">Invoke-Shellcode</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/CodeExecution/Invoke-WmiCommand" class="wm-article-link wm-toc-text">Invoke-WmiCommand</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Mayhem</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Mayhem/Set-MasterBootRecord" class="wm-article-link wm-toc-text">Set-MasterBootRecord</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Mayhem/Set-CriticalProcess" class="wm-article-link wm-toc-text">Set-CriticalProcess</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Persistence</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Persistence/New-ElevatedPersistenceOption" class="wm-article-link wm-toc-text">New-ElevatedPersistenceOption</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Persistence/New-UserPersistenceOption" class="wm-article-link wm-toc-text">New-UserPersistenceOption</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Persistence/Add-Persistence" class="wm-article-link wm-toc-text">Add-Persistence</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Persistence/Install-SSP" class="wm-article-link wm-toc-text">Install-SSP</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/Persistence/Get-SecurityPackage" class="wm-article-link wm-toc-text">Get-SecurityPackage</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">ScriptModification</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/ScriptModification/Out-CompressedDll" class="wm-article-link wm-toc-text">Out-CompressedDll</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/ScriptModification/Out-EncodedCommand" class="wm-article-link wm-toc-text">Out-EncodedCommand</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/ScriptModification/Out-EncryptedScript" class="wm-article-link wm-toc-text">Out-EncryptedScript</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/recon/ScriptModification/Remove-Comment" class="wm-article-link wm-toc-text">Remove-Comment</a>
-</li>
-  </ul>
-</li>
-
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Linux System</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Archive</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/7z" class="wm-article-link wm-toc-text">7z</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/bzip-bunzip" class="wm-article-link wm-toc-text">Bzip-Bunzip</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/crack-7z-password" class="wm-article-link wm-toc-text">Crack-7z-Password</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/crack-zip-password" class="wm-article-link wm-toc-text">Crack-Zip-Password</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/downloading_apt_pip3_packages_offline" class="wm-article-link wm-toc-text">Downloading_Apt_Pip3_Packages_Offline</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/gzip-gunzip" class="wm-article-link wm-toc-text">Gzip-Gunzip</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/tar" class="wm-article-link wm-toc-text">Tar</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/archive/zip-unzip" class="wm-article-link wm-toc-text">Zip-Unzip</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Attack</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/attack/fork-bomb" class="wm-article-link wm-toc-text">Forkbomb</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/attack/borgbackup-pentesting" class="wm-article-link wm-toc-text">Backup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/attack/lxc-lxd-privilege-escalation" class="wm-article-link wm-toc-text">Container</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Management</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/management/management/add-and-delete-groups-in-linux" class="wm-article-link wm-toc-text">Add-And-Delete-Groups-In-Linux</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/management/management/add-and-delete-user-in-linux" class="wm-article-link wm-toc-text">Add-And-Delete-User-In-Linux</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/management/file-and-directory-ownership-in-linux" class="wm-article-link wm-toc-text">File-And-Directory-Ownership-In-Linux</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/management/file-and-directory-permission-in-linux" class="wm-article-link wm-toc-text">File-And-Directory-Permission-In-Linux</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/management/file-transfer-in-linux" class="wm-article-link wm-toc-text">File-Transfer-In-Linux</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/Os/linux/management/shell-scripting" class="wm-article-link wm-toc-text">Shell-Scripting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Post-Exploitation</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/post-exploitation/cover-your-tracks-in-linux" class="wm-article-link wm-toc-text">Cover-Your-Tracks-In-Linux</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/post-exploitation/linux-backdoors" class="wm-article-link wm-toc-text">Linux-Backdoors</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/post-exploitation/linux-pivoting" class="wm-article-link wm-toc-text">Linux-Pivoting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Privilege-Escalation</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/ansible-playbook-privilege-escalation" class="wm-article-link wm-toc-text">Ansible-Playbook-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/apache-conf-privilege-escalation" class="wm-article-link wm-toc-text">Apache-Conf-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/bash-eq-privilege-escalation" class="wm-article-link wm-toc-text">Bash-Eq-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/buffer-overflow-privilege-escalation" class="wm-article-link wm-toc-text">Buffer-Overflow-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/chrome-remote-debugger-pentesting" class="wm-article-link wm-toc-text">Chrome-Remote-Debugger-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/doas" class="wm-article-link wm-toc-text">Doas</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/ghidra-debug-mode-rce" class="wm-article-link wm-toc-text">Ghidra-Debug-Mode-Rce</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/gnuplot-privilege-escalation" class="wm-article-link wm-toc-text">Gnuplot-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/irb-privilege-escalation" class="wm-article-link wm-toc-text">Irb-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/linux privilege escalation" class="wm-article-link wm-toc-text">Linux Privilege Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/mozilla-pentsting" class="wm-article-link wm-toc-text">Mozilla-Pentsting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/openssl-privilege-escalation" class="wm-article-link wm-toc-text">Openssl-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/pip-download-code-execution" class="wm-article-link wm-toc-text">Pip-Download-Code-Execution</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/polkit-privilege-escalation" class="wm-article-link wm-toc-text">Polkit-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/python-eval-code-execution" class="wm-article-link wm-toc-text">Python-Eval-Code-Execution</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/python-jails-escape" class="wm-article-link wm-toc-text">Python-Jails-Escape</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/python-privilege-escalation" class="wm-article-link wm-toc-text">Python-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/python-yaml-privilege-escalation" class="wm-article-link wm-toc-text">Python-Yaml-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/ruby-privilege-escalation" class="wm-article-link wm-toc-text">Ruby-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/rust-privilege-escalation" class="wm-article-link wm-toc-text">Rust-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/shared-library-hijacking" class="wm-article-link wm-toc-text">Shared-Library-Hijacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/snapd-privilege-escalation" class="wm-article-link wm-toc-text">Snapd-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sssd-privilege-escalation" class="wm-article-link wm-toc-text">SSSD-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/tar-wildcard-injection-PrivEsc" class="wm-article-link wm-toc-text">Tar-Wildcard-Injection-Privesc</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/update-motd-privilege-escalation" class="wm-article-link wm-toc-text">Update-Motd-Privilege-Escalation</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Sudo (Super User)</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-privilege-escalation" class="wm-article-link wm-toc-text">Sudo privilege escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-clamav-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Clamav-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-dstat-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Dstat-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-exiftool-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Exiftool-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-fail2ban-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Fail2ban-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-git-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Git-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-java-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Java-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-openvpn-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Openvpn-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-path-traversal-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Path-Traversal-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-privilege-escalation-by-overriding-shared-library" class="wm-article-link wm-toc-text">Sudo-Privilege-Escalation-By-Overriding-Shared-Library</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-reboot-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Reboot-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-screen-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Screen-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-service-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Service-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-shutdown-poweroff-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Shutdown-Poweroff-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-systemctl-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Systemctl-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-tee-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Tee-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-umount-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Umount-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-vim-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Vim-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-wall-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Wall-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudo-wget-privilege-escalation" class="wm-article-link wm-toc-text">Sudo-Wget-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/linux/privilege-escalation/sudo/sudoedit-privilege-escalation" class="wm-article-link wm-toc-text">Sudoedit-Privilege-Escalation</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/os/linux/protoco/x11-pentesting" class="wm-article-link wm-toc-text">Protocol</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Windows System</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/active directory pentesting" class="wm-article-link wm-toc-text">Active Directory Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/active_directory_auditing" class="wm-article-link wm-toc-text">Active_Directory_Auditing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/ad-cs-pentesting" class="wm-article-link wm-toc-text">Ad-Cs-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/as-rep-roasting" class="wm-article-link wm-toc-text">As-Rep-Roasting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/basic-knowledge" class="wm-article-link wm-toc-text">Basic-Knowledge</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/cheat sheet" class="wm-article-link wm-toc-text">Cheat Sheet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/constrained-delegation-attack" class="wm-article-link wm-toc-text">Constrained-Delegation-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/dacl-attack" class="wm-article-link wm-toc-text">DACL-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/domainuser_tracking" class="wm-article-link wm-toc-text">Domainuser_Tracking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/download-files-in-windows" class="wm-article-link wm-toc-text">Download-Files-In-Windows</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/kerberoasting-attack" class="wm-article-link wm-toc-text">Kerberoasting-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/kerberos-pentesting" class="wm-article-link wm-toc-text">Kerberos-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/laps-pentesting" class="wm-article-link wm-toc-text">LAPS-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/ldap-injection" class="wm-article-link wm-toc-text">LDAP-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/ldap-pentesting" class="wm-article-link wm-toc-text">LDAP-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/netlogon-elavasion-of-privilege" class="wm-article-link wm-toc-text">Netlogon-Elavasion-Of-Privilege</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/resource-based-constrained-delegation-attack" class="wm-article-link wm-toc-text">Resource-Based-Constrained-Delegation-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/shadow-credentials" class="wm-article-link wm-toc-text">Shadow-Credentials</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/smb-pentesting" class="wm-article-link wm-toc-text">SMB-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/Windows SID" class="wm-article-link wm-toc-text">Windows SID</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/Windows SPN" class="wm-article-link wm-toc-text">Windows SPN</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/active-directory/403 bypass" class="wm-article-link wm-toc-text">403 Bypass</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Forensics</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/forensics/reading-onedrive-logs" class="wm-article-link wm-toc-text">Reading-Onedrive-Logs</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/forensics/Windows Forensics" class="wm-article-link wm-toc-text">Windows Forensics</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/forensics/windows-disk-management" class="wm-article-link wm-toc-text">Windows-Disk-Management</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/forensics/windows-memory-dump-analysis" class="wm-article-link wm-toc-text">Windows-Memory-Dump-Analysis</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/forensics/windows-xml-eventLog" class="wm-article-link wm-toc-text">Windows-Xml-Eventlog</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Microsoft</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/microsoft/m365" class="wm-article-link wm-toc-text">M365</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/microsoft/microsoft-exchange-server-pentesting" class="wm-article-link wm-toc-text">Microsoft-Exchange-Server-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/microsoft/msrpc" class="wm-article-link wm-toc-text">MSRPC</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Post-Exploitation</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/dotnet" class="wm-article-link wm-toc-text">Dotnet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/evasion" class="wm-article-link wm-toc-text">Evasion</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/initial_foothold" class="wm-article-link wm-toc-text">Initial Foothold</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/pop_calc_and_alike" class="wm-article-link wm-toc-text">Pop Calc & Alike</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/post_exploitation" class="wm-article-link wm-toc-text">Post Exploitation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/shells" class="wm-article-link wm-toc-text">Shells</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/window-pivoting" class="wm-article-link wm-toc-text">Window-Pivoting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/os/windows/powershell/powershell" class="wm-article-link wm-toc-text">Powershell</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/os/windows/powershell/powerview" class="wm-article-link wm-toc-text">Powerview</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Privilege-Escalation</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/activate-administrator-account-on-windows" class="wm-article-link wm-toc-text">Activate-Administrator-Account-On-Windows</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/add-edit-delete-users-on-windows" class="wm-article-link wm-toc-text">Add-Edit-Delete-Users-On-Windows</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/dumping-credentials-from-windows-vault" class="wm-article-link wm-toc-text">Dumping-Credentials-From-Windows-Vault</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/dumping-windows-password-hashes" class="wm-article-link wm-toc-text">Dumping-Windows-Password-Hashes</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/iperius-backup-service-privilege-escalation" class="wm-article-link wm-toc-text">Iperius-Backup-Service-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/login-windows-shell" class="wm-article-link wm-toc-text">Login-Windows-Shell</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/manageEngine-adselfservice-plus" class="wm-article-link wm-toc-text">Manageengine-Adselfservice-Plus</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/mimikatz" class="wm-article-link wm-toc-text">Mimikatz</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/outlook-reminder-privilege-escalation" class="wm-article-link wm-toc-text">Outlook-Reminder-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/privilege-escalation" class="wm-article-link wm-toc-text">Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/switch-user-on-windows" class="wm-article-link wm-toc-text">Switch-User-On-Windows</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/uac-windows-privilege-escalation" class="wm-article-link wm-toc-text">Uac-Windows-Privilege-Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows privilege escalation" class="wm-article-link wm-toc-text">Windows Privilege Escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-adcs" class="wm-article-link wm-toc-text">Windows-Privesc-With-Adcs</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-dll-hijacking" class="wm-article-link wm-toc-text">Windows-Privesc-With-Dll-Hijacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-kerberos" class="wm-article-link wm-toc-text">Windows-Privesc-With-Kerberos</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-localpotato" class="wm-article-link wm-toc-text">Windows-Privesc-With-Localpotato</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-registry-keys" class="wm-article-link wm-toc-text">Windows-Privesc-With-Registry-Keys</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-remotepotato" class="wm-article-link wm-toc-text">Windows-Privesc-With-Remotepotato</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-sebackupprivilege" class="wm-article-link wm-toc-text">Windows-Privesc-With-Sebackupprivilege</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/privilege-escalation/windows-privesc-with-unquoted-service-path" class="wm-article-link wm-toc-text">Windows-Privesc-With-Unquoted-Service-Path</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Protocol</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/protocol/msrpc-pentesting" class="wm-article-link wm-toc-text">MSRPC-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/protocol/rdp-pentesting" class="wm-article-link wm-toc-text">RDP-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/protocol/winrm-pentesting" class="wm-article-link wm-toc-text">Winrm-Pentesting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Service</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/service/m365-pentesting" class="wm-article-link wm-toc-text">M365-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/service/microsoft-outlook-message" class="wm-article-link wm-toc-text">Microsoft-Outlook-Message</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/service/microsoft-word-pentesting" class="wm-article-link wm-toc-text">Microsoft-Word-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/os/windows/service/windows-print-spooler-service" class="wm-article-link wm-toc-text">Windows-Print-Spooler-Service</a>
-</li>
-  </ul>
-</li>
-
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Windows Subsystem for Linux (WSL)</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/wsl/" class="wm-article-link wm-toc-text">WSLU</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Social Engineering (OSINT)</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/osint/" class="wm-article-link wm-toc-text">OSINT</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Dorking Cheat Sheet</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/osint/GoogleDorks" class="wm-article-link wm-toc-text">GoogleDorks</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/osint/Github Recon" class="wm-article-link wm-toc-text">Github Recon</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/osint/boxpiper" class="wm-article-link wm-toc-text">Boxpiper</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/osint/disclosurePrograms" class="wm-article-link wm-toc-text">disclosurePrograms</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/osint/vsec7-list" class="wm-article-link wm-toc-text">Vsec7-List</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/osint/webcam-otw" class="wm-article-link wm-toc-text">Webcam-Otw</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Web Vuln</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Api</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/api/ApiKey" class="wm-article-link wm-toc-text">Apikey</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/api/bug_bounty_api_testing_basics" class="wm-article-link wm-toc-text">Bug Bounty Api Testing Basics</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/api/graphql" class="wm-article-link wm-toc-text">Graphql</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Burpsuite</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/add-custom-http-headers-in-burp-suite" class="wm-article-link wm-toc-text">Add Custom HTTP Headers</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/Broken_Authentication_Checks" class="wm-article-link wm-toc-text">Broken Authentication Checks</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/burp" class="wm-article-link wm-toc-text">Burp</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/Extensions" class="wm-article-link wm-toc-text">Burp Extensions</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/integrate-burp-request-and-sqlmap" class="wm-article-link wm-toc-text">Burp Integrate Sqlmap</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/automate-sequence-requests-with-burp-intruder" class="wm-article-link wm-toc-text">Burp Intruder</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/burpplugins" class="wm-article-link wm-toc-text">Burp Plugins</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/Chromium_Proxy_Setup" class="wm-article-link wm-toc-text">Chromium Proxy</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/Persistent_Automated_Collaborator" class="wm-article-link wm-toc-text">Persistent Automated Collaborator</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/socks-proxy-in-burp-suite" class="wm-article-link wm-toc-text">Socks Proxy</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/burp-suite-troubleshooting" class="wm-article-link wm-toc-text">Troubleshooting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/turbo-intruder-in-burp-suite" class="wm-article-link wm-toc-text">Turbo Intruder</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/burp/how-to-use-owasp-zap" class="wm-article-link wm-toc-text">Owasp-Zap</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">CMS</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/bolt-cms-pentesting" class="wm-article-link wm-toc-text">Bolt-Cms-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/cockpit-cms-pentesting" class="wm-article-link wm-toc-text">Cockpit-Cms-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/concrete-cms-pentesting" class="wm-article-link wm-toc-text">Concrete-Cms-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/fuel-cms-pentesting" class="wm-article-link wm-toc-text">Fuel-Cms-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/joomla-cms-pentesting" class="wm-article-link wm-toc-text">Joomla-Cms-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/mara-cms-pentesting" class="wm-article-link wm-toc-text">Mara-Cms-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/subrion-cms-pentesting" class="wm-article-link wm-toc-text">Subrion-Cms-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/typo3-pentesting" class="wm-article-link wm-toc-text">Typo3-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cms/wordpress-pentesting" class="wm-article-link wm-toc-text">Wordpress-Pentesting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Cookie</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cookie/cookie-hijacking" class="wm-article-link wm-toc-text">Cookie Hijacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cookie/session-fixation" class="wm-article-link wm-toc-text">Session Fixation</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Cloud</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/apache-activemq-pentesting" class="wm-article-link wm-toc-text">Apache-Activemq-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/apache-tomcat-pentesting" class="wm-article-link wm-toc-text">Apache-Tomcat-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/apache-zeppelin-pentesting" class="wm-article-link wm-toc-text">Apache-Zeppelin-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/atlassian-confluence-pentesting" class="wm-article-link wm-toc-text">Atlassian-Confluence-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/aws-pentesting" class="wm-article-link wm-toc-text">AWS-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/bookmarklet-attack" class="wm-article-link wm-toc-text">Bookmarklet-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/broken-link-hijacking" class="wm-article-link wm-toc-text">Broken-Link-Hijacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/browser-in-the-browser-attack" class="wm-article-link wm-toc-text">Browser-In-The-Browser-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/buffer-overflow" class="wm-article-link wm-toc-text">Buffer-Overflow</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/cacti-pentesting" class="wm-article-link wm-toc-text">Cacti-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/cgi-pentesting" class="wm-article-link wm-toc-text">CGI-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/clipbucket-pentesting" class="wm-article-link wm-toc-text">Clipbucket-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/code-deobfuscation" class="wm-article-link wm-toc-text">Code-Deobfuscation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/codiad-pentesting" class="wm-article-link wm-toc-text">Codiad-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/content_discovery" class="wm-article-link wm-toc-text">Content_Discovery</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/cors-origin" class="wm-article-link wm-toc-text">Cors-Origin</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/crawl_parameters" class="wm-article-link wm-toc-text">Crawl_Parameters</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/crlf" class="wm-article-link wm-toc-text">CRLF</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/deserialization" class="wm-article-link wm-toc-text">Deserialization</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/dompdf-rce" class="wm-article-link wm-toc-text">Dompdf-Rce</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/dump-git-repository-from-website" class="wm-article-link wm-toc-text">Dump-Git-Repository-From-Website</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/endpointsextractor" class="wm-article-link wm-toc-text">Endpointsextractor</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/errorsandvulnsdetect" class="wm-article-link wm-toc-text">Errorsandvulnsdetect</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/extract-web-browser-passwords" class="wm-article-link wm-toc-text">Extract-Web-Browser-Passwords</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/fiddler_web_debugger" class="wm-article-link wm-toc-text">Fiddler_Web_Debugger</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/file_upload" class="wm-article-link wm-toc-text">File_Upload</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/georgian-recon" class="wm-article-link wm-toc-text">Georgian-Recon</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/ghostscript-pentesting" class="wm-article-link wm-toc-text">Ghostscript-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/go-ssti" class="wm-article-link wm-toc-text">Go-Ssti</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/gospider" class="wm-article-link wm-toc-text">Gospider</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/grafana-pentesting" class="wm-article-link wm-toc-text">Grafana-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/hashicorp-consul-pentesting" class="wm-article-link wm-toc-text">Hashicorp-Consul-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/html-smuggling" class="wm-article-link wm-toc-text">Html-Smuggling</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/icinga-web-pentesting" class="wm-article-link wm-toc-text">Icinga-Web-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/ip_regex" class="wm-article-link wm-toc-text">Ip_Regex</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/java-rmi-pentesting" class="wm-article-link wm-toc-text">Java-Rmi-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/jboss-pentesting" class="wm-article-link wm-toc-text">Jboss-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/jenkins-pentesting" class="wm-article-link wm-toc-text">Jenkins-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/jwt-pentesting" class="wm-article-link wm-toc-text">Jwt-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/lfi" class="wm-article-link wm-toc-text">LFI</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/limesurvey-pentesting" class="wm-article-link wm-toc-text">Limesurvey-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/log4j-pentesting" class="wm-article-link wm-toc-text">Log4j-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/mail-server-attacks" class="wm-article-link wm-toc-text">Mail-Server-Attacks</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/mybugbountymethodology" class="wm-article-link wm-toc-text">Mybugbountymethodology</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/node.js" class="wm-article-link wm-toc-text">Node.Js</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/opencats-pentesting" class="wm-article-link wm-toc-text">Opencats-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/openredirect_ssrf" class="wm-article-link wm-toc-text">Openredirect_Ssrf</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/php-hash-hmac-bypass" class="wm-article-link wm-toc-text">Php-Hash-Hmac-Bypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/php-rce-cheat-sheet" class="wm-article-link wm-toc-text">Php-Rce-Cheat-Sheet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/php-srand-time-abusing" class="wm-article-link wm-toc-text">Php-Srand-Time-Abusing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/rce" class="wm-article-link wm-toc-text">RCE</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/reconwithburp_suite" class="wm-article-link wm-toc-text">Reconwithburp_Suite</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/restaurant-management-system" class="wm-article-link wm-toc-text">Restaurant-Management-System</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/sqli" class="wm-article-link wm-toc-text">Sqli</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/sqlierror" class="wm-article-link wm-toc-text">Sqlierror</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/sqlitips" class="wm-article-link wm-toc-text">Sqlitips</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/ssti" class="wm-article-link wm-toc-text">SSTI</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/subdomain" class="wm-article-link wm-toc-text">Subdomain</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/subdomainstoburp" class="wm-article-link wm-toc-text">Subdomainstoburp</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/subregex" class="wm-article-link wm-toc-text">Subregex</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/teamcity-pentesting" class="wm-article-link wm-toc-text">Teamcity-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/tiny-file-manager-pentesting" class="wm-article-link wm-toc-text">Tiny-File-Manager-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/web attack cheat sheet" class="wm-article-link wm-toc-text">Web Attack Cheat Sheet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/web ports" class="wm-article-link wm-toc-text">Web Ports</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/web-browser-settings-for-pentesting" class="wm-article-link wm-toc-text">Web-Browser-Settings-For-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/web-php-pentesting" class="wm-article-link wm-toc-text">Web-Php-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/web_reconnaissance" class="wm-article-link wm-toc-text">Web_Reconnaissance</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/webanno-pentesting" class="wm-article-link wm-toc-text">Webanno-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/webdav-pentesting" class="wm-article-link wm-toc-text">Webdav-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/webdav" class="wm-article-link wm-toc-text">Webdav</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/webmin-pentesting" class="wm-article-link wm-toc-text">Webmin-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/websocket-pentesting" class="wm-article-link wm-toc-text">Websocket-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/whitebox" class="wm-article-link wm-toc-text">Whitebox</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/x-forwarded" class="wm-article-link wm-toc-text">X-Forwarded</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/xpath" class="wm-article-link wm-toc-text">Xpath</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/xss" class="wm-article-link wm-toc-text">Xss</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/xss_types" class="wm-article-link wm-toc-text">Xss_Types</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/xxe" class="wm-article-link wm-toc-text">Xxe</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/cloud/xxe_injection" class="wm-article-link wm-toc-text">Xxe_Injection</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Elasticsearch</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/elasticsearch/elasticsearch-pentesting" class="wm-article-link wm-toc-text">Elasticsearch</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/elasticsearch/kibana-pentesting" class="wm-article-link wm-toc-text">Kibana</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Framework</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/ajp-pentesting" class="wm-article-link wm-toc-text">Ajp-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/angular-pentesting" class="wm-article-link wm-toc-text">Angular-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/apache-struts-pentesting" class="wm-article-link wm-toc-text">Apache-Struts-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/django-pentesting" class="wm-article-link wm-toc-text">Django-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/flask-jinja2-pentesting" class="wm-article-link wm-toc-text">Flask-Jinja2-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/python-pickle-rce" class="wm-article-link wm-toc-text">Python-Pickle-Rce</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/ruby-on-rails-pentesting" class="wm-article-link wm-toc-text">Ruby-On-Rails-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/spring-cloud-function-rce" class="wm-article-link wm-toc-text">Spring-Cloud-Function-Rce</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/spring-pentesting" class="wm-article-link wm-toc-text">Spring-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/tornado-pentesting" class="wm-article-link wm-toc-text">Tornado-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/framework/werkzeug-pentesting" class="wm-article-link wm-toc-text">Werkzeug-Pentesting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Method</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/bypass-client-server-side-filter" class="wm-article-link wm-toc-text">Bypass-Client-Server-Side-Filter</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/http-rate-limit-bypass" class="wm-article-link wm-toc-text">Http-Rate-Limit-Bypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/waf-detection" class="wm-article-link wm-toc-text">Waf-Detection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/web-basic-pentesting" class="wm-article-link wm-toc-text">Web-Basic-Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/web-content-discovery" class="wm-article-link wm-toc-text">Web-Content-Discovery</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/web-login-bypass" class="wm-article-link wm-toc-text">Web-Login-Bypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/web-registration-attack" class="wm-article-link wm-toc-text">Web-Registration-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/web-server-security-misconfiguration" class="wm-article-link wm-toc-text">Web-Server-Security-Misconfiguration</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/method/web-vhost-enumeration" class="wm-article-link wm-toc-text">Web-Vhost-Enumeration</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Security-Risk</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/blind-xxe" class="wm-article-link wm-toc-text">Blind-XXE</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/broken-access-control" class="wm-article-link wm-toc-text">Broken-Access-Control</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/business-logic-attack" class="wm-article-link wm-toc-text">Business-Logic-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/client-side-javaScript-validation-bypass" class="wm-article-link wm-toc-text">Client-Side-Javascript-Validation-Bypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/cors-attack" class="wm-article-link wm-toc-text">Cors-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/crlf-injection" class="wm-article-link wm-toc-text">CRLF-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/csrf" class="wm-article-link wm-toc-text">CSRF</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/directory-traversal" class="wm-article-link wm-toc-text">Directory-Traversal</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/dom-cloberring" class="wm-article-link wm-toc-text">Dom-Cloberring</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/erb-ssti" class="wm-article-link wm-toc-text">Erb-Ssti</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/file-inclusion" class="wm-article-link wm-toc-text">File-Inclusion</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/file-upload-attack-on-exiftool" class="wm-article-link wm-toc-text">File-Upload-Attack-On-Exiftool</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/file-upload-attack-on-imagemagick" class="wm-article-link wm-toc-text">File-Upload-Attack-On-Imagemagick</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/file-upload-attack" class="wm-article-link wm-toc-text">File-Upload-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/host-header-attack" class="wm-article-link wm-toc-text">Host-Header-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/http-header-injection" class="wm-article-link wm-toc-text">Http-Header-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/http-request-smuggling" class="wm-article-link wm-toc-text">Http-Request-Smuggling</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/idor-attack" class="wm-article-link wm-toc-text">Idor-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/insecure-deserialization" class="wm-article-link wm-toc-text">Insecure-Deserialization</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/json-net-deserialization" class="wm-article-link wm-toc-text">Json-Net-Deserialization</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/latex-injection" class="wm-article-link wm-toc-text">Latex-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/nodejs-deserialization-attack" class="wm-article-link wm-toc-text">Nodejs-Deserialization-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/nosql-injection" class="wm-article-link wm-toc-text">Nosql-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/oauth-attack" class="wm-article-link wm-toc-text">Oauth-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/open-redirect" class="wm-article-link wm-toc-text">Open-Redirect</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/os-command-injection" class="wm-article-link wm-toc-text">Os-Command-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/php-filters-chain" class="wm-article-link wm-toc-text">Php-Filters-Chain</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/php-object-injection" class="wm-article-link wm-toc-text">Php-Object-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/prototype-pollution-in-client-side" class="wm-article-link wm-toc-text">Prototype-Pollution-In-Client-Side</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/prototype-pollution-in-server-side" class="wm-article-link wm-toc-text">Prototype-Pollution-In-Server-Side</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/redis-ssrf" class="wm-article-link wm-toc-text">Redis-Ssrf</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/sql-injection-cheat-sheet" class="wm-article-link wm-toc-text">Sql-Injection-Cheat-Sheet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/sql-injection-with-sqlmap" class="wm-article-link wm-toc-text">Sql-Injection-With-Sqlmap</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/sql-injection" class="wm-article-link wm-toc-text">Sql-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/ssrf" class="wm-article-link wm-toc-text">SSRF</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/ssti" class="wm-article-link wm-toc-text">SSTI</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/web-cache-poisoning" class="wm-article-link wm-toc-text">Web-Cache-Poisoning</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/web-race-condition-attack" class="wm-article-link wm-toc-text">Web-Race-Condition-Attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/wkhtmltopdf-ssrf" class="wm-article-link wm-toc-text">Wkhtmltopdf-SSRF</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/xss-with-dynamic-pdf" class="wm-article-link wm-toc-text">XSS-With-Dynamic-Pdf</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/xss" class="wm-article-link wm-toc-text">XSS</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/xst" class="wm-article-link wm-toc-text">XST</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/security-risk/xxe" class="wm-article-link wm-toc-text">XXE</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Template-Engine</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/template-engine/jsrender-template-injection" class="wm-article-link wm-toc-text">Jsrender-Template-Injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/template-engine/pug-pentesting" class="wm-article-link wm-toc-text">Pug-Pentesting</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Wordlists</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/wordlists/common_api_paths.txt" class="wm-article-link wm-toc-text">Common_Api_Paths</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/wordlists/content.txt" class="wm-article-link wm-toc-text">Content</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/wordlists/parameters.txt" class="wm-article-link wm-toc-text">Parameters</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/web/wordlists/s0md3v_XSS.txt" class="wm-article-link wm-toc-text">s0md3v_XSS</a>
-</li>
-  </ul>
-</li>
-
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Workaround</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/bug_bounty" class="wm-article-link wm-toc-text">Bug Bounty</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/burpplugins" class="wm-article-link wm-toc-text">Burp Plugins</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/useful_commands" class="wm-article-link wm-toc-text">Command</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/common bugs" class="wm-article-link wm-toc-text">Common Bugs</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/ettercap" class="wm-article-link wm-toc-text">Ettercap</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Hak5-oMG</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">iOS</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/iOS/OpenSafariLink" class="wm-article-link wm-toc-text">OpenSafariLink</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/iOS/iOS-URL-Map" class="wm-article-link wm-toc-text">iOS URL Map</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Linux</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Linux/Obfuscated-Network-Recon" class="wm-article-link wm-toc-text">Obfuscated Network Recon</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Linux/Python-Reverse-Shell" class="wm-article-link wm-toc-text">Python Reverse Shell</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Linux/Quiet-Exfil" class="wm-article-link wm-toc-text">Quiet Exfil</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Linux/Setup-New-HIDX-Target-Client" class="wm-article-link wm-toc-text">Setup New HIDX Target Client</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">macOS</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/macOS/Locate-and-Alert-User" class="wm-article-link wm-toc-text">Locate and-Alert User</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/macOS/Python-Reverse-Shell" class="wm-article-link wm-toc-text">Python Reverse Shell</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/macOS/Quiet-Shell" class="wm-article-link wm-toc-text">Quiet Shell</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/macOS/SetupHIDXTargetShell" class="wm-article-link wm-toc-text">Setup HIDX Target Shell</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/explore/Hak5-oMG/rubberducky/placeholder" class="wm-article-link wm-toc-text">Rubberducky</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Sharkjack</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/sharkjack/LAMPooned" class="wm-article-link wm-toc-text">LAMPooned</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/sharkjack/sneaky-beacon" class="wm-article-link wm-toc-text">Sneaky Beacon</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/sharkjack/byon-nmap" class="wm-article-link wm-toc-text">Bring your own network NMAP</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Windows</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Windows/HelloWithLocation" class="wm-article-link wm-toc-text">Hello With Location</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Windows/PS-Reverse-Shell" class="wm-article-link wm-toc-text">PS Reverse Shell</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Windows/SetupHIDX-TCP-EXFIL" class="wm-article-link wm-toc-text">Setup HIDX TCP EXFIL</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hak5-oMG/Windows/SetupHIDXAirGapShell" class="wm-article-link wm-toc-text">Setup HIDX Air Gap Shell</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Hardware</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hardware/assembly" class="wm-article-link wm-toc-text">Assembly</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hardware/binary-exploitation" class="wm-article-link wm-toc-text">Binary Exploitation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hardware/hardware-pentesting" class="wm-article-link wm-toc-text">Hardware Pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev4 "><a href="explore/Hardware/bin/HB0096_TwoMeter_Demo_Mod" class="wm-article-link wm-toc-text">HB0096 TwoMeter Demo Mod</a>
-</li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev3 "><a href="docs/explore/THC/" class="wm-article-link wm-toc-text">THCs Favourite Tips & Tricks Hacks</a>
-</li>
-  </ul>
-</li>
-
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Misscellaneous</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/aixbuild" class="wm-article-link wm-toc-text">Aix build</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/apachessl" class="wm-article-link wm-toc-text">Apache ssl</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/attackingmssql" class="wm-article-link wm-toc-text">Attacking mssql</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/avbypass" class="wm-article-link wm-toc-text">Avbypass</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/awsome-cheatsheet" class="wm-article-link wm-toc-text">Awsome-Cheatsheet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/bashscripting" class="wm-article-link wm-toc-text">Bash scripting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/binarytides" class="wm-article-link wm-toc-text">Binary tides</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/blockchain" class="wm-article-link wm-toc-text">Block chain</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/bloodhound" class="wm-article-link wm-toc-text">Blood hound</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/brutespray" class="wm-article-link wm-toc-text">Brute spray</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/bufferoverflow" class="wm-article-link wm-toc-text">Buffer over flow</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/buildreviews" class="wm-article-link wm-toc-text">Build reviews</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/chessgamecheating" class="wm-article-link wm-toc-text">Chess game cheating</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/ciscoios" class="wm-article-link wm-toc-text">Cisco ios</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/cloudhacking" class="wm-article-link wm-toc-text">Cloud hacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/cobaltstrikebofcollections" class="wm-article-link wm-toc-text">Cobaltstrike bof collections</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/csrredteam/" class="wm-article-link wm-toc-text">Cobaltstrike red team</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/codereview" class="wm-article-link wm-toc-text">Code review</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/commonbugs" class="wm-article-link wm-toc-text">Common bugs</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/computervision" class="wm-article-link wm-toc-text">Computer vision</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/cookiestealing" class="wm-article-link wm-toc-text">Cookie stealing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/createswapfile" class="wm-article-link wm-toc-text">Create swap file</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/dataprocessing" class="wm-article-link wm-toc-text">Data processing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/debuggers" class="wm-article-link wm-toc-text">Debuggers</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/deception" class="wm-article-link wm-toc-text">Deception</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/DissectingTCPICMPandARPpackets" class="wm-article-link wm-toc-text">Dissecting tcp icmp and arp packets</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/dockerpentesting" class="wm-article-link wm-toc-text">Docker pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/domainadminexploitation" class="wm-article-link wm-toc-text">Domain admin exploitation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/domaintrustkey" class="wm-article-link wm-toc-text">Domain trustkey</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/dos" class="wm-article-link wm-toc-text">D.O.S</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/dotnetpayload" class="wm-article-link wm-toc-text">Dot-Net payload</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/emailspoofing" class="wm-article-link wm-toc-text">Email spoofing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/ettercap" class="wm-article-link wm-toc-text">Ettercap</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/exploitdev" class="wm-article-link wm-toc-text">Exploit dev</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/externaltesttemplate" class="wm-article-link wm-toc-text">External test template</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/fileuploaddownloadtransfer" class="wm-article-link wm-toc-text">File upload download transfer</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/fixeth0" class="wm-article-link wm-toc-text">Fix eth0</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/frequencyranges" class="wm-article-link wm-toc-text">Frequency ranges</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/gdb" class="wm-article-link wm-toc-text">Gdb</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/general" class="wm-article-link wm-toc-text">General</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/gpg" class="wm-article-link wm-toc-text">Gpg</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/hackingproject" class="wm-article-link wm-toc-text">Hacking project</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/hackingweb" class="wm-article-link wm-toc-text">Hacking web</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/hackingwireless" class="wm-article-link wm-toc-text">Hacking wireless</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/ikescan" class="wm-article-link wm-toc-text">Ike scan</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/impacket" class="wm-article-link wm-toc-text">Im packet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/InstagramPrivateAPI" class="wm-article-link wm-toc-text">Instagram private api</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/iothacking" class="wm-article-link wm-toc-text">Iot hacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/kalisurvival" class="wm-article-link wm-toc-text">Kali survival</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/lateralmovement" class="wm-article-link wm-toc-text">Lateral movement</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/localprivilegeescalation" class="wm-article-link wm-toc-text">Local privilege escalation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/localsamdump" class="wm-article-link wm-toc-text">Local sump</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/looting" class="wm-article-link wm-toc-text">Looting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/mailscout" class="wm-article-link wm-toc-text">Mail scout</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/metasploit&meterpreter" class="wm-article-link wm-toc-text">Metasploit & Meterpreter</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/metasploit" class="wm-article-link wm-toc-text">Metasploit payloads</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/monitorpotentialincommingaccount" class="wm-article-link wm-toc-text">Monitor potential incomming account</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/msfpostexploitation" class="wm-article-link wm-toc-text">Msf post exploitation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/msfvenom" class="wm-article-link wm-toc-text">Msf venom</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/nessus" class="wm-article-link wm-toc-text">Nessus</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/netcat" class="wm-article-link wm-toc-text">Netcat</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/netcatshells" class="wm-article-link wm-toc-text">Netcat Shell Listener</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/networking" class="wm-article-link wm-toc-text">Networking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/nmap" class="wm-article-link wm-toc-text">Nmap</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/nmapdirvuln" class="wm-article-link wm-toc-text">Nmap dirvuln</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/nslookup" class="wm-article-link wm-toc-text">Ns lookup</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/onelinesubs" class="wm-article-link wm-toc-text">One line subfinder</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/oracle" class="wm-article-link wm-toc-text">Oracle Penetration Testing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/osdistributionvirtualmachines" class="wm-article-link wm-toc-text">OS distribution virtual machines</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/owaspchecklist" class="wm-article-link wm-toc-text">OWASP checklist</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/persistence" class="wm-article-link wm-toc-text">Persistence</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/pivoting" class="wm-article-link wm-toc-text">Pivoting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/portscan" class="wm-article-link wm-toc-text">Portscan</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/privesc" class="wm-article-link wm-toc-text">Privesc</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/privilegedaccountsandgroups" class="wm-article-link wm-toc-text">Privilege accounts and groups</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/programminglanguagedetection" class="wm-article-link wm-toc-text">Programming language detection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/rainbowcrack" class="wm-article-link wm-toc-text">Rainbow crack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/recoveringdeletedpartition" class="wm-article-link wm-toc-text">Recovering deleted partition</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/redteamopsec" class="wm-article-link wm-toc-text">Redteam OPSEC</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/regularexpressions" class="wm-article-link wm-toc-text">Regular expressions</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/reverseengineering" class="wm-article-link wm-toc-text">Reverse engineering</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/reverseshells" class="wm-article-link wm-toc-text">Reverse shells</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/scp" class="wm-article-link wm-toc-text">Secure Copy</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/securitydowngrade" class="wm-article-link wm-toc-text">Security downgrade</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/sessionhijacking" class="wm-article-link wm-toc-text">Session hijacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/shellter" class="wm-article-link wm-toc-text">Shellter</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/sliverc2" class="wm-article-link wm-toc-text">Sliverc2</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/SLMail example" class="wm-article-link wm-toc-text">Simple Buffer Overflow</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/slowdeath" class="wm-article-link wm-toc-text">Slowdeath</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/smbcapture" class="wm-article-link wm-toc-text">SMB capture</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/smbenumeration" class="wm-article-link wm-toc-text">SMB enumeration</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/smtpopenrelay" class="wm-article-link wm-toc-text">SMTP open relay</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/solaris" class="wm-article-link wm-toc-text">Solaris</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/spoofingnetwork" class="wm-article-link wm-toc-text">Spoofing network</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/sqlinjection" class="wm-article-link wm-toc-text">Sql injection</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/sqlmap" class="wm-article-link wm-toc-text">Sql map</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/sslstrip" class="wm-article-link wm-toc-text">Ssl strip</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/systemhacking" class="wm-article-link wm-toc-text">System hacking</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/tcpdumptutorial" class="wm-article-link wm-toc-text">Tcp dump</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/telnet" class="wm-article-link wm-toc-text">Telnet</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/tshark" class="wm-article-link wm-toc-text">Tshark</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/uldlexecskills" class="wm-article-link wm-toc-text">Uldl exec skills</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/usefulcommands" class="wm-article-link wm-toc-text">Useful commands</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/userhunting" class="wm-article-link wm-toc-text">User hunting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/usingexiftool" class="wm-article-link wm-toc-text">Using exiftool</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/usinghdparm" class="wm-article-link wm-toc-text">Using hdparm</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/versioncontrol" class="wm-article-link wm-toc-text">Version control</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/vlans" class="wm-article-link wm-toc-text">Vlans</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/vmpentesting" class="wm-article-link wm-toc-text">Vm pentesting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/voip" class="wm-article-link wm-toc-text">Voip</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/vulnverify" class="wm-article-link wm-toc-text">Vuln verify</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/w3af" class="wm-article-link wm-toc-text">W3af</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/wirelesstesting" class="wm-article-link wm-toc-text">Wireless testing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/wireshark" class="wm-article-link wm-toc-text">Wireshark</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/xss" class="wm-article-link wm-toc-text">Xss</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/xssattack" class="wm-article-link wm-toc-text">Xss attack</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/xssstrings" class="wm-article-link wm-toc-text">Xss strings</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/xssvectors" class="wm-article-link wm-toc-text">Xss vectors</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/resource/zap" class="wm-article-link wm-toc-text">Zap</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Methods</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/atm kiosks laptops" class="wm-article-link wm-toc-text">ATM Kiosks Laptops</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/bug-bounty" class="wm-article-link wm-toc-text">Bug-Bounty</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/external/" class="wm-article-link wm-toc-text">External</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/internal/" class="wm-article-link wm-toc-text">Internal</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/iot" class="wm-article-link wm-toc-text">IoT</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/lpe- windows edition" class="wm-article-link wm-toc-text">LPE- Windows Edition</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/macos%20intrusion/" class="wm-article-link wm-toc-text">macOS intrusion</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/powershell 4 attackers" class="wm-article-link wm-toc-text">Powershell 4 Attackers</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/proxying & tunnneling techniques" class="wm-article-link wm-toc-text">Proxying & Tunnneling Techniques</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/sharepoint" class="wm-article-link wm-toc-text">Sharepoint</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/explore/methods/wmi%204%20attackers/" class="wm-article-link wm-toc-text">Wmi 4 Attackers</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Reference</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/bibliography" class="wm-article-link wm-toc-text">Bibliographys</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/links+" class="wm-article-link wm-toc-text">Blogs and Articles</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/bugbounty" class="wm-article-link wm-toc-text">Bug Bounty</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/bughunting" class="wm-article-link wm-toc-text">Bug Hunting</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/cloud security" class="wm-article-link wm-toc-text">Cloud Security</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="https://readloud.github.io/CyberSecurity-Resources/" class="wm-article-link wm-toc-text">CyberSecurity Resources</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="https://github.com/readloud/readloud/wiki" class="wm-article-link wm-toc-text">Documentation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/forensic analysis tools" class="wm-article-link wm-toc-text">Forensic Analysis</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/guide ceh practical" class="wm-article-link wm-toc-text">Guide CEH Practical</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/hackingresources" class="wm-article-link wm-toc-text">Hacking Resources</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/offensiveactivedirectory" class="wm-article-link wm-toc-text">Offensive active directory</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="https://readloud.github.io/OSINT-investigation-tools" class="wm-article-link wm-toc-text">OSINT Investigation Tools</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/awesome repositories" class="wm-article-link wm-toc-text">Repos</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="docs/glossary/hacking tools" class="wm-article-link wm-toc-text">Tools</a>
-</li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://facebook.com/pages/readloud" class="wm-article-link wm-toc-text">Facebook</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://instagram.com/readloud" class="wm-article-link wm-toc-text">Instagram</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://threads.net/@readloud" class="wm-article-link wm-toc-text">Threads</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://twitter.com/readloud" class="wm-article-link wm-toc-text">Twitter</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://pinterest.com/readloud" class="wm-article-link wm-toc-text">Pinterest</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://youtube.com/readloud" class="wm-article-link wm-toc-text">Youtube</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://orcid.org/0009-0000-8631-2926" class="wm-article-link wm-toc-text">ORCID</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://readloud.github.io/faucetmonitor" class="wm-article-link wm-toc-text">💱 Faucetmonitor</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://faucetpay.io/page/user-admin" class="wm-article-link wm-toc-text">💽 Faucetpay</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://gist.githubusercontent.com/readloud" class="wm-article-link wm-toc-text">🐙 Gist</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://pastebin.com/u/mansz81" class="wm-article-link wm-toc-text">📝 Pastebin</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://lazada.co.id/shop/outsidethebox" class="wm-article-link wm-toc-text">🛒️ Marketplace</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="https://mega.nz/folder/fmIDDayC#PSpixqzEr9VbJFy_9QFgLw/" class="wm-article-link wm-toc-text">🔖 Unsupported Device</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 "><a href="credits" class="wm-article-link wm-toc-text">📄 Credits</a>
-</li>
-  </ul>
-</nav>
-
-    <div class="wm-content-pane">
-      <iframe class="wm-article" name="article"></iframe>
-    </div>
-  </div>
-
-<div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-
-    <p><img alt="vercel" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=readloud&amp;theme=tokyonight" /></p>
-<p><img height="180em" src="https://github-readme-stats.vercel.app/api?username=readloud&show_icons=true&theme=radical&include_all_commits=true&count_private=true"/>
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=readloud&layout=compact&langs_count=7&theme=radical"/>
-<img height="180em" src="https://github-profile-trophy.vercel.app/?username=readloud&no-bg=true"/>
-<a href="https://github.com/readloud/github-achievements">
-<a href="https://github.com/readloud/github-stats"></p>
-<p><img alt="prouser123" src="https://img.shields.io/badge/prouser123.me-misc-green?url=https://prouser123.me/misc/mastodon-userid-lookup.html" />
-<img alt="Shield.io" src="https://img.shields.io/badge/shield.io-build-orang.svg?style=sociale?url=https://shields.io/category/build" />
-<img alt="" src="https://komarev.com/ghpvc/?username=your-github-readloud&amp;color=red&amp;label=PROFILE+VIEWS&amp;style=social" />
-<img alt="GitHub Followers" src="https://img.shields.io/github/followers/readloud?label=Follow" />
-<img alt="GitHub User's stars" src="https://img.shields.io/github/stars/readloud?affiliations=OWNER%2CCOLLABORATOR" />
-<img alt="GitHub Forks" src="https://img.shields.io/github/forks/danielmiessler/SecLists?label=Fork" />
-<img alt="GitHub Watchers" src="https://img.shields.io/github/watchers/danielmiessler/SecLists?label=Watch" />
-<img alt="GitHub Repo Stars" src="https://img.shields.io/github/stars/danielmiessler/SecLists?style=social" />
-<img alt="GitHub Contexts" src="https://img.shields.io/github/status/contexts/pulls/danielmiessler/SecLists/1?style=social" />
-<img alt="GitHub Issues" src="https://img.shields.io/github/issues/danielmiessler/SecLists?style=social" />
-<img alt="Facebook" src="https://img.shields.io/badge/facebook-page-blue.svg?url=https://facebook.com/readloud" />
-<img alt="Facebook" src="https://img.shields.io/badge/facebook-profile-brightgreen.svg?url=https://facebook.com/readloud" />
-<img alt="Twitter URL" src="https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com/readloud?style=social" />
-<img alt="Twitch Status" src="https://img.shields.io/twitch/status/readloud?style=social" />
-<img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/readloud?label=Follow" />
-<img alt="Donate" src="https://img.shields.io/badge/Donate-PayPal-green.svg?url=https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=readloud" /></p>
-<hr />
-<p>👉 <em>_This site is made for educational purpose only is a starting point for <a href="https://github.com/oneplus-x">online documentation</a>, which offers tutorials, samples, guidance on development, and a full reference.
-✅ _Performing hack attempt against a target without their explicit permission is illegal._</em></p>
-<hr />
-
-  <br>
-    
-
-    <br>
-</div>
-
-<footer class="col-md-12 wm-page-content">
-      <p>
-        <a href="https://github.com/readloud/readloud.github.io/releases/tag/themes/edit/master/docs/index.md"><i class="fa fa-github"></i>
-Edit on GitHub</a>
-      </p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/noraj/mkdocs-windmill-dark">Windmill Dark</a> theme by Alexandre ZANNI (noraj).</p>
-<p>        ⚠️ The quieter you become, the more you are able to hear 🥷</p>
-</footer>
-
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Jasa Konstruksi Profesional & Terpercaya</h1>
+            <p>Melayani jasa redesign, rebuilding, renovasi, dan pembangunan baru dengan kualitas terbaik dan harga terjangkau</p>
+            <a href="#contact" class="btn">Konsultasi Gratis</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan Kami</h2>
+                <p>Kami menyediakan berbagai layanan konstruksi untuk kebutuhan properti Anda</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1541976590-713941681591?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Redesign Bangunan</h3>
+                        <p>Layanan redesign bangunan untuk memperbarui tampilan dan fungsi bangunan Anda sesuai kebutuhan terkini.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Rebuilding</h3>
+                        <p>Membangun kembali struktur yang sudah ada dengan desain dan material yang lebih baik dan modern.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Renovasi</h3>
+                        <p>Perbaikan dan pembaruan bagian-bagian bangunan untuk meningkatkan kenyamanan dan nilai properti.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1448630360428-65456885c650?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Bangun Baru</h3>
+                        <p>Konstruksi bangunan baru dari nol, mulai dari perumahan, ruko, hingga gedung perkantoran.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" style="background-color: #f1f8ff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Daftar Harga</h2>
+                <p>Berikut adalah informasi harga layanan konstruksi kami</p>
+            </div>
+            
+            <div class="pricing-tabs">
+                <button class="tab-btn active" data-tab="building-type">Type Bangunan</button>
+                <button class="tab-btn" data-tab="borongan">Upah Borongan</button>
+                <button class="tab-btn" data-tab="harian">Upah Harian</button>
+            </div>
+            
+            <div class="tab-content active" id="building-type">
+                <h3 style="text-align: center; margin-bottom: 1.5rem;">Harga per Meter Berdasarkan Type dan Kualitas</h3>
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Type Bangunan</th>
+                            <th>Kualitas Standard (Rp/m²)</th>
+                            <th>Kualitas Menengah (Rp/m²)</th>
+                            <th>Kualitas Premium (Rp/m²)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rumah Tinggal</td>
+                            <td>2.500.000</td>
+                            <td>3.800.000</td>
+                            <td>5.500.000</td>
+                        </tr>
+                        <tr>
+                            <td>Ruko</td>
+                            <td>3.200.000</td>
+                            <td>4.500.000</td>
+                            <td>6.200.000</td>
+                        </tr>
+                        <tr>
+                            <td>Gedung Perkantoran</td>
+                            <td>3.800.000</td>
+                            <td>5.200.000</td>
+                            <td>7.500.000</td>
+                        </tr>
+                        <tr>
+                            <td>Gudang</td>
+                            <td>1.800.000</td>
+                            <td>2.500.000</td>
+                            <td>3.500.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="borongan">
+                <h3 style="text-align: center; margin-bottom: 1.5rem;">Daftar Harga Upah Borongan per Item Pekerjaan</h3>
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Item Pekerjaan</th>
+                            <th>Satuan</th>
+                            <th>Harga (Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pondasi</td>
+                            <td>m³</td>
+                            <td>450.000</td>
+                        </tr>
+                        <tr>
+                            <td>Dinding Bata</td>
+                            <td>m²</td>
+                            <td>120.000</td>
+                        </tr>
+                        <tr>
+                            <td>Plesteran</td>
+                            <td>m²</td>
+                            <td>85.000</td>
+                        </tr>
+                        <tr>
+                            <td>Cat</td>
+                            <td>m²</td>
+                            <td>40.000</td>
+                        </tr>
+                        <tr>
+                            <td>Keramik Lantai</td>
+                            <td>m²</td>
+                            <td>95.000</td>
+                        </tr>
+                        <tr>
+                            <td>Atap Genteng</td>
+                            <td>m²</td>
+                            <td>180.000</td>
+                        </tr>
+                        <tr>
+                            <td>Instalasi Listrik</td>
+                            <td>m²</td>
+                            <td>125.000</td>
+                        </tr>
+                        <tr>
+                            <td>Instalasi Air</td>
+                            <td>m²</td>
+                            <td>110.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="harian">
+                <h3 style="text-align: center; margin-bottom: 1.5rem;">Daftar Upah Harian per Item Pekerjaan</h3>
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Pekerjaan</th>
+                            <th>Satuan</th>
+                            <th>Harga (Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pekerja</td>
+                            <td>Hari</td>
+                            <td>120.000</td>
+                        </tr>
+                        <tr>
+                            <td>Tukang Batu</td>
+                            <td>Hari</td>
+                            <td>180.000</td>
+                        </tr>
+                        <tr>
+                            <td>Tukang Kayu</td>
+                            <td>Hari</td>
+                            <td>200.000</td>
+                        </tr>
+                        <tr>
+                            <td>Tukang Besi</td>
+                            <td>Hari</td>
+                            <td>190.000</td>
+                        </tr>
+                        <tr>
+                            <td>Tukang Cat</td>
+                            <td>Hari</td>
+                            <td>170.000</td>
+                        </tr>
+                        <tr>
+                            <td>Mandor</td>
+                            <td>Hari</td>
+                            <td>250.000</td>
+                        </tr>
+                        <tr>
+                            <td>Operator Alat Berat</td>
+                            <td>Hari</td>
+                            <td>350.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- RAB Services Section -->
+    <section id="rab">
+        <div class="container">
+            <div class="section-title">
+                <h2>Jasa Pembuatan RAB (Rencana Anggaran Biaya)</h2>
+                <p>Kami menyediakan jasa pembuatan RAB untuk berbagai jenis bangunan</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-content">
+                        <h3>RAB Rumah Tinggal</h3>
+                        <p>Jasa pembuatan RAB untuk rumah tinggal dengan perhitungan yang akurat dan detail.</p>
+                        <p><strong>Harga: Mulai dari Rp 1.500.000</strong></p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-content">
+                        <h3>RAB Ruko</h3>
+                        <p>Pembuatan RAB untuk ruko (rumah toko) dengan analisis kebutuhan yang komprehensif.</p>
+                        <p><strong>Harga: Mulai dari Rp 2.500.000</strong></p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-content">
+                        <h3>RAB Gedung Perkantoran</h3>
+                        <p>Jasa pembuatan RAB untuk gedung perkantoran dengan standar profesional.</p>
+                        <p><strong>Harga: Mulai dari Rp 5.000.000</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LPSE Services Section -->
+    <section id="lpse" style="background-color: #f1f8ff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Jasa Pembuatan dan Upload Dokumen LPSE</h2>
+                <p>Kami membantu Anda dalam proses pengadaan barang/jasa melalui sistem LPSE</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-content">
+                        <h3>Pendaftaran LPSE</h3>
+                        <p>Jasa pendaftaran vendor dan penyiapan dokumen untuk mengikuti tender di LPSE.</p>
+                        <p><strong>Harga: Rp 1.000.000</strong></p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-content">
+                        <h3>Pembuatan Dokumen Tender</h3>
+                        <p>Penyusunan dokumen penawaran teknis dan administrasi untuk mengikuti tender.</p>
+                        <p><strong>Harga: Mulai dari Rp 2.500.000</strong></p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-content">
+                        <h3>Upload Dokumen LPSE</h3>
+                        <p>Jasa upload dokumen penawaran ke sistem LPSE hingga proses selesai.</p>
+                        <p><strong>Harga: Mulai dari Rp 1.500.000</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+                <p>Silakan hubungi kami untuk konsultasi dan penawaran</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">📍</div>
+                        <p>Jl. Bakung Selatan Blok Asem, Karya Bakti, Batu Jaya Karawang Jawa Barat</p>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">📞</div>
+                        <p>+62 21 7654 3210 / +62 831 3835 2525</p>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">✉️</div>
+                        <p>info@mitrabangun.com</p>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">🕒</div>
+                        <p>Senin - Jumat: 08:00 - 17:00<br>Sabtu: 08:00 - 14:00</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="consultationForm">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Jasa yang Diminati</label>
+                            <select id="service" class="form-control" required>
+                                <option value="">Pilih Layanan</option>
+                                <option value="redesign">Redesign Bangunan</option>
+                                <option value="rebuilding">Rebuilding</option>
+                                <option value="renovasi">Renovasi</option>
+                                <option value="bangun-baru">Bangun Baru</option>
+                                <option value="rab">Pembuatan RAB</option>
+                                <option value="lpse">Jasa LPSE</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tentang Kami</h3>
+                    <p>Kami adalah perusahaan jasa konstruksi profesional yang telah berpengalaman dalam berbagai proyek konstruksi, renovasi, dan pembangunan.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="#services">Redesign Bangunan</a></li>
+                        <li><a href="#services">Rebuilding</a></li>
+                        <li><a href="#services">Renovasi</a></li>
+                        <li><a href="#services">Bangun Baru</a></li>
+                        <li><a href="#rab">Jasa RAB</a></li>
+                        <li><a href="#lpse">Jasa LPSE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kontak Kami</h3>
+                    <p>📞 +62 21 7654 3210</p>
+                    <p>📱 +62 831 3835 2525</p>
+                    <p>✉️ info@mitrabangun.com</p>
+                    <p>📍 Jl. Bakung Selatan Blok Asem, Karya Bakti, Batu Jaya Karawang Jawa Barat</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Jasa Konstruksi Profesional. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality for pricing section
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            // Form submission
+            const form = document.getElementById('consultationForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Terima kasih! Pesan Anda telah kami terima. Kami akan segera menghubungi Anda.');
+                form.reset();
+            });
+            
+            // Responsive nav adjustment
+            function adjustNav() {
+                if (window.innerWidth <= 768) {
+                    nav.style.display = 'none';
+                } else {
+                    nav.style.display = 'flex';
+                }
+            }
+            
+            window.addEventListener('resize', adjustNav);
+            adjustNav(); // Initial call
+        });
+    </script>
 </body>
 </html>
-<!--
-MkDocs version : 1.6.1
-Build Date UTC : 2024-09-27 08:09:25.756010+00:00
--->
