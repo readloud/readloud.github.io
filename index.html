@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jasa Konstruksi Profesional - Design, Bangun, Renovasi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #1a5276;
@@ -228,7 +229,7 @@
             border-collapse: collapse;
             margin: 1rem 0;
             background: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px极速15px rgba(0, 0, 0, 0.05);
             border-radius: 8px;
             overflow: hidden;
         }
@@ -247,8 +248,8 @@
         .pricing-table tr:last-child td {
             border-bottom: none;
         }
-        
-        .pricing-table tr:hover {
+       
+       .pricing-table tr:hover {
             background-color: #f9f9f9;
         }
         
@@ -447,7 +448,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-building"></i> MITRA<span>BANGUN</span>
+                    <i class="fab fa-excavator"></i>MITRA<span>BANGUN</span>
                 </div>
                 <button class="mobile-menu-btn">☰</button>
                 <nav>
@@ -491,7 +492,7 @@
                 </div>
                 
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="service-img极速" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680极速f356dfd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="service-content">
                         <h3>Rebuilding</h3>
                         <p>Membangun kembali struktur yang sudah ada dengan desain dan material yang lebih baik dan modern.</p>
@@ -499,7 +500,7 @@
                 </div>
                 
                 <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib极速=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
                     <div class="service-content">
                         <h3>Renovasi</h3>
                         <p>Perbaikan dan pembaruan bagian-bagian bangunan untuk meningkatkan kenyamanan dan nilai properti.</p>
@@ -520,7 +521,7 @@
     <!-- Pricing Section -->
     <section id="pricing" style="background-color: #f1f8ff;">
         <div class="container">
-            <div class="section-title">
+            <div极速 class="section-title">
                 <h2>Daftar Harga</h2>
                 <p>Berikut adalah informasi harga layanan konstruksi kami</p>
             </div>
@@ -757,7 +758,8 @@
                 <h2>Hubungi Kami</h2>
                 <p>Silakan hubungi kami untuk konsultasi dan penawaran</p>
             </div>
-             <div class="alert alert-success" id="successAlert">
+            
+            <div class="alert alert-success" id="successAlert">
                 Terima kasih! Pesan Anda telah kami terima. Kami akan segera menghubungi Anda.
             </div>
             
@@ -775,14 +777,14 @@
                     </div>
                     
                     <div class="contact-detail">
-                        <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
                         <a href="https://wa.me/6281291576624" class="contact-link whatsapp-link" target="_blank">
                             WhatsApp
                         </a>
                     </div>
                     
                     <div class="contact-detail">
-                        <div class="contact-icon"><i class="fa-brands fa-facebook-messenger"></i></div>
+                        <div class="contact-icon"><i class="fab fa-facebook-messenger"></i></div>
                         <a href="https://m.me/jasakonstruksi.profesional" class="contact-link messenger-link" target="_blank">
                             Messenger
                         </a>
@@ -790,7 +792,7 @@
                     
                     <div class="contact-detail">
                         <div class="contact-icon">✉️</div>
-                        <p>info@mitrabangun.com</p>
+                        <p>info@jasakonstruksi.com</p>
                     </div>
                     
                     <div class="contact-detail">
@@ -803,22 +805,22 @@
                     <form id="consultationForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                         <div class="form-group">
                             <label for="name">Nama Lengkap</label>
-                            <input type="text" id="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" class="form-control" required>
+                            <input type="email" id="email" name="email" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="phone">Nomor Telepon</label>
-                            <input type="tel" id="phone" class="form-control" required>
+                            <label for="phone">Nomor Telepon/WhatsApp</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="service">Jasa yang Diminati</label>
-                            <select id="service" class="form-control" required>
+                            <select id="service" name="service" class="form-control" required>
                                 <option value="">Pilih Layanan</option>
                                 <option value="redesign">Redesign Bangunan</option>
                                 <option value="rebuilding">Rebuilding</option>
@@ -831,7 +833,7 @@
                         
                         <div class="form-group">
                             <label for="message">Pesan</label>
-                            <textarea id="message" class="form-control" required></textarea>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
                         </div>
                         
                         <button type="submit" class="btn">Kirim Pesan</button>
@@ -849,7 +851,8 @@
                     <h3>Tentang Kami</h3>
                     <p>Kami adalah perusahaan jasa konstruksi profesional yang telah berpengalaman dalam berbagai proyek konstruksi, renovasi, dan pembangunan.</p>
                 </div>
-                 <div class="footer-section">
+                
+                <div class="footer-section">
                     <h3>Layanan Kami</h3>
                     <ul>
                         <li><a href="#services">Redesign Bangunan</a></li>
@@ -861,19 +864,18 @@
                     </ul>
                 </div>
                 
-            
-               <div class="footer-section">
+                <div class="footer-section">
                     <h3>Kontak Kami</h3>
                     <div class="footer-contact-link">
                         <div class="footer-contact-icon">📍</div>
                         <span>Jl. Bakung Selatan, Karya Bakti, Batu Jaya Karawang Jawa Barat</span>
                     </div>
                     <div class="footer-contact-link" target="_blank">
-                        <div class="footer-contact-icon"><i class="fas fa-whatsapp"></i></div>
+                        <div class="footer-contact-icon"><i class="fab fa-whatsapp"></i></div>
                         <span> <a href="https://wa.me/6281291576624">WhatsApp</a></span> </div>
                         <div class="footer-contact-link" target="_blank">
-                        <div class="footer-contact-icon"><i class="fas fa-facebook-messenger"></i></div>
-                        <span <a href="https://m.me/jasakonstruksi.profesional">Messenger</a></span>
+                        <div class="footer-contact-icon"><i class="fab fa-facebook-messenger"></i></div>
+                        <span <a href="https://m.me/jasakonstruksi.profesional"> Messenger</a></span>
                      </div>
                     <div class="footer-contact-link">
                         <div class="footer-contact-icon">✉️</div>
