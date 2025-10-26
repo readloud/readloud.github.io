@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Construction & Renovation - Full Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --primary: #1e4d92;
+      --secondary: #0a6c8b;
+      --bg: #f5f7fa;
+      --text: #1b2b42;
+      --muted: #5f6b7a;
+      --card: #ffffff;
+      --border: #e5e8ee;
+    }
+    * {box-sizing: border-box;}
+    body {margin:0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg);}
+    header {background: #fff; border-bottom: 1px solid var(--border); padding: 20px 24px; position: sticky; top:0; z-index: 1000;}
+    .container {max-width: 1100px; margin: 0 auto; padding: 0 16px;}
+    .brand {font-weight: 800; color: var(--primary); text-decoration: none; font-size: 20px;}
+    nav {float: right;}
+    nav a {margin-left: 16px; color: #333; text-decoration: none; font-weight: 600;}
+    .hero {display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items:center; padding: 48px 0;}
+    .hero h1 {font-size: 40px; margin:0 0 12px;}
+    .hero p {color: var(--muted); font-size: 18px; line-height: 1.6;}
+    .cta {display: inline-block; padding: 14px 22px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 6px; font-weight: 700; cursor:pointer;}
+    .card {background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,.04);}
+    .grid {display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; margin: 28px 0;}
+    .section {padding: 40px 0;}
+    h2 {font-size: 28px; margin:0 0 12px;}
+    .gallery { display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
+    .gallery img { width:100%; height:120px; object-fit: cover; border-radius:4px; }
+    footer { background:#111; color:#ddd; padding:20px 0; font-size:13px; }
+    .social a { margin-right:10px; color:#ddd; text-decoration:none; }
+    @media (max-width: 900px){
+      .hero {grid-template-columns: 1fr; text-align:left}
+      nav { float:none; text-align:right}
+      .grid { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between;">
+    <a href="#" class="brand">Your Company Name</a>
+    <nav aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="container hero" id="home">
+  <div>
+    <h1>End-to-end Building Construction, Renovation, and Smart Installations</h1>
+    <p>From design through delivery, with detailed cost planning, accurate BOQs, and transparent communication. Specializing in residential, commercial, and industrial projects including CCTV, MEP, and roofing solutions.</p>
+    <a class="cta" href="#contact">Request a Free Project Estimate</a>
+  </div>
+  <div class="card" aria-label="Intro image">
+    <img src="https://via.placeholder.com/520x320" alt="Construction site overview" style="width:100%; height:auto; border-radius:6px;">
+    <p style="color:var(--muted); margin-top:8px;">Illustrative project overview and capability snapshot.</p>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <h2>Our Services</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Construction & Renovation</h3>
+        <p>Concept to completion with value engineering, schedule management, and quality control aligned to local codes.</p>
+      </div>
+      <div class="card">
+        <h3>CCTV & Security</h3>
+        <p>Site surveys, camera placement, cabling, network integration, and remote monitoring solutions.</p>
+      </div>
+      <div class="card">
+        <h3>MEP Installation</h3>
+        <p>Integrated mechanical, electrical, and plumbing design, coordination, and commissioning.</p>
+      </div>
+      <div class="card">
+        <h3>Roof & Canopy</h3>
+        <p>Roofing systems, waterproofing, insulation, and canopy structures with wind-load and drainage considerations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="container">
+    <h2>Projects Gallery</h2>
+    <div class="gallery" aria-label="Project gallery">
+      <img src="https://via.placeholder.com/400x260?text=Project+1" alt="Project 1"/>
+      <img src="https://via.placeholder.com/400x260?text=Project+2" alt="Project 2"/>
+      <img src="https://via.placeholder.com/400x260?text=Project+3" alt="Project 3"/>
+      <img src="https://via.placeholder.com/400x260?text=Project+4" alt="Project 4"/>
+      <img src="https://via.placeholder.com/400x260?text=Project+5" alt="Project 5"/>
+      <img src="https://via.placeholder.com/400x260?text=Project+6" alt="Project 6"/>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="container">
+    <h2>Contact Your Project Team</h2>
+    <p>Get in touch with our responsible personnel to discuss your project scope, timeline, and budget. Include preferred contact method and site location.</p>
+    <div class="grid" style="grid-template-columns: 1.2fr 0.8fr;">
+      <form class="card" onsubmit="return false;">
+        <div style="margin-bottom:8px;">
+          <label>Name</label><br/>
+          <input type="text" placeholder="Full name" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:4px;" required>
+        </div>
+        <div style="margin-bottom:8px;">
+          <label>Email</label><br/>
+          <input type="email" placeholder="Email" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:4px;" required>
+        </div>
+        <div style="margin-bottom:8px;">
+          <label>Phone</label><br/>
+          <input type="tel" placeholder="Phone" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:4px;">
+        </div>
+        <div style="margin-bottom:8px;">
+          <label>Project Type</label><br/>
+          <select style="width:100%; padding:8px; border:1px solid var(--border); border-radius:4px;" required>
+            <option value="" disabled selected>Select type</option>
+            <option>Residential</option>
+            <option>Commercial</option>
+            <option>Industrial</option>
+          </select>
+        </div>
+        <div style="margin-bottom:8px;">
+          <label>Message</label><br/>
+          <textarea rows="4" placeholder="Describe project scope, location, timeline" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:4px;"></textarea>
+        </div>
+        <button class="cta" style="background:#0a6c8b;" onclick="alert('Thanks—your message has been captured. We will contact you soon.')">Send Message</button>
+      </form>
+
+      <div class="card" aria-label="Contacts">
+        <h3>Key Contacts</h3>
+        <p><strong>Project Manager</strong><br/>Alexandra M. — alex@example.com • +1 555-0100</p>
+        <p><strong>Site Foreman</strong><br/>David R. — david@example.com • +1 555-0101</p>
+        <p><strong>MEP Lead</strong><br/>Priya K. — priya@example.com • +1 555-0102</p>
+        <p><strong>Security & CCTV</strong><br/>Lee T. — lee@example.com • +1 555-0103</p>
+        <div class="social" style="margin-top:12px;">
+          <strong>Social</strong><br/>
+          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="YouTube">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="display:flex; justify-content:space-between; align-items:center; padding-top:8px;">
+    <div>© <span id="year"></span> Your Company Name. All rights reserved.</div>
+    <div class="social">
+      <a href="#" aria-label="Facebook">Facebook</a>
+      <a href="#" aria-label="LinkedIn">LinkedIn</a>
+      <a href="#" aria-label="Instagram">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
