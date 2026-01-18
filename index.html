@@ -1,542 +1,105 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-adsense-account" content="ca-pub-2313105504330449">
-    <title>Platform Penghasil Online Terbaik</title>
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #7209b7;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4cc9f0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7ff;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 80px 0 60px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,192C672,181,768,139,864,138.7C960,139,1056,181,1152,192C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background-color: #5a08a0;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.2rem;
-            color: var(--secondary);
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: "";
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            margin: 15px auto;
-            border-radius: 2px;
-        }
-        
-        .platform-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .platform-card {
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .platform-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        
-        .card-header {
-            padding: 20px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            text-align: center;
-        }
-        
-        .card-body {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .platform-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .platform-desc {
-            color: #666;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-        
-        .category {
-            display: inline-block;
-            padding: 5px 12px;
-            background-color: #e9ecef;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .categories {
-            margin-bottom: 40px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .category-btn {
-            padding: 10px 20px;
-            background-color: white;
-            border: 2px solid var(--primary);
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .category-btn.active, .category-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .testimonial {
-            background-color: var(--light);
-            padding: 40px;
-            border-radius: 12px;
-            margin: 30px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-        
-        .testimonial-author {
-            font-weight: 600;
-            color: var(--secondary);
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 60px 0 30px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-column h3 {
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-column h3::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background-color: var(--accent);
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #adb5bd;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #495057;
-            color: #adb5bd;
-            font-size: 0.9rem;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .platform-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            section {
-                padding: 50px 0;
-            }
-        }
-    </style>
-    <script async custom-element="amp-auto-ads"
-        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
-</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="/_next/static/media/e4af272ccee01ff0-s.p.woff2" as="font" crossorigin="" type="font/woff2">
+<link rel="preload" as="image" href="/image.png">
+<link rel="preload" as="image" href="https://fast.image.delivery/zfcaznp.png">
+<link rel="stylesheet" href="css/c86a525babbd7472.css" data-precedence="next">
+<link rel="preload" as="script" fetchpriority="low" href="/_next/static/chunks/webpack-5ac8f5a1b669b13f.js">
+<script src="js/4bd1b696-fe603676e62ece45.js" async=""></script>
+<script src="js/1684-6d9624fae9fec53d.js" async=""></script>
+<script src="js/main-app-ac2444ab022d9587.js" async=""></script>
+<script src="js/6874-2d816cda188f3558.js" async=""></script>
+<script src="js/not-found-698423abec9d7407.js" async=""></script>
+<script src="js/4277-4b9b3d4803ab3a40.js" async=""></script>
+<script src="js/2077-974b8a6d4e1fa611.js" async=""></script>
+<script src="js/4523-f4b55aa0c6f4b387.js" async=""></script>
+<script src="js/6766-ea91928f5703145d.js" async=""></script>
+<script src="js/289-d063c32d744785ec.js" async=""></script>
+<script src="js/page-4f8cbdaa0332e236.js" async=""></script>
+<meta name="next-size-adjust" content="">
+<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+<meta content="ReceiptFlex | https://receiptflex.cc" property="og:title">
+<meta content="ReceiptFlex specialises in making tools for resellers, dropshipping, ecommerce and much more. Gain more attention to your products today. Join today use our service for FREE" property="og:description">
+<meta content="https://receiptflex.cc" property="og:url">
+<meta content="images/0TaeAgAAAAZJREFUAwDZE3Dv7NQGSwAAAABJRU5ErkJggg.png" property="og:image">
+<meta content="#27e06f" data-react-helmet="true" name="theme-color">
+<title>ReceiptFlex</title>
+<meta name="description" content="Your All-in-One eBay Tool: 1:1 Receipt Generator & View Bot.">
+<script src="js/polyfills-42372ed130431b0a.js" nomodule=""></script>
 </head>
-<body>
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2313105504330449"
-     crossorigin="anonymous"></script>
-    <amp-auto-ads type="adsense"
-        data-ad-client="ca-pub-2313105504330449">
-</amp-auto-ads>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <h1>Temukan Platform Penghasil Online Terbaik</h1>
-                <p class="subtitle">Jelajahi 17 platform terpercaya untuk menghasilkan uang secara online melalui survei, freelancing, penjualan kreatif, dan afiliasi</p>
-                <a href="#platforms" class="btn">Jelajahi Platform</a>
-            </div>
-        </div>
-    </header>
-    
-    <section id="platforms">
-        <div class="container">
-            <h2 class="section-title">Platform Penghasil Online</h2>
-            
-            <div class="categories">
-                <button class="category-btn active" data-category="all">Semua Platform</button>
-                <button class="category-btn" data-category="survei">Survei Online</button>
-                <button class="category-btn" data-category="freelance">Freelance</button>
-                <button class="category-btn" data-category="kreatif">Kreatif & Jualan</button>
-                <button class="category-btn" data-category="afiliasi">Afiliasi & Donasi</button>
-            </div>
-            
-            <div class="platform-grid">
-                                                <!-- Website Sendiri -->
-                <div class="platform-card" data-category="kreatif">
-                    <div class="card-header">
-                        <div class="platform-name">Google AdSense</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Kreatif & Jualan</span>
-                        <p class="platform-desc">Google AdSense adalah program yang dijalankan oleh Google di mana penerbit situs web di Jaringan situs konten Google menayangkan iklan teks, gambar, video, atau media interaktif yang ditargetkan pada konten dan audiens situs. Iklan-iklan ini dikelola, diurutkan, dan dipelihara oleh Google.</p>
-                        <a href="https://join.honeygain.com/FOREV06641" class="btn">Pelajari Lebih Lanjut</a>
-                    </div>
-                </div>
-                <!-- Survei Online -->
-                <div class="platform-card" data-category="survei">
-                    <div class="card-header">
-                        <div class="platform-name">YouGov Indonesia</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Survei Online</span>
-                        <p class="platform-desc">Suarakan pendapat Anda.
-Dapatkan uang.
-Bentuklah berita.
-Bergabunglah dengan jutaan orang lainnya untuk berbagi opini Anda mengenai dunia politik, olahraga, hiburan, dan masih banyak lagi.</p>
-                        <a href="https://account.yougov.com/id-id/join/main" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <div class="platform-card" data-category="survei">
-                    <div class="card-header">
-                        <div class="platform-name">ySense</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Survei Online</span>
-                        <p class="platform-desc">Dapatkan Uang dengan Survei Online di 2026!
-Mau tahu cara mudah mendapatkan uang tunai dan hadiah menarik? Kami telah memilih situs survei berbayar terbaik di Indonesia yang sedang mencari anggota baru! Semakin banyak informasi yang Anda berikan, semakin besar peluang Anda mendapatkan survei berbayar.</p>
-                        <a href="https://surveyspotter.com/id/?utm_source=google&utm_medium=cpc&utm_campaign=44024542019&utm_content=780423465279&utm_term=ysense&offer_id=7255&aff_id=1584&ad_id=Cj0KCQiAvOjKBhC9ARIsAFvz5lhcLuqHN33heDx4F2-wd8oV65z6LlM5YoKOnsX1oCcH9Is82IKxfvsaAvtHEALw_wcB&gad_source=1&gad_campaignid=44024542019&gbraid=0AAAAAD36GdPvxVNPgGBN8YeT0u5YsuhOw&gclid=Cj0KCQiAvOjKBhC9ARIsAFvz5lhcLuqHN33heDx4F2-wd8oV65z6LlM5YoKOnsX1oCcH9Is82IKxfvsaAvtHEALw_wcB" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <div class="platform-card" data-category="survei">
-                    <div class="card-header">
-                        <div class="platform-name">SurveySavvy</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Survei Online</span>
-                        <p class="platform-desc">Pendapat Anda Penting
-Gabung SurveySavvy dan dapatkan bayaran untuk menyampaikan pendapat Anda. Semakin banyak survei yang Anda ikuti, semakin banyak uang yang Anda hasilkan.</p>
-                        <a href="https://surveysavvy.com/members/sign-up" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <div class="platform-card" data-category="survei">
-                    <div class="card-header">
-                        <div class="platform-name">OpinionWorld</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Survei Online</span>
-                        <p class="platform-desc">Masa Depan Ada Di Tangan Anda
-DAPATKAN REWARD UNTUK BERBAGI PENDAPAT DAN JADIKAN HARI ESOK LEBIH BAIK DARI HARI INI</p>
-                        <a href="opinionworld.co.id/signup" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-               
-                <!-- Etsy -->
-                <div class="platform-card" data-category="kreatif">
-                    <div class="card-header">
-                        <div class="platform-name">Etsy</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Kreatif & Jualan</span>
-                        <p class="platform-desc">Etsy adalah pasar online global, tempat orang-orang berkumpul untuk membuat, menjual, membeli, dan mengoleksi barang-barang unik.</p>
-                        <a href="https://www.etsy.com/?ref=lgo" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Afiliasi Hostinger -->
-                <div class="platform-card" data-category="afiliasi">
-                    <div class="card-header">
-                        <div class="platform-name">Afiliasi Hostinger</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Afiliasi & Donasi</span>
-                        <p class="platform-desc">Daftar dan buat akun afiliasi tak sampai semenit gratis. Verifikasi akun dan dapatkan akses untuk masuk ke dashboard afiliasi.</p>
-                        <a href="https://affiliates.hostinger.com/" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Medium Partner Program -->
-                <div class="platform-card" data-category="kreatif">
-                    <div class="card-header">
-                        <div class="platform-name">Medium Partner Program</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Kreatif & Jualan</span>
-                        <p class="platform-desc">Program Kemitraan Medium ditujukan bagi orang-orang yang tertarik membantu kami mewujudkan misi kami untuk memperdalam kearifan kolektif dunia.</p>
-                        <a href="https://help.medium.com/hc/en-us/articles/115011694187-Partner-Program-application-and-enrollment" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Trakteer -->
-                <div class="platform-card" data-category="afiliasi">
-                    <div class="card-header">
-                        <div class="platform-name">Trakteer</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Afiliasi & Donasi</span>
-                        <p class="platform-desc">Trakteer adalah platform yang membantu kreator konten untuk memonetisasi karya dan mendapatkan dukungan finansial dari penggemar.</p>
-                        <a href="https://trakteer.id/register" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Saweria -->
-                <div class="platform-card" data-category="afiliasi">
-                    <div class="card-header">
-                        <div class="platform-name">Saweria</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Afiliasi & Donasi</span>
-                        <p class="platform-desc">Jembatan interaksi dengan penontonmu!
-Saweria membantu kamu mendapatkan dukungan finansial dari penggemar karyamu.</p>
-                        <a href="https://saweria.co/register" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Shutterstock -->
-                <div class="platform-card" data-category="kreatif">
-                    <div class="card-header">
-                        <div class="platform-name">Shutterstock</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Kreatif & Jualan</span>
-                        <p class="platform-desc">Bagikan karya Anda dan mulailah menghasilkan uang.
-Bergabunglah dengan komunitas kontributor global Shutterstock dan dapatkan penghasilan dengan melakukan hal yang Anda sukai..</p>
-                        <a href="https://contributor-accounts.shutterstock.com/users/new?next=%2Foauth%2Fauthorize%3Fstate%3D92aceced10ca36b213122c06deaf6e45%26redirect_uri%3Dhttp%253A%252F%252Fsubmit.shutterstock.com%252Foauth%252Fcallback%253Flanding_page%253D%25252Fsignup%25252Fcontinue-registration%2526realm%253Dcontributor%26scope%3Duser.view%2520user.edit%2520media.submit%2520media.upload%2520media.edit%26hl%3Den%26site%3Dsubmit%26view%3Dsignup%26client_id%3DContributor" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- iStock -->
-                <div class="platform-card" data-category="kreatif">
-                    <div class="card-header">
-                        <div class="platform-name">iStock</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Kreatif & Jualan</span>
-                        <p class="platform-desc">Semua konten yang Anda perlukan. Semuanya di satu tempat.
-Jelajahi jutaan visual berkualitas tinggi yang autentik, termasuk visual eksklusif yang tidak akan Anda temukan di tempat lain, di pustaka kreatif kami yang bebas dari konten hasil AI.</p>
-                        <a href="https://www.istockphoto.com/id/join?returnurl=%2Fid" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Sribu -->
-                <div class="platform-card" data-category="freelance">
-                    <div class="card-header">
-                        <div class="platform-name">Sribu</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Freelance</span>
-                        <p class="platform-desc">Solusi lengkap untuk semua kebutuhan Anda! Sribu adalah marketplace freelancer yang menghubungkan pebisnis dengan para profesional berbakat di berbagai bidang. Mulai dari desain grafis, pengembangan web, penulisan konten, hingga pemasaran digital. Sribu menyediakan wadah terhubungnya layanan jasa dari freelancer untuk bisnis dengan cepat dan mudah menemukannya.</p>
-                        <a href="https://www.sribu.com/id/auth/register/freelancer?srsltid=AfmBOooQR5eitHXfbYhcpSz7u9zZMCs9sfApW21B7gDHGgxpp9NWZvFX" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Projects.co.id -->
-                <div class="platform-card" data-category="freelance">
-                    <div class="card-header">
-                        <div class="platform-name">Projects.co.id</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Freelance</span>
-                        <p class="platform-desc">Temukan freelancerdari seluruh penjuru Indonesia untuk berbagai pekerjaanWebsite Development, Android & iOS Development, Desktop Programming,
-Graphic & Logo Design, Penulisan Artikel, dan masih banyak lagi.</p>
-                        <a href="https://projects.co.id/public/new_user/sign_up" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Fastwork -->
-                <div class="platform-card" data-category="freelance">
-                    <div class="card-header">
-                        <div class="platform-name">Fastwork</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Freelance</span>
-                        <p class="platform-desc">Dapatkan freelancer profesional untuk bantu pekerjaan maupun bisnis Anda atau cari kerja online sebagai sampingan Anda di situs freelance Indonesia!</p>
-                        <a href="https://auth2.fastwork.id/oauth/authorize?response_type=code&client_id=076ba9d7-275f-4edd-b055-060f0547cf5e&callback_url=https%3A%2F%2Ffastwork.id%2Fcallback%3Fredirect%3DLw%3D%3D" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Fiverr -->
-                <div class="platform-card" data-category="freelance">
-                    <div class="card-header">
-                        <div class="platform-name">Fiverr</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Freelance</span>
-                        <p class="platform-desc">Layanan populer · Vibe Coding · Pengembangan Situs Web · Penyuntingan Video · Pengembangan Perangkat Lunak · Penerbitan Buku · Arsitektur & Desain Interior · Desain Buku.</p>
-                        <a href="https://www.fiverr.com/join" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-                
-                <!-- Upwork -->
-                <div class="platform-card" data-category="freelance">
-                    <div class="card-header">
-                        <div class="platform-name">Upwork</div>
-                    </div>
-                    <div class="card-body">
-                        <span class="category">Freelance</span>
-                        <p class="platform-desc">Upwork adalah pasar freelance terbesar di dunia yang didukung oleh AI untuk merekrut talenta terbaik—dipercaya oleh bisnis dan profesional di seluruh dunia.</p>
-                        <a href="https://www.upwork.com/nx/signup/" class="btn">Kunjungi Situs</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-     
-    <section style="background-color: var(--light);">
-        <div class="container">
-            <h2 class="
+<body class="__className_f367f3"><main class="min-h-screen bg-[#0d0d0d] antialiased relative">
+<div class="relative z-10 pl-6 sm:pl-10">
+<nav class="fixed left-0 right-0 flex items-center justify-between px-6 py-4 backdrop-blur-sm border-b border-white/10 z-50
+          transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
+          top-0
+          w-full" style="transform:translateY(-100px)">
+		  <a class="flex items-center" href="/">
+		  <img src="images/image.png" alt="Receiptify Logo" class="h-8 w-auto"></a>
+		  <div class="hidden md:flex items-center space-x-8">
+		  <button class="text-gray-300 hover:text-white transition-all duration-300 relative group cursor-pointer">Features<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#16a24a] transition-all duration-300 group-hover:w-full"></span></button>
+		  <button class="text-gray-300 hover:text-white transition-all duration-300 relative group cursor-pointer">How it Works<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#16a24a] transition-all duration-300 group-hover:w-full"></span></button>
+		  <button class="text-gray-300 hover:text-white transition-all duration-300 relative group cursor-pointer">Examples<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#16a24a] transition-all duration-300 group-hover:w-full"></span></button>
+		  <button class="text-gray-300 hover:text-white transition-all duration-300 relative group cursor-pointer">Pricing<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#16a24a] transition-all duration-300 group-hover:w-full"></span></button>
+		  </div>
+		  <div class="hidden md:flex items-center space-x-4">
+		  <a href="https://discord.gg/receiptflex" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110" aria-label="Discord">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="w-6 h-6"><defs><mask id="discord-mask"><rect width="100%" height="100%" fill="white"></rect><circle cx="8.5" cy="12.5" r="1.5" fill="black"></circle><circle cx="15.5" cy="12.5" r="1.5" fill="black"></circle></mask></defs><path mask="url(#discord-mask)" fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"></path></svg>
+		  <span class="text-sm font-medium">Join Our Server</span></a>
+		  </div>
+		  <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 md:hidden text-white hover:bg-[#12883e]">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></nav>
+		  <div class="relative min-h-[calc(100vh-76px)] flex items-center px-4 pt-6 md:px-6">
+		  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:gap-20 relative z-10">
+		  <div class="relative w-full flex justify-center md:justify-start">
+		  <div class="relative w-[260px] sm:w-[340px] md:w-[460px] lg:w-[520px] aspect-[10/16] cursor-pointer">
+		  <img src="images/zfcaznp.png" class="absolute inset-0 w-full h-full object-contain transition-opacity duration-300" style="opacity:1">
+		  </div>
+		  </div>
+		  <div class="w-full max-w-2xl flex flex-col text-left">
+		  <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style="opacity:0;transform:translateY(20px)">Prove It. Boost It.
+		  <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#44f385] to-[#16a24a]"> <!-- -->ReceiptFlex It.</span></h1>
+		  <p class="text-gray-300 text-base sm:text-lg md:text-xl mb-8 max-w-lg leading-relaxed" style="opacity:0;transform:translateY(20px)">Your All-in-One eBay Tool: 1:1 Receipt Generator & View Bot. Get verified, boost sales, and dominate the marketplace.</p>
+		  <button class="w-fit flex items-center gap-2 px-8 py-3.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold rounded-xl transition-colors duration-300 shadow-lg" style="opacity:0;transform:translateY(20px)">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="w-5 h-5"><defs><mask id="discord-mask"><rect width="100%" height="100%" fill="white"></rect><circle cx="8.5" cy="12.5" r="1.5" fill="black"></circle><circle cx="15.5" cy="12.5" r="1.5" fill="black"></circle></mask></defs><path mask="url(#discord-mask)" fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"></path></svg>
+		  <span>Sign In for 1 free generation</span></button>
+		  </div>
+		  </div>
+		  <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 cursor-pointer opacity-100 transition-opacity duration-300" style="transform:none">
+		  <div class="bg-[#12883e] hover:bg-[#16a24a] p-3 rounded-full backdrop-blur-sm">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-6 w-6 text-white"><path d="m6 9 6 6 6-6"></path></svg></div></div></div>
+		  <div style="opacity:0" class="py-16" id="features">
+		  <div class="container mx-auto px-6">
+		  <div class="text-center mb-16">
+		  <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Features</h2>
+		  <div class="w-24 h-1 bg-[#12883e] mx-auto"></div>
+		  </div>
+		  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+		  <div class="bg-[#181818] border border-white/10 rounded-lg p-6 text-center hover:border-[#27e06f] transition-colors" style="opacity:0;transform:translateY(20px)">
+		  <div class="bg-[#12883e] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-8 h-8 text-green-500"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></div>
+		  <h3 class="text-xl font-bold text-white mb-2">1:1 Email Receipts</h3>
+		  <p class="text-gray-400">The best 1:1 receipts for multiple brands</p></div>
+		  <div class="bg-[#181818] border border-white/10 rounded-lg p-6 text-center hover:border-[#27e06f] transition-colors" style="opacity:0;transform:translateY(20px)">
+		  <div class="bg-[#12883e] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-8 h-8 text-green-500"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+		  <h3 class="text-xl font-bold text-white mb-2">View Bot</h3><p class="text-gray-400">eBay and Depop view bot</p></div>
+		  <div class="bg-[#181818] border border-white/10 rounded-lg p-6 text-center hover:border-[#27e06f] transition-colors" style="opacity:0;transform:translateY(20px)">
+		  <div class="bg-[#12883e] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check w-8 h-8 text-green-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg></div>
+		  <h3 class="text-xl font-bold text-white mb-2">User Friendly</h3>
+		  <p class="text-gray-400">Simple, intuitive interface designed for ease of use with no technical knowledge required.</p></div>
+		  </div>
+		  </div>
+		  </div>
+		  <div style="opacity:0" class="py-16 bg-[#0d0d0d]" id="how-it-works">
+		  <div class="container mx-auto px-6"><div class="text-center mb-16">
+		  <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">How It Works</h2>
+		  <div class="w-24 h-1 bg-[#16a24a] mx-auto mb-6"></div>
+		  <p class="text-xl text-gray-300 max-w-3xl mx-auto">Just fill out some information and our system will add it to the receipt.</p></div>
+		  <div class="flex flex-col md:flex-row justify-between items-center max-w-4xl mx-auto">
+		  <div class="flex flex-col items-center text-center mb-8 md:mb-0" style="opacity:0;transform:translateY(20px)"><div class="bg-[#12883e] w-20 h-20 rounded-full flex items-center justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text w-10 h-10 text-green-500"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg></div><h3 class="text-xl font-bold text-white mb-2">Enter Information</h3><p class="text-gray-400 max-w-xs">Fill in the required information for the receipt.</p></div><div class="flex flex-col items-center text-center mb-8 md:mb-0" style="opacity:0;transform:translateY(20px)"><div class="bg-[#12883e] w-20 h-20 rounded-full flex items-center justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-10 h-10 text-green-500"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></div><h3 class="text-xl font-bold text-white mb-2">Generate Receipt</h3><p class="text-gray-400 max-w-xs">Our system creates the receipt for you.</p></div><div class="flex flex-col items-center text-center mb-8 md:mb-0" style="opacity:0;transform:translateY(20px)"><div class="bg-[#12883e] w-20 h-20 rounded-full flex items-center justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-10 h-10 text-green-500"><path d="M20 6 9 17l-5-5"></path></svg></div><h3 class="text-xl font-bold text-white mb-2">Receive by Email</h3><p class="text-gray-400 max-w-xs">The receipt is sent straight to your email inbox.</p></div></div></div></div><div style="opacity:0" class="py-16" id="examples"><div class="container mx-auto px-6"><div class="text-center mb-16"><h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Examples</h2><div class="w-24 h-1 bg-[#16a24a] mx-auto mb-6"></div><p class="text-xl text-gray-300 max-w-3xl mx-auto">See how ReceiptFlex works.</p></div><div class="max-w-4xl mx-auto aspect-video rounded-lg overflow-hidden border border-white/10" style="opacity:0;transform:translateY(20px)"><iframe class="w-full h-full" src="https://www.youtube.com/embed/m8TNAWVCHzQ" title="FREE working 1:1 receipt generator" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe></div></div></div><div style="opacity:0" class="py-16 bg-[#0d0d0d]" id="pricing"><div class="container mx-auto px-6"><div class="text-center mb-16"><h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Pricing</h2><div class="w-24 h-1 bg-[#16a24a] mx-auto mb-6"></div><p class="text-xl text-gray-300 max-w-3xl mx-auto">Choose the license that best works for you.</p></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"><div style="opacity:0;transform:translateY(20px)"><div class="rounded-lg shadow-sm bg-[#181818] border border-white/10 text-white overflow-hidden h-full"><div class="relative h-40 w-full"><img alt="Daily License" loading="lazy" decoding="async" data-nimg="fill" class="opacity-80" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent" src="images/xuzscpt.png"><div class="absolute top-2 right-2"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-red-600 text-white font-semibold">50% OFF</div></div></div><div class="flex flex-col space-y-1.5 p-6"><div class="text-2xl font-semibold leading-none tracking-tight">Daily</div></div><div class="p-6 pt-0"><div class="mb-4"><div class="flex items-center gap-3"><p class="text-3xl font-bold">$<!-- -->10.00</p><p class="text-lg text-gray-400 line-through">$<!-- -->20.00</p></div><p class="text-sm text-gray-400">one-time payment</p></div></div><div class="flex items-center p-6 pt-0"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:text-accent-foreground h-10 px-4 py-2 w-full bg-[#12883e] hover:bg-[#16a24a] text-white">Get Started</button></div></div></div><div style="opacity:0;transform:translateY(20px)"><div class="rounded-lg shadow-sm bg-[#181818] border border-white/10 text-white overflow-hidden h-full"><div class="relative h-40 w-full"><img alt="Weekly License" loading="lazy" decoding="async" data-nimg="fill" class="opacity-80" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent" src="images/jzbesga.png"><div class="absolute top-2 right-2"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-red-600 text-white font-semibold">50% OFF</div></div></div><div class="flex flex-col space-y-1.5 p-6"><div class="text-2xl font-semibold leading-none tracking-tight">Weekly</div></div><div class="p-6 pt-0"><div class="mb-4"><div class="flex items-center gap-3"><p class="text-3xl font-bold">$<!-- -->15.00</p><p class="text-lg text-gray-400 line-through">$<!-- -->30.00</p></div><p class="text-sm text-gray-400">one-time payment</p></div></div><div class="flex items-center p-6 pt-0"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:text-accent-foreground h-10 px-4 py-2 w-full bg-[#12883e] hover:bg-[#16a24a] text-white">Get Started</button></div></div></div><div style="opacity:0;transform:translateY(20px)"><div class="rounded-lg shadow-sm bg-[#181818] border-2 border-[#16a24a] text-white overflow-hidden h-full"><div class="relative h-40 w-full"><img alt="Lifetime License" loading="lazy" decoding="async" data-nimg="fill" class="opacity-80" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent" src="images/tlvdwgo.png"><div class="absolute top-2 right-2 flex gap-2"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-red-600 text-white font-semibold">50% OFF</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-[#16a24a] text-white">Popular</div></div></div><div class="flex flex-col space-y-1.5 p-6"><div class="text-2xl font-semibold leading-none tracking-tight">Lifetime</div></div><div class="p-6 pt-0"><div class="mb-4"><div class="flex items-center gap-3"><p class="text-3xl font-bold">$<!-- -->40.00</p><p class="text-lg text-gray-400 line-through">$<!-- -->80.00</p></div><p class="text-sm text-gray-400">one-time payment</p></div></div><div class="flex items-center p-6 pt-0"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 w-full bg-[#12883e] hover:bg-[#16a24a] text-white">Get Started</button></div></div></div></div></div></div><footer class="bg-[#0d0d0d] py-8"><div class="mx-auto  max-w-[2000px] border-t border-white/10 pt-8"><div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-4 gap-8"><div class="space-y-4"><h3 class="text-white font-bold text-lg">ReceiptFlex</h3><p class="text-gray-400 text-sm">Your All-in-One eBay Tool: 1:1 Receipt Generator & View Bot.</p><p class="text-gray-400 text-sm">Made by<!-- --> <a href="https://guns.lol/smf" target="_blank" rel="noopener noreferrer" class="text-[#16a24a] hover:text-[#12883e] transition-colors">wmnd</a></p></div><div class="space-y-4 hidden md:block"><h3 class="text-white font-bold text-lg">Navigation</h3><ul class="space-y-2"><li><a class="text-gray-400 hover:text-white transition-colors" href="/#features">Features</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/#how-it-works">How It Works</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/#examples">Examples</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/#pricing">Pricing</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/terms">Terms Of Service</a></li></ul></div><div class="space-y-4 hidden md:block"><h3 class="text-white font-bold text-lg">Account</h3><ul class="space-y-2"><li><a class="text-gray-400 hover:text-white transition-colors" href="/login">Login</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/dashboard">Dashboard</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/dashboard/generate">Generate Receipt</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/ebay">eBay View Bot</a></li><li><a class="text-gray-400 hover:text-white transition-colors" href="/dashboard/license">Manage License</a></li></ul></div><div class="space-y-4"><h3 class="text-white font-bold text-lg">Connect</h3><div class="flex space-x-4"><a href="https://discord.gg/receiptflex" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Discord"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="w-6 h-6"><defs><mask id="discord-mask"><rect width="100%" height="100%" fill="white"></rect><circle cx="8.5" cy="12.5" r="1.5" fill="black"></circle><circle cx="15.5" cy="12.5" r="1.5" fill="black"></circle></mask></defs><path mask="url(#discord-mask)" fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"></path></svg></a><a href="https://tiktok.com/@receiptflex" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="TikTok"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a></div></div></div><div class="border-t border-white/10 mt-8 pt-8 text-center text-gray-500 text-sm"><p>© <!-- -->2026<!-- --> ReceiptFlex. All rights reserved.</p></div></div></div></footer></div></main><script src="js/webpack-5ac8f5a1b669b13f.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[7555,[],\"\"]\n3:I[1295,[],\"\"]\n4:I[6874,[\"6874\",\"static/chunks/6874-2d816cda188f3558.js\",\"4345\",\"static/chunks/app/not-found-698423abec9d7407.js\"],\"\"]\n5:I[894,[],\"ClientPageRoot\"]\n6:I[705,[\"4277\",\"static/chunks/4277-4b9b3d4803ab3a40.js\",\"2077\",\"static/chunks/2077-974b8a6d4e1fa611.js\",\"4523\",\"static/chunks/4523-f4b55aa0c6f4b387.js\",\"6874\",\"static/chunks/6874-2d816cda188f3558.js\",\"6766\",\"static/chunks/6766-ea91928f5703145d.js\",\"289\",\"static/chunks/289-d063c32d744785ec.js\",\"8974\",\"static/chunks/app/page-4f8cbdaa0332e236.js\"],\"default\"]\n9:I[9665,[],\"OutletBoundary\"]\nc:I[9665,[],\"ViewportBoundary\"]\ne:I[9665,[],\"MetadataBoundary\"]\n10:I[6614,[],\"\"]\n:HL[\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/css/c86a525babbd7472.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"ERbOnr9K8CUpLw02XpnEY\",\"p\":\"\",\"c\":[\"\",\"\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/c86a525babbd7472.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"suppressHydrationWarning\":true,\"children\":[[\"$\",\"head\",null,{\"children\":[[\"$\",\"link\",null,{\"rel\":\"icon\",\"type\":\"image/x-icon\",\"href\":\"/favicon.ico\"}],[\"$\",\"meta\",null,{\"content\":\"ReceiptFlex | https://receiptflex.cc\",\"property\":\"og:title\"}],[\"$\",\"meta\",null,{\"content\":\"ReceiptFlex specialises in making tools for resellers, dropshipping, ecommerce and much more. Gain more attention to your products today. Join today use our service for FREE\",\"property\":\"og:description\"}],[\"$\",\"meta\",null,{\"content\":\"https://receiptflex.cc\",\"property\":\"og:url\"}],[\"$\",\"meta\",null,{\"content\":\"https://cdn.discordapp.com/attachments/1283659601224667217/1443121528513495120/0TaeAgAAAAZJREFUAwDZE3Dv7NQGSwAAAABJRU5ErkJggg.png?ex=6927eb28\u0026is=692699a8\u0026hm=0672c1f0d5e3980dbbb3a0b167798696a8109175e0dd97ed481ff9b5b575c348\u0026\",\"property\":\"og:image\"}],[\"$\",\"meta\",null,{\"content\":\"#27e06f\",\"data-react-helmet\":\"true\",\"name\":\"theme-color\"}]]}],[\"$\",\"body\",null,{\"className\":\"__className_f367f3\",\"suppressHydrationWarning\":true,\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"div\",null,{\"className\":\"min-h-screen w-full bg-black flex flex-col\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex-grow flex items-center justify-center p-4\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-md w-full bg-black/50 border border-white/10 rounded-lg p-8 text-center\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex justify-center mb-6\",\"children\":[\"$\",\"svg\",null,{\"ref\":\"$undefined\",\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-file-question h-20 w-20 text-[#16a24a]\",\"children\":[[\"$\",\"path\",\"p32p05\",{\"d\":\"M12 17h.01\"}],[\"$\",\"path\",\"1mlx9k\",{\"d\":\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z\"}],[\"$\",\"path\",\"mhlwft\",{\"d\":\"M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3\"}],\"$undefined\"]}]}],[\"$\",\"h1\",null,{\"className\":\"text-2xl font-bold text-white mb-2\",\"children\":\"404\"}],[\"$\",\"h2\",null,{\"className\":\"text-xl font-medium text-white mb-4\",\"children\":\"Page Not Found\"}],[\"$\",\"p\",null,{\"className\":\"text-gray-300 mb-6\",\"children\":\"The page you are looking for doesn't exist or has been moved.\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-col sm:flex-row gap-4 justify-center\",\"children\":[[\"$\",\"$L4\",null,{\"href\":\"/\",\"children\":\"Go Home\",\"className\":\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [\u0026_svg]:pointer-events-none [\u0026_svg]:size-4 [\u0026_svg]:shrink-0 h-10 px-4 py-2 bg-[#12883e] hover:bg-[#16a24a] text-white\",\"ref\":null}],[\"$\",\"$L4\",null,{\"href\":\"/dashboard\",\"children\":\"Dashboard\",\"className\":\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [\u0026_svg]:pointer-events-none [\u0026_svg]:size-4 [\u0026_svg]:shrink-0 border hover:text-accent-foreground h-10 px-4 py-2 bg-black/30 text-white border-white/20 hover:border-[#16a24a] hover:bg-black/40\",\"ref\":null}]]}]]}]}],[\"$\",\"footer\",null,{\"className\":\"bg-black border-t border-white/10 py-4\",\"children\":[\"$\",\"div\",null,{\"className\":\"container mx-auto px-6 text-center text-gray-500 text-sm\",\"children\":[\"$\",\"p\",null,{\"children\":[\"© \",2026,\" ReceiptFlex. All rights reserved.\"]}]}]}]]}],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]]}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L5\",null,{\"Component\":\"$6\",\"searchParams\":{},\"params\":{},\"promises\":[\"$@7\",\"$@8\"]}],\"$undefined\",null,[\"$\",\"$L9\",null,{\"children\":[\"$La\",\"$Lb\",null]}]]}],{},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$1\",\"BYkrVQmhPShhiuuRx-Bkc\",{\"children\":[[\"$\",\"$Lc\",null,{\"children\":\"$Ld\"}],[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"}]]}],[\"$\",\"$Le\",null,{\"children\":\"$Lf\"}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$10\",\"$undefined\"],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"7:{}\n8:{}\n"])</script><script>self.__next_f.push([1,"d:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\na:null\n"])</script><script>self.__next_f.push([1,"b:null\nf:[[\"$\",\"title\",\"0\",{\"children\":\"ReceiptFlex\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Your All-in-One eBay Tool: 1:1 Receipt Generator \u0026 View Bot.\"}]]\n"])</script>
+		  </body>
+		  </html>
