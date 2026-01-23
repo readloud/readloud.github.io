@@ -30,6 +30,34 @@ readloud.github.io	3600	IN	SOA	pedro.ns.cloudflare.com. dns.cloudflare.com. 2052
 readloud.github.io.	86400	IN	NS	pedro.ns.cloudflare.com.
 readloud.github.io.	86400	IN	NS	vida.ns.cloudflare.com.
 
+;; A Records
+*.readloud.github.io.	1	IN	A	185.199.111.153 ; cf_tags=cf-proxied:true
+*.readloud.github.io.	1	IN	A	185.199.110.153 ; cf_tags=cf-proxied:true
+*.readloud.github.io.	1	IN	A	185.199.109.153 ; cf_tags=cf-proxied:true
+*.readloud.github.io.	1	IN	A	185.199.108.153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	A	185.199.109.153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	A	185.199.111.153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	A	185.199.108.153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	A	185.199.110.153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	A	185.199.111.153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	A	185.199.110.153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	A	185.199.108.153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	A	185.199.109.153 ; cf_tags=cf-proxied:true
+
+;; AAAA Records
+*.readloud.github.io.	1	IN	AAAA	2606:50c0:8000::153 ; cf_tags=cf-proxied:true
+*.readloud.github.io.	1	IN	AAAA	2606:50c0:8002::153 ; cf_tags=cf-proxied:true
+*.readloud.github.io.	1	IN	AAAA	2606:50c0:8001::153 ; cf_tags=cf-proxied:true
+*.readloud.github.io.	1	IN	AAAA	2606:50c0:8003::153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	AAAA	2606:50c0:8000::153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	AAAA	2606:50c0:8001::153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	AAAA	2606:50c0:8002::153 ; cf_tags=cf-proxied:true
+readloud.github.io.	1	IN	AAAA	2606:50c0:8003::153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	AAAA	2606:50c0:8003::153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	AAAA	2606:50c0:8002::153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	AAAA	2606:50c0:8001::153 ; cf_tags=cf-proxied:true
+www.readloud.github.io.	1	IN	AAAA	2606:50c0:8000::153 ; cf_tags=cf-proxied:true
+
 ;; CAA Records
 readloud.github.io.	1	IN	CAA	0 issuewild "sectigo.com"
 readloud.github.io.	1	IN	CAA	0 issuewild "digicert.com"
