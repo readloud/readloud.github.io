@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Form Order Online - Custom</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding: 20px 24px 32px;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px dashed #e0e0e0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #075e54;
+        }
+
+        .header p {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #1a2a3a;
+            font-size: 0.95rem;
+        }
+
+        label i {
+            font-style: normal;
+            font-size: 1.1rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: 0.2s;
+            background-color: #fff;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #25D366;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.2);
+        }
+
+        .product-row {
+            background: #f9fafc;
+            padding: 16px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            border: 1px solid #e9ecef;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #075e54;
+        }
+
+        .remove-product {
+            background: #fee2e2;
+            border: none;
+            color: #d33;
+            border-radius: 30px;
+            padding: 5px 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-add {
+            background: #e9ecef;
+            border: 1px dashed #6c757d;
+            padding: 10px;
+            border-radius: 40px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 8px 0 20px;
+            transition: 0.2s;
+        }
+
+        .btn-add:hover {
+            background: #dee2e6;
+        }
+
+        button[type="submit"] {
+            background: #25D366;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background: #128C7E;
+        }
+
+        .note {
+            font-size: 0.8rem;
+            background: #eef7ff;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 550px) {
+            .form-container {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="header">
+            <h1>🍽️ FORM ORDER</h1>
+            <p>Isi data dengan lengkap, pesanan akan otomatis dikirim ke admin via WhatsApp</p>
+        </div>
+
+        <form id="orderForm">
+            <!-- Data Pemesan -->
+            <div class="form-group">
+                <label><i>👤</i> Nama Pemesan</label>
+                <input type="text" id="nama" required placeholder="Contoh: Ahmad Fauzi">
+            </div>
+
+            <div class="form-group">
+                <label><i>📞</i> Nomor WhatsApp (aktif)</label>
+                <input type="tel" id="waCustomer" required placeholder="628123456789">
+            </div>
+
+            <div class="form-group">
+                <label><i>🏠</i> Alamat Pengiriman</label>
+                <textarea id="alamat" rows="2" placeholder="Jl. Contoh No. 12, RT/RW, Kelurahan, Kecamatan"></textarea>
+            </div>
+
+            <!-- Produk dinamis -->
+            <label><i>🛒</i> Daftar Pesanan</label>
+            <div id="productsContainer">
+                <div class="product-row" data-idx="0">
+                    <div class="product-header">
+                        <span>Produk 1</span>
+                        <button type="button" class="remove-product" style="display:none;">Hapus</button>
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <select class="product-name" required>
+                            <option value="">Pilih produk</option>
+                            <option value="Nasi Goreng Spesial">🍚 Nasi Goreng Spesial - Rp 35.000</option>
+                            <option value="Mie Ayam Komplit">🍜 Mie Ayam Komplit - Rp 28.000</option>
+                            <option value="Es Teh Manis">🥤 Es Teh Manis - Rp 8.000</option>
+                            <option value="Kopi Susu">☕ Kopi Susu - Rp 15.000</option>
+                            <option value="Cucumber Fresh">🥒 Cucumber Fresh - Rp 12.000</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:6px;">
+                        <input type="number" class="qty" placeholder="Kuantitas" min="1" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="catatan-produk" rows="1" placeholder="Catatan (level pedas, topping, dll)"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-add" id="addProductBtn">+ Tambah Produk Lain</button>
+
+            <!-- Keterangan tambahan global -->
+            <div class="form-group">
+                <label><i>📝</i> Keterangan Tambahan (opsional)</label>
+                <textarea id="globalCatatan" rows="2" placeholder="Contoh: Tolong pisah bawang, minta bon, dll"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label><i>💵</i> Metode Pembayaran</label>
+                <select id="metodeBayar">
+                    <option value="Transfer Bank">Transfer Bank (BCA/Mandiri)</option>
+                    <option value="COD (Bayar di Tempat)">COD (Bayar di Tempat)</option>
+                    <option value="QRIS">QRIS / E-Wallet</option>
+                </select>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                <span>📲</span> Kirim Pesanan ke WhatsApp
+            </button>
+        </form>
+        <div class="note">
+            ✅ Pesanan akan dikirim ke admin via WhatsApp + rekap otomatis ke Google Sheets.<br>
+            Pastikan nomor WhatsApp benar (format 628xxxx).
+        </div>
+    </div>
+
+    <script>
+        // === SETTING ===
+        // GANTI DENGAN NOMOR ADMIN WHATSAPP (PAKAI KODE NEGARA, tanpa + / spasi)
+        const ADMIN_WA_NUMBER = "628123456789"; // <-- GANTI DENGAN NOMOR ADMIN ANDA
+        
+        // Untuk Google Apps Script Web App URL (jika pakai rekap ke Sheets)
+        // Kosongkan jika tidak ingin rekap, tetapi WA tetap jalan.
+        const GOOGLE_SHEETS_API_URL = ""; // Isi dengan URL deployment Web Apps nanti
+
+        let productCounter = 1;
+
+        // Fungsi buat produk row baru
+        function createProductRow(index) {
+            const row = document.createElement('div');
+            row.className = 'product-row';
+            row.setAttribute('data-idx', index);
+            row.innerHTML = `
+                <div class="product-header">
+                    <span>Produk ${index+1}</span>
+                    <button type="button" class="remove-product">Hapus</button>
+                </div>
+                <div class="form-group" style="margin-bottom:12px;">
+                    <select class="product-name" required>
+                        <option value="">Pilih produk</option>
+                        <option value="Nasi Goreng Spesial">🍚 Nasi Goreng Spesial - Rp 35.000</option>
+                        <option value="Mie Ayam Komplit">🍜 Mie Ayam Komplit - Rp 28.000</option>
+                        <option value="Es Teh Manis">🥤 Es Teh Manis - Rp 8.000</option>
+                        <option value="Kopi Susu">☕ Kopi Susu - Rp 15.000</option>
+                        <option value="Cucumber Fresh">🥒 Cucumber Fresh - Rp 12.000</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom:6px;">
+                    <input type="number" class="qty" placeholder="Kuantitas" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="catatan-produk" rows="1" placeholder="Catatan (level pedas, topping, dll)"></textarea>
+                </div>
+            `;
+            const removeBtn = row.querySelector('.remove-product');
+            removeBtn.addEventListener('click', function() {
+                row.remove();
+                updateProductNumbers();
+            });
+            return row;
+        }
+
+        function updateProductNumbers() {
+            const rows = document.querySelectorAll('.product-row');
+            rows.forEach((row, idx) => {
+                const span = row.querySelector('.product-header span');
+                if(span) span.innerText = `Produk ${idx+1}`;
+                row.setAttribute('data-idx', idx);
+                const removeBtn = row.querySelector('.remove-product');
+                if(rows.length === 1) {
+                    removeBtn.style.display = 'none';
+                } else {
+                    removeBtn.style.display = 'inline-block';
+                }
+            });
+        }
+
+        // Tambah produk
+        document.getElementById('addProductBtn').addEventListener('click', () => {
+            productCounter++;
+            const container = document.getElementById('productsContainer');
+            const newRow = createProductRow(productCounter-1);
+            container.appendChild(newRow);
+            updateProductNumbers();
+        });
+
+        // Setup awal: tombol hapus di produk pertama disembunyikan jika hanya 1
+        function initRemoveButtons() {
+            const rows = document.querySelectorAll('.product-row');
+            if(rows.length === 1) {
+                const btn = rows[0].querySelector('.remove-product');
+                if(btn) btn.style.display = 'none';
+            }
+        }
+        initRemoveButtons();
+
+        // Kirim data ke WhatsApp (format pesan rapi)
+        function formatWhatsAppMessage(formData) {
+            let message = `*🆕 ORDER BARU*%0A`;
+            message += `*Nama:* ${formData.nama}%0A`;
+            message += `*WA:* ${formData.waCustomer}%0A`;
+            message += `*Alamat:* ${formData.alamat || '-'}%0A`;
+            message += `%0A*🛍️ DAFTAR PESANAN:*%0A`;
+            formData.items.forEach((item, i) => {
+                message += `${i+1}. ${item.nama_produk} — ${item.qty} pcs`;
+                if(item.catatan) message += ` (Catatan: ${item.catatan})`;
+                message += `%0A`;
+            });
+            message += `%0A*📝 Keterangan:* ${formData.catatanTambahan || '-'}%0A`;
+            message += `*💳 Bayar:* ${formData.metodeBayar}%0A`;
+            message += `%0A_Dikirim via Online Order Form_`;
+            return message;
+        }
+
+        // Mengirim ke WhatsApp (menggunakan API WhatsApp Web langsung)
+        function sendToWhatsApp(waMessage) {
+            const waUrl = `https://wa.me/${ADMIN_WA_NUMBER}?text=${waMessage}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // Kirim data ke Google Sheets via Apps Script (opsional)
+        async function sendToGoogleSheets(orderData) {
+            if (!GOOGLE_SHEETS_API_URL) return;
+            try {
+                const response = await fetch(GOOGLE_SHEETS_API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // untuk sederhana, bisa pakai ini jika sudah deploy
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+                console.log("Data dikirim ke Sheets (mode no-cors)");
+            } catch(e) {
+                console.warn("Gagal kirim ke sheets:", e);
+            }
+        }
+
+        // Event submit
+        document.getElementById('orderForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Ambil data pemesan
+            const nama = document.getElementById('nama').value.trim();
+            const waCustomer = document.getElementById('waCustomer').value.trim();
+            const alamat = document.getElementById('alamat').value.trim();
+            const globalCatatan = document.getElementById('globalCatatan').value.trim();
+            const metodeBayar = document.getElementById('metodeBayar').value;
+
+            if(!nama || !waCustomer) {
+                alert("Nama dan Nomor WA pemesan harus diisi!");
+                return;
+            }
+
+            // Ambil semua produk rows
+            const productRows = document.querySelectorAll('.product-row');
+            let items = [];
+            let isValid = true;
+            productRows.forEach(row => {
+                const productNameSelect = row.querySelector('.product-name');
+                const productName = productNameSelect.value;
+                const qty = row.querySelector('.qty').value;
+                const catatan = row.querySelector('.catatan-produk').value;
+
+                if(!productName) {
+                    alert("Pilih semua produk terlebih dahulu!");
+                    isValid = false;
+                    return;
+                }
+                if(!qty || qty < 1) {
+                    alert("Kuantitas minimal 1");
+                    isValid = false;
+                    return;
+                }
+                items.push({
+                    nama_produk: productName,
+                    qty: parseInt(qty),
+                    catatan: catatan || ""
+                });
+            });
+            if(!isValid) return;
+
+            const orderData = {
+                timestamp: new Date().toISOString(),
+                nama_pemesan: nama,
+                wa_pemesan: waCustomer,
+                alamat: alamat,
+                items: items,
+                catatan_tambahan: globalCatatan,
+                metode_pembayaran: metodeBayar
+            };
+
+            // Format pesan WhatsApp untuk admin
+            const whatsappMsg = formatWhatsAppMessage({
+                nama: nama,
+                waCustomer: waCustomer,
+                alamat: alamat,
+                items: items,
+                catatanTambahan: globalCatatan,
+                metodeBayar: metodeBayar
+            });
+
+            // Kirim ke admin WA
+            sendToWhatsApp(whatsappMsg);
+            
+            // Kirim rekap ke Google Sheets jika tersedia
+            await sendToGoogleSheets(orderData);
+
+            alert(`✅ Pesanan berhasil dikirim ke admin!\nPesan WA akan terbuka, cukup tekan kirim.`);
+
+            // Opsional: reset form atau biarkan
+            // document.getElementById('orderForm').reset(); (jika ingin reset, hati2)
+        });
+    </script>
+</body>
+</html>

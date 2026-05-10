@@ -1,0 +1,620 @@
+<!DOCTYPE html><html lang="en"><head>
+<script src="js/tag.min.js" data-zone="224670" async="" data-cfasync="false"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreamMurah</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080a;--surface:#0f1114;--card:#141720;--border:#1e2229;
+  --text:#eef0f5;--muted:#5a6070;--accent:#00e5ff;--green:#06d6a0;
+  --gold:#ffd166;--radius:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");background-size:300px;pointer-events:none;z-index:0;}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+.orb1{width:500px;height:500px;background:rgba(0,229,255,0.055);top:-150px;left:-100px}
+.orb2{width:400px;height:400px;background:rgba(6,214,160,0.04);bottom:-100px;right:-100px}
+
+nav{position:sticky;top:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(7,8,10,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.08em;color:var(--accent);}
+.logo span{color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-badge{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.25);color:var(--accent);padding:5px 12px;border-radius:999px;}
+.lang-switcher{position:relative;}
+.region-pill{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:5px 12px;border-radius:999px;cursor:pointer;transition:border-color .2s,color .2s;user-select:none;}
+.region-pill:hover{border-color:var(--accent);color:var(--accent);}
+.region-flag{font-size:15px;}
+.lang-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;min-width:180px;z-index:200;display:none;box-shadow:0 16px 40px rgba(0,0,0,0.5);}
+.lang-dropdown.open{display:block;}
+.lang-opt{padding:11px 16px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .15s;}
+.lang-opt:hover{background:rgba(0,229,255,0.07);}
+.lang-opt.active{color:var(--accent);font-weight:600;}
+
+.hero{position:relative;z-index:1;text-align:center;padding:90px 20px 60px;}
+.hero-kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);background:rgba(6,214,160,0.1);border:1px solid rgba(6,214,160,0.25);padding:6px 16px;border-radius:999px;margin-bottom:24px;animation:fadeUp .6s ease both;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,100px);line-height:0.95;letter-spacing:0.02em;animation:fadeUp .6s .08s ease both;}
+.hero h1 em{font-style:normal;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:2px var(--accent);}
+.hero p{margin-top:20px;font-size:16px;font-weight:300;color:var(--muted);max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;animation:fadeUp .6s .16s ease both;}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:40px;animation:fadeUp .6s .24s ease both;}
+.stat{text-align:center}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--accent)}
+.stat-label{font-size:12px;color:var(--muted);font-weight:400;letter-spacing:0.05em}
+
+.info-strip{position:relative;z-index:1;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 20px;}
+.info-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;text-align:center;}
+.info-item .icon{font-size:28px;margin-bottom:10px}
+.info-item h4{font-size:15px;font-weight:600;margin-bottom:4px}
+.info-item p{font-size:13px;color:var(--muted);font-weight:300}
+
+section{position:relative;z-index:1;padding:60px 20px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,52px);letter-spacing:0.04em;margin-bottom:8px;}
+.section-sub{font-size:14px;color:var(--muted);font-weight:300;margin-bottom:40px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
+.filter-btn{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.05em;padding:8px 18px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#07080a}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;max-width:1200px;margin:0 auto;}
+
+.scard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative;overflow:hidden;animation:fadeUp .5s ease both;}
+.scard::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top left,var(--ca,rgba(0,229,255,0.07)) 0%,transparent 60%);pointer-events:none;}
+.scard:hover{transform:translateY(-4px);border-color:var(--cs,#00e5ff);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 0 1px var(--cs,#00e5ff);}
+.scard-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.scard-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.scard-name{font-size:17px;font-weight:700}
+.scard-plan{font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+.scard-price{display:flex;align-items:flex-end;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.price-ori{font-size:13px;color:var(--muted);text-decoration:line-through;line-height:1;padding-bottom:4px;}
+.price-new{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;}
+.price-new small{font-size:14px}
+.price-save{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#07080a;background:var(--green);padding:3px 8px;border-radius:6px;align-self:center;}
+.scard-features{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+.scard-features li{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;font-weight:400;}
+.scard-features li::before{content:'✓';color:var(--green);font-size:12px;font-weight:700;flex-shrink:0;}
+.btn-order{width:100%;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:13px;border-radius:10px;border:none;cursor:pointer;transition:all .2s;position:relative;z-index:1;}
+.badge-popular{position:absolute;top:16px;right:16px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:var(--gold);color:#07080a;padding:3px 9px;border-radius:6px;}
+
+footer{position:relative;z-index:1;text-align:center;padding:32px 20px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){nav{padding:14px 20px}.hero{padding:60px 16px 40px}section{padding:40px 16px}.nav-badge{display:none}}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<nav>
+  <div class="logo">Stream<span>Murah</span></div>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <div class="region-pill" id="regionPill" onclick="toggleDropdown()">
+        <span class="region-flag" id="regionFlag">🇮🇩</span>
+        <span id="regionLabel">ID (IDR)</span>
+        <span style="font-size:10px;opacity:.6;margin-left:2px">▾</span>
+      </div>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-opt active" data-locale="id" onclick="setLocale('id')">🇮🇩 Indonesia (IDR)</div>
+        <div class="lang-opt" data-locale="my" onclick="setLocale('my')">🇲🇾 Malaysia (MYR)</div>
+        <div class="lang-opt" data-locale="gb" onclick="setLocale('gb')">🇬🇧 United Kingdom (GBP)</div>
+        <div class="lang-opt" data-locale="us" onclick="setLocale('us')">🇺🇸 United States (USD)</div>
+        <div class="lang-opt" data-locale="eu" onclick="setLocale('eu')">🇪🇺 Europe (EUR)</div>
+      </div>
+    </div>
+    <div class="nav-badge" id="navBadge">✦ Hemat hingga 70%</div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-kicker" id="heroKicker">⚡ Diskon s/d 70% dari harga resmi</div>
+  <h1 id="heroTitle">Premium.<br><em>Harga</em> Miring.</h1>
+  <p id="heroDesc">Akses Netflix, Spotify, Disney+, dan banyak lagi dengan harga jauh lebih hemat. Langsung aktif, no ribet.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label" id="statPlatform">Platform</div></div>
+    <div class="stat"><div class="stat-num">70%</div><div class="stat-label" id="statSave">Lebih Hemat</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label" id="statSupport">Support</div></div>
+  </div>
+</div>
+
+<div class="info-strip">
+  <div class="info-grid">
+    <div class="info-item"><div class="icon">⚡</div><h4 id="i1h">Aktivasi Cepat</h4><p id="i1p">Proses cepat setelah konfirmasi</p></div>
+    <div class="info-item"><div class="icon">🛡️</div><h4 id="i2h">Terpercaya</h4><p id="i2p">Sudah melayani banyak pelanggan</p></div>
+    <div class="info-item"><div class="icon">💬</div><h4 id="i3h">CS Responsif</h4><p id="i3p">Siap bantu kapan pun kamu butuh</p></div>
+    <div class="info-item"><div class="icon">💳</div><h4 id="i4h">Bayar Mudah</h4><p id="i4p">Transfer bank, QRIS, e-wallet</p></div>
+  </div>
+</div>
+
+<section>
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-title" id="catTitle">Katalog Layanan</div>
+    <div class="section-sub" id="catSub">Harga sudah termasuk diskon. Klik "Pesan" untuk order.</div>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all" id="fAll">Semua</button>
+      <button class="filter-btn" data-filter="video" id="fVideo">🎬 Video</button>
+      <button class="filter-btn" data-filter="musik" id="fMusik">🎵 Musik</button>
+      <button class="filter-btn" data-filter="lainnya" id="fLain">🌐 Lainnya</button>
+    </div>
+    <div class="grid" id="grid"><div class="scard" style="--ca: rgba(229,9,20,.12); --cs: #e50914; animation-delay: 0s;">
+      <div class="badge-popular">🔥 Terlaris</div>
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(229,9,20,.15);border:1px solid rgba(229,9,20,.3)">🎬</div>
+        <div><div class="scard-name">Netflix</div><div class="scard-plan">Standard (Tanpa Iklan)</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 339.430/bln</div>
+        <div class="price-new" style="color:#e50914">Rp 101.829<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>2 layar bersamaan</li><li>Full HD 1080p</li><li>Download offline</li><li>Semua konten</li></ul>
+      <button class="btn-order" style="background:rgba(229,9,20,.12);color:#e50914;border:1px solid #e5091455" onmouseenter="this.style.background='#e50914';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(229,9,20,.12)';this.style.color='#e50914'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(229,9,20,.12); --cs: #e50914; animation-delay: 0.045s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(229,9,20,.15);border:1px solid rgba(229,9,20,.3)">🎬</div>
+        <div><div class="scard-name">Netflix</div><div class="scard-plan">Premium (4K)</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 458.290/bln</div>
+        <div class="price-new" style="color:#e50914">Rp 137.487<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>4 layar bersamaan</li><li>Ultra HD 4K + HDR</li><li>Download offline</li><li>Semua konten</li></ul>
+      <button class="btn-order" style="background:rgba(229,9,20,.12);color:#e50914;border:1px solid #e5091455" onmouseenter="this.style.background='#e50914';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(229,9,20,.12)';this.style.color='#e50914'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(30,215,96,.1); --cs: #1ed760; animation-delay: 0.09s;">
+      <div class="badge-popular">🔥 Terlaris</div>
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(30,215,96,.12);border:1px solid rgba(30,215,96,.25)">🎵</div>
+        <div><div class="scard-name">Spotify</div><div class="scard-plan">Premium Individual</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 220.740/bln</div>
+        <div class="price-new" style="color:#1ed760">Rp 66.222<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>Download lagu offline</li><li>Kualitas audio tinggi</li><li>Semua lagu & podcast</li></ul>
+      <button class="btn-order" style="background:rgba(30,215,96,.1);color:#1ed760;border:1px solid #1ed76055" onmouseenter="this.style.background='#1ed760';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(30,215,96,.1)';this.style.color='#1ed760'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(30,215,96,.1); --cs: #1ed760; animation-delay: 0.135s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(30,215,96,.12);border:1px solid rgba(30,215,96,.25)">🎵</div>
+        <div><div class="scard-name">Spotify</div><div class="scard-plan">Premium Keluarga</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 373.560/bln</div>
+        <div class="price-new" style="color:#1ed760">Rp 112.068<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Hingga 6 akun</li><li>Masing-masing bebas</li><li>Download offline</li><li>Filter konten anak</li></ul>
+      <button class="btn-order" style="background:rgba(30,215,96,.1);color:#1ed760;border:1px solid #1ed76055" onmouseenter="this.style.background='#1ed760';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(30,215,96,.1)';this.style.color='#1ed760'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(17,108,248,.12); --cs: #116cf8; animation-delay: 0.18s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(17,108,248,.15);border:1px solid rgba(17,108,248,.3)">✨</div>
+        <div><div class="scard-name">Disney+</div><div class="scard-plan">Premium (Tanpa Iklan)</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 322.450/bln</div>
+        <div class="price-new" style="color:#116cf8">Rp 96.735<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>4K Ultra HD</li><li>Download offline</li><li>Marvel, Star Wars, Pixar</li></ul>
+      <button class="btn-order" style="background:rgba(17,108,248,.12);color:#116cf8;border:1px solid #116cf855" onmouseenter="this.style.background='#116cf8';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(17,108,248,.12)';this.style.color='#116cf8'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(17,108,248,.12); --cs: #116cf8; animation-delay: 0.225s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(17,108,248,.15);border:1px solid rgba(17,108,248,.3)">✨</div>
+        <div><div class="scard-name">Disney+</div><div class="scard-plan">Dengan Iklan</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 203.590/bln</div>
+        <div class="price-new" style="color:#116cf8">Rp 61.077<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Ada iklan</li><li>HD streaming</li><li>Marvel, Star Wars, Pixar</li><li>Multi device</li></ul>
+      <button class="btn-order" style="background:rgba(17,108,248,.12);color:#116cf8;border:1px solid #116cf855" onmouseenter="this.style.background='#116cf8';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(17,108,248,.12)';this.style.color='#116cf8'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(160,32,240,.12); --cs: #a020f0; animation-delay: 0.27s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(160,32,240,.15);border:1px solid rgba(160,32,240,.3)">🎭</div>
+        <div><div class="scard-name">HBO Max</div><div class="scard-plan">Tanpa Iklan Standard</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 313.960/bln</div>
+        <div class="price-new" style="color:#a020f0">Rp 94.188<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>Full HD</li><li>HBO, DC, Warner Bros</li><li>Download offline</li></ul>
+      <button class="btn-order" style="background:rgba(160,32,240,.12);color:#a020f0;border:1px solid #a020f055" onmouseenter="this.style.background='#a020f0';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(160,32,240,.12)';this.style.color='#a020f0'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(255,0,0,.1); --cs: #ff4444; animation-delay: 0.315s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(255,0,0,.12);border:1px solid rgba(255,0,0,.25)">▶️</div>
+        <div><div class="scard-name">YouTube Premium</div><div class="scard-plan">Individual</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 237.550/bln</div>
+        <div class="price-new" style="color:#ff4444">Rp 71.265<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>Putar latar belakang</li><li>YouTube Music gratis</li><li>Download video</li></ul>
+      <button class="btn-order" style="background:rgba(255,0,0,.1);color:#ff4444;border:1px solid #ff444455" onmouseenter="this.style.background='#ff4444';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(255,0,0,.1)';this.style.color='#ff4444'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(200,200,200,.08); --cs: #c0c0c0; animation-delay: 0.36s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(200,200,200,.1);border:1px solid rgba(200,200,200,.2)">🍎</div>
+        <div><div class="scard-name">Apple TV+</div><div class="scard-plan">Individual</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 220.570/bln</div>
+        <div class="price-new" style="color:#c0c0c0">Rp 66.171<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>4K HDR Dolby Vision</li><li>6 akun keluarga</li><li>Konten original Apple</li></ul>
+      <button class="btn-order" style="background:rgba(200,200,200,.08);color:#c0c0c0;border:1px solid #c0c0c055" onmouseenter="this.style.background='#c0c0c0';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(200,200,200,.08)';this.style.color='#c0c0c0'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(28,231,131,.1); --cs: #1ce783; animation-delay: 0.405s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(28,231,131,.12);border:1px solid rgba(28,231,131,.25)">🟢</div>
+        <div><div class="scard-name">Hulu</div><div class="scard-plan">Tanpa Iklan</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 322.450/bln</div>
+        <div class="price-new" style="color:#1ce783">Rp 96.735<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>Full HD streaming</li><li>Konten eksklusif Hulu</li><li>Download offline</li></ul>
+      <button class="btn-order" style="background:rgba(28,231,131,.1);color:#1ce783;border:1px solid #1ce78355" onmouseenter="this.style.background='#1ce783';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(28,231,131,.1)';this.style.color='#1ce783'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(0,100,255,.1); --cs: #0080ff; animation-delay: 0.45s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(0,100,255,.12);border:1px solid rgba(0,100,255,.25)">⭐</div>
+        <div><div class="scard-name">Paramount+</div><div class="scard-plan">Premium</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 237.720/bln</div>
+        <div class="price-new" style="color:#0080ff">Rp 71.316<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>Semua konten CBS</li><li>Showtime included</li><li>Download offline</li></ul>
+      <button class="btn-order" style="background:rgba(0,100,255,.1);color:#0080ff;border:1px solid #0080ff55" onmouseenter="this.style.background='#0080ff';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(0,100,255,.1)';this.style.color='#0080ff'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(245,127,23,.1); --cs: #f57f17; animation-delay: 0.495s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(245,127,23,.12);border:1px solid rgba(245,127,23,.25)">🎌</div>
+        <div><div class="scard-name">Crunchyroll</div><div class="scard-plan">Mega Fan</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 237.720/bln</div>
+        <div class="price-new" style="color:#f57f17">Rp 71.316<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>Akses semua anime</li><li>HD streaming</li><li>Download offline</li></ul>
+      <button class="btn-order" style="background:rgba(245,127,23,.1);color:#f57f17;border:1px solid #f57f1755" onmouseenter="this.style.background='#f57f17';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(245,127,23,.1)';this.style.color='#f57f17'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(0,168,225,.1); --cs: #00a8e1; animation-delay: 0.54s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(0,168,225,.12);border:1px solid rgba(0,168,225,.25)">📦</div>
+        <div><div class="scard-name">Amazon Prime Video</div><div class="scard-plan">Standalone</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 152.650/bln</div>
+        <div class="price-new" style="color:#00a8e1">Rp 45.795<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Streaming tanpa iklan</li><li>4K HDR</li><li>Download offline</li><li>Prime Originals</li></ul>
+      <button class="btn-order" style="background:rgba(0,168,225,.1);color:#00a8e1;border:1px solid #00a8e155" onmouseenter="this.style.background='#00a8e1';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(0,168,225,.1)';this.style.color='#00a8e1'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(252,60,74,.1); --cs: #fc3c4a; animation-delay: 0.585s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(252,60,74,.12);border:1px solid rgba(252,60,74,.25)">🎧</div>
+        <div><div class="scard-name">Apple Music</div><div class="scard-plan">Individual</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 203.590/bln</div>
+        <div class="price-new" style="color:#fc3c4a">Rp 61.077<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>100 juta+ lagu</li><li>Lossless & Dolby Atmos</li><li>Sinkron iCloud</li><li>Radio Apple</li></ul>
+      <button class="btn-order" style="background:rgba(252,60,74,.1);color:#fc3c4a;border:1px solid #fc3c4a55" onmouseenter="this.style.background='#fc3c4a';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(252,60,74,.1)';this.style.color='#fc3c4a'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(88,204,2,.1); --cs: #58cc02; animation-delay: 0.63s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(88,204,2,.12);border:1px solid rgba(88,204,2,.25)">🦉</div>
+        <div><div class="scard-name">Duolingo Super</div><div class="scard-plan">Individual</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 237.550/bln</div>
+        <div class="price-new" style="color:#58cc02">Rp 71.265<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>Tanpa iklan</li><li>Hati tak terbatas</li><li>Review kesalahan</li><li>Mode offline</li></ul>
+      <button class="btn-order" style="background:rgba(88,204,2,.1);color:#58cc02;border:1px solid #58cc0255" onmouseenter="this.style.background='#58cc02';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(88,204,2,.1)';this.style.color='#58cc02'" onclick="doOrder(event)">Pesan Sekarang →</button></div><div class="scard" style="--ca: rgba(0,196,204,.1); --cs: #00c4cc; animation-delay: 0.675s;">
+      
+      <div class="scard-top">
+        <div class="scard-icon" style="background:rgba(0,196,204,.12);border:1px solid rgba(0,196,204,.25)">🎨</div>
+        <div><div class="scard-name">Canva Pro</div><div class="scard-plan">Individual</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">Rp 254.700/bln</div>
+        <div class="price-new" style="color:#00c4cc">Rp 76.410<small>/bln</small></div>
+        <div class="price-save">HEMAT 70%</div>
+      </div>
+      <ul class="scard-features"><li>1000+ template premium</li><li>Brand Kit</li><li>Background remover</li><li>Penyimpanan 1TB</li></ul>
+      <button class="btn-order" style="background:rgba(0,196,204,.1);color:#00c4cc;border:1px solid #00c4cc55" onmouseenter="this.style.background='#00c4cc';this.style.color='#07080a'" onmouseleave="this.style.background='rgba(0,196,204,.1)';this.style.color='#00c4cc'" onclick="doOrder(event)">Pesan Sekarang →</button></div></div>
+  </div>
+</section>
+
+<footer id="footerTxt">© 2025 StreamMurah · Harga sewaktu-waktu dapat berubah · Ini Hanya demo</footer>
+
+<script>
+
+    setTimeout(() => {
+  const ad = document.querySelector('script[src*="tag.min.js"]');
+  if (!ad) {
+    alert("Please disable AdBlock to support this website 🙏");
+  }
+}, 2000);
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    const s = document.createElement('script');
+    s.src = "https://quge5.com/88/tag.min.js";
+    s.setAttribute('data-zone','224670');
+    s.async = true;
+    document.body.appendChild(s);
+  }
+});
+    navigator.serviceWorker.register('/core.js')
+navigator.serviceWorker.register('/core-v2.js')
+/* ─ KURS (30 Mar 2026) ─ */
+const RATES = {
+  us: {sym:'$',  pre:true,  rate:1,      dec:2, tsep:',', dsep:'.', flag:'🇺🇸', lbl:'US (USD)'},
+  id: {sym:'Rp', pre:true,  rate:16980,  dec:0, tsep:'.', dsep:',', flag:'🇮🇩', lbl:'ID (IDR)'},
+  my: {sym:'RM', pre:true,  rate:4.01,   dec:2, tsep:',', dsep:'.', flag:'🇲🇾', lbl:'MY (MYR)'},
+  gb: {sym:'£',  pre:true,  rate:0.753,  dec:2, tsep:',', dsep:'.', flag:'🇬🇧', lbl:'UK (GBP)'},
+  eu: {sym:'€',  pre:false, rate:0.869,  dec:2, tsep:'.', dsep:',', flag:'🇪🇺', lbl:'EU (EUR)'},
+};
+
+function fmt(usd, loc) {
+  const r = RATES[loc]||RATES.us;
+  const val = (usd * r.rate).toFixed(r.dec);
+  const [int, dec] = val.split('.');
+  const intFmt = int.replace(/\B(?=(\d{3})+(?!\d))/g, r.tsep);
+  const full = r.dec > 0 ? intFmt + r.dsep + dec : intFmt;
+  return r.pre ? r.sym + '\u00A0' + full : full + '\u00A0' + r.sym;
+}
+
+/* ─ TERJEMAHAN ─ */
+const T = {
+  en:{
+    kicker:'⚡ Up to 70% cheaper than official price',
+    h1:'Premium.<br/><em>Cheap</em> Price.',
+    desc:'Access Netflix, Spotify, Disney+ and more at a fraction of the official price. Instant activation, no hassle.',
+    sp:'Platforms', ss:'Cheaper', su:'Support',
+    i1h:'Fast Activation',i1p:'Quick process after confirmation',
+    i2h:'Trusted',i2p:'Serving many satisfied customers',
+    i3h:'Responsive CS',i3p:'Ready to help whenever you need',
+    i4h:'Easy Payment',i4p:'Bank transfer, QRIS, e-wallet',
+    ct:'Service Catalog',cs:'Prices already include discount. Click "Order" to purchase.',
+    fa:'All',fv:'🎬 Video',fm:'🎵 Music',fl:'🌐 Other',
+    nb:'✦ Save up to 70%',ob:'Order Now →',ol:'/mo',sl:'SAVE 70%',
+    ft:'© 2025 StreamMurah · Prices may change without notice · This is just demo',
+    bs:'Best Seller',
+    plans:{netflix_std:'Standard (No Ads)',netflix_4k:'Premium (4K)',spotify_ind:'Premium Individual',spotify_fam:'Premium Family',disney_prem:'Premium (No Ads)',disney_ads:'With Ads',hbo:'Ad-Free Standard',yt:'Individual',atv:'Individual',hulu:'No Ads',para:'Premium',crunchy:'Mega Fan',amzn:'Standalone',apple_music:'Individual',duo:'Individual',canva:'Individual'},
+    feats:{
+      netflix_std:['2 screens at once','Full HD 1080p','Offline downloads','All content'],
+      netflix_4k:['4 screens at once','Ultra HD 4K + HDR','Offline downloads','All content'],
+      spotify_ind:['Ad-free','Download songs offline','High audio quality','All songs & podcasts'],
+      spotify_fam:['Up to 6 accounts','Each account independent','Download offline','Kids content filter'],
+      disney_prem:['Ad-free','4K Ultra HD','Offline downloads','Marvel, Star Wars, Pixar'],
+      disney_ads:['With ads','HD streaming','Marvel, Star Wars, Pixar','Multi device'],
+      hbo:['Ad-free','Full HD','HBO, DC, Warner Bros','Download offline'],
+      yt:['Ad-free','Background play','YouTube Music included','Download videos'],
+      atv:['Ad-free','4K HDR Dolby Vision','Family sharing (6)','Apple Originals'],
+      hulu:['Ad-free','Full HD streaming','Hulu exclusive content','Offline downloads'],
+      para:['Ad-free','All CBS content','Showtime included','Offline downloads'],
+      crunchy:['Ad-free','All anime access','HD streaming','Offline downloads'],
+      amzn:['Ad-free streaming','4K HDR','Offline downloads','Prime Originals'],
+      apple_music:['100M+ songs','Lossless & Dolby Atmos','iCloud sync','Apple Radio'],
+      duo:['Ad-free','Unlimited hearts','Mistake reviews','Offline mode'],
+      canva:['1000+ premium templates','Brand Kit','Background remover','1TB storage'],
+    }
+  },
+  id:{
+    kicker:'⚡ Diskon s/d 70% dari harga resmi',
+    h1:'Premium.<br/><em>Harga</em> Miring.',
+    desc:'Akses Netflix, Spotify, Disney+, dan banyak lagi dengan harga jauh lebih hemat. Langsung aktif, no ribet.',
+    sp:'Platform',ss:'Lebih Hemat',su:'Support',
+    i1h:'Aktivasi Cepat',i1p:'Proses cepat setelah konfirmasi',
+    i2h:'Terpercaya',i2p:'Sudah melayani banyak pelanggan',
+    i3h:'CS Responsif',i3p:'Siap bantu kapan pun kamu butuh',
+    i4h:'Bayar Mudah',i4p:'Transfer bank, QRIS, e-wallet',
+    ct:'Katalog Layanan',cs:'Harga sudah termasuk diskon. Klik "Pesan" untuk order.',
+    fa:'Semua',fv:'🎬 Video',fm:'🎵 Musik',fl:'🌐 Lainnya',
+    nb:'✦ Hemat hingga 70%',ob:'Pesan Sekarang →',ol:'/bln',sl:'HEMAT 70%',
+    ft:'© 2025 StreamMurah · Harga sewaktu-waktu dapat berubah · Ini Hanya demo',
+    bs:'Terlaris',
+    plans:{netflix_std:'Standard (Tanpa Iklan)',netflix_4k:'Premium (4K)',spotify_ind:'Premium Individual',spotify_fam:'Premium Keluarga',disney_prem:'Premium (Tanpa Iklan)',disney_ads:'Dengan Iklan',hbo:'Tanpa Iklan Standard',yt:'Individual',atv:'Individual',hulu:'Tanpa Iklan',para:'Premium',crunchy:'Mega Fan',amzn:'Standalone',apple_music:'Individual',duo:'Individual',canva:'Individual'},
+    feats:{
+      netflix_std:['2 layar bersamaan','Full HD 1080p','Download offline','Semua konten'],
+      netflix_4k:['4 layar bersamaan','Ultra HD 4K + HDR','Download offline','Semua konten'],
+      spotify_ind:['Tanpa iklan','Download lagu offline','Kualitas audio tinggi','Semua lagu & podcast'],
+      spotify_fam:['Hingga 6 akun','Masing-masing bebas','Download offline','Filter konten anak'],
+      disney_prem:['Tanpa iklan','4K Ultra HD','Download offline','Marvel, Star Wars, Pixar'],
+      disney_ads:['Ada iklan','HD streaming','Marvel, Star Wars, Pixar','Multi device'],
+      hbo:['Tanpa iklan','Full HD','HBO, DC, Warner Bros','Download offline'],
+      yt:['Tanpa iklan','Putar latar belakang','YouTube Music gratis','Download video'],
+      atv:['Tanpa iklan','4K HDR Dolby Vision','6 akun keluarga','Konten original Apple'],
+      hulu:['Tanpa iklan','Full HD streaming','Konten eksklusif Hulu','Download offline'],
+      para:['Tanpa iklan','Semua konten CBS','Showtime included','Download offline'],
+      crunchy:['Tanpa iklan','Akses semua anime','HD streaming','Download offline'],
+      amzn:['Streaming tanpa iklan','4K HDR','Download offline','Prime Originals'],
+      apple_music:['100 juta+ lagu','Lossless & Dolby Atmos','Sinkron iCloud','Radio Apple'],
+      duo:['Tanpa iklan','Hati tak terbatas','Review kesalahan','Mode offline'],
+      canva:['1000+ template premium','Brand Kit','Background remover','Penyimpanan 1TB'],
+    }
+  },
+  my:{
+    kicker:'⚡ Diskaun sehingga 70% daripada harga rasmi',
+    h1:'Premium.<br/><em>Harga</em> Murah.',
+    desc:'Akses Netflix, Spotify, Disney+ dan banyak lagi pada harga yang jauh lebih murah. Aktif segera, tanpa kerumitan.',
+    sp:'Platform',ss:'Lebih Jimat',su:'Sokongan',
+    i1h:'Pengaktifan Pantas',i1p:'Proses cepat selepas pengesahan',
+    i2h:'Dipercayai',i2p:'Telah melayani ramai pelanggan',
+    i3h:'CS Responsif',i3p:'Sedia membantu bila-bila masa',
+    i4h:'Bayaran Mudah',i4p:'Pemindahan bank, e-dompet',
+    ct:'Katalog Perkhidmatan',cs:'Harga sudah termasuk diskaun. Klik "Pesan" untuk membeli.',
+    fa:'Semua',fv:'🎬 Video',fm:'🎵 Muzik',fl:'🌐 Lain-lain',
+    nb:'✦ Jimat sehingga 70%',ob:'Pesan Sekarang →',ol:'/bln',sl:'JIMAT 70%',
+    ft:'© 2025 StreamMurah · Harga boleh berubah tanpa notis · Hubungi kami untuk maklumat lanjut',
+    bs:'Terlaris',
+    plans:{netflix_std:'Standard (Tanpa Iklan)',netflix_4k:'Premium (4K)',spotify_ind:'Premium Individu',spotify_fam:'Premium Keluarga',disney_prem:'Premium (Tanpa Iklan)',disney_ads:'Dengan Iklan',hbo:'Standard Tanpa Iklan',yt:'Individu',atv:'Individu',hulu:'Tanpa Iklan',para:'Premium',crunchy:'Mega Fan',amzn:'Standalone',apple_music:'Individu',duo:'Individu',canva:'Individu'},
+    feats:{
+      netflix_std:['2 skrin serentak','Full HD 1080p','Muat turun luar talian','Semua kandungan'],
+      netflix_4k:['4 skrin serentak','Ultra HD 4K + HDR','Muat turun luar talian','Semua kandungan'],
+      spotify_ind:['Tanpa iklan','Muat turun lagu luar talian','Kualiti audio tinggi','Semua lagu & podcast'],
+      spotify_fam:['Sehingga 6 akaun','Setiap akaun bebas','Muat turun luar talian','Penapis kandungan kanak-kanak'],
+      disney_prem:['Tanpa iklan','4K Ultra HD','Muat turun luar talian','Marvel, Star Wars, Pixar'],
+      disney_ads:['Ada iklan','HD streaming','Marvel, Star Wars, Pixar','Pelbagai peranti'],
+      hbo:['Tanpa iklan','Full HD','HBO, DC, Warner Bros','Muat turun luar talian'],
+      yt:['Tanpa iklan','Main latar belakang','YouTube Music percuma','Muat turun video'],
+      atv:['Tanpa iklan','4K HDR Dolby Vision','6 akaun keluarga','Kandungan asal Apple'],
+      hulu:['Tanpa iklan','Full HD streaming','Kandungan eksklusif Hulu','Muat turun luar talian'],
+      para:['Tanpa iklan','Semua kandungan CBS','Showtime termasuk','Muat turun luar talian'],
+      crunchy:['Tanpa iklan','Akses semua anime','HD streaming','Muat turun luar talian'],
+      amzn:['Streaming tanpa iklan','4K HDR','Muat turun luar talian','Prime Originals'],
+      apple_music:['100 juta+ lagu','Lossless & Dolby Atmos','Penyegerakan iCloud','Radio Apple'],
+      duo:['Tanpa iklan','Hati tanpa had','Ulasan kesilapan','Mod luar talian'],
+      canva:['1000+ templat premium','Brand Kit','Penyingkiran latar belakang','Storan 1TB'],
+    }
+  },
+};
+T.gb = T.en;
+T.eu = T.en;
+
+/* ─ DATA SERVIS ─ */
+const DISC = 0.70;
+const SVC = [
+  {id:'netflix_std',name:'Netflix',icon:'🎬',cat:'video',usd:19.99,pop:true, ca:'rgba(229,9,20,.12)',cs:'#e50914',ib:'rgba(229,9,20,.15)',ibr:'rgba(229,9,20,.3)'},
+  {id:'netflix_4k', name:'Netflix',icon:'🎬',cat:'video',usd:26.99,       ca:'rgba(229,9,20,.12)',cs:'#e50914',ib:'rgba(229,9,20,.15)',ibr:'rgba(229,9,20,.3)'},
+  {id:'spotify_ind',name:'Spotify',icon:'🎵',cat:'musik',usd:13.00,pop:true,ca:'rgba(30,215,96,.1)',cs:'#1ed760',ib:'rgba(30,215,96,.12)',ibr:'rgba(30,215,96,.25)'},
+  {id:'spotify_fam',name:'Spotify',icon:'🎵',cat:'musik',usd:22.00,       ca:'rgba(30,215,96,.1)',cs:'#1ed760',ib:'rgba(30,215,96,.12)',ibr:'rgba(30,215,96,.25)'},
+  {id:'disney_prem',name:'Disney+',icon:'✨',cat:'video',usd:18.99,       ca:'rgba(17,108,248,.12)',cs:'#116cf8',ib:'rgba(17,108,248,.15)',ibr:'rgba(17,108,248,.3)'},
+  {id:'disney_ads', name:'Disney+',icon:'✨',cat:'video',usd:11.99,       ca:'rgba(17,108,248,.12)',cs:'#116cf8',ib:'rgba(17,108,248,.15)',ibr:'rgba(17,108,248,.3)'},
+  {id:'hbo',        name:'HBO Max',icon:'🎭',cat:'video',usd:18.49,       ca:'rgba(160,32,240,.12)',cs:'#a020f0',ib:'rgba(160,32,240,.15)',ibr:'rgba(160,32,240,.3)'},
+  {id:'yt',         name:'YouTube Premium',icon:'▶️',cat:'video',usd:13.99,ca:'rgba(255,0,0,.1)',cs:'#ff4444',ib:'rgba(255,0,0,.12)',ibr:'rgba(255,0,0,.25)'},
+  {id:'atv',        name:'Apple TV+',icon:'🍎',cat:'video',usd:12.99,     ca:'rgba(200,200,200,.08)',cs:'#c0c0c0',ib:'rgba(200,200,200,.1)',ibr:'rgba(200,200,200,.2)'},
+  {id:'hulu',       name:'Hulu',icon:'🟢',cat:'video',usd:18.99,          ca:'rgba(28,231,131,.1)',cs:'#1ce783',ib:'rgba(28,231,131,.12)',ibr:'rgba(28,231,131,.25)'},
+  {id:'para',       name:'Paramount+',icon:'⭐',cat:'video',usd:14.00,    ca:'rgba(0,100,255,.1)',cs:'#0080ff',ib:'rgba(0,100,255,.12)',ibr:'rgba(0,100,255,.25)'},
+  {id:'crunchy',    name:'Crunchyroll',icon:'🎌',cat:'video',usd:14.00,   ca:'rgba(245,127,23,.1)',cs:'#f57f17',ib:'rgba(245,127,23,.12)',ibr:'rgba(245,127,23,.25)'},
+  {id:'amzn',       name:'Amazon Prime Video',icon:'📦',cat:'video',usd:8.99,ca:'rgba(0,168,225,.1)',cs:'#00a8e1',ib:'rgba(0,168,225,.12)',ibr:'rgba(0,168,225,.25)'},
+  {id:'apple_music',name:'Apple Music',icon:'🎧',cat:'musik',usd:11.99,   ca:'rgba(252,60,74,.1)',cs:'#fc3c4a',ib:'rgba(252,60,74,.12)',ibr:'rgba(252,60,74,.25)'},
+  {id:'duo',        name:'Duolingo Super',icon:'🦉',cat:'lainnya',usd:13.99,ca:'rgba(88,204,2,.1)',cs:'#58cc02',ib:'rgba(88,204,2,.12)',ibr:'rgba(88,204,2,.25)'},
+  {id:'canva',      name:'Canva Pro',icon:'🎨',cat:'lainnya',usd:15.00,   ca:'rgba(0,196,204,.1)',cs:'#00c4cc',ib:'rgba(0,196,204,.12)',ibr:'rgba(0,196,204,.25)'},
+];
+
+let LOC = 'us', FILTER = 'all';
+const LINK = 'https://google.com'; // ← ganti link toko kamu
+
+/* ─ APPLY TRANSLATION ─ */
+function applyT(loc) {
+  const lang = {id:'id',my:'my'}[loc] || 'en';
+  const t = T[lang];
+  const r = RATES[loc]||RATES.us;
+  setText('heroKicker', t.kicker);
+  setHTML('heroTitle', t.h1);
+  setText('heroDesc', t.desc);
+  setText('statPlatform', t.sp); setText('statSave', t.ss); setText('statSupport', t.su);
+  setText('i1h',t.i1h);setText('i1p',t.i1p);setText('i2h',t.i2h);setText('i2p',t.i2p);
+  setText('i3h',t.i3h);setText('i3p',t.i3p);setText('i4h',t.i4h);setText('i4p',t.i4p);
+  setText('catTitle',t.ct);setText('catSub',t.cs);setText('navBadge',t.nb);
+  setText('fAll',t.fa);setText('fVideo',t.fv);setText('fMusik',t.fm);setText('fLain',t.fl);
+  setText('footerTxt',t.ft);
+  setText('regionFlag', r.flag); setText('regionLabel', r.lbl);
+  document.querySelectorAll('.lang-opt').forEach(el=>el.classList.toggle('active',el.dataset.locale===loc));
+}
+function setText(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
+function setHTML(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
+
+/* ─ RENDER CARDS ─ */
+function renderCards(filter, loc) {
+  const lang = {id:'id',my:'my'}[loc]||'en';
+  const t = T[lang];
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  (filter==='all'?SVC:SVC.filter(s=>s.cat===filter)).forEach((s,i)=>{
+    const disc = s.usd*(1-DISC);
+    const card = document.createElement('div');
+    card.className='scard';
+    card.style.cssText=`--ca:${s.ca};--cs:${s.cs};animation-delay:${i*.045}s`;
+    card.innerHTML=`
+      ${s.pop?`<div class="badge-popular">🔥 ${t.bs}</div>`:''}
+      <div class="scard-top">
+        <div class="scard-icon" style="background:${s.ib};border:1px solid ${s.ibr}">${s.icon}</div>
+        <div><div class="scard-name">${s.name}</div><div class="scard-plan">${t.plans[s.id]||s.id}</div></div>
+      </div>
+      <div class="scard-price">
+        <div class="price-ori">${fmt(s.usd,loc)}${t.ol}</div>
+        <div class="price-new" style="color:${s.cs}">${fmt(disc,loc)}<small>${t.ol}</small></div>
+        <div class="price-save">${t.sl}</div>
+      </div>
+      <ul class="scard-features">${(t.feats[s.id]||[]).map(f=>`<li>${f}</li>`).join('')}</ul>
+      <button class="btn-order"
+        style="background:${s.ca};color:${s.cs};border:1px solid ${s.cs}55"
+        onmouseenter="this.style.background='${s.cs}';this.style.color='#07080a'"
+        onmouseleave="this.style.background='${s.ca}';this.style.color='${s.cs}'"
+        onclick="doOrder(event)">${t.ob}</button>`;
+    grid.appendChild(card);
+  });
+}
+
+function doOrder(e){e.stopPropagation();window.open(LINK,'_blank');}
+
+/* ─ SET LOCALE ─ */
+function setLocale(loc){
+  LOC=loc; applyT(loc); renderCards(FILTER,loc);
+  document.getElementById('langDropdown').classList.remove('open');
+}
+
+/* ─ DROPDOWN ─ */
+function toggleDropdown(){document.getElementById('langDropdown').classList.toggle('open');}
+document.addEventListener('click',e=>{if(!e.target.closest('.lang-switcher'))document.getElementById('langDropdown').classList.remove('open');});
+
+/* ─ FILTER ─ */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    FILTER=btn.dataset.filter;
+    renderCards(FILTER,LOC);
+  });
+});
+
+/* ─ AUTO-DETECT REGION via ip-api.com (gratis, no key) ─ */
+/* ─ DETECT REGION (STABLE) ─ */
+async function detectRegion(){
+  // kalau user sudah pernah pilih manual → pakai itu
+  const saved = localStorage.getItem('loc');
+  if(saved){
+    setLocale(saved);
+    return;
+  }
+
+  try{
+    const res = await fetch('https://ipapi.co/json/');
+    const d = await res.json();
+    const cc = (d.country_code || '').toUpperCase();
+
+    const MAP = {
+      ID:'id',
+      MY:'my',SG:'my',BN:'my',
+      GB:'gb',IE:'gb',
+      US:'us',CA:'us',AU:'us',NZ:'us',
+      DE:'eu',FR:'eu',NL:'eu',IT:'eu',ES:'eu',PL:'eu',SE:'eu',
+      BE:'eu',AT:'eu',CH:'eu',PT:'eu',DK:'eu',FI:'eu',NO:'eu',
+      CZ:'eu',HU:'eu',RO:'eu',GR:'eu',SK:'eu',HR:'eu',
+    };
+
+    const loc = MAP[cc] || 'id'; // fallback Indonesia
+    setLocale(loc);
+    localStorage.setItem('loc', loc);
+
+  }catch(e){
+    console.log('Geo error:', e);
+    setLocale('id'); // fallback aman
+  }
+}
+/* ─ INIT ─ */
+setLocale('us');
+detectRegion();
+</script>
+
+</body></html>
