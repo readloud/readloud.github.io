@@ -1,5 +1,10 @@
+# Allow all bots by default
 User-agent: *
 Allow: /
+
+# Block specific paths
 Disallow: /old-database/
 Disallow: /private/
-Sitemap: https://readloud.github.io/sitemap.xml
+
+# Sitemap
+Sitemap: readloud.github.io/sitemap.xml
