@@ -176,6 +176,66 @@
         .text-glow {
             text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
         }
+		
+		/* Overlay background */
+		.ad-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.7);
+			display: none; /* Ubah ke flex lewat JS */
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			padding: 20px;
+			box-sizing: border-box;
+		}
+
+		/* Banner container */
+		.ad-banner {
+			position: relative;
+			width: auto;       
+			max-width: 90%;    
+			max-height: 85vh;  
+			background: #fff;
+			padding: 10px;
+			border-radius: 8px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+			box-sizing: border-box;
+			
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		/* Close Button */
+		.close-btn {
+			position: absolute;
+			top: -15px;
+			right: -15px;
+			background: #333;
+			color: #fff;
+			border: none;
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			font-size: 20px;
+			cursor: pointer;
+			z-index: 10000; 
+		}
+
+		/* Banner Image */
+		.ad-banner img {
+			width: auto;          
+			max-width: 100%;      
+			height: auto;         
+			max-height: calc(85vh - 20px); 
+			object-fit: contain;
+			display: block;
+			border-radius: 4px;
+		}
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden">
@@ -209,7 +269,7 @@
 				<a href="https://ffmpeg-studio.vercel.app" class="btn btn-primary text-xs bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-lg text-gray-400 hover:text-brand-cyan transition-all hidden sm:inline-flex items-center gap-1">
 				<i class="fa-solid fa-star"></i>SoundDrive AI Studio
 						</button>
-                <a href="#customizer" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-cyan hover:from-brand-700 hover:to-brand-cyan text-white text-sm font-semibold transition-all shadow-md hover:shadow-brand-600/25"> Pesan Sekarang <i class="fa fa-shopping-bag"></i>
+                <a href="#customizer" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-cyan hover:from-brand-700 hover:to-brand-cyan text-white text-sm font-semibold transition-all shadow-md hover:shadow-brand-600/25"> Dapatkan Sekarang <i class="fa fa-shopping-bag"></i>
                 </a>
             </div>
 
@@ -227,7 +287,7 @@
             <a href="#harga" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-brand-500 transition-colors font-medium">Paket Harga</a>
             <a href="#faq" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-brand-500 transition-colors font-medium">FAQ</a>
             <a href="#customizer" onclick="toggleMobileMenu()" class="block text-center w-full px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-brand-cyan text-white font-semibold shadow-md">
-                Pesan Sekarang
+                Dapatkan Sekarang
             </a>
         </div>
     </header>
@@ -274,7 +334,7 @@
                     <!-- CTA Buttons -->
                     <div class="mt-10 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
                         <a href="#customizer" class="px-8 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-cyan hover:from-brand-700 hover:to-brand-cyan text-white font-bold text-base transition-all shadow-lg shadow-brand-600/20 hover:shadow-brand-600/35 transform hover:-translate-y-1">
-                            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Desain Flashdisk-mu
+                            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Dapatkan Flashdisk-mu
                         </a>
                         <a href="#genre" class="px-8 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 hover:text-white font-semibold text-base transition-all flex items-center justify-center gap-2">
                             <i class="fa-solid fa-circle-play text-brand-cyan"></i> Dengar Kualitas Musik
@@ -824,7 +884,7 @@
     <section id="harga" class="py-24 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-xs uppercase tracking-widest font-black text-brand-500">Pilihan Paket Hemat</h2>
+                <h2 class="text-xs uppercase tracking-widest font-black text-brand-500">Harga Terbaik</h2>
                 <p class="mt-3 text-3xl sm:text-4xl font-extrabold text-white">Investasi Musik Tanpa Ribet</p>
                 <p class="mt-4 text-slate-400">Pilih kapasitas terbaik yang paling pas dengan koleksi selera musik mobil dan gadget harian Anda.</p>
             </div>
@@ -1208,7 +1268,80 @@
             </div>
         </div>
     </footer>
-	
+				<div id="popup-ad-overlay" class="ad-overlay">
+				<div class="ad-banner">
+					<button id="close-ad-btn" class="close-btn">&times;</button>
+					<a href="#customizer" target="_blank">
+						<img src="images/ad-banner.png" alt="Create Your Mix Tape Now">
+					</a>
+				</div>
+			</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const overlay = document.getElementById("popup-ad-overlay");
+    const closeBtn = document.getElementById("close-ad-btn");
+    
+    // PENGATURAN WAKTU (dalam milidetik)
+    const COOLDOWN_TIME = 30 * 60 * 1000; // 30 menit (Ubah angka 30 menjadi 15 jika ingin 15 menit)
+    const AUTO_CLOSE_TIME = 8000;         // 8 detik untuk close otomatis
+    const INITIAL_DELAY = 3000;           // 3 detik delay pertama kali muncul saat web dibuka
+
+    let autoCloseTimeout; // Menyimpan timer auto-close
+
+    // Fungsi untuk memunculkan iklan
+    function showAd() {
+        overlay.style.display = "flex";
+
+        // Fitur: Otomatis close dalam 5 detik
+        autoCloseTimeout = setTimeout(function() {
+            closeAd();
+        }, AUTO_CLOSE_TIME);
+    }
+
+    // Fungsi untuk menutup iklan dan mencatat waktu ditutup
+    function closeAd() {
+        overlay.style.display = "none";
+        
+        // Batalkan timeout otomatis jika user klik tombol close manual sebelum 5 detik
+        clearTimeout(autoCloseTimeout); 
+
+        // Catat waktu sekarang (dalam milidetik) ke localStorage
+        const now = new Date().getTime();
+        localStorage.setItem("adLastClosedTime", now);
+    }
+
+    // --- LOGIKA UTAMA JALANNYA IKLAN ---
+    const lastClosed = localStorage.getItem("adLastClosedTime");
+    const now = new Date().getTime();
+
+    if (!lastClosed) {
+        // Kondisi 1: Jika user BARU PERTAMA KALI buka web, munculkan setelah delay 3 detik
+        setTimeout(showAd, INITIAL_DELAY);
+    } else {
+        // Kondisi 2: Jika user sudah pernah menutup iklan sebelumnya
+        const timePassed = now - parseInt(lastClosed);
+
+        if (timePassed >= COOLDOWN_TIME) {
+            // Jika sudah lewat dari 10/15 menit, langsung munculkan setelah delay 3 detik
+            setTimeout(showAd, INITIAL_DELAY);
+        } else {
+            // Jika BELUM lewat 10/15 menit, hitung sisa waktunya, lalu munculkan secara presisi
+            const remainingTime = COOLDOWN_TIME - timePassed;
+            setTimeout(showAd, remainingTime);
+        }
+    }
+
+    // Tombol close manual
+    closeBtn.addEventListener("click", closeAd);
+
+    // Close manual jika klik area hitam di luar gambar
+    overlay.addEventListener("click", function(e) {
+        if (e.target === overlay) {
+            closeAd();
+        }
+    });
+});
+</script>
 <script>
 	// Fungsi untuk membaca isi file text yang diupload secara real-time
 	function handleFileText() {
