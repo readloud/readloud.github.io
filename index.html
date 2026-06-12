@@ -695,10 +695,11 @@
 							 </div>
 						 </div>
 							<div>
-								<label class="block text-sm font-semibold text-slate-300 mb-3">
-									Request Lagu Tambahan (Opsional)
-								</label>
-								<div class="space-y-3">
+								<div class="mt-4 space-y-3">
+									<label class="block text-sm font-semibold text-slate-300">
+										Request Lagu Tambahan (Opsional)
+									</label>
+									
 									<div class="relative">
 										<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
 											<i class="fa-solid fa-music"></i>
@@ -707,10 +708,11 @@
 									</div>
 
 									<div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex flex-col gap-2">
-										<span class="text-xs text-slate-400 flex items-center gap-1">
-											<i class="fa-solid fa-file-lines text-brand-cyan"></i> Atau upload daftar lagu (.txt)
+										<span class="text-xs text-slate-400 flex items-center gap-2">
+											<i class="fa-solid fa-file-lines text-cyan-400"></i> Atau upload daftar lagu (.txt)
 										</span>
-										<input type="file" id="customFileTxt" accept=".txt" onchange="handleFileText()" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-900 file:text-brand-cyan hover:file:bg-slate-800 cursor-pointer">
+										<input type="file" id="customFileTxt" accept=".txt" onchange="handleFileText()" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-900 file:text-cyan-400 hover:file:bg-slate-800 cursor-pointer">
+										
 										<input type="hidden" id="fileContentHidden" value="">
 									</div>
 								</div>
@@ -1342,29 +1344,30 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
-<script>
-	// Fungsi untuk membaca isi file text yang diupload secara real-time
-	function handleFileText() {
-		const fileInput = document.getElementById('customFileTxt');
-		const hiddenInput = document.getElementById('fileContentHidden');
-		
-		if (fileInput.files.length === 0) {
-			hiddenInput.value = "";
-			return;
-		}
-		
-		const file = fileInput.files[0];
-		const reader = new FileReader();
-		
-		reader.onload = function(e) {
-			// Mengambil baris text dan memotongnya agar tidak terlalu panjang saat dikirim ke WA
-			let content = e.target.result;
-			// Opsional: Batasi karakter atau bersihkan baris baru agar rapi di WA
-			hiddenInput.value = content.trim().substring(0, 300) + (content.length > 300 ? '... (dipotong)' : '');
-		};
-		
-		reader.readAsText(file);
-		}
+	<script>
+		// Fungsi untuk membaca isi file text yang diupload secara real-time
+			function handleFileText() {
+				const fileInput = document.getElementById('customFileTxt');
+				const hiddenInput = document.getElementById('fileContentHidden');
+				
+				if (!fileInput || fileInput.files.length === 0) {
+					if (hiddenInput) hiddenInput.value = "";
+					return;
+				}
+				
+				const file = fileInput.files[0];
+				const reader = new FileReader();
+				
+				reader.onload = function(e) {
+					let content = e.target.result;
+					// Membatasi teks agar tidak terlalu panjang saat masuk ke chat WhatsApp (Max 300 karakter)
+					if (hiddenInput) {
+						hiddenInput.value = content.trim().substring(0, 300) + (content.length > 300 ? '... (dipotong)' : '');
+					}
+				};
+				
+				reader.readAsText(file);
+			}
 
          // CONFIGURATOR STATES
         let selectedCapacity = "32GB";
@@ -1630,57 +1633,55 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Kirim Order ke WhatsApp (Fungsi yang sebelumnya terputus)
-        function submitOrderWhatsApp(event) {
-            if (event) event.preventDefault();
+        function submitOrderWhatsApp(e) {
+			if (e) e.preventDefault();
 
-            if (typeof fbq === 'function') {
-                fbq('track', 'Lead', { 
-                    content_name: 'Flashdisk Musik Kustom V2', 
-                    value: selectedPrice, 
-                    currency: 'IDR' 
-                });
-            }
+			// 1. Ambil data kustomisasi standar
+			const engraveText = document.getElementById('engraveText').value || 'Tanpa Grafir';
 
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const address = document.getElementById('custAddress').value;
-            const courier = document.getElementById('custCourier').value;
-            
-            // Mengambil daftar genre terpilih
-            const selectedGenreElems = document.getElementsByName('genreSelected');
-            const genreList = [];
-            selectedGenreElems.forEach(elem => {
-                if (elem.checked) genreList.push(elem.value);
-            });
-            const genresText = genreList.length > 0 ? genreList.join(', ') : 'Default Paket';
-			const customSongs = document.getElementById('customSongsInput').value || 'Tidak ada';
-			const txtFileContent = document.getElementById('fileContentHidden').value || 'Tidak ada file diupload';
+			// 2. Ambil data genre yang dicentang
+			const checkedGenres = document.querySelectorAll('input[name="genreSelected"]:checked');
+			let genresText = '';
+			if (checkedGenres.length > 0) {
+				const genres = [];
+				checkedGenres.forEach(cb => genres.push(cb.value));
+				genresText = genres.join(', ');
+			} else {
+				genresText = 'Tidak ada genre dipilih';
+			}
 
-            // Membuat format pesan teks otomatis
-            const message = `*Halo SoundDrive, saya ingin memesan:*\n` +
-                            `-----------------------------------------\n` +
-                            `*Nama Penerima :* ${name}\n` +
-                            `*No. WhatsApp  :* ${phone}\n` +
-                            `*Alamat Kirim  :* ${address}\n` +
-                            `*Ekspedisi     :* ${courier}\n` +
-                            `-----------------------------------------\n` +
-                            `*PESANAN CUSTOMISASI*\n` +
+			// 3. Ambil data Input Text & File Text baru (Ambil dengan aman agar tidak error jika elemen belum ada)
+			const customSongsInput = document.getElementById('customSongsInput');
+			const fileContentHidden = document.getElementById('fileContentHidden');
+			
+			const customSongs = customSongsInput ? (customSongsInput.value.trim() || 'Tidak ada') : 'Tidak ada';
+			const txtFileContent = fileContentHidden ? (fileContentHidden.value.trim() || 'Tidak ada file diupload') : 'Tidak ada file diupload';
+
+			// 4. Susun Format Pesan WhatsApp
+			const message = `Halo SoundDrive, saya ingin memesan:\n` +
+							`-----------------------------------------\n` +
+							`*PESANAN CUSTOMISASI*\n` +
 							`*Kapasitas     :* ${selectedCapacity}\n` +
 							`*Warna Drive   :* ${selectedMetal.toUpperCase()}\n` +
 							`*Teks Grafir   :* ${engraveText}\n` +
 							`*Genre Dipilih :* ${genresText}\n` +
 							`*Lagu Kustom   :* ${customSongs}\n` +
 							`*Isi File Txt  :* ${txtFileContent}\n` +
-                            `-----------------------------------------\n` +
-                            `*TOTAL HARGA   :* Rp ${selectedPrice.toLocaleString('id-ID')}\n\n` +
-                            `Mohon segera diproses pesanan saya, Kak! Terima kasih.`;
+							`-----------------------------------------\n` +
+							`*TOTAL HARGA   :* Rp ${selectedPrice.toLocaleString('id-ID')}\n\n` +
+							`Mohon segera diproses pesanan saya, Kak! Terima kasih.`;
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappnum = atob(waBase64);
+			const encodedMessage = encodeURIComponent(message);
+			const whatsappnum = atob(waBase64);
 
-            window.open(`https://api.whatsapp.com/send?phone=${whatsappnum}&text=${encodedMessage}`, '_blank');
-            closeOrderModal();
-        }
+			// 5. Redirect ke WhatsApp
+			window.open(`https://api.whatsapp.com/send?phone=${whatsappnum}&text=${encodedMessage}`, '_blank');
+			
+			// Tutup modal jika fungsi closeOrderModal tersedia
+			if (typeof closeOrderModal === "function") {
+				closeOrderModal();
+				}
+			}
 
         // On Load Initialization
         window.onload = function() {
