@@ -1634,54 +1634,70 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Kirim Order ke WhatsApp (Fungsi yang sebelumnya terputus)
         function submitOrderWhatsApp(e) {
-			if (e) e.preventDefault();
+    if (e) e.preventDefault();
 
-			// 1. Ambil data kustomisasi standar
-			const engraveText = document.getElementById('engraveText').value || 'Tanpa Grafir';
+    // 1. Ambil data kustomisasi teks grafir
+    const engraveInputEl = document.getElementById('engraveInput');
+    const engraveText = engraveInputEl ? (engraveInputEl.value.trim() || 'Tanpa Grafir') : 'Tanpa Grafir';
 
-			// 2. Ambil data genre yang dicentang
-			const checkedGenres = document.querySelectorAll('input[name="genreSelected"]:checked');
-			let genresText = '';
-			if (checkedGenres.length > 0) {
-				const genres = [];
-				checkedGenres.forEach(cb => genres.push(cb.value));
-				genresText = genres.join(', ');
-			} else {
-				genresText = 'Tidak ada genre dipilih';
-			}
+    // 2. Ambil data genre musik yang dicentang
+    const checkedGenres = document.querySelectorAll('input[name="genreSelected"]:checked');
+    let genresText = '';
+    if (checkedGenres && checkedGenres.length > 0) {
+        const genres = [];
+        checkedGenres.forEach(cb => genres.push(cb.value));
+        genresText = genres.join(', ');
+    } else {
+        genresText = 'Tidak ada genre dipilih';
+    }
 
-			// 3. Ambil data Input Text & File Text baru (Ambil dengan aman agar tidak error jika elemen belum ada)
-			const customSongsInput = document.getElementById('customSongsInput');
-			const fileContentHidden = document.getElementById('fileContentHidden');
-			
-			const customSongs = customSongsInput ? (customSongsInput.value.trim() || 'Tidak ada') : 'Tidak ada';
-			const txtFileContent = fileContentHidden ? (fileContentHidden.value.trim() || 'Tidak ada file diupload') : 'Tidak ada file diupload';
+    // 3. Ambil data Input Text & File Text baru (Menggunakan Fallback Aman)
+    const customSongsInput = document.getElementById('customSongsInput');
+    const fileContentHidden = document.getElementById('fileContentHidden');
+    
+    const customSongs = customSongsInput ? (customSongsInput.value.trim() || 'Tidak ada') : 'Tidak ada';
+    const txtFileContent = fileContentHidden ? (fileContentHidden.value.trim() || 'Tidak ada file diupload') : 'Tidak ada file diupload';
 
-			// 4. Susun Format Pesan WhatsApp
-			const message = `Halo SoundDrive, saya ingin memesan:\n` +
-							`-----------------------------------------\n` +
-							`*PESANAN CUSTOMISASI*\n` +
-							`*Kapasitas     :* ${selectedCapacity}\n` +
-							`*Warna Drive   :* ${selectedMetal.toUpperCase()}\n` +
-							`*Teks Grafir   :* ${engraveText}\n` +
-							`*Genre Dipilih :* ${genresText}\n` +
-							`*Lagu Kustom   :* ${customSongs}\n` +
-							`*Isi File Txt  :* ${txtFileContent}\n` +
-							`-----------------------------------------\n` +
-							`*TOTAL HARGA   :* Rp ${selectedPrice.toLocaleString('id-ID')}\n\n` +
-							`Mohon segera diproses pesanan saya, Kak! Terima kasih.`;
+    // 4. Ambil data Data Pembeli dari Form Modal
+    const custName = document.getElementById('custName') ? document.getElementById('custName').value : '-';
+    const custPhone = document.getElementById('custPhone') ? document.getElementById('custPhone').value : '-';
+    const custAddress = document.getElementById('custAddress') ? document.getElementById('custAddress').value : '-';
+    const custCourier = document.getElementById('custCourier') ? document.getElementById('custCourier').value : '-';
 
-			const encodedMessage = encodeURIComponent(message);
-			const whatsappnum = atob(waBase64);
+    // 5. Susun Format Pesan WhatsApp (Memperbaiki selectedColor agar tidak crash)
+    const currentPrice = typeof selectedPrice !== 'undefined' ? selectedPrice : 199000;
+    const currentCapacity = typeof selectedCapacity !== 'undefined' ? selectedCapacity : '32GB';
+    const currentColor = typeof selectedColor !== 'undefined' ? selectedColor : 'silver';
 
-			// 5. Redirect ke WhatsApp
-			window.open(`https://api.whatsapp.com/send?phone=${whatsappnum}&text=${encodedMessage}`, '_blank');
-			
-			// Tutup modal jika fungsi closeOrderModal tersedia
-			if (typeof closeOrderModal === "function") {
-				closeOrderModal();
-				}
-			}
+    const message = `Halo SoundDrive, saya ingin memesan:\n` +
+                    `-----------------------------------------\n` +
+                    `*DATA PEMBELI*\n` +
+                    `*Nama* : ${custName}\n` +
+                    `*No. HP* : ${custPhone}\n` +
+                    `*Alamat* : ${custAddress}\n` +
+                    `*Ekspedisi* : ${custCourier}\n\n` +
+                    `*PESANAN CUSTOMISASI*\n` +
+                    `*Kapasitas* : ${currentCapacity}\n` +
+                    `*Warna Drive* : ${currentColor.toUpperCase()}\n` +
+                    `*Teks Grafir* : ${engraveText}\n` +
+                    `*Genre Dipilih* : ${genresText}\n` +
+                    `*Lagu Kustom* : ${customSongs}\n` +
+                    `*Isi File Txt* : ${txtFileContent}\n` +
+                    `-----------------------------------------\n` +
+                    `*TOTAL HARGA* : Rp ${currentPrice.toLocaleString('id-ID')}\n\n` +
+                    `Mohon segera diproses pesanan saya, Kak! Terima kasih.`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappnum = atob(waBase64);
+
+    // 6. Redirect & Buka Tab Baru WhatsApp
+    window.open(`https://api.whatsapp.com/send?phone=${whatsappnum}&text=${encodedMessage}`, '_blank');
+    
+    // 7. Tutup Modal Pesanan setelah sukses kirim
+    if (typeof closeOrderModal === "function") {
+        closeOrderModal();
+    }
+}
 
         // On Load Initialization
         window.onload = function() {
